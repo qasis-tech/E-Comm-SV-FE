@@ -59,8 +59,9 @@ function LoginPage() {
           },
         })}
         fullWidth
+        error={errors?.email}
       />
-      <p>{errors.email?.message}</p>
+      <p>{errors?.email?.message}</p>
 
       <TextField
         label="Password"
@@ -83,13 +84,13 @@ function LoginPage() {
             </InputAdornment>
           ),
         }}
+        error={errors?.password}
       />
-      <p>{errors.password?.message}</p>
+      <p>{errors?.password?.message}</p>
 
       <Button type="submit " variant="contained" fullWidth>
         Login
       </Button>
-
       <Grid container direction="row" justifyContent="space-between">
         <Grid item>
           <FormControlLabel
@@ -102,7 +103,6 @@ function LoginPage() {
             label="Keep me signed in"
           />
         </Grid>
-
         <Grid item sx={{ display: "flex", alignItems: "center" }}>
           <Typography>Forgot password?</Typography>
         </Grid>
