@@ -1,5 +1,5 @@
-import Home from "./pages/homePage";
-import ProductDetails from "./pages/productDetais";
+// import Home from "./pages/homePage";
+// import ProductDetails from "./pages/productDetais";
 import Login from "./pages/loginPage";
 
 function App() {
