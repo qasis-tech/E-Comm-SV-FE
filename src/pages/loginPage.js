@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from "react";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import {
   Typography,
   InputAdornment,
   IconButton,
-  FormControl,
-  InputLabel,
-  OutlinedInput,
+  Grid,
+  TextField,
+  Button,
+  FormControlLabel,
+  Checkbox,
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -19,122 +16,98 @@ import { useForm } from "react-hook-form";
 function LoginPage() {
   const [isChecked, setCheckBox] = useState(false);
   const [isVisible, setVisible] = useState(false);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
-  } = useForm({ defaultValues: { username: "", password: "" } });
+  } = useForm({ defaultValues: { email: "", password: "" } });
 
-  console.log(errors);
   useEffect(() => {
-    // console.log("component didmount");
-    const object = localStorage.getItem("loginDetails");
-    if (object) {
-      const newObject = JSON.parse(object);
-      // const onject = { email: email, password: password };
-      setUsername(newObject.username);
-      setPassword(newObject.password);
+    const loginFromLocals = localStorage.getItem("loginDetails");
+    if (loginFromLocals) {
+      const parsedDetails = JSON.parse(loginFromLocals);
+      setValue("email", parsedDetails.email);
+      setValue("password", parsedDetails.password);
       setCheckBox(true);
     }
   }, []);
 
-  const emailvalidation = (username) => {
-    return /\S+@\S+\.\S+/.test(username);
-  };
-
-  const handleLogin = () => {
-    console.log("User name and password =====> ", username, password);
-
-    if (username === "" && password === "") {
-      alert("enter Valid username and password");
-    }
-    // else if (password === "") {
-    //   alert("enter password");
-    // }
-    //  else if (username === "") {
-    //   alert("enter username");
-    // }
-    else if (!emailvalidation(username)) {
-      alert("email is not correct");
-    } else {
-      alert("Login successfully");
-    }
+  const handleLogin = ({ email, password }) => {
     if (isChecked) {
-      const object = { username: username, password: password };
-      localStorage.setItem("loginDetails", JSON.stringify(object));
+      localStorage.setItem("loginDetails", JSON.stringify({ email, password }));
     } else {
       localStorage.removeItem("loginDetails");
     }
 
-    // email validation
-    // if(email vaidation true)
-    // alert("Login Successfully")
+    console.log("Donee");
   };
 
   return (
     <form onSubmit={handleSubmit(handleLogin)}>
-      <h1>LoginPage</h1>
       <TextField
         id="login-username"
-        {...register("username", { required: "enter username" })}
         variant="outlined"
         size="small"
+        label="Email ID"
+        {...register("email", {
+          required: "Email ID is required",
+          pattern: {
+            value:
+              /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+            message: "Invalid email Id (example@mail.com) ",
+          },
+        })}
         fullWidth
-        value={username}
-        onChange={(z) => setUsername(z.target.value)}
       />
-      <p>{errors.username?.message}</p>
-      <FormControl sx={{ m: 1, width: "25ch" }} variant="outlined">
-        <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-        <OutlinedInput
-          id="outlined-adornment-password"
-          {...register("password", {
-            required: "enter password",
-            maxLength: {
-              value: 5,
-              message: "max length is 5",
-            },
-          })}
-          type={isVisible ? "text" : "password"}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          fullWidth
-          endAdornment={
+      <p>{errors.email?.message}</p>
+
+      <TextField
+        label="Password"
+        size="small"
+        fullWidth
+        type={isVisible ? "text" : "password"}
+        {...register("password", {
+          required: "Password is required",
+          minLength: {
+            value: 8,
+            message: "Minimum of 8 Charecter",
+          },
+        })}
+        InputProps={{
+          endAdornment: (
             <InputAdornment position="end">
-              <IconButton
-                aria-label="toggle password visibility"
-                onClick={() => setVisible(!isVisible)}
-                edge="end"
-              >
-                {isVisible ? <VisibilityOff /> : <Visibility />}
+              <IconButton onClick={() => setVisible(!isVisible)} edge="end">
+                {!isVisible ? <VisibilityOff /> : <Visibility />}
               </IconButton>
             </InputAdornment>
-          }
-        />
-      </FormControl>
+          ),
+        }}
+      />
       <p>{errors.password?.message}</p>
 
       <Button type="submit " variant="contained" fullWidth>
         Login
       </Button>
-      <FormGroup>
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={isChecked}
-              onChange={() => setCheckBox(!isChecked)}
-            />
-          }
-          label="Keep me signed in"
-        />
-        <Typography variant="caption" component="span">
-          Forgot password?
-        </Typography>
-      </FormGroup>
+
+      <Grid container direction="row" justifyContent="space-between">
+        <Grid item>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={isChecked}
+                onChange={() => setCheckBox(!isChecked)}
+              />
+            }
+            label="Keep me signed in"
+          />
+        </Grid>
+
+        <Grid item sx={{ display: "flex", alignItems: "center" }}>
+          <Typography>Forgot password?</Typography>
+        </Grid>
+      </Grid>
     </form>
   );
 }
-
 export default LoginPage;
