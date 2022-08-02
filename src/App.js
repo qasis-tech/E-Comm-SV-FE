@@ -4,7 +4,7 @@ import Login from "./pages/loginPage";
 
 function App() {
   return (
-    <div >
+    <div>
       {/* <Home /> */}
       {/* <ProductDetails /> */}
       <Login />
