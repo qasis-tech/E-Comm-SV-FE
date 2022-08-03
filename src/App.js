@@ -2,6 +2,8 @@
 // import ProductDetails from "./pages/productDetais";
 // import Login from "./pages/loginPage";
 import RegisterPage from "./pages/registerPage";
+//import Login from "./pages/loginPage";
+import MainContainer from "./pages/mainContainer";
 
 function App() {
   return (
@@ -9,7 +11,8 @@ function App() {
       {/* <Home /> */}
       {/* <ProductDetails /> */}
       {/* <Login /> */}
-      <RegisterPage />
+      {/* <RegisterPage /> */}
+      <MainContainer />
     </div>
   );
 }
