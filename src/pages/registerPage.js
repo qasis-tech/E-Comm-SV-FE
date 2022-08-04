@@ -31,9 +31,15 @@ function RegisterPage() {
   } = useForm({
     resolver: yupResolver(schema),
   });
+  const replaceHyphen = (e) => {
+    const new_str = e.replace(/-/g, "");
+    return new_str;
+  };
 
   const handleRegister = (data) => {
-    console.log("Data Result", data);
+    const result = replaceHyphen(data.mobilenumber);
+    data.mobilenumber = result;
+    console.log("Registration Details", data);
   };
 
   return (
