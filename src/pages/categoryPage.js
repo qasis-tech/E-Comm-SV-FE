@@ -38,18 +38,22 @@ const CategoryList = () => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
+              <TableCell>ID</TableCell>
               <TableCell>Category</TableCell>
-              <TableCell align="right"> Subcategory</TableCell>
-              <TableCell align="right">Actions</TableCell>
+              <TableCell> Subcategory</TableCell>
+              <TableCell>Created Date</TableCell>
+              <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             <TableRow>
+              <TableCell>#593203</TableCell>
               <TableCell component="th" scope="row">
                 Fruits
               </TableCell>
-              <TableCell align="right">dry fruits</TableCell>
-              <TableCell align="right">
+              <TableCell>dry fruits</TableCell>
+              <TableCell>27-08-2021</TableCell>
+              <TableCell>
                 <Button variant="outlined">
                   <DeleteIcon />
                 </Button>

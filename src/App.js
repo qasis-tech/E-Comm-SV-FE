@@ -1,5 +1,4 @@
 // import Home from "./pages/homePage";
-// import ProductDetails from "./pages/productDetais";
 // import Login from "./pages/loginPage";
 import RegisterPage from "./pages/registerPage";
 //import Login from "./pages/loginPage";
@@ -13,26 +12,29 @@ import OrderDetails from "./pages/orderDetailsPage";
 import StockList from "./pages/stockPage";
 import UserList from "./pages/userPage";
 import UserDetails from "./pages/userDetailsPage";
+import StockAdd from "./pages/stockAddPage";
+import ProductDetails from "./pages/productDetailsPage";
 
 function App() {
   return (
     <div>
       {/* <Home /> */}
-      {/* <ProductDetails /> */}
       {/* <Login /> */}
-      <RegisterPage />
+      {/* <RegisterPage /> */}
+      {/* <RegisterPage /> */}
       {/* <MainContainer /> */}
       {/* <MainContainer/> */}
       {/* <Category /> */}
       {/* <CategoryAdd /> */}
       {/* <ProductList /> */}
       {/* <ProductAdd /> */}
+      {/* <ProductDetails /> */}
       {/* <OrderList /> */}
       {/* <OrderDetails /> */}
       {/* <StockList /> */}
+      {/* <StockAdd /> */}
       {/* <UserList /> */}
-      {/* <UserDetails /> */}
-      {/* <RegisterPage /> */}
+      <UserDetails />
     </div>
   );
 }
