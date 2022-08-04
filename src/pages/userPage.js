@@ -15,6 +15,7 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
 import SearchIcon from "@mui/icons-material/Search";
+import Chip from "@mui/material/Chip";
 
 const UserList = () => {
   return (
@@ -40,6 +41,9 @@ const UserList = () => {
               <TableCell>Email</TableCell>
               <TableCell> Phone Number</TableCell>
               <TableCell>Location</TableCell>
+              <TableCell>Created Date</TableCell>
+              <TableCell>Updated Date</TableCell>
+              <TableCell>Status</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -53,6 +57,12 @@ const UserList = () => {
               </TableCell>
               <TableCell>+91-764389026</TableCell>
               <TableCell>Thrissur</TableCell>
+              <TableCell>25-03-2022</TableCell>
+              <TableCell>25-03-2022</TableCell>
+              <TableCell>
+                <Chip label="Active" color="success" />
+                <Chip label="Inactive" color="error" />
+              </TableCell>
               <TableCell>
                 <Button variant="outlined">
                   <DeleteIcon />

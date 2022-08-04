@@ -10,11 +10,15 @@ import {
   InputAdornment,
   IconButton,
   TextField,
+  Grid,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import Fab from "@mui/material/Fab";
 import Chip from "@mui/material/Chip";
 import SearchIcon from "@mui/icons-material/Search";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
+import CheckIcon from "@mui/icons-material/Check";
 const OrderList = () => {
   return (
     <Box>
@@ -32,6 +36,47 @@ const OrderList = () => {
             ),
           }}
         />
+        <Grid container spacing={2}>
+          <Grid item xs={4}>
+            <Box
+              sx={{
+                width: 300,
+                height: 125,
+                backgroundColor: "primary.dark",
+              }}
+            >
+              <ShoppingCartIcon />
+              <h3>Total Orders</h3>
+              <h3>100</h3>
+            </Box>
+          </Grid>
+          <Grid item xs={4}>
+            <Box
+              sx={{
+                width: 300,
+                height: 125,
+                backgroundColor: "primary.dark",
+              }}
+            >
+              <ShoppingCartCheckoutIcon />
+              <h3>Order Pending</h3>
+              <h3>100</h3>
+            </Box>
+          </Grid>
+          <Grid item xs={4}>
+            <Box
+              sx={{
+                width: 300,
+                height: 125,
+                backgroundColor: "primary.dark",
+              }}
+            >
+              <CheckIcon />
+              <h3>Order Completed</h3>
+              <h3>100</h3>
+            </Box>
+          </Grid>
+        </Grid>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>

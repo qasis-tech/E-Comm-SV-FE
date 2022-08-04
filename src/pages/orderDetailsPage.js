@@ -1,10 +1,32 @@
-import { Box, Button, TextField } from "@mui/material";
+import { Box, Button, MenuItem, TextField } from "@mui/material";
 import * as React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-
+const currencies = [
+  {
+    value: "Fruits",
+    label: "Fruits",
+  },
+  {
+    value: "EUR",
+    label: "€",
+  },
+  {
+    value: "BTC",
+    label: "฿",
+  },
+  {
+    value: "JPY",
+    label: "¥",
+  },
+];
 const OrderDetails = () => {
+  const [currency, setCurrency] = React.useState("Fruits");
+
+  const handleChange = (event) => {
+    setCurrency(event.target.value);
+  };
   return (
     <React.Fragment>
       <CssBaseline />
@@ -102,15 +124,22 @@ const OrderDetails = () => {
             </Grid>
             <Grid item xs={6}>
               <TextField
-                id="outlined-read-only-input"
-                label="Status"
-                defaultValue="Status"
-                InputProps={{
-                  readOnly: true,
-                }}
-              />
+                fullWidth
+                id="outlined-select-currency"
+                select
+                label="Subcategory"
+                value={currency}
+                onChange={handleChange}
+              >
+                {currencies.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
             </Grid>
           </Grid>
+          <Button variant="outlined">Cancel</Button>
           <Button variant="contained" color="primary">
             Change
           </Button>

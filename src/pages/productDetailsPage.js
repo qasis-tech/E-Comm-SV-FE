@@ -22,7 +22,7 @@ const currencies = [
     label: "¥",
   },
 ];
-const ProductAdd = () => {
+const ProductDetails = () => {
   const [currency, setCurrency] = React.useState("Fruits");
 
   const handleChange = (event) => {
@@ -38,7 +38,7 @@ const ProductAdd = () => {
           noValidate
           autoComplete="off"
         >
-          <h3>Product</h3>
+          <h3>Product Details</h3>
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <TextField fullWidth variant="outlined" label="Name" />
@@ -154,4 +154,4 @@ const ProductAdd = () => {
   );
 };
 
-export default ProductAdd;
+export default ProductDetails;
