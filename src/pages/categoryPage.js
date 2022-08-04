@@ -18,7 +18,10 @@ import AddIcon from "@mui/icons-material/Add";
 import Fab from "@mui/material/Fab";
 import SearchIcon from "@mui/icons-material/Search";
 
+import { useNavigate } from "react-router-dom";
+
 const CategoryList = () => {
+  const navigate = useNavigate();
   return (
     <Box>
       <h3>Category</h3>
@@ -67,7 +70,11 @@ const CategoryList = () => {
       </TableContainer>
 
       <div style={{ position: "absolute", bottom: "4em", right: "4em" }}>
-        <Fab color="primary" aria-label="add">
+        <Fab
+          color="primary"
+          aria-label="add"
+          onClick={() => navigate("/add-category")}
+        >
           <AddIcon />
         </Fab>
       </div>

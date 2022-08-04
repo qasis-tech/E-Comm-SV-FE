@@ -19,7 +19,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import CheckIcon from "@mui/icons-material/Check";
+import { useNavigate } from "react-router-dom";
+
 const OrderList = () => {
+  const navigate = useNavigate();
   return (
     <Box>
       <TableContainer component={Paper}>
@@ -88,7 +91,7 @@ const OrderList = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow>
+            <TableRow onClick={() => navigate("/order-details")}>
               <TableCell component="th" scope="row">
                 #80632
               </TableCell>
@@ -106,7 +109,11 @@ const OrderList = () => {
       </TableContainer>
 
       <div style={{ position: "absolute", bottom: "4em", right: "4em" }}>
-        <Fab color="primary" aria-label="add">
+        <Fab
+          color="primary"
+          aria-label="add"
+          onClick={() => navigate("/add-stock")}
+        >
           <AddIcon />
         </Fab>
       </div>

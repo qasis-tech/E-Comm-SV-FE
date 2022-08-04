@@ -17,7 +17,10 @@ import CreateIcon from "@mui/icons-material/Create";
 import SearchIcon from "@mui/icons-material/Search";
 import Chip from "@mui/material/Chip";
 
+import { useNavigate } from "react-router-dom";
+
 const UserList = () => {
+  const navigate = useNavigate();
   return (
     <Box>
       <TableContainer component={Paper}>
@@ -48,7 +51,7 @@ const UserList = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow>
+            <TableRow onClick={() => navigate("/user-details")}>
               <TableCell component="th" scope="row">
                 Vaishna
               </TableCell>

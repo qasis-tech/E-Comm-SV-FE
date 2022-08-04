@@ -18,7 +18,10 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
+
+import { useNavigate } from "react-router-dom";
 const StockList = () => {
+  const navigate = useNavigate();
   return (
     <Box>
       <TableContainer component={Paper}>
