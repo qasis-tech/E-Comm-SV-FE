@@ -6,18 +6,6 @@ import SearchIcon from "@mui/icons-material/Search";
 const CategoryAdd = () => {
   return (
     <form>
-      <TextField
-        label="With normal TextField"
-        InputProps={{
-          endAdornment: (
-            <InputAdornment>
-              <IconButton>
-                <SearchIcon />
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-      />
       <div>
         <h1>Category</h1>
         <TextField fullWidth variant="outlined" label="Name" />

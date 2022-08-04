@@ -6,6 +6,8 @@ import RegisterPage from "./pages/registerPage";
 import CategoryAdd from "./pages/categoryAddPage";
 import Category from "./pages/categoryPage";
 import MainContainer from "./pages/mainContainer";
+import ProductList from "./pages/productPage";
+import ProductAdd from "./pages/productAddPage";
 
 function App() {
   return (
@@ -15,7 +17,9 @@ function App() {
       {/* <Login /> */}
       {/* <MainContainer/> */}
       {/* <Category /> */}
-      <CategoryAdd />
+      {/* <CategoryAdd /> */}
+      {/* <ProductList /> */}
+      <ProductAdd />
       {/* <RegisterPage /> */}
     </div>
   );
