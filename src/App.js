@@ -28,7 +28,7 @@ function App() {
       {/* <ProductList /> */}
       {/* <ProductAdd /> */}
       {/* <OrderList /> */}
-      <OrderDetails />
+      {/* <OrderDetails /> */}
       {/* <StockList /> */}
       {/* <UserList /> */}
       {/* <UserDetails /> */}
