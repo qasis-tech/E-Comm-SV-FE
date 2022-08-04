@@ -8,6 +8,11 @@ import Category from "./pages/categoryPage";
 import MainContainer from "./pages/mainContainer";
 import ProductList from "./pages/productPage";
 import ProductAdd from "./pages/productAddPage";
+import OrderList from "./pages/orderPage";
+import OrderDetails from "./pages/orderDetailsPage";
+import StockList from "./pages/stockPage";
+import UserList from "./pages/userPage";
+import UserDetails from "./pages/userDetailsPage";
 
 function App() {
   return (
@@ -19,7 +24,12 @@ function App() {
       {/* <Category /> */}
       {/* <CategoryAdd /> */}
       {/* <ProductList /> */}
-      <ProductAdd />
+      {/* <ProductAdd /> */}
+      {/* <OrderList /> */}
+      <OrderDetails />
+      {/* <StockList /> */}
+      {/* <UserList /> */}
+      {/* <UserDetails /> */}
       {/* <RegisterPage /> */}
     </div>
   );

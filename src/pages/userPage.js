@@ -14,15 +14,13 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
-import AddIcon from "@mui/icons-material/Add";
-import Fab from "@mui/material/Fab";
 import SearchIcon from "@mui/icons-material/Search";
 
-const CategoryList = () => {
+const UserList = () => {
   return (
     <Box>
-      <h3>Category</h3>
       <TableContainer component={Paper}>
+        <h1>User</h1>
         <TextField
           label="Search"
           InputProps={{
@@ -38,18 +36,24 @@ const CategoryList = () => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Category</TableCell>
-              <TableCell align="right"> Subcategory</TableCell>
-              <TableCell align="right">Actions</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell> Phone Number</TableCell>
+              <TableCell>Location</TableCell>
+              <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             <TableRow>
               <TableCell component="th" scope="row">
-                Fruits
+                Vaishna
               </TableCell>
-              <TableCell align="right">dry fruits</TableCell>
-              <TableCell align="right">
+              <TableCell component="th" scope="row">
+                vaishnakp@gmail.com
+              </TableCell>
+              <TableCell>+91-764389026</TableCell>
+              <TableCell>Thrissur</TableCell>
+              <TableCell>
                 <Button variant="outlined">
                   <DeleteIcon />
                 </Button>
@@ -61,14 +65,8 @@ const CategoryList = () => {
           </TableBody>
         </Table>
       </TableContainer>
-
-      <div style={{ position: "absolute", bottom: "4em", right: "4em" }}>
-        <Fab color="primary" aria-label="add">
-          <AddIcon />
-        </Fab>
-      </div>
     </Box>
   );
 };
 
-export default CategoryList;
+export default UserList;

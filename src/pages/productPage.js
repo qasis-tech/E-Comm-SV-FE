@@ -10,30 +10,32 @@ import {
   Box,
   InputAdornment,
   IconButton,
+  TextField,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
 import AddIcon from "@mui/icons-material/Add";
 import Fab from "@mui/material/Fab";
+import SearchIcon from "@mui/icons-material/Search";
 
 const ProductList = () => {
   return (
     <Box>
       <TableContainer component={Paper}>
+        <h1>Product</h1>
+        <TextField
+          label="Search"
+          InputProps={{
+            endAdornment: (
+              <InputAdornment>
+                <IconButton>
+                  <SearchIcon />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <h1>Product</h1>
-          <TextField
-            label="Search"
-            InputProps={{
-              endAdornment: (
-                <InputAdornment>
-                  <IconButton>
-                    <SearchIcon />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
           <TableHead>
             <TableRow>
               <TableCell>Name</TableCell>

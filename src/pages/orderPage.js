@@ -6,23 +6,20 @@ import {
   TableRow,
   Paper,
   TableBody,
-  Button,
   Box,
   InputAdornment,
   IconButton,
   TextField,
 } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import CreateIcon from "@mui/icons-material/Create";
 import AddIcon from "@mui/icons-material/Add";
 import Fab from "@mui/material/Fab";
+import Chip from "@mui/material/Chip";
 import SearchIcon from "@mui/icons-material/Search";
-
-const CategoryList = () => {
+const OrderList = () => {
   return (
     <Box>
-      <h3>Category</h3>
       <TableContainer component={Paper}>
+        <h1>Order</h1>
         <TextField
           label="Search"
           InputProps={{
@@ -38,24 +35,25 @@ const CategoryList = () => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
+              <TableCell>ID</TableCell>
               <TableCell>Category</TableCell>
-              <TableCell align="right"> Subcategory</TableCell>
-              <TableCell align="right">Actions</TableCell>
+              <TableCell> Subcategory</TableCell>
+              <TableCell>Phone Number</TableCell>
+              <TableCell>Status</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             <TableRow>
               <TableCell component="th" scope="row">
+                #80632
+              </TableCell>
+              <TableCell component="th" scope="row">
                 Fruits
               </TableCell>
-              <TableCell align="right">dry fruits</TableCell>
-              <TableCell align="right">
-                <Button variant="outlined">
-                  <DeleteIcon />
-                </Button>
-                <Button variant="outlined">
-                  <CreateIcon />
-                </Button>
+              <TableCell>dry fruits</TableCell>
+              <TableCell>+91-8953013692</TableCell>
+              <TableCell>
+                <Chip label="Shipped" color="primary" />
               </TableCell>
             </TableRow>
           </TableBody>
@@ -71,4 +69,4 @@ const CategoryList = () => {
   );
 };
 
-export default CategoryList;
+export default OrderList;

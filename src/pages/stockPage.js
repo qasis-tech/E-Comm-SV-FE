@@ -6,23 +6,20 @@ import {
   TableRow,
   Paper,
   TableBody,
-  Button,
   Box,
   InputAdornment,
   IconButton,
   TextField,
+  Button,
 } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
-import AddIcon from "@mui/icons-material/Add";
-import Fab from "@mui/material/Fab";
-import SearchIcon from "@mui/icons-material/Search";
-
-const CategoryList = () => {
+const StockList = () => {
   return (
     <Box>
-      <h3>Category</h3>
       <TableContainer component={Paper}>
+        <h1>Stock</h1>
         <TextField
           label="Search"
           InputProps={{
@@ -39,8 +36,10 @@ const CategoryList = () => {
           <TableHead>
             <TableRow>
               <TableCell>Category</TableCell>
-              <TableCell align="right"> Subcategory</TableCell>
-              <TableCell align="right">Actions</TableCell>
+              <TableCell> Subcategory</TableCell>
+              <TableCell> Name</TableCell>
+              <TableCell>Quantity</TableCell>
+              <TableCell>Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -48,8 +47,10 @@ const CategoryList = () => {
               <TableCell component="th" scope="row">
                 Fruits
               </TableCell>
-              <TableCell align="right">dry fruits</TableCell>
-              <TableCell align="right">
+              <TableCell>dry fruits</TableCell>
+              <TableCell>Apple</TableCell>
+              <TableCell>100</TableCell>
+              <TableCell>
                 <Button variant="outlined">
                   <DeleteIcon />
                 </Button>
@@ -61,14 +62,8 @@ const CategoryList = () => {
           </TableBody>
         </Table>
       </TableContainer>
-
-      <div style={{ position: "absolute", bottom: "4em", right: "4em" }}>
-        <Fab color="primary" aria-label="add">
-          <AddIcon />
-        </Fab>
-      </div>
     </Box>
   );
 };
 
-export default CategoryList;
+export default StockList;
