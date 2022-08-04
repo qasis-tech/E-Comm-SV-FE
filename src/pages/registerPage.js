@@ -9,13 +9,17 @@ import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import "yup-phone";
 
 const schema = yup
   .object({
     firstName: yup.string().required(),
     lastName: yup.string().required(),
     email: yup.string().email().required(),
-    mobilenumber: yup.number().min(10).required(),
+    mobilenumber: yup
+      .string()
+      .phone("IN", true, "${path} is invalid")
+      .required(),
   })
   .required();
 
@@ -38,7 +42,7 @@ function RegisterPage() {
       <TextField
         id="filled-basic"
         label="FirstName"
-        {...register("firstName")}
+        {...register("firstName", {})}
         variant="filled"
         fullWidth
       />
@@ -59,7 +63,7 @@ function RegisterPage() {
         fullWidth
       />
       <p>{errors?.email?.message}</p>
-      <TextField type="number" {...register("mobilenumber")} />
+      <TextField type="numeric" {...register("mobilenumber")} />
       <p>{errors?.mobilenumber?.message}</p>
       <FormControl>
         <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>

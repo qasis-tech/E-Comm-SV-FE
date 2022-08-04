@@ -11,8 +11,8 @@ function App() {
       {/* <Home /> */}
       {/* <ProductDetails /> */}
       {/* <Login /> */}
-      {/* <RegisterPage /> */}
-      <MainContainer />
+      <RegisterPage />
+      {/* <MainContainer /> */}
     </div>
   );
 }
