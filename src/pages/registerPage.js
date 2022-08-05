@@ -18,7 +18,7 @@ const schema = yup
     email: yup.string().email().required(),
     mobilenumber: yup
       .string()
-      .phone("IN", true, "${path} is invalid")
+      .phone("IN", true, "Mobile Number is invalid")
       .required(),
   })
   .required();
