@@ -3,7 +3,18 @@ import * as React from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
+const stockaddpageSchema = yup
+  .object()
+  .shape({
+    productname: yup.string().required(),
+    productquantity: yup.string().required(),
+    productcreateddate: yup.date().required("Date is required"),
+  })
+  .required();
 const currencies = [
   {
     value: "Fruits",
@@ -23,72 +34,109 @@ const currencies = [
   },
 ];
 const StockAdd = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(stockaddpageSchema),
+  });
   const [currency, setCurrency] = React.useState("Fruits");
 
   const handleChange = (event) => {
     setCurrency(event.target.value);
   };
+  const handleStockAddpage = (data) => {
+    console.log("StockAddpage Details", data);
+  };
   return (
     <React.Fragment>
       <CssBaseline />
       <Container maxWidth="sm">
-        <Box
-          component="form"
-          sx={{ flexGrow: 1 }}
-          noValidate
-          autoComplete="off"
-        >
-          <h3>Stock</h3>
-          <Grid container spacing={2}>
-            <Grid item xs={6}>
-              <TextField
-                fullWidth
-                id="outlined-select-currency"
-                select
-                label="Category"
-                value={currency}
-                onChange={handleChange}
-              >
-                {currencies.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
+        <Box sx={{ flexGrow: 1 }} noValidate autoComplete="off">
+          <form onSubmit={handleSubmit(handleStockAddpage)}>
+            <h3>Stock</h3>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  id="outlined-select-currency"
+                  select
+                  label="Category"
+                  value={currency}
+                  onChange={handleChange}
+                >
+                  {currencies.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  id="outlined-select-currency"
+                  select
+                  label="Subcategory"
+                  value={currency}
+                  onChange={handleChange}
+                >
+                  {currencies.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  id="outlined-read-only-input"
+                  label="Name"
+                  {...register("productname")}
+                />
+                <p>{errors?.productname?.message}</p>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  id="outlined-read-only-input"
+                  label="Quantity"
+                  {...register("productquantity")}
+                />
+                <p>{errors?.productquantity?.message}</p>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  id="date"
+                  label="Created Date"
+                  type="date"
+                  fullWidth
+                  variant="outlined"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  {...register("productcreateddate")}
+                />
+                <p>{errors?.productcreateddate?.message}</p>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  id="date"
+                  label="Updated Date"
+                  type="date"
+                  fullWidth
+                  variant="outlined"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={6}>
-              <TextField
-                fullWidth
-                id="outlined-select-currency"
-                select
-                label="Subcategory"
-                value={currency}
-                onChange={handleChange}
-              >
-                {currencies.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>
-            </Grid>
-            <Grid item xs={6}>
-              <TextField id="outlined-read-only-input" label="Name" />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField id="outlined-read-only-input" label="Quantity" />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField id="outlined-read-only-input" label="Created Date" />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField id="outlined-read-only-input" label="Updated Date" />
-            </Grid>
-          </Grid>
-          <Button variant="outlined">Cancel</Button>
-          <Button variant="contained" color="primary">
-            Submit
-          </Button>
+            <Button variant="outlined">Cancel</Button>
+            <Button type="submit" variant="contained" color="primary">
+              Submit
+            </Button>
+          </form>
         </Box>
       </Container>
     </React.Fragment>

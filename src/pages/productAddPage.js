@@ -7,8 +7,9 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-const schema = yup
-  .object({
+const productaddpageSchema = yup
+  .object()
+  .shape({
     productName: yup.string().required("Product is required"),
     quantity: yup
       .number()
@@ -28,24 +29,18 @@ const schema = yup
       .required("OfferPrice is required")
       .typeError("You must specify number")
       .min(0, "Min value 0"),
-    chooseFile1: yup
-      .mixed()
-      .required("Upload a file")
-      .test("fileSize", "The file is too large", (value) => {
-        return value && value[0].size <= 2000000;
-      })
-      .test("type", "We only support jpeg", (value) => {
-        return value && value[0].type === "image/jpeg";
-      }),
-    chooseFile2: yup
-      .mixed()
-      .required("Upload a file")
-      .test("fileSize", "The file is too large", (value) => {
-        return value && value[0].size <= 2000000;
-      })
-      .test("type", "We only support jpeg", (value) => {
-        return value && value[0].type === "image/jpeg";
-      }),
+    imageFile: yup.array().required("Upload a file"),
+
+    // .test("type", "We only support jpeg", (value) => {
+    //   return value && value[0].type === "image/jpeg";
+    // })
+    videoFile: yup.mixed().required("Upload a file"),
+    // .test("fileSize", "The file is too large", (value) => {
+    //   return value && value[0].size <= 2000000;
+    // })
+    // .test("type", "We only support jpeg", (value) => {
+    //   return value && value[0].type === "image/jpeg";
+    // }),
   })
   .required();
 
@@ -73,7 +68,7 @@ const ProductAdd = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(productaddpageSchema),
   });
   const [currency, setCurrency] = React.useState("Fruits");
 
@@ -227,18 +222,18 @@ const ProductAdd = () => {
                   fullWidth
                   variant="outlined"
                   type="file"
-                  {...register("chooseFile1")}
+                  {...register("imageFile")}
                 />
-                {errors?.chooseFile1 && <p>{errors?.chooseFile1?.message}</p>}
+                {errors?.imageFile && <p>{errors?.imageFile?.message}</p>}
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   fullWidth
                   variant="outlined"
                   type="file"
-                  {...register("chooseFile2")}
+                  {...register("videoFile")}
                 />
-                {errors?.chooseFile2 && <p>{errors?.chooseFile2?.message}</p>}
+                {errors?.videoFile && <p>{errors?.videoFile?.message}</p>}
               </Grid>
             </Grid>
             <Button variant="outlined">Cancel</Button>

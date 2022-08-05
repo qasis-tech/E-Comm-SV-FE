@@ -7,28 +7,25 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-const schema = yup
-  .object({
+const categoryaddpageSchema = yup
+  .object()
+  .shape({
     categoryName1: yup.string().required("name is required"),
-    file1: yup
-      .mixed()
-      .required("Upload a file")
-      .test("fileSize", "The file is too large", (value) => {
-        return value && value[0].size <= 2000000;
-      })
-      .test("type", "We only support jpeg", (value) => {
-        return value && value[0].type === "image/jpeg";
-      }),
+    file1: yup.mixed().required("Upload a file"),
+    // .test("fileSize", "The file is too large", (value) => {
+    //   return value && value[0].size <= 2000000;
+    // })
+    // .test("type", "We only support jpeg", (value) => {
+    //   return value && value[0].type === "image/jpeg";
+    // })
     categoryName2: yup.string().required("name is required"),
-    file2: yup
-      .mixed()
-      .required("Upload a file")
-      .test("fileSize", "The file is too large", (value) => {
-        return value && value[0].size <= 2000000;
-      })
-      .test("type", "We only support jpeg", (value) => {
-        return value && value[0].type === "image/jpeg";
-      }),
+    file2: yup.mixed().required("Upload a file"),
+    // .test("fileSize", "The file is too large", (value) => {
+    //   return value && value[0].size <= 2000000;
+    // })
+    // .test("type", "We only support jpeg", (value) => {
+    //   return value && value[0].type === "image/jpeg";
+    // })
   })
   .required();
 
@@ -38,7 +35,7 @@ const CategoryAdd = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(categoryaddpageSchema),
   });
 
   const handleCategoryAddpage = (data) => {

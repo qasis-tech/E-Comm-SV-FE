@@ -11,8 +11,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import "yup-phone";
 
-const schema = yup
-  .object({
+const signupSchema = yup
+  .object()
+  .shape({
     firstName: yup.string().required(),
     lastName: yup.string().required(),
     email: yup.string().email().required(),
@@ -29,7 +30,7 @@ function RegisterPage() {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(signupSchema),
   });
   const replaceHyphen = (e) => {
     const new_str = e.replace(/-/g, "");
@@ -40,6 +41,7 @@ function RegisterPage() {
     const result = replaceHyphen(data.mobilenumber);
     data.mobilenumber = result;
     console.log("Registration Details", data);
+    console.log(errors);
   };
 
   return (
@@ -92,13 +94,6 @@ function RegisterPage() {
             value="male"
             control={<Radio />}
             label="Male"
-          />
-          <FormControlLabel
-            {...register("gender", { required: true })}
-            type="radio"
-            value="other"
-            control={<Radio />}
-            label="Other"
           />
         </RadioGroup>
       </FormControl>
