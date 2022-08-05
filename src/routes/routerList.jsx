@@ -1,5 +1,5 @@
 const List = {
-  login: "/",
+  login: "/login",
   register: "register",
   dashboard: "dashboard",
   categoryList: "category",
