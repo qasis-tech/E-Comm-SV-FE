@@ -21,22 +21,22 @@ import login from "../assets/login.jpg";
 import "../styles/login.styles.scss";
 import { alpha, styled } from "@mui/material/styles";
 
-const CssTextField = styled(TextField)({
-  "& .MuiInput-underline:after": {
-    borderBottomColor: "white",
-  },
-  "& .MuiOutlinedInput-root": {
-    "& fieldset": {
-      borderColor: "red",
-    },
-    "&:hover fieldset": {
-      borderColor: "yellow",
-    },
-    "&.Mui-focused fieldset": {
-      borderColor: "green",
-    },
-  },
-});
+// const CssTextField = styled(TextField)({
+//   "& .MuiInput-underline:after": {
+//     borderBottomColor: "white",
+//   },
+//   "& .MuiOutlinedInput-root": {
+//     "& fieldset": {
+//       borderColor: "red",
+//     },
+//     "&:hover fieldset": {
+//       borderColor: "yellow",
+//     },
+//     "&.Mui-focused fieldset": {
+//       borderColor: "green",
+//     },
+//   },
+// });
 function LoginPage() {
   const [isChecked, setCheckBox] = useState(false);
   const [isVisible, setVisible] = useState(false);
@@ -81,7 +81,7 @@ function LoginPage() {
               <Grid item xs={12} marginBottom={3} className="profile-container">
                 <h2 fw-bold>Login</h2>
               </Grid>
-              <CssTextField
+              <TextField
                 id="login-username"
                 variant="outlined"
                 size="small"
@@ -97,6 +97,7 @@ function LoginPage() {
                 })}
                 fullWidth
                 error={errors?.email}
+                style={{ color: "#fff" }}
               />
               <p>{errors?.email?.message}</p>
 

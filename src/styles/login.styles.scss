@@ -27,18 +27,23 @@
       }
 
       .form-section {
-        background-color:#9ca4c33d;
+       // background-color:#f7f7f7d6;
         height: 44vh;
         color: white;
         margin:9em 0;
         border-radius: 15px;
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.5); 
       // box-shadow:1px 0 14px 0px;
         form {
           align-items: center;
           padding: 3em 5em;
           // .text-field{
-          //   border-color: white!important;
-          //   color: white;
+            
+          //   .MuiInputBase-input {              
+          //     border-color: white!important;
+          //     color: white !important;
+          //   }
           // }
           .profile-container {
             margin-bottom: 1em;
