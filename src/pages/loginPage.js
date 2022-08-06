@@ -76,10 +76,10 @@ function LoginPage() {
         className="wrapper"
       >
         <Grid container direction="row" className="login-container">
-          <Grid item xs={8} className="form-section">
+          <Grid item xs={6} className="form-section">
             <form onSubmit={handleSubmit(handleLogin)}>
               <Grid item xs={12} marginBottom={3} className="profile-container">
-                <h2 fw-bold>Login</h2>
+                <h1 fw-bold>Login</h1>
               </Grid>
               <TextField
                 id="login-username"
@@ -153,6 +153,22 @@ function LoginPage() {
               <Grid
                 container
                 direction="row"
+                justifyContent="space-between"
+                marginBottom={2}
+              >
+                <Grid item className="login-btn-container" xs={12}>
+                  <Button
+                    className="login-btn"
+                    type="submit"
+                    variant="contained"
+                  >
+                    Login
+                  </Button>
+                </Grid>
+              </Grid>
+              <Grid
+                container
+                direction="row"
                 className="sub-btn"
                 justifyContent="space-between"
                 marginBottom={2}
@@ -170,6 +186,7 @@ function LoginPage() {
                   </Button>
                 </Grid>
               </Grid>
+
               <Grid
                 container
                 direction="row"
@@ -177,11 +194,7 @@ function LoginPage() {
                 justifyContent="space-between"
                 marginTop={4}
               >
-                <Grid item>
-                  <Button type="submit" variant="contained">
-                    Login
-                  </Button>
-                </Grid>
+                <Grid item></Grid>
                 <Grid item className="create-account">
                   <a href="">
                     Create your account
