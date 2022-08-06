@@ -9,7 +9,10 @@
 
     .login-container {
       display: flex;
-
+      background-image: url("../assets/bg1.jpg");
+      width: 100%;
+      height: 76vh;
+      justify-content: center;
       .image-wrapper {
         width: 100%;
         height: 52vh;
@@ -24,13 +27,24 @@
       }
 
       .form-section {
+        background-color:#9ca4c33d;
+        height: 44vh;
+        color: white;
+        margin:9em 0;
+        border-radius: 15px;
+      // box-shadow:1px 0 14px 0px;
         form {
           align-items: center;
           padding: 3em 5em;
-          margin-top: 2em;
-
+          // .text-field{
+          //   border-color: white!important;
+          //   color: white;
+          // }
           .profile-container {
             margin-bottom: 1em;
+           h2{
+            align-items: center;
+           }
           }
 
           .sub-btn {

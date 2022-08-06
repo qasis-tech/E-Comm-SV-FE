@@ -19,7 +19,24 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import login from "../assets/login.jpg";
 import "../styles/login.styles.scss";
+import { alpha, styled } from "@mui/material/styles";
 
+const CssTextField = styled(TextField)({
+  "& .MuiInput-underline:after": {
+    borderBottomColor: "white",
+  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: "red",
+    },
+    "&:hover fieldset": {
+      borderColor: "yellow",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "green",
+    },
+  },
+});
 function LoginPage() {
   const [isChecked, setCheckBox] = useState(false);
   const [isVisible, setVisible] = useState(false);
@@ -59,19 +76,17 @@ function LoginPage() {
         className="wrapper"
       >
         <Grid container direction="row" className="login-container">
-          <Grid item xs={4} className="image-wrapper">
-            <img src={login} alt="login image" />
-          </Grid>
           <Grid item xs={8} className="form-section">
             <form onSubmit={handleSubmit(handleLogin)}>
               <Grid item xs={12} marginBottom={3} className="profile-container">
-                <h2 fw-bold>LOGIN</h2>
+                <h2 fw-bold>Login</h2>
               </Grid>
-              <TextField
+              <CssTextField
                 id="login-username"
                 variant="outlined"
                 size="small"
                 label="Email"
+                className="text-field"
                 {...register("email", {
                   required: "Email ID is required",
                   pattern: {
