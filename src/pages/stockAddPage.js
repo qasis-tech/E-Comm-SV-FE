@@ -12,7 +12,6 @@ const stockaddpageSchema = yup
   .shape({
     productname: yup.string().required(),
     productquantity: yup.string().required(),
-    productcreateddate: yup.date().required("Date is required"),
   })
   .required();
 const currencies = [
@@ -59,6 +58,22 @@ const StockAdd = () => {
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <TextField
+                  id="outlined-read-only-input"
+                  label="Name"
+                  {...register("productname")}
+                />
+                <p>{errors?.productname?.message}</p>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  id="outlined-read-only-input"
+                  label="Quantity"
+                  {...register("productquantity")}
+                />
+                <p>{errors?.productquantity?.message}</p>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
                   fullWidth
                   id="outlined-select-currency"
                   select
@@ -88,48 +103,6 @@ const StockAdd = () => {
                     </MenuItem>
                   ))}
                 </TextField>
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  id="outlined-read-only-input"
-                  label="Name"
-                  {...register("productname")}
-                />
-                <p>{errors?.productname?.message}</p>
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  id="outlined-read-only-input"
-                  label="Quantity"
-                  {...register("productquantity")}
-                />
-                <p>{errors?.productquantity?.message}</p>
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  id="date"
-                  label="Created Date"
-                  type="date"
-                  fullWidth
-                  variant="outlined"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  {...register("productcreateddate")}
-                />
-                <p>{errors?.productcreateddate?.message}</p>
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  id="date"
-                  label="Updated Date"
-                  type="date"
-                  fullWidth
-                  variant="outlined"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
               </Grid>
             </Grid>
             <Button variant="outlined">Cancel</Button>

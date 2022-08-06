@@ -1,26 +1,15 @@
 import React from "react";
-import {
-  Typography,
-  InputAdornment,
-  IconButton,
-  Grid,
-  TextField,
-  Button,
-  FormControlLabel,
-  Checkbox,
-  Container,
-  Box,
-  FormControl,
-} from "@mui/material";
+import TextField from "@mui/material/TextField";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
+import Button from "@mui/material/Button";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import "yup-phone";
-import "../styles/register.styles.css";
-import login from "../assets/login.jpg";
 
 const signupSchema = yup
   .object()
@@ -56,15 +45,41 @@ function RegisterPage() {
   };
 
   return (
-    <React.Fragment>
-      <Container className="container">
-        <Box
-          sx={{ flexGrow: 1 }}
-          noValidate
-          autoComplete="off"
-          className="wrapper"
+    <form onSubmit={handleSubmit(handleRegister)}>
+      <h1>REGISTRATION FORM</h1>
+      <TextField
+        id="filled-basic"
+        label="FirstName"
+        {...register("firstName", {})}
+        variant="filled"
+        fullWidth
+      />
+      <p>{errors?.firstName?.message}</p>
+      <TextField
+        id="filled-basic"
+        label="LastName"
+        {...register("lastName")}
+        variant="filled"
+        fullWidth
+      />
+      <p>{errors?.lastName?.message}</p>
+      <TextField
+        id="filled-basic"
+        label="email"
+        {...register("email")}
+        variant="filled"
+        fullWidth
+      />
+      <p>{errors?.email?.message}</p>
+      <TextField type="numeric" {...register("mobilenumber")} />
+      <p>{errors?.mobilenumber?.message}</p>
+      <FormControl>
+        <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
+        <RadioGroup
+          aria-labelledby="demo-radio-buttons-group-label"
+          defaultValue="female"
+          name="radio-buttons-group"
         >
-<<<<<<< Updated upstream
           <FormControlLabel
             {...register("gender", { required: true })}
             type="radio"
@@ -99,150 +114,6 @@ function RegisterPage() {
         Register
       </Button>
     </form>
-=======
-          <Grid container direction="row" className="register-container">
-            <Grid item xs={4} className="image-wrapper">
-              <img src={login} alt="login image" />
-            </Grid>
-            <Grid item xs={8} className="form-section">
-              <form onSubmit={handleSubmit(handleRegister)}>
-                <Grid item xs={12} className="main-head">
-                  <h3 fw-bold>CREATE YOUR ACCOUNT</h3>
-                </Grid>
-                <Grid
-                  container
-                  direction="row"
-                  marginBottom={1}
-                  justifyContent="space-between"
-                >
-                  <Grid item>
-                    <TextField
-                      id="filled-basic"
-                      label="FirstName"
-                      {...register("firstName", {})}
-                      variant="outlined"
-                      size="small"
-                    />
-                    <p>{errors?.firstName?.message}</p>
-                  </Grid>
-                  <Grid item>
-                    <TextField
-                      id="filled-basic"
-                      label="LastName"
-                      {...register("lastName")}
-                      variant="outlined"
-                      size="small"
-                    />
-                    <p>{errors?.lastName?.message}</p>
-                  </Grid>
-                </Grid>
-                <Grid container direction="row" justifyContent="space-between">
-                  <Grid item>
-                    <TextField
-                      id="filled-basic"
-                      label="email"
-                      {...register("email")}
-                      variant="outlined"
-                      size="small"
-                    />
-                    <p>{errors?.email?.message}</p>
-                  </Grid>
-                  <Grid item>
-                    <TextField
-                      id="filled-basic"
-                      label="Mobile Number"
-                      type="numeric"
-                      variant="outlined"
-                      size="small"
-                      {...register("mobilenumber")}
-                    />
-                    <p>{errors?.mobilenumber?.message}</p>
-                  </Grid>
-                </Grid>
-                <Grid
-                  container
-                  direction="row"
-                  marginBottom={1}
-                  justifyContent="space-between"
-                >
-                  <Grid item xs={6}>
-                    <FormControl>
-                      <FormLabel id="demo-row-radio-buttons-group-label">
-                        Gender
-                      </FormLabel>
-                      <RadioGroup
-                        row
-                        aria-labelledby="demo-row-radio-buttons-group-label"
-                        name="row-radio-buttons-group"
-                      >
-                        <FormControlLabel
-                          value="female"
-                          control={<Radio />}
-                          label="Female"
-                          {...register("gender", { required: true })}
-                        />
-                        <FormControlLabel
-                          value="male"
-                          control={<Radio />}
-                          label="Male"
-                          {...register("gender", { required: true })}
-                        />
-                      </RadioGroup>
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <TextField
-                      id="date"
-                      label="DOB"
-                      type="date"
-                      fullWidth
-                      variant="outlined"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                  </Grid>
-                </Grid>
-                <TextField
-                  id="filled-basic"
-                  label="Pin"
-                  variant="outlined"
-                  size="small"
-                />
-                <Grid
-                  marginBottom={5}
-                  container
-                  direction="row"
-                  marginTop={2}
-                  justifyContent="space-between"
-                >
-                  <Grid item>
-                    <TextField
-                      id="filled-basic"
-                      label="OTP for email"
-                      variant="outlined"
-                      size="small"
-                    />
-                  </Grid>
-                  <Grid item>
-                    <TextField
-                      id="filled-basic"
-                      label="OTP for mobile"
-                      variant="outlined"
-                      size="small"
-                    />
-                  </Grid>
-                </Grid>
-                <Button type="submit" variant="contained">
-                  Register
-                </Button>
-              </form>
-            </Grid>
-          </Grid>
-        </Box>
-      </Container>
-    </React.Fragment>
->>>>>>> Stashed changes
   );
 }
 
