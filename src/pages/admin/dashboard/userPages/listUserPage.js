@@ -10,14 +10,14 @@ import {
   Box,
   InputAdornment,
   IconButton,
-  TextField,
   Grid,
+  TextField,
+  Fab,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
-import AddIcon from "@mui/icons-material/Add";
-import Fab from "@mui/material/Fab";
 import SearchIcon from "@mui/icons-material/Search";
+import Chip from "@mui/material/Chip";
 import * as React from "react";
 
 import Drawer from "@mui/material/Drawer";
@@ -31,8 +31,9 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { useNavigate } from "react-router-dom";
+import AddIcon from "@mui/icons-material/Add";
 
-const CategoryList = () => {
+const UserList = () => {
   const [state, setState] = React.useState({
     right: false,
   });
@@ -85,8 +86,8 @@ const CategoryList = () => {
   const navigate = useNavigate();
   return (
     <Box>
-      <h3>Category</h3>
       <TableContainer component={Paper}>
+        <h1>User</h1>
         <Grid item xs={2} style={{ display: "flex" }}>
           <Grid item xs={4}>
             <TextField
@@ -124,21 +125,32 @@ const CategoryList = () => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
-              <TableCell>Category</TableCell>
-              <TableCell> Subcategory</TableCell>
+              <TableCell>Name</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell> Phone Number</TableCell>
+              <TableCell>Location</TableCell>
               <TableCell>Created Date</TableCell>
+              <TableCell>Updated Date</TableCell>
+              <TableCell>Status</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow>
-              <TableCell>#593203</TableCell>
+            <TableRow onClick={() => navigate("/users-details")}>
               <TableCell component="th" scope="row">
-                Fruits
+                Vaishna
               </TableCell>
-              <TableCell>dry fruits</TableCell>
-              <TableCell>27-08-2021</TableCell>
+              <TableCell component="th" scope="row">
+                vaishnakp@gmail.com
+              </TableCell>
+              <TableCell>+91-764389026</TableCell>
+              <TableCell>Thrissur</TableCell>
+              <TableCell>25-03-2022</TableCell>
+              <TableCell>25-03-2022</TableCell>
+              <TableCell>
+                <Chip label="Active" color="success" />
+                <Chip label="Inactive" color="error" />
+              </TableCell>
               <TableCell>
                 <Button variant="outlined">
                   <DeleteIcon />
@@ -151,12 +163,11 @@ const CategoryList = () => {
           </TableBody>
         </Table>
       </TableContainer>
-
       <div style={{ position: "absolute", bottom: "4em", right: "4em" }}>
         <Fab
           color="primary"
           aria-label="add"
-          onClick={() => navigate("/add-category")}
+          onClick={() => navigate("/add-stock")}
         >
           <AddIcon />
         </Fab>
@@ -165,4 +176,4 @@ const CategoryList = () => {
   );
 };
 
-export default CategoryList;
+export default UserList;

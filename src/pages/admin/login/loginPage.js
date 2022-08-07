@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import {
   Typography,
   InputAdornment,
@@ -13,31 +15,10 @@ import {
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { useForm } from "react-hook-form";
-import GoogleIcon from "@mui/icons-material/Google";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import login from "../assets/login.jpg";
-import "../styles/login.styles.scss";
-import { alpha, styled } from "@mui/material/styles";
+import "./login.styles.scss";
 
-// const CssTextField = styled(TextField)({
-//   "& .MuiInput-underline:after": {
-//     borderBottomColor: "white",
-//   },
-//   "& .MuiOutlinedInput-root": {
-//     "& fieldset": {
-//       borderColor: "red",
-//     },
-//     "&:hover fieldset": {
-//       borderColor: "yellow",
-//     },
-//     "&.Mui-focused fieldset": {
-//       borderColor: "green",
-//     },
-//   },
-// });
-function LoginPage() {
+export default function AdminLoginPage() {
+  const navigate = useNavigate();
   const [isChecked, setCheckBox] = useState(false);
   const [isVisible, setVisible] = useState(false);
   const {
@@ -63,8 +44,7 @@ function LoginPage() {
     } else {
       localStorage.removeItem("loginDetails");
     }
-
-    console.log("Donee");
+    navigate("dashboard");
   };
 
   return (
@@ -79,7 +59,7 @@ function LoginPage() {
           <Grid item xs={6} className="form-section">
             <form onSubmit={handleSubmit(handleLogin)}>
               <Grid item xs={12} marginBottom={3} className="profile-container">
-                <h1 fw-bold>Login</h1>
+                <h1>Login</h1>
               </Grid>
               <TextField
                 id="login-username"
@@ -166,42 +146,6 @@ function LoginPage() {
                   </Button>
                 </Grid>
               </Grid>
-              <Grid
-                container
-                direction="row"
-                className="sub-btn"
-                justifyContent="space-between"
-                marginBottom={2}
-              >
-                <Grid item>
-                  <Button className="login-with-button" variant="outlined">
-                    <GoogleIcon />
-                    Login with Google
-                  </Button>
-                </Grid>
-                <Grid item sx={{ display: "flex", alignItems: "center" }}>
-                  <Button className="login-with-button" variant="contained">
-                    <FacebookIcon />
-                    Login with Facebook
-                  </Button>
-                </Grid>
-              </Grid>
-
-              <Grid
-                container
-                direction="row"
-                className="sub-btn"
-                justifyContent="space-between"
-                marginTop={4}
-              >
-                <Grid item></Grid>
-                <Grid item className="create-account">
-                  <a href="">
-                    Create your account
-                    <ArrowForwardIcon />
-                  </a>
-                </Grid>
-              </Grid>
             </form>
           </Grid>
         </Grid>
@@ -209,4 +153,3 @@ function LoginPage() {
     </Container>
   );
 }
-export default LoginPage;

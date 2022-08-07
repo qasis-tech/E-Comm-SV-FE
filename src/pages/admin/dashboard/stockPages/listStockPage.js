@@ -6,21 +6,19 @@ import {
   TableRow,
   Paper,
   TableBody,
-  Button,
   Box,
   InputAdornment,
   IconButton,
   TextField,
+  Button,
   Grid,
+  Fab,
 } from "@mui/material";
+import SearchIcon from "@mui/icons-material/Search";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
-import AddIcon from "@mui/icons-material/Add";
-import Fab from "@mui/material/Fab";
-import SearchIcon from "@mui/icons-material/Search";
-import { useNavigate } from "react-router-dom";
-import * as React from "react";
-
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
@@ -31,8 +29,11 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import * as React from "react";
+import AddIcon from "@mui/icons-material/Add";
 
-const ProductList = () => {
+import { useNavigate } from "react-router-dom";
+const StockList = () => {
   const [state, setState] = React.useState({
     right: false,
   });
@@ -86,7 +87,7 @@ const ProductList = () => {
   return (
     <Box>
       <TableContainer component={Paper}>
-        <h1>Product</h1>
+        <h1>Stock</h1>
         <Grid item xs={2} style={{ display: "flex" }}>
           <Grid item xs={4}>
             <TextField
@@ -121,28 +122,56 @@ const ProductList = () => {
             </div>
           </Grid>
         </Grid>
+        <Grid container spacing={2}>
+          <Grid item xs={4}>
+            <Box
+              sx={{
+                width: 300,
+                height: 125,
+                backgroundColor: "primary.dark",
+              }}
+            >
+              <ShoppingCartIcon />
+              <h3>In Stock</h3>
+              <h3>100</h3>
+            </Box>
+          </Grid>
+          <Grid item xs={4}>
+            <Box
+              sx={{
+                width: 300,
+                height: 125,
+                backgroundColor: "primary.dark",
+              }}
+            >
+              <ShoppingCartCheckoutIcon />
+              <h3>Out Stock</h3>
+              <h3>100</h3>
+            </Box>
+          </Grid>
+        </Grid>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Name</TableCell>
               <TableCell>Category</TableCell>
               <TableCell> Subcategory</TableCell>
-              <TableCell>Unit</TableCell>
-              <TableCell>Price</TableCell>
-              <TableCell>Actions</TableCell>
+              <TableCell> Name</TableCell>
+              <TableCell>Quantity</TableCell>
+              <TableCell>Created Date</TableCell>
+              <TableCell>Updated Date</TableCell>
+              <TableCell>Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow>
-              <TableCell component="th" scope="row">
-                Apple
-              </TableCell>
+            <TableRow onClick={() => navigate("/stock-details")}>
               <TableCell component="th" scope="row">
                 Fruits
               </TableCell>
               <TableCell>dry fruits</TableCell>
-              <TableCell>Kg</TableCell>
-              <TableCell>1</TableCell>
+              <TableCell>Apple</TableCell>
+              <TableCell>100</TableCell>
+              <TableCell>20-01-2021</TableCell>
+              <TableCell>28-02-2021</TableCell>
               <TableCell>
                 <Button variant="outlined">
                   <DeleteIcon />
@@ -160,7 +189,7 @@ const ProductList = () => {
         <Fab
           color="primary"
           aria-label="add"
-          onClick={() => navigate("/add-product")}
+          onClick={() => navigate("/add-stock")}
         >
           <AddIcon />
         </Fab>
@@ -169,4 +198,4 @@ const ProductList = () => {
   );
 };
 
-export default ProductList;
+export default StockList;

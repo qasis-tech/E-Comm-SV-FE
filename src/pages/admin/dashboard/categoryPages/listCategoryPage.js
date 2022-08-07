@@ -6,18 +6,20 @@ import {
   TableRow,
   Paper,
   TableBody,
+  Button,
   Box,
   InputAdornment,
   IconButton,
   TextField,
-  Button,
   Grid,
 } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
+import AddIcon from "@mui/icons-material/Add";
+import Fab from "@mui/material/Fab";
+import SearchIcon from "@mui/icons-material/Search";
+import * as React from "react";
+
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
@@ -28,10 +30,9 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import * as React from "react";
-
 import { useNavigate } from "react-router-dom";
-const StockList = () => {
+
+const ListCategory = () => {
   const [state, setState] = React.useState({
     right: false,
   });
@@ -85,7 +86,6 @@ const StockList = () => {
   return (
     <Box>
       <TableContainer component={Paper}>
-        <h1>Stock</h1>
         <Grid item xs={2} style={{ display: "flex" }}>
           <Grid item xs={4}>
             <TextField
@@ -120,56 +120,24 @@ const StockList = () => {
             </div>
           </Grid>
         </Grid>
-        <Grid container spacing={2}>
-          <Grid item xs={4}>
-            <Box
-              sx={{
-                width: 300,
-                height: 125,
-                backgroundColor: "primary.dark",
-              }}
-            >
-              <ShoppingCartIcon />
-              <h3>In Stock</h3>
-              <h3>100</h3>
-            </Box>
-          </Grid>
-          <Grid item xs={4}>
-            <Box
-              sx={{
-                width: 300,
-                height: 125,
-                backgroundColor: "primary.dark",
-              }}
-            >
-              <ShoppingCartCheckoutIcon />
-              <h3>Out Stock</h3>
-              <h3>100</h3>
-            </Box>
-          </Grid>
-        </Grid>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
+              <TableCell>ID</TableCell>
               <TableCell>Category</TableCell>
               <TableCell> Subcategory</TableCell>
-              <TableCell> Name</TableCell>
-              <TableCell>Quantity</TableCell>
               <TableCell>Created Date</TableCell>
-              <TableCell>Updated Date</TableCell>
-              <TableCell>Action</TableCell>
+              <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             <TableRow>
+              <TableCell>#593203</TableCell>
               <TableCell component="th" scope="row">
                 Fruits
               </TableCell>
               <TableCell>dry fruits</TableCell>
-              <TableCell>Apple</TableCell>
-              <TableCell>100</TableCell>
-              <TableCell>20-01-2021</TableCell>
-              <TableCell>28-02-2021</TableCell>
+              <TableCell>27-08-2021</TableCell>
               <TableCell>
                 <Button variant="outlined">
                   <DeleteIcon />
@@ -182,8 +150,18 @@ const StockList = () => {
           </TableBody>
         </Table>
       </TableContainer>
+
+      <div style={{ position: "absolute", bottom: "4em", right: "4em" }}>
+        <Fab
+          color="primary"
+          aria-label="add"
+          onClick={() => navigate("/add-category")}
+        >
+          <AddIcon />
+        </Fab>
+      </div>
     </Box>
   );
 };
 
-export default StockList;
+export default ListCategory;

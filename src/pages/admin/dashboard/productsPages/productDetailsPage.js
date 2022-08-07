@@ -1,6 +1,6 @@
 import { Box, Button, MenuItem, TextField } from "@mui/material";
 import * as React from "react";
-import CssBaseline from "@mui/material/CssBaseline";
+
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 
@@ -30,7 +30,6 @@ const ProductDetails = () => {
   };
   return (
     <React.Fragment>
-      <CssBaseline />
       <Container maxWidth="sm">
         <Box
           component="form"

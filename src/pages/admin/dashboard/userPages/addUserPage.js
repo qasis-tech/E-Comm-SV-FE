@@ -1,12 +1,10 @@
 import { Box, Button, TextField } from "@mui/material";
 import * as React from "react";
-import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -31,7 +29,7 @@ const userdetailspageSchema = yup
   })
   .required();
 
-const UserDetails = () => {
+const AddUser = () => {
   const {
     register,
     handleSubmit,
@@ -45,7 +43,6 @@ const UserDetails = () => {
   };
   return (
     <React.Fragment>
-      <CssBaseline />
       <Container maxWidth="sm">
         <Box sx={{ flexGrow: 1 }} noValidate autoComplete="off">
           <form onSubmit={handleSubmit(handleUserDetailspage)}>
@@ -156,4 +153,4 @@ const UserDetails = () => {
   );
 };
 
-export default UserDetails;
+export default AddUser;

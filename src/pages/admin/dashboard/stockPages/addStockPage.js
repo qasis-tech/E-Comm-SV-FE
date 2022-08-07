@@ -1,6 +1,5 @@
 import { Box, Button, MenuItem, TextField } from "@mui/material";
 import * as React from "react";
-import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import { useForm } from "react-hook-form";
@@ -32,7 +31,7 @@ const currencies = [
     label: "¥",
   },
 ];
-const StockAdd = () => {
+const AddStock = () => {
   const {
     register,
     handleSubmit,
@@ -50,7 +49,6 @@ const StockAdd = () => {
   };
   return (
     <React.Fragment>
-      <CssBaseline />
       <Container maxWidth="sm">
         <Box sx={{ flexGrow: 1 }} noValidate autoComplete="off">
           <form onSubmit={handleSubmit(handleStockAddpage)}>
@@ -116,4 +114,4 @@ const StockAdd = () => {
   );
 };
 
-export default StockAdd;
+export default AddStock;

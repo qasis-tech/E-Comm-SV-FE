@@ -29,7 +29,7 @@ const categoryaddpageSchema = yup
   })
   .required();
 
-const CategoryAdd = () => {
+const AddCategory = () => {
   const {
     register,
     handleSubmit,
@@ -44,7 +44,6 @@ const CategoryAdd = () => {
   return (
     <form onSubmit={handleSubmit(handleCategoryAddpage)}>
       <div>
-        <h1>Category</h1>
         <TextField
           fullWidth
           variant="outlined"
@@ -92,4 +91,4 @@ const CategoryAdd = () => {
   );
 };
 
-export default CategoryAdd;
+export default AddCategory;

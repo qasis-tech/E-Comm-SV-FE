@@ -10,13 +10,15 @@ import {
   Box,
   InputAdornment,
   IconButton,
-  Grid,
   TextField,
+  Grid,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
+import AddIcon from "@mui/icons-material/Add";
+import Fab from "@mui/material/Fab";
 import SearchIcon from "@mui/icons-material/Search";
-import Chip from "@mui/material/Chip";
+import { useNavigate } from "react-router-dom";
 import * as React from "react";
 
 import Drawer from "@mui/material/Drawer";
@@ -29,9 +31,8 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import { useNavigate } from "react-router-dom";
 
-const UserList = () => {
+const ListProduct = () => {
   const [state, setState] = React.useState({
     right: false,
   });
@@ -85,7 +86,6 @@ const UserList = () => {
   return (
     <Box>
       <TableContainer component={Paper}>
-        <h1>User</h1>
         <Grid item xs={2} style={{ display: "flex" }}>
           <Grid item xs={4}>
             <TextField
@@ -124,31 +124,24 @@ const UserList = () => {
           <TableHead>
             <TableRow>
               <TableCell>Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell> Phone Number</TableCell>
-              <TableCell>Location</TableCell>
-              <TableCell>Created Date</TableCell>
-              <TableCell>Updated Date</TableCell>
-              <TableCell>Status</TableCell>
+              <TableCell>Category</TableCell>
+              <TableCell> Subcategory</TableCell>
+              <TableCell>Unit</TableCell>
+              <TableCell>Price</TableCell>
               <TableCell>Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow onClick={() => navigate("/user-details")}>
+            <TableRow>
               <TableCell component="th" scope="row">
-                Vaishna
+                Apple
               </TableCell>
               <TableCell component="th" scope="row">
-                vaishnakp@gmail.com
+                Fruits
               </TableCell>
-              <TableCell>+91-764389026</TableCell>
-              <TableCell>Thrissur</TableCell>
-              <TableCell>25-03-2022</TableCell>
-              <TableCell>25-03-2022</TableCell>
-              <TableCell>
-                <Chip label="Active" color="success" />
-                <Chip label="Inactive" color="error" />
-              </TableCell>
+              <TableCell>dry fruits</TableCell>
+              <TableCell>Kg</TableCell>
+              <TableCell>1</TableCell>
               <TableCell>
                 <Button variant="outlined">
                   <DeleteIcon />
@@ -161,8 +154,18 @@ const UserList = () => {
           </TableBody>
         </Table>
       </TableContainer>
+
+      <div style={{ position: "absolute", bottom: "4em", right: "4em" }}>
+        <Fab
+          color="primary"
+          aria-label="add"
+          onClick={() => navigate("/add-products")}
+        >
+          <AddIcon />
+        </Fab>
+      </div>
     </Box>
   );
 };
 
-export default UserList;
+export default ListProduct;

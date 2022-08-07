@@ -1,9 +1,9 @@
 import { Routes, Route } from "react-router-dom";
 
 import RegisterPage from "../pages/registerPage";
-import Login from "../pages/loginPage";
-import CategoryAdd from "../pages/categoryAddPage";
-import Category from "../pages/categoryPage";
+import Login from "../pages/user/loginPage";
+import CategoryAdd from "../pages/admin/dashboard/addCategoryPage";
+import Category from "../pages/admin/dashboard/listCategoryPage";
 import MainContainer from "../pages/mainContainer";
 import ProductList from "../pages/productPage";
 import ProductAdd from "../pages/productAddPage";
@@ -21,7 +21,7 @@ const Routers = () => {
       <Route path={RouterList.login} element={<Login />} />
       <Route path={RouterList.dashboard} element={<MainContainer />} />
       <Route path={RouterList.register} element={<RegisterPage />} />
-      <Route path={RouterList.categoryList} element={<Category />} />
+      <Route path={RouterList.acategoryList} element={<Category />} />
       <Route path={RouterList.addCategory} element={<CategoryAdd />} />
       <Route path={RouterList.productList} element={<ProductList />} />
       <Route path={RouterList.addProduct} element={<ProductAdd />} />
