@@ -48,7 +48,7 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <Container className="container">
+    <Container className="main-container">
       <Box
         sx={{ flexGrow: 1 }}
         noValidate
