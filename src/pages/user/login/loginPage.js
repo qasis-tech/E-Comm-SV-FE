@@ -18,10 +18,12 @@ import { useForm } from "react-hook-form";
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import "./login.styles.scss";
+import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
 function LoginPage() {
+  const navigate = useNavigate();
   const [isChecked, setCheckBox] = useState(false);
   const [isVisible, setVisible] = useState(false);
   const {
@@ -43,17 +45,34 @@ function LoginPage() {
   }, []);
 
   const handleLogin = ({ email, password }) => {
-    if (isChecked) {
-      localStorage.setItem("loginDetails", JSON.stringify({ email, password }));
-    } else {
-      localStorage.removeItem("loginDetails");
-    }
-
-    let payload = { email: "admin@gmail.com", password: "Pass@1234" };
+    let payload = { email: email, password: password };
     axios
-      .post("http://localhost:4000/login", payload)
-      .then((res) => console.log("REsss", res.data))
+      .post("http://localhost:4000/login", payload, {
+        "Content-Type": "application/json",
+      })
+      .then((res) => {
+        console.log("REsss", res);
+
+        if (res.data.data) {
+          if (isChecked) {
+            localStorage.setItem(
+              "loginDetails",
+              JSON.stringify({ email, password })
+            );
+            localStorage.setItem(
+              "Login data details",
+              JSON.stringify(res.data.data)
+            );
+            navigate("/admin");
+          } else {
+            localStorage.removeItem("loginDetails");
+          }
+        }
+      })
+
       .catch((error) => console.log("RESS Err", error));
+
+    // navigate("/admin");
   };
 
   // const { data, error, loaded } =
