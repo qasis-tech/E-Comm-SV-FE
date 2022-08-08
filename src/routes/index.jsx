@@ -25,6 +25,7 @@ import OrderList from "../pages/user/accounts/order";
 import OrderDetails from "../pages/user/accounts/order/orderDetailsPage";
 import Profile from "../pages/user/accounts/profile";
 import Payment from "../pages/user/accounts/payment";
+import RegisterPage from "../pages/user/register/registerPage";
 
 const PageNotFound = () => {
   return <div>Page Not Found</div>;
@@ -36,6 +37,7 @@ const CustomRouters = () => {
       <Route element={<PublicRouting />}>
         <Route path="/" element={<HomePage />} />
         <Route path="login" element={<UserLoginPage />} />
+        <Route path="register" element={<RegisterPage />} />
         <Route path="product-details" element={<CustomerProductDetails />} />
         <Route path="cart" element={<CartPage />} />
         <Route path="profile" element={<Profile />} />
