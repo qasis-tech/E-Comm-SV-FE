@@ -1,12 +1,12 @@
 @import "../../../styles/common.styles.scss";
 
 * {
-    font-family: "Poppins", sans-serif;
-    font-size: 15px;
+    font-family: $main-font-family;
+    font-size: $main-font-size;
 }
 
 .main-container {
-    font-family: "Poppins", sans-serif;
+    font-family:$main-font-family;
     margin: 0 !important;
     padding: 0 !important;
     // width: 100%;
@@ -24,12 +24,12 @@
             height: 100% !important;
 
             .form-section {
-                margin: 17em 0;
+                margin: 15em 0;
                 border-radius: 15px;
                 backdrop-filter: blur(10px);
                 background-color: #ffffffcc;
                 max-width: 550px !important;
-                height: 490px;
+                height: 535px;
                 //  background-color: rgba(255, 255, 255, 78%);
 
                 form {
@@ -40,6 +40,24 @@
                         display: flex;
                         justify-content: center;
                     }
+                    .dob{
+                        padding-right: 10px;
+                    }
+                    .submit-btn-container {
+                        display: flex;
+                        justify-content: center;
+                        .submit-btn {
+                          width: 100%;
+                          background-color: $primary;
+                        }
+                      }
+                      .login-link{
+                       display: flex;
+                       justify-content: center;
+                       a{
+                        text-decoration: none;
+                       }
+                      }
                 }
             }
         }
