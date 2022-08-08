@@ -46,75 +46,81 @@ function RegisterPage() {
   };
 
   return (
-    <form onSubmit={handleSubmit(handleRegister)}>
-      <h1>REGISTRATION FORM</h1>
-      <TextField
-        id="filled-basic"
-        label="FirstName"
-        {...register("firstName", {})}
-        variant="filled"
-        fullWidth
-      />
-      <p>{errors?.firstName?.message}</p>
-      <TextField
-        id="filled-basic"
-        label="LastName"
-        {...register("lastName")}
-        variant="filled"
-        fullWidth
-      />
-      <p>{errors?.lastName?.message}</p>
-      <TextField
-        id="filled-basic"
-        label="email"
-        {...register("email")}
-        variant="filled"
-        fullWidth
-      />
-      <p>{errors?.email?.message}</p>
-      <TextField type="numeric" {...register("mobilenumber")} />
-      <p>{errors?.mobilenumber?.message}</p>
-      <FormControl>
-        <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
-        <RadioGroup
-          aria-labelledby="demo-radio-buttons-group-label"
-          defaultValue="female"
-          name="radio-buttons-group"
-        >
-          <FormControlLabel
-            {...register("gender", { required: true })}
-            type="radio"
-            value="female"
-            control={<Radio />}
-            label="Female"
-          />
+    <div className="main-container">
+      <Box noValidate autoComplete="off" className="wrapper">
+        <Grid container direction="row" className="register-container">
+          <form onSubmit={handleSubmit(handleRegister)}>
+            <h1>REGISTRATION FORM</h1>
+            <TextField
+              id="filled-basic"
+              label="FirstName"
+              {...register("firstName", {})}
+              variant="filled"
+              fullWidth
+            />
+            <p>{errors?.firstName?.message}</p>
+            <TextField
+              id="filled-basic"
+              label="LastName"
+              {...register("lastName")}
+              variant="filled"
+              fullWidth
+            />
+            <p>{errors?.lastName?.message}</p>
+            <TextField
+              id="filled-basic"
+              label="email"
+              {...register("email")}
+              variant="filled"
+              fullWidth
+            />
+            <p>{errors?.email?.message}</p>
+            <TextField type="numeric" {...register("mobilenumber")} />
+            <p>{errors?.mobilenumber?.message}</p>
+            <FormControl>
+              <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
+              <RadioGroup
+                aria-labelledby="demo-radio-buttons-group-label"
+                defaultValue="female"
+                name="radio-buttons-group"
+              >
+                <FormControlLabel
+                  {...register("gender", { required: true })}
+                  type="radio"
+                  value="female"
+                  control={<Radio />}
+                  label="Female"
+                />
 
-          <FormControlLabel
-            {...register("gender", { required: true })}
-            type="radio"
-            value="male"
-            control={<Radio />}
-            label="Male"
-          />
-        </RadioGroup>
-      </FormControl>
+                <FormControlLabel
+                  {...register("gender", { required: true })}
+                  type="radio"
+                  value="male"
+                  control={<Radio />}
+                  label="Male"
+                />
+              </RadioGroup>
+            </FormControl>
 
-      <TextField
-        id="filled-basic"
-        label="OTP for email"
-        variant="filled"
-        fullWidth
-      />
-      <TextField
-        id="filled-basic"
-        label="OTP for mobile"
-        variant="filled"
-        fullWidth
-      />
-      <Button type="submit" variant="contained">
-        Register
-      </Button>
-    </form>
+            <TextField
+              id="filled-basic"
+              label="OTP for email"
+              variant="filled"
+              fullWidth
+            />
+            <TextField
+              id="filled-basic"
+              label="OTP for mobile"
+              variant="filled"
+              fullWidth
+            />
+            <Button type="submit" variant="contained">
+              Register
+            </Button>
+          </form>
+        </Grid>
+      </Box>
+    </div>
   );
 }
 
