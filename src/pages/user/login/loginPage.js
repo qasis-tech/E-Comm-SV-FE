@@ -9,6 +9,7 @@ import {
   FormControlLabel,
   Checkbox,
   Container,
+  Divider,
   Box,
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
@@ -16,26 +17,10 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useForm } from "react-hook-form";
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import "./login.styles.scss";
-import { alpha, styled } from "@mui/material/styles";
 
-// const CssTextField = styled(TextField)({
-//   "& .MuiInput-underline:after": {
-//     borderBottomColor: "white",
-//   },
-//   "& .MuiOutlinedInput-root": {
-//     "& fieldset": {
-//       borderColor: "red",
-//     },
-//     "&:hover fieldset": {
-//       borderColor: "yellow",
-//     },
-//     "&.Mui-focused fieldset": {
-//       borderColor: "green",
-//     },
-//   },
-// });
+import axios from "axios";
+
 function LoginPage() {
   const [isChecked, setCheckBox] = useState(false);
   const [isVisible, setVisible] = useState(false);
@@ -45,6 +30,7 @@ function LoginPage() {
     setValue,
     formState: { errors },
   } = useForm({ defaultValues: { email: "", password: "" } });
+  const URL = process.env.BASE_URL;
 
   useEffect(() => {
     const loginFromLocals = localStorage.getItem("loginDetails");
@@ -63,22 +49,23 @@ function LoginPage() {
       localStorage.removeItem("loginDetails");
     }
 
-    console.log("Donee");
+    let payload = { email: "admin@gmail.com", password: "Pass@1234" };
+    axios
+      .post("http://localhost:4000/login", payload)
+      .then((res) => console.log("REsss", res.data))
+      .catch((error) => console.log("RESS Err", error));
   };
 
+  // const { data, error, loaded } =
   return (
-    <Container className="container">
-      <Box
-        sx={{ flexGrow: 1 }}
-        noValidate
-        autoComplete="off"
-        className="wrapper"
-      >
+    <div className="main-container">
+      <Box noValidate autoComplete="off" className="wrapper">
         <Grid container direction="row" className="login-container">
-          <Grid item xs={6} className="form-section">
-            <form onSubmit={handleSubmit(handleLogin)}>
+          <Grid item xs={5} className="form-section ">
+            <form onSubmit={handleSubmit(handleLogin)} className="">
               <Grid item xs={12} marginBottom={3} className="profile-container">
                 <h1>Login</h1>
+                <Divider />
               </Grid>
               <TextField
                 id="login-username"
@@ -91,25 +78,26 @@ function LoginPage() {
                   pattern: {
                     value:
                       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                    message: "Invalid email Id (example@mail.com) ",
+                    message: "Invalid email Id ( eg: example@mail.com ) ",
                   },
                 })}
                 fullWidth
                 error={errors?.email}
                 style={{ color: "#fff" }}
               />
-              <p>{errors?.email?.message}</p>
+              <div className="error">{errors?.email?.message}</div>
 
               <TextField
                 label="Password"
                 size="small"
                 fullWidth
+                variant="outlined"
                 type={isVisible ? "text" : "password"}
                 {...register("password", {
                   required: "Password is required",
                   minLength: {
                     value: 8,
-                    message: "Minimum of 8 Charecter",
+                    message: "Minimum 8 charecter",
                   },
                 })}
                 InputProps={{
@@ -126,7 +114,7 @@ function LoginPage() {
                 }}
                 error={errors?.password}
               />
-              <p>{errors?.password?.message}</p>
+              <div className="error">{errors?.password?.message}</div>
 
               <Grid
                 container
@@ -168,44 +156,36 @@ function LoginPage() {
               <Grid
                 container
                 direction="row"
-                className="sub-btn"
                 justifyContent="space-between"
-                marginBottom={2}
+                className="sub-btn"
               >
-                <Grid item>
+                <Grid item xs={3}>
                   <Button className="login-with-button" variant="outlined">
-                    <GoogleIcon />
-                    Login with Google
+                    Login with <GoogleIcon style={{ paddingLeft: 5 }} />
                   </Button>
                 </Grid>
-                <Grid item sx={{ display: "flex", alignItems: "center" }}>
+                <Grid
+                  item
+                  xs={3}
+                  sx={{ display: "flex", alignItems: "center" }}
+                >
                   <Button className="login-with-button" variant="contained">
-                    <FacebookIcon />
-                    Login with Facebook
+                    Login with <FacebookIcon style={{ paddingLeft: 5 }} />
                   </Button>
                 </Grid>
-              </Grid>
-
-              <Grid
-                container
-                direction="row"
-                className="sub-btn"
-                justifyContent="space-between"
-                marginTop={4}
-              >
-                <Grid item></Grid>
-                <Grid item className="create-account">
-                  <a href="">
-                    Create your account
-                    <ArrowForwardIcon />
-                  </a>
+                <Grid item xs={4} className="create-account-container">
+                  <Grid item className="create-account">
+                    <Button className="login-with-button" variant="outlined">
+                      Create your account
+                    </Button>
+                  </Grid>
                 </Grid>
               </Grid>
             </form>
           </Grid>
         </Grid>
       </Box>
-    </Container>
+    </div>
   );
 }
 export default LoginPage;

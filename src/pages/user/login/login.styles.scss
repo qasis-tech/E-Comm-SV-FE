@@ -1,39 +1,45 @@
-.container {
-  margin-top: 4em;
+@import "../../../styles/common.styles.scss";
+* {
   font-family: "Poppins", sans-serif;
+  font-size: 15px;
+}
+.main-container {
+  font-family: "Poppins", sans-serif;
+  margin: 0 !important;
+  padding: 0 !important;
+  // width: 100%;
 
   .wrapper {
-    box-shadow: 0px 8px 20px 0px #00000026;
-    //border-radius: 10px;
+    // box-shadow: 0px 8px 20px 0px #00000026;
 
     .login-container {
-      display: flex;
+      // display: flex;
       background-image: url("../../../assets/bg3.jpg");
-
       justify-content: center;
-      background-repeat: no-repeat;
-      object-fit: cover;
+      // background-repeat: no-repeat;
+      // object-fit: cover;
+      height: 100% !important;
 
       .image-wrapper {
         img {
-          object-fit: cover;
-          border-radius: 10px 0 0 10px;
-          border-right: none;
+          // object-fit: cover;
+          // border-radius: 10px 0 0 10px;
+          // border-right: none;
         }
       }
 
       .form-section {
-        width: 10% !important;
-        height: 500px;
         margin: 9em 0;
         border-radius: 15px;
         backdrop-filter: blur(10px);
         background-color: #ffffffcc;
+        max-width: 550px !important;
+
         //  background-color: rgba(255, 255, 255, 78%);
 
         form {
           align-items: center;
-          padding: 1em 5em;
+          padding: 2.5em;
 
           .profile-container {
             display: flex;
@@ -45,22 +51,22 @@
             justify-content: center;
             .login-btn {
               width: 100%;
-              background-color: #31611a;
+              background-color: $primary;
             }
           }
 
           .sub-btn {
+            padding: 1em 0 0;
             .login-with-button {
               border-radius: 20px;
               text-transform: none;
+              width: 100%;
             }
           }
-
-          .create-account {
-            a {
-              text-decoration: none;
-              color: black;
-            }
+          .create-account-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
           }
         }
       }

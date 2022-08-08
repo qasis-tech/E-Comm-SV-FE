@@ -1,6 +1,15 @@
 $primary: "#1976d2";
 $secondary: "#009688";
 
+$error: red;
+$error-font-size: 13px;
+
+.error {
+  padding: 0.5em 0 1em;
+  color: $error;
+  font-size: $error-font-size;
+}
+
 //
 .logout {
   position: absolute;

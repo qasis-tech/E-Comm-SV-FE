@@ -72,7 +72,7 @@ function DashboardPage() {
             </List>
           </Box>
           <Divider />
-          <Box className="logout" onClick={() => navigate("/admin/login")}>
+          <Box className="logout" onClick={() => navigate("/login")}>
             Logout
           </Box>
         </div>
