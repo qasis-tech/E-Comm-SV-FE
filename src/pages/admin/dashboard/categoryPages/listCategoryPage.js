@@ -31,6 +31,7 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const ListCategory = () => {
   const [state, setState] = React.useState({
@@ -82,6 +83,17 @@ const ListCategory = () => {
       </List>
     </Box>
   );
+  const [data1, setData1] = React.useState([]);
+  React.useEffect(() => {
+    axios
+      .get("http://localhost:4000/category")
+      .then((res) => {
+        setData1(res.data.data);
+      })
+      .catch((err) => {
+        console.log("error", err);
+      });
+  }, []);
   const navigate = useNavigate();
   return (
     <Box>
@@ -131,22 +143,34 @@ const ListCategory = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow>
-              <TableCell>#593203</TableCell>
-              <TableCell component="th" scope="row">
-                Fruits
-              </TableCell>
-              <TableCell>dry fruits</TableCell>
-              <TableCell>27-08-2021</TableCell>
-              <TableCell>
-                <Button variant="outlined">
-                  <DeleteIcon />
-                </Button>
-                <Button variant="outlined">
-                  <CreateIcon />
-                </Button>
-              </TableCell>
-            </TableRow>
+            {data1.map((item) => {
+              return (
+                <TableRow>
+                  <TableCell>{item._id}</TableCell>
+                  <TableCell component="th" scope="row">
+                    {item.name}
+                  </TableCell>
+                  <ul>
+                    {item.subCategory.map((e) => {
+                      return (
+                        <TableCell>
+                          <li>{e.title}</li>
+                        </TableCell>
+                      );
+                    })}
+                  </ul>
+                  <TableCell>{item.createdAt}</TableCell>
+                  <TableCell>
+                    <Button variant="outlined">
+                      <DeleteIcon />
+                    </Button>
+                    <Button variant="outlined">
+                      <CreateIcon />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>
