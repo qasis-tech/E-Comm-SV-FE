@@ -78,11 +78,15 @@ const AddCategory = () => {
         <p>{errors?.file1?.message}</p>
       </div>
       <Grid container spacing={2}>
-        <Grid item xs={2}>
+        <Grid item xs={6}>
           <h1>Subcategory</h1>
         </Grid>
-        <Grid item xs={2}>
-          <AddIcon color="primary" />
+        <Grid item xs={6}>
+          <AddIcon
+            color="primary"
+            style={{ fontSize: 25, backgroundColor: "red" }}
+            onClick={() => console.log("Yessss")}
+          />
         </Grid>
         <TextField
           fullWidth
@@ -99,11 +103,15 @@ const AddCategory = () => {
           {...register("file2")}
         />
         <p>{errors?.file2?.message}</p>
+        <button className="btn btn-primary">remove</button>
       </Grid>
-      <Button variant="outlined">Cancel</Button>
-      <Button type="submit" variant="contained" color="primary">
-        submit
-      </Button>
+
+      <Grid className="my-5">
+        <Button variant="outlined">Cancel</Button>
+        <Button type="submit" variant="contained" color="primary">
+          submit
+        </Button>
+      </Grid>
     </form>
   );
 };
