@@ -7,11 +7,12 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
+import { useState } from "react";
 
 const categoryaddpageSchema = yup
   .object()
   .shape({
-    categoryName1: yup.string().required("Name is required"),
+    mainCategory: yup.string().required("Name is required"),
     file1: yup.mixed().required("Upload a file"),
     // .test("fileSize", "The file is too large", (value) => {
     //   return value && value[0].size <= 2000000;
@@ -19,7 +20,7 @@ const categoryaddpageSchema = yup
     // .test("type", "We only support jpeg", (value) => {
     //   return value && value[0].type === "image/jpeg";
     // })
-    categoryName2: yup.string().required("Name is required"),
+    subCategory: yup.string().required("Name is required"),
     file2: yup.mixed().required("Upload a file"),
     // .test("fileSize", "The file is too large", (value) => {
     //   return value && value[0].size <= 2000000;
@@ -38,14 +39,32 @@ const AddCategory = () => {
   } = useForm({
     resolver: yupResolver(categoryaddpageSchema),
   });
-
-  const handleCategoryAddpage = ({ categoryName1, file1, file2 }) => {
+  const [duplicate, setduplicate] = useState([{ title: "", img: null }]);
+  const [subC, setSubc] = useState(0);
+  const handleAddbutton = (event) => {
+    let data = [...duplicate];
+    data.push({ title: "", img: null });
+    setduplicate(data);
+    setSubc((subC) => subC + 1);
+  };
+  const handleRemovebutton = (index) => {
+    const newdata = [...duplicate];
+    newdata.splice(index, 1);
+    setduplicate(newdata);
+  };
+  const handleCategoryAddpage = ({
+    mainCategory,
+    subCategory,
+    file1,
+    file2,
+  }) => {
     var bodyFormData = new FormData();
-    bodyFormData.append("name", categoryName1);
+    bodyFormData.append("name", mainCategory);
     bodyFormData.append("image", file1);
     bodyFormData.append("sub1", file2);
     // console.log("CategoryAddpage Details:", data);
-    console.log("category", categoryName1);
+    console.log("category", mainCategory);
+    console.log("subcategory=>=>", subCategory);
     axios
       .post("http://localhost:4000/category", bodyFormData, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -65,10 +84,10 @@ const AddCategory = () => {
           fullWidth
           variant="outlined"
           label="Name"
-          {...register("categoryName1")}
-          error={errors?.categoryName1}
+          {...register("mainCategory")}
+          error={errors?.mainCategory}
         />
-        <p>{errors?.categoryName1?.message}</p>
+        <p>{errors?.mainCategory?.message}</p>
         <TextField
           fullWidth
           variant="outlined"
@@ -80,30 +99,49 @@ const AddCategory = () => {
       <Grid container spacing={2}>
         <Grid item xs={6}>
           <h1>Subcategory</h1>
-        </Grid>
-        <Grid item xs={6}>
           <AddIcon
             color="primary"
             style={{ fontSize: 25, backgroundColor: "red" }}
-            onClick={() => console.log("Yessss")}
+            onClick={() => handleAddbutton()}
           />
         </Grid>
-        <TextField
-          fullWidth
-          variant="outlined"
-          label="Name"
-          {...register("categoryName2")}
-          error={errors?.categoryName2}
-        />
-        <p>{errors?.categoryName2?.message}</p>
-        <TextField
-          fullWidth
-          variant="outlined"
-          type="file"
-          {...register("file2")}
-        />
-        <p>{errors?.file2?.message}</p>
-        <button className="btn btn-primary">remove</button>
+        {duplicate.map((pname, index) => {
+          return (
+            <Grid key={index} item xs={12}>
+              {/* {duplicate.length - 1 === index && (
+                <AddIcon
+                  color="primary"
+                  style={{ fontSize: 25, backgroundColor: "red" }}
+                  onClick={(e) => handleAddbutton(e)}
+                />
+              )} */}
+
+              <TextField
+                fullWidth
+                variant="outlined"
+                label="Name"
+                {...register("subCategory")}
+                error={errors?.subCategory}
+              />
+              <p>{errors?.subCategory?.message}</p>
+              <TextField
+                fullWidth
+                variant="outlined"
+                type="file"
+                {...register("file2")}
+              />
+              <p>{errors?.file2?.message}</p>
+              {duplicate.length > 1 && (
+                <button
+                  onClick={() => handleRemovebutton(index)}
+                  className="btn btn-primary"
+                >
+                  remove
+                </button>
+              )}
+            </Grid>
+          );
+        })}
       </Grid>
 
       <Grid className="my-5">
