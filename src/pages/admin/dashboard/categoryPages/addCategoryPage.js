@@ -6,11 +6,12 @@ import Fab from "@mui/material/Fab";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import axios from "axios";
 
 const categoryaddpageSchema = yup
   .object()
   .shape({
-    categoryName1: yup.string().required("name is required"),
+    categoryName1: yup.string().required("Name is required"),
     file1: yup.mixed().required("Upload a file"),
     // .test("fileSize", "The file is too large", (value) => {
     //   return value && value[0].size <= 2000000;
@@ -18,7 +19,7 @@ const categoryaddpageSchema = yup
     // .test("type", "We only support jpeg", (value) => {
     //   return value && value[0].type === "image/jpeg";
     // })
-    categoryName2: yup.string().required("name is required"),
+    categoryName2: yup.string().required("Name is required"),
     file2: yup.mixed().required("Upload a file"),
     // .test("fileSize", "The file is too large", (value) => {
     //   return value && value[0].size <= 2000000;
@@ -38,8 +39,24 @@ const AddCategory = () => {
     resolver: yupResolver(categoryaddpageSchema),
   });
 
-  const handleCategoryAddpage = (data) => {
-    console.log("CategoryAddpage Details:", data);
+  const handleCategoryAddpage = ({ categoryName1, file1, file2 }) => {
+    var bodyFormData = new FormData();
+    bodyFormData.append("name", categoryName1);
+    bodyFormData.append("image", file1);
+    bodyFormData.append("sub1", file2);
+    // console.log("CategoryAddpage Details:", data);
+    console.log("category", categoryName1);
+    axios
+      .post("http://localhost:4000/category", bodyFormData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then((response) => {
+        console.log("Response=>>", response);
+      })
+      .catch((err) => {
+        //handle error
+        console.log("Errorss=>>", err);
+      });
   };
   return (
     <form onSubmit={handleSubmit(handleCategoryAddpage)}>

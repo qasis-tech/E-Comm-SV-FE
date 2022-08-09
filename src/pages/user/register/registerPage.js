@@ -14,6 +14,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import "yup-phone";
 import "./register.styles.scss";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const signupSchema = yup
   .object()
@@ -25,10 +27,16 @@ const signupSchema = yup
       .string()
       .phone("IN", true, "Mobile Number is invalid")
       .required(),
+    password: yup.string().min(8).required("Password is required"),
+    pincode: yup
+      .string()
+      .matches(/^[1-9][0-9]{5}$/, "Invalid zipcode (682315)")
+      .required(),
   })
-  .required("Mobile Number is required");
+  .required();
 
 function RegisterPage() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -41,11 +49,44 @@ function RegisterPage() {
     return new_str;
   };
 
-  const handleRegister = (data) => {
-    const result = replaceHyphen(data.mobilenumber);
-    data.mobilenumber = result;
-    console.log("Registration Details", data);
-    console.log(errors);
+  const handleRegister = ({
+    firstName,
+    lastName,
+    email,
+    mobilenumber,
+    gender,
+    dob,
+    password,
+    pincode,
+  }) => {
+    const result = replaceHyphen(mobilenumber);
+    mobilenumber = result;
+    let payload = {
+      firstName: firstName,
+      lastName: lastName,
+      mobileNumber: mobilenumber,
+      email: email,
+      gender: gender,
+      dob: dob,
+      pinCode: pincode,
+      password: password,
+    };
+    axios
+      .post("http://localhost:4000/signup", payload, {
+        "Content-Type": "application/json",
+      })
+      .then((res) => {
+        console.log("ress=>=>", res);
+        if (res.data.data) {
+          if (res.data.success === false) {
+            alert(res.data.message);
+          }
+          navigate("/login");
+        }
+      })
+      .catch((err) => {
+        console.log("errors", err);
+      });
   };
 
   return (
@@ -131,15 +172,37 @@ function RegisterPage() {
                 </Grid>
                 <Grid item xs={6} className="dob">
                   <TextField
+                    {...register("dob")}
                     id="date"
                     label="DOB"
                     type="date"
                     fullWidth
                     variant="outlined"
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
                   />
+                </Grid>
+              </Grid>
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <TextField
+                    id="filled-basic"
+                    type="password"
+                    label="Password"
+                    {...register("password")}
+                    variant="outlined"
+                    error={errors?.password}
+                  />
+                  <div className="error">{errors?.password?.message}</div>
+                </Grid>
+                <Grid item xs={6}>
+                  <TextField
+                    id="filled-basic"
+                    label="Pincode"
+                    {...register("pincode")}
+                    variant="outlined"
+                    type="numeric"
+                    error={errors?.pincode}
+                  />
+                  <div className="error">{errors?.pincode?.message}</div>
                 </Grid>
               </Grid>
               <Grid container spacing={2}>

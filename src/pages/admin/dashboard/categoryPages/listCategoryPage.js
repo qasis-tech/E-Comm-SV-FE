@@ -179,7 +179,7 @@ const ListCategory = () => {
         <Fab
           color="primary"
           aria-label="add"
-          onClick={() => navigate("/add-category")}
+          onClick={() => navigate("/admin/add-category")}
         >
           <AddIcon />
         </Fab>
