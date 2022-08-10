@@ -180,7 +180,10 @@ function LoginPage() {
                 className="sub-btn"
               >
                 <Grid item xs={3}>
-                  <Button className="login-with-button" variant="outlined">
+                  <Button
+                    className="login-with-button  google-btn"
+                    variant="outlined"
+                  >
                     Login with <GoogleIcon style={{ paddingLeft: 5 }} />
                   </Button>
                 </Grid>
@@ -195,7 +198,10 @@ function LoginPage() {
                 </Grid>
                 <Grid item xs={4} className="create-account-container">
                   <Grid item className="create-account">
-                    <Button className="login-with-button" variant="outlined">
+                    <Button
+                      className="login-with-button reg-btn"
+                      variant="outlined"
+                    >
                       Create your account
                     </Button>
                   </Grid>
