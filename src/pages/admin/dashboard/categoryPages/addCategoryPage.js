@@ -40,11 +40,11 @@ const AddCategory = () => {
   } = useForm({
     resolver: yupResolver(categoryaddpageSchema),
   });
-  const [duplicate, setduplicate] = useState([{ title: "", img: null }]);
+  const [duplicate, setduplicate] = useState([{ title: "" }]);
   const [subC, setSubc] = useState(0);
   const handleAddbutton = (event) => {
     let data = [...duplicate];
-    data.push({ title: "", img: null });
+    data.push({ title: "" });
     setduplicate(data);
     setSubc((subC) => subC + 1);
   };
@@ -84,43 +84,51 @@ const AddCategory = () => {
         <Grid container direction="row" className="add-category-container">
           <Grid item xs={6} className="category-form-section ">
             <form onSubmit={handleSubmit(handleCategoryAddpage)}>
-              <h3>Category</h3>
+              <h3 className="heading">Category</h3>
               <div>
                 <TextField
                   fullWidth
-                  variant="outlined"
                   label="Name"
                   {...register("mainCategory")}
                   error={errors?.mainCategory}
                 />
                 <p>{errors?.mainCategory?.message}</p>
-                <TextField
+                <Button variant="contained" fullWidth component="label">
+                  Upload Image
+                  <input type="file" hidden />
+                </Button>
+                {/* <TextField
                   fullWidth
-                  variant="outlined"
+                  id="outlined-required"
+                  label="Upload Image"
                   type="file"
                   {...register("file1")}
                 />
-                <p>{errors?.file1?.message}</p>
+                <p>{errors?.file1?.message}</p> */}
               </div>
-              <Grid container spacing={2}>
-                <Grid item xs={6}>
-                  <h3>Subcategory</h3>
-                  <AddIcon
-                    color="primary"
-                    style={{ fontSize: 25, backgroundColor: "red" }}
-                    onClick={() => handleAddbutton()}
-                  />
+              <Grid container spacing={2} marginTop={4}>
+                <Grid container spacing={2} paddingLeft={2}>
+                  <Grid item xs={10}>
+                    <h3>Subcategory</h3>
+                  </Grid>
+                  <Grid item xs={2}>
+                    <AddIcon
+                      color="primary"
+                      style={{ fontSize: 25, backgroundColor: "red" }}
+                      onClick={() => handleAddbutton()}
+                    />
+                  </Grid>
                 </Grid>
                 {duplicate.map((pname, index) => {
                   return (
                     <Grid key={index} item xs={12}>
                       {/* {duplicate.length - 1 === index && (
-                <AddIcon
-                  color="primary"
-                  style={{ fontSize: 25, backgroundColor: "red" }}
-                  onClick={(e) => handleAddbutton(e)}
-                />
-              )} */}
+                            <AddIcon
+                              color="primary"
+                              style={{ fontSize: 25, backgroundColor: "red" }}
+                              onClick={(e) => handleAddbutton(e)}
+                            />
+                          )} */}
 
                       <TextField
                         fullWidth
@@ -130,12 +138,10 @@ const AddCategory = () => {
                         error={errors?.subCategory}
                       />
                       <p>{errors?.subCategory?.message}</p>
-                      <TextField
-                        fullWidth
-                        variant="outlined"
-                        type="file"
-                        {...register("file2")}
-                      />
+                      <Button variant="contained" fullWidth component="label">
+                        Upload Image
+                        <input type="file" hidden />
+                      </Button>
                       <p>{errors?.file2?.message}</p>
                       {duplicate.length > 1 && (
                         <button
