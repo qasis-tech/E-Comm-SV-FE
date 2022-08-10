@@ -19,6 +19,7 @@ const List = {
     addStock: "add-stock",
     userList: "user-list",
     userDetails: "user-details",
+    addUser:"add-user",
   },
 };
 

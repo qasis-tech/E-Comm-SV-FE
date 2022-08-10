@@ -32,6 +32,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { useNavigate } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
+import axios from "axios";
 
 const UserList = () => {
   const [state, setState] = React.useState({
@@ -83,6 +84,20 @@ const UserList = () => {
       </List>
     </Box>
   );
+  const [userData, setUserData] = React.useState([]);
+  React.useEffect(() => {
+    axios
+      .get("http://localhost:4000/signup", {
+        "Content-Type": "application/json",
+      })
+      .then((res) => {
+        console.log("ressss=>", res);
+        setUserData(res.data.data);
+      })
+      .catch((err) => {
+        console.log("error", err);
+      });
+  }, []);
   const navigate = useNavigate();
   return (
     <Box>
@@ -136,30 +151,34 @@ const UserList = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow onClick={() => navigate("/users-details")}>
-              <TableCell component="th" scope="row">
-                Vaishna
-              </TableCell>
-              <TableCell component="th" scope="row">
-                vaishnakp@gmail.com
-              </TableCell>
-              <TableCell>+91-764389026</TableCell>
-              <TableCell>Thrissur</TableCell>
-              <TableCell>25-03-2022</TableCell>
-              <TableCell>25-03-2022</TableCell>
-              <TableCell>
-                <Chip label="Active" color="success" />
-                <Chip label="Inactive" color="error" />
-              </TableCell>
-              <TableCell>
-                <Button variant="outlined">
-                  <DeleteIcon />
-                </Button>
-                <Button variant="outlined">
-                  <CreateIcon />
-                </Button>
-              </TableCell>
-            </TableRow>
+            {userData.map((useritem) => {
+              return (
+                <TableRow onClick={() => navigate("/admin/users-details")}>
+                  <TableCell component="th" scope="row">
+                    {useritem.firstName}
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    {useritem.email}
+                  </TableCell>
+                  <TableCell>{useritem.mobileNumber}</TableCell>
+                  <TableCell>thrissur</TableCell>
+                  <TableCell>25-03-2022</TableCell>
+                  <TableCell>25-03-2022</TableCell>
+                  <TableCell>
+                    <Chip label="Active" color="success" />
+                    <Chip label="Inactive" color="error" />
+                  </TableCell>
+                  <TableCell>
+                    <Button variant="outlined">
+                      <DeleteIcon />
+                    </Button>
+                    <Button variant="outlined">
+                      <CreateIcon />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>
@@ -167,7 +186,7 @@ const UserList = () => {
         <Fab
           color="primary"
           aria-label="add"
-          onClick={() => navigate("/add-stock")}
+          onClick={() => navigate("/admin/add-user")}
         >
           <AddIcon />
         </Fab>

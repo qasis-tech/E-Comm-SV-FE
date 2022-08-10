@@ -31,6 +31,7 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import axios from "axios";
 
 const ListProduct = () => {
   const [state, setState] = React.useState({
@@ -82,6 +83,17 @@ const ListProduct = () => {
       </List>
     </Box>
   );
+  const [productData, setProductData] = React.useState([]);
+  React.useEffect(() => {
+    axios
+      .get("http://localhost:4000/product")
+      .then((res) => {
+        setProductData(res.data.data);
+      })
+      .catch((err) => {
+        console.log("error", err);
+      });
+  }, []);
   const navigate = useNavigate();
   return (
     <Box>
@@ -132,25 +144,29 @@ const ListProduct = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow>
-              <TableCell component="th" scope="row">
-                Apple
-              </TableCell>
-              <TableCell component="th" scope="row">
-                Fruits
-              </TableCell>
-              <TableCell>dry fruits</TableCell>
-              <TableCell>Kg</TableCell>
-              <TableCell>1</TableCell>
-              <TableCell>
-                <Button variant="outlined">
-                  <DeleteIcon />
-                </Button>
-                <Button variant="outlined">
-                  <CreateIcon />
-                </Button>
-              </TableCell>
-            </TableRow>
+            {productData.map((product) => {
+              return (
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                    {product.name}
+                  </TableCell>
+                  <TableCell component="th" scope="row">
+                    {product.category}
+                  </TableCell>
+                  <TableCell>{product.subCategory}</TableCell>
+                  <TableCell>{product.unit}</TableCell>
+                  <TableCell>{product.price}</TableCell>
+                  <TableCell>
+                    <Button variant="outlined">
+                      <DeleteIcon />
+                    </Button>
+                    <Button variant="outlined">
+                      <CreateIcon />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>

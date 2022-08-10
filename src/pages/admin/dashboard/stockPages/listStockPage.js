@@ -31,8 +31,9 @@ import MailIcon from "@mui/icons-material/Mail";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import * as React from "react";
 import AddIcon from "@mui/icons-material/Add";
-
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
 const StockList = () => {
   const [state, setState] = React.useState({
     right: false,
@@ -83,6 +84,21 @@ const StockList = () => {
       </List>
     </Box>
   );
+  const [listData, setListdata] = React.useState([]);
+  console.log("listdata", listData);
+  React.useEffect(() => {
+    axios
+      .get("http://localhost:4000/stock", {
+        "Content-Type": "application/json",
+      })
+      .then((res) => {
+        console.log("ress", res);
+        setListdata(res.data.data.totalStock);
+      })
+      .catch((err) => {
+        console.log("error", err);
+      });
+  }, []);
   const navigate = useNavigate();
   return (
     <Box>
@@ -163,24 +179,28 @@ const StockList = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow onClick={() => navigate("/stock-details")}>
-              <TableCell component="th" scope="row">
-                Fruits
-              </TableCell>
-              <TableCell>dry fruits</TableCell>
-              <TableCell>Apple</TableCell>
-              <TableCell>100</TableCell>
-              <TableCell>20-01-2021</TableCell>
-              <TableCell>28-02-2021</TableCell>
-              <TableCell>
-                <Button variant="outlined">
-                  <DeleteIcon />
-                </Button>
-                <Button variant="outlined">
-                  <CreateIcon />
-                </Button>
-              </TableCell>
-            </TableRow>
+            {listData.map((listitem) => {
+              return (
+                <TableRow onClick={() => navigate("/stock-details")}>
+                  <TableCell component="th" scope="row">
+                    {listitem.category}
+                  </TableCell>
+                  <TableCell>{listitem.subCategory}</TableCell>
+                  <TableCell>{listitem.product}</TableCell>
+                  <TableCell>{listitem.quantity}</TableCell>
+                  <TableCell>{listitem.createdAt}</TableCell>
+                  <TableCell>{listitem.updatedAt}</TableCell>
+                  <TableCell>
+                    <Button variant="outlined">
+                      <DeleteIcon />
+                    </Button>
+                    <Button variant="outlined">
+                      <CreateIcon />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>

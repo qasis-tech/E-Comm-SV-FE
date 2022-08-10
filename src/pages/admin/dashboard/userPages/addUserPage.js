@@ -46,7 +46,7 @@ const AddUser = () => {
       <Container maxWidth="sm">
         <Box sx={{ flexGrow: 1 }} noValidate autoComplete="off">
           <form onSubmit={handleSubmit(handleUserDetailspage)}>
-            <h3>User Details</h3>
+            <h3>User </h3>
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <TextField
