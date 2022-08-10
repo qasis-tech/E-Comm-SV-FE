@@ -1,0 +1,19 @@
+@import "../../../../styles/common.styles.scss";
+
+* {
+    font-family: $main-font-family;
+    font-size: $main-font-size;
+  }
+  
+.add-category{
+    font-family: $main-font-family;
+    .wrapper{
+        .add-category-container{
+            justify-content: center;
+            .category-form-section{
+                padding: 3em;
+                border: 1px solid black;
+            }
+        }
+    }
+}

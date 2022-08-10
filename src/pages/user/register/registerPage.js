@@ -91,7 +91,7 @@ function RegisterPage() {
   };
 
   return (
-    <div className="main-container">
+    <div className="register">
       <Box noValidate autoComplete="off" className="wrapper">
         <Grid container direction="row" className="register-container">
           <Grid item xs={5} className="form-section ">

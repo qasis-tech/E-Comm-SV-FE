@@ -1,6 +1,6 @@
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import Fab from "@mui/material/Fab";
 import { useForm } from "react-hook-form";
@@ -8,6 +8,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
 import { useState } from "react";
+import "./addCategoryPage.styles.scss";
 
 const categoryaddpageSchema = yup
   .object()
@@ -78,37 +79,42 @@ const AddCategory = () => {
       });
   };
   return (
-    <form onSubmit={handleSubmit(handleCategoryAddpage)}>
-      <div>
-        <TextField
-          fullWidth
-          variant="outlined"
-          label="Name"
-          {...register("mainCategory")}
-          error={errors?.mainCategory}
-        />
-        <p>{errors?.mainCategory?.message}</p>
-        <TextField
-          fullWidth
-          variant="outlined"
-          type="file"
-          {...register("file1")}
-        />
-        <p>{errors?.file1?.message}</p>
-      </div>
-      <Grid container spacing={2}>
-        <Grid item xs={6}>
-          <h1>Subcategory</h1>
-          <AddIcon
-            color="primary"
-            style={{ fontSize: 25, backgroundColor: "red" }}
-            onClick={() => handleAddbutton()}
-          />
-        </Grid>
-        {duplicate.map((pname, index) => {
-          return (
-            <Grid key={index} item xs={12}>
-              {/* {duplicate.length - 1 === index && (
+    <div className="add-category">
+      <Box noValidate autoComplete="off" className="wrapper">
+        <Grid container direction="row" className="add-category-container">
+          <Grid item xs={6} className="category-form-section ">
+            <form onSubmit={handleSubmit(handleCategoryAddpage)}>
+              <h3>Category</h3>
+              <div>
+                <TextField
+                  fullWidth
+                  variant="outlined"
+                  label="Name"
+                  {...register("mainCategory")}
+                  error={errors?.mainCategory}
+                />
+                <p>{errors?.mainCategory?.message}</p>
+                <TextField
+                  fullWidth
+                  variant="outlined"
+                  type="file"
+                  {...register("file1")}
+                />
+                <p>{errors?.file1?.message}</p>
+              </div>
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <h3>Subcategory</h3>
+                  <AddIcon
+                    color="primary"
+                    style={{ fontSize: 25, backgroundColor: "red" }}
+                    onClick={() => handleAddbutton()}
+                  />
+                </Grid>
+                {duplicate.map((pname, index) => {
+                  return (
+                    <Grid key={index} item xs={12}>
+                      {/* {duplicate.length - 1 === index && (
                 <AddIcon
                   color="primary"
                   style={{ fontSize: 25, backgroundColor: "red" }}
@@ -116,41 +122,45 @@ const AddCategory = () => {
                 />
               )} */}
 
-              <TextField
-                fullWidth
-                variant="outlined"
-                label="Name"
-                {...register("subCategory")}
-                error={errors?.subCategory}
-              />
-              <p>{errors?.subCategory?.message}</p>
-              <TextField
-                fullWidth
-                variant="outlined"
-                type="file"
-                {...register("file2")}
-              />
-              <p>{errors?.file2?.message}</p>
-              {duplicate.length > 1 && (
-                <button
-                  onClick={() => handleRemovebutton(index)}
-                  className="btn btn-primary"
-                >
-                  remove
-                </button>
-              )}
-            </Grid>
-          );
-        })}
-      </Grid>
+                      <TextField
+                        fullWidth
+                        variant="outlined"
+                        label="Name"
+                        {...register("subCategory")}
+                        error={errors?.subCategory}
+                      />
+                      <p>{errors?.subCategory?.message}</p>
+                      <TextField
+                        fullWidth
+                        variant="outlined"
+                        type="file"
+                        {...register("file2")}
+                      />
+                      <p>{errors?.file2?.message}</p>
+                      {duplicate.length > 1 && (
+                        <button
+                          onClick={() => handleRemovebutton(index)}
+                          className="btn btn-primary"
+                        >
+                          remove
+                        </button>
+                      )}
+                    </Grid>
+                  );
+                })}
+              </Grid>
 
-      <Grid className="my-5">
-        <Button variant="outlined">Cancel</Button>
-        <Button type="submit" variant="contained" color="primary">
-          submit
-        </Button>
-      </Grid>
-    </form>
+              <Grid className="my-5">
+                <Button variant="outlined">Cancel</Button>
+                <Button type="submit" variant="contained" color="primary">
+                  submit
+                </Button>
+              </Grid>
+            </form>
+          </Grid>
+        </Grid>
+      </Box>
+    </div>
   );
 };
 
