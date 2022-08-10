@@ -16,6 +16,7 @@ import "yup-phone";
 import "./register.styles.scss";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import BackgoundImg from "../../../assets/bg-pic.png";
 
 const signupSchema = yup
   .object()
@@ -172,12 +173,15 @@ function RegisterPage() {
                 </Grid>
                 <Grid item xs={6} className="dob">
                   <TextField
-                    {...register("dob")}
                     id="date"
                     label="DOB"
                     type="date"
                     fullWidth
                     variant="outlined"
+                    {...register("dob")}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
                   />
                 </Grid>
               </Grid>
@@ -245,6 +249,9 @@ function RegisterPage() {
             </form>
           </Grid>
         </Grid>
+        <div className="bottom-image">
+          <img src={BackgoundImg} alt="background image" />
+        </div>
       </Box>
     </div>
   );

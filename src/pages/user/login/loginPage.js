@@ -19,6 +19,7 @@ import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import "./login.styles.scss";
 import { useNavigate } from "react-router-dom";
+import BackgoundImg from "../../../assets/bg-pic.png";
 
 import axios from "axios";
 
@@ -203,6 +204,9 @@ function LoginPage() {
             </form>
           </Grid>
         </Grid>
+        <div className="bottom-image">
+          <img src={BackgoundImg} alt="background image" />
+        </div>
       </Box>
     </div>
   );
