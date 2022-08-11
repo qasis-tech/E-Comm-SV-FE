@@ -148,13 +148,13 @@ const ListCategory = () => {
                 <TableRow>
                   <TableCell>{item._id}</TableCell>
                   <TableCell component="th" scope="row">
-                    {item.name}
+                    {item.label}
                   </TableCell>
                   <ul>
                     {item.subCategory.map((e) => {
                       return (
                         <TableCell>
-                          <li>{e.title}</li>
+                          <li>{e.label}</li>
                         </TableCell>
                       );
                     })}

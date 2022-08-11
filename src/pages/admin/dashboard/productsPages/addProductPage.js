@@ -63,8 +63,10 @@ const AddProduct = () => {
   });
   const [categoryData, setCategorydata] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState([]);
-  const [unitData, setUnitdata] = useState(["Kg", "Ltr", "no:"]);
   const [selectedSubCategory, setSelectedSubCategory] = useState([]);
+  const [unitData, setUnitdata] = useState(["Kg", "Ltr", "no:"]);
+  const [selectedUnit, setSelectedunit] = useState([]);
+  const [selectedOfferunit, setSelectedofferunit] = useState();
 
   React.useEffect(() => {
     getCatgoryListApi();
@@ -90,7 +92,8 @@ const AddProduct = () => {
   const handleCategory = (e, val) => setSelectedCategory(val);
   const handleSubCategory = (e, val) => setSelectedSubCategory(val);
 
-  const handleUnit = (event) => setUnitdata(event.target.value);
+  const handleUnit = (e, val) => setSelectedunit(val);
+  const handleOfferUnit = (e, val) => setSelectedofferunit(val);
 
   const handleProductAdd = ({
     productName,
@@ -124,7 +127,6 @@ const AddProduct = () => {
         console.log("Response=>>", response);
       })
       .catch((error) => {
-        //handle error
         console.log("Errorss=>>", error);
       });
 
@@ -156,18 +158,16 @@ const AddProduct = () => {
                 <p>{errors?.quantity?.message}</p>
               </Grid>
               <Grid item xs={4}>
-                <TextField
-                  fullWidth
-                  id="outlined-select-currency"
-                  select
-                  label="Unit"
-                  // value={unitData}
-                  onChange={handleUnit}
-                >
-                  {unitData.map((option) => (
-                    <MenuItem value={option}>{option}</MenuItem>
-                  ))}
-                </TextField>
+                {unitData?.length && (
+                  <Autocomplete
+                    options={unitData}
+                    onChange={(e, val) => handleUnit(e, val)}
+                    value={selectedUnit}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Units" />
+                    )}
+                  />
+                )}
               </Grid>
             </Grid>
             <Grid container spacing={2}>
@@ -233,18 +233,16 @@ const AddProduct = () => {
                 <p>{errors?.price?.message}</p>
               </Grid>
               <Grid item xs={4}>
-                <TextField
-                  fullWidth
-                  id="outlined-select-currency"
-                  select
-                  label="Unit"
-                  // value={unitData}
-                  onChange={handleUnit}
-                >
-                  {unitData.map((option) => (
-                    <MenuItem>{option.offerUnit}</MenuItem>
-                  ))}
-                </TextField>
+                {unitData?.length && (
+                  <Autocomplete
+                    options={unitData}
+                    onChange={(e, val) => handleOfferUnit(e, val)}
+                    value={selectedOfferunit}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Units" />
+                    )}
+                  />
+                )}
               </Grid>
               <Grid item xs={4}>
                 <TextField
