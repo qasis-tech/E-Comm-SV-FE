@@ -1,4 +1,11 @@
-import { Box, Button, MenuItem, TextField } from "@mui/material";
+import {
+  Autocomplete,
+  Box,
+  Button,
+  Divider,
+  MenuItem,
+  TextField,
+} from "@mui/material";
 import * as React from "react";
 
 import Container from "@mui/material/Container";
@@ -8,6 +15,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
 import { useState } from "react";
+import { BASE_URL, URLS } from "../../../../config/urls.config";
 
 const productaddpageSchema = yup
   .object()
@@ -45,26 +53,6 @@ const productaddpageSchema = yup
     // }),
   })
   .required();
-
-// const currencies = [
-//   {
-//     value: "Fruits",
-//     label: "Fruits",
-//   },
-//   {
-//     value: "EUR",
-//     label: "€",
-//   },
-//   {
-//     value: "BTC",
-//     label: "฿",
-//   },
-//   {
-//     value: "JPY",
-//     label: "¥",
-//   },
-// ];
-
 const AddProduct = () => {
   const {
     register,
@@ -74,33 +62,37 @@ const AddProduct = () => {
     resolver: yupResolver(productaddpageSchema),
   });
   const [categoryData, setCategorydata] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState([]);
   const [unitData, setUnitdata] = useState(["Kg", "Ltr", "no:"]);
-  const [subCategorydata, setSubcategorydata] = useState([]);
+  const [selectedSubCategory, setSelectedSubCategory] = useState([]);
+
   React.useEffect(() => {
+    getCatgoryListApi();
+  }, []);
+
+  const getCatgoryListApi = () => {
     axios
-      .get("http://localhost:4000/category")
+      .get(`${process.env.REACT_APP_BASE_URL}${URLS.category}`)
       .then((res) => {
-        console.log("resss", res.data.data);
+        res.data.data.forEach((el) => {
+          el.label = el.name;
+          if (el?.subCategory?.length) {
+            el.subCategory.forEach((sc) => (sc.label = sc.title));
+          }
+        });
         setCategorydata(res.data.data);
-        // setSubcategorydata(res.data.data.subCategory);
-        console.log("subcategory", res.data.data.subCategory);
       })
       .catch((err) => {
         console.log("error", err);
       });
-  }, []);
+  };
 
-  const handleCategory = (event, index) => {
-    console.log("event", event);
-    // setCategorydata();
-  };
-  const handleUnit = (event) => {
-    setUnitdata(event.target.value);
-  };
-  const handleSubcategory = (event) => {
-    setSubcategorydata(event.target.value);
-  };
-  const handleProductAddpage = ({
+  const handleCategory = (e, val) => setSelectedCategory(val);
+  const handleSubCategory = (e, val) => setSelectedSubCategory(val);
+
+  const handleUnit = (event) => setUnitdata(event.target.value);
+
+  const handleProductAdd = ({
     productName,
     category,
     subCategory,
@@ -138,13 +130,14 @@ const AddProduct = () => {
 
     // console.log("ProductAddpage Details", data);
   };
+
   return (
     <React.Fragment>
-      <Container maxWidth="sm">
-        <Box sx={{ flexGrow: 1 }} noValidate autoComplete="off">
-          <form onSubmit={handleSubmit(handleProductAddpage)}>
+      <Container maxWidth="md">
+        <Box sx={{}} autoComplete="off">
+          <form onSubmit={handleSubmit(handleProductAdd)}>
             <Grid container spacing={2}>
-              <Grid item xs={6}>
+              <Grid item xs={4}>
                 <TextField
                   fullWidth
                   variant="outlined"
@@ -152,50 +145,6 @@ const AddProduct = () => {
                   {...register("productName")}
                 />
                 <p>{errors?.productName?.message}</p>
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  fullWidth
-                  id="outlined-select-currency"
-                  select
-                  label="Category"
-                  value={categoryData}
-                  onChange={(e, index) => handleCategory(e, index)}
-                >
-                  {categoryData.map((option, index) => (
-                    <MenuItem key={option._id} value={option.name}>
-                      {option.name}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  fullWidth
-                  id="outlined-select-currency"
-                  select
-                  label="Subcategory"
-                  value={subCategorydata}
-                  onChange={handleSubcategory}
-                >
-                  {subCategorydata.map((option) => (
-                    <MenuItem>{option.title}</MenuItem>
-                  ))}
-                </TextField>
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  fullWidth
-                  id="outlined-select-currency"
-                  select
-                  label="Unit"
-                  value={unitData}
-                  onChange={handleUnit}
-                >
-                  {unitData.map((option) => (
-                    <MenuItem value={option}>{option}</MenuItem>
-                  ))}
-                </TextField>
               </Grid>
               <Grid item xs={4}>
                 <TextField
@@ -206,6 +155,50 @@ const AddProduct = () => {
                 />
                 <p>{errors?.quantity?.message}</p>
               </Grid>
+              <Grid item xs={4}>
+                <TextField
+                  fullWidth
+                  id="outlined-select-currency"
+                  select
+                  label="Unit"
+                  // value={unitData}
+                  onChange={handleUnit}
+                >
+                  {unitData.map((option) => (
+                    <MenuItem value={option}>{option}</MenuItem>
+                  ))}
+                </TextField>
+              </Grid>
+            </Grid>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                {categoryData?.length && (
+                  <Autocomplete
+                    options={categoryData}
+                    onChange={(e, val) => handleCategory(e, val)}
+                    value={selectedCategory}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Categories" />
+                    )}
+                  />
+                )}
+              </Grid>
+              <Grid item xs={6}>
+                <Autocomplete
+                  options={
+                    selectedCategory?.subCategory?.length
+                      ? selectedCategory?.subCategory
+                      : []
+                  }
+                  onChange={(e, val) => handleSubCategory(e, val)}
+                  value={selectedSubCategory}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Subcategories" />
+                  )}
+                />
+              </Grid>
+            </Grid>
+            <Grid>
               <Grid item xs={12}>
                 <TextField
                   fullWidth
@@ -228,6 +221,8 @@ const AddProduct = () => {
                 />
                 <p>{errors?.features?.message}</p>
               </Grid>
+
+              <Divider />
               <Grid item xs={12}>
                 <TextField
                   fullWidth
@@ -243,7 +238,7 @@ const AddProduct = () => {
                   id="outlined-select-currency"
                   select
                   label="Unit"
-                  value={unitData}
+                  // value={unitData}
                   onChange={handleUnit}
                 >
                   {unitData.map((option) => (
