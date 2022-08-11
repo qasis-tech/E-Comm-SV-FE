@@ -1,0 +1,129 @@
+@import "../styles/variables.styles.scss";
+@import "../styles/button.styles.scss";
+body {
+	font-family: $font-primary;
+	background: $white;
+	font-size: 15px;
+	line-height: 1.8;
+	font-weight: 400;
+	color: lighten($black,50%);
+	&.menu-show {
+		overflow: hidden;
+		position: fixed;
+		height: 100%;
+		width: 100%;
+	}
+}
+
+.top-section{
+    background-color:$primary ;
+    .topper{
+        font-size: 11px;
+        width: 100%;
+        display: block;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        .icon{
+            .icon-color{
+                color: $white!important;
+                padding: 0 0.5em;
+            }
+        }
+        .text{
+            width: calc(100% - 30px);
+            color: rgba(255,255,255,1);
+        }
+    }
+    
+}
+.ftco-navbar-light {
+	background: transparent !important;
+	z-index: 3;
+	padding: 0;
+	&.ftco-navbar-light-2{
+		position: relative;
+		top: 0;
+	}
+
+	.navbar-brand {
+		color: $primary;
+		font-weight: 800;
+		font-size: 20px;
+		text-transform: uppercase;
+		&:hover, &:focus{
+			color: $black;
+		}
+	}
+
+	.navbar-nav {
+		> .nav-item {
+			> .nav-link {
+				font-size: 11px;
+				padding-top: 1.5rem;
+				padding-bottom: 1.5rem;
+				padding-left: 20px;
+				padding-right: 20px;
+				font-weight: 400;
+				color: $black;
+				text-transform: uppercase;
+				letter-spacing: 2px;
+				&:hover {
+					color: $black;
+				}
+				opacity: 1!important;
+			}
+
+			.dropdown-menu{
+				border: none;
+				background: $white;
+				box-shadow: 0px 10px 34px -20px rgba(0,0,0,0.41);
+                .dropdown-item{
+					font-size: 14px;
+					&:hover, &:focus{
+						background: transparent;
+						color: $black;
+                        display: block;
+					}
+				}
+			}
+
+			
+			&.ftco-seperator {
+				position: relative;
+				margin-left: 20px;
+				padding-left: 20px;
+				&:before {
+					position: absolute;
+					content: "";
+					top: 10px;
+					bottom: 10px;
+					left: 0;
+					width: 2px;
+					background: rgba($white, .05);
+				}
+			}
+			&.cta {
+				> a {
+					color: $black;
+				}
+			}
+			&.active {
+				> a {
+					color: $black;
+				}
+			}
+		}
+	}
+	.navbar-toggler {
+		border: none;
+		color: rgba(255,255,255,.5)!important;
+		cursor: pointer;
+		padding-right: 0;
+		text-transform: uppercase;
+		font-size: 16px;
+		letter-spacing: .1em;
+		&:focus{
+			outline: none !important;
+		}
+	}
+}
