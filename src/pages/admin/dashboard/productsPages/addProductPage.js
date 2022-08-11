@@ -6,6 +6,8 @@ import Grid from "@mui/material/Grid";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import axios from "axios";
+import { useState } from "react";
 
 const productaddpageSchema = yup
   .object()
@@ -29,12 +31,12 @@ const productaddpageSchema = yup
       .required("OfferPrice is required")
       .typeError("You must specify number")
       .min(0, "Min value 0"),
-    imageFile: yup.array().required("Upload a file"),
+    // imageFile: yup.array().required("Upload a file"),
 
     // .test("type", "We only support jpeg", (value) => {
     //   return value && value[0].type === "image/jpeg";
     // })
-    videoFile: yup.mixed().required("Upload a file"),
+    // videoFile: yup.mixed().required("Upload a file"),
     // .test("fileSize", "The file is too large", (value) => {
     //   return value && value[0].size <= 2000000;
     // })
@@ -44,24 +46,24 @@ const productaddpageSchema = yup
   })
   .required();
 
-const currencies = [
-  {
-    value: "Fruits",
-    label: "Fruits",
-  },
-  {
-    value: "EUR",
-    label: "€",
-  },
-  {
-    value: "BTC",
-    label: "฿",
-  },
-  {
-    value: "JPY",
-    label: "¥",
-  },
-];
+// const currencies = [
+//   {
+//     value: "Fruits",
+//     label: "Fruits",
+//   },
+//   {
+//     value: "EUR",
+//     label: "€",
+//   },
+//   {
+//     value: "BTC",
+//     label: "฿",
+//   },
+//   {
+//     value: "JPY",
+//     label: "¥",
+//   },
+// ];
 
 const AddProduct = () => {
   const {
@@ -71,13 +73,70 @@ const AddProduct = () => {
   } = useForm({
     resolver: yupResolver(productaddpageSchema),
   });
-  const [currency, setCurrency] = React.useState("Fruits");
+  const [categoryData, setCategorydata] = useState([]);
+  const [unitData, setUnitdata] = useState(["Kg", "Ltr", "no:"]);
+  const [subCategorydata, setSubcategorydata] = useState([]);
+  React.useEffect(() => {
+    axios
+      .get("http://localhost:4000/category")
+      .then((res) => {
+        console.log("resss", res.data.data);
+        setCategorydata(res.data.data);
+        // setSubcategorydata(res.data.data.subCategory);
+        console.log("subcategory", res.data.data.subCategory);
+      })
+      .catch((err) => {
+        console.log("error", err);
+      });
+  }, []);
 
-  const handleChange = (event) => {
-    setCurrency(event.target.value);
+  const handleCategory = (event, index) => {
+    console.log("event", event);
+    // setCategorydata();
   };
-  const handleProductAddpage = (data) => {
-    console.log("ProductAddpage Details", data);
+  const handleUnit = (event) => {
+    setUnitdata(event.target.value);
+  };
+  const handleSubcategory = (event) => {
+    setSubcategorydata(event.target.value);
+  };
+  const handleProductAddpage = ({
+    productName,
+    category,
+    subCategory,
+    quantity,
+    description,
+    features,
+    price,
+    offerQuantity,
+    offerPrice,
+  }) => {
+    var bodyFormData = new FormData();
+    bodyFormData.append("name", productName);
+    // bodyFormData.append("category", category);
+    // bodyFormData.append("subCategory", subCategory);
+    bodyFormData.append("quantity", quantity);
+    bodyFormData.append("description", description);
+    bodyFormData.append("features", features);
+    bodyFormData.append("price", price);
+    bodyFormData.append("offerQuantity", offerQuantity);
+    bodyFormData.append("offerPrice", offerPrice);
+    // bodyFormData.append("productImage", imageFile);
+    // bodyFormData.append("productVideo", videoFile);
+
+    axios
+      .post("http://localhost:4000/product", bodyFormData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then((response) => {
+        console.log("Response=>>", response);
+      })
+      .catch((error) => {
+        //handle error
+        console.log("Errorss=>>", error);
+      });
+
+    // console.log("ProductAddpage Details", data);
   };
   return (
     <React.Fragment>
@@ -100,12 +159,12 @@ const AddProduct = () => {
                   id="outlined-select-currency"
                   select
                   label="Category"
-                  value={currency}
-                  onChange={handleChange}
+                  value={categoryData}
+                  onChange={(e, index) => handleCategory(e, index)}
                 >
-                  {currencies.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
+                  {categoryData.map((option, index) => (
+                    <MenuItem key={option._id} value={option.name}>
+                      {option.name}
                     </MenuItem>
                   ))}
                 </TextField>
@@ -116,13 +175,11 @@ const AddProduct = () => {
                   id="outlined-select-currency"
                   select
                   label="Subcategory"
-                  value={currency}
-                  onChange={handleChange}
+                  value={subCategorydata}
+                  onChange={handleSubcategory}
                 >
-                  {currencies.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
+                  {subCategorydata.map((option) => (
+                    <MenuItem>{option.title}</MenuItem>
                   ))}
                 </TextField>
               </Grid>
@@ -132,13 +189,11 @@ const AddProduct = () => {
                   id="outlined-select-currency"
                   select
                   label="Unit"
-                  value={currency}
-                  onChange={handleChange}
+                  value={unitData}
+                  onChange={handleUnit}
                 >
-                  {currencies.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
+                  {unitData.map((option) => (
+                    <MenuItem value={option}>{option}</MenuItem>
                   ))}
                 </TextField>
               </Grid>
@@ -188,13 +243,11 @@ const AddProduct = () => {
                   id="outlined-select-currency"
                   select
                   label="Unit"
-                  value={currency}
-                  onChange={handleChange}
+                  value={unitData}
+                  onChange={handleUnit}
                 >
-                  {currencies.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
+                  {unitData.map((option) => (
+                    <MenuItem>{option.offerUnit}</MenuItem>
                   ))}
                 </TextField>
               </Grid>

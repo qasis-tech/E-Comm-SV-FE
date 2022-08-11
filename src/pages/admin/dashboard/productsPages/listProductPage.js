@@ -175,7 +175,7 @@ const ListProduct = () => {
         <Fab
           color="primary"
           aria-label="add"
-          onClick={() => navigate("/add-products")}
+          onClick={() => navigate("/admin/add-products")}
         >
           <AddIcon />
         </Fab>
