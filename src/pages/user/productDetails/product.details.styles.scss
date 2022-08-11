@@ -1,0 +1,380 @@
+@import "../../../styles/button.styles.scss";
+@import "../../../styles/footer.styles.scss";
+@import "../../../styles/variables.styles.scss";
+@import "../../../styles/header.styles.scss";
+.bg-light {
+	background: #f7f6f2 !important;
+}
+
+.bg-primary {
+	background: $primary;
+}
+
+.bg-secondary {
+	background: $secondary  !important;
+}
+
+.bg-color-1 {
+	background: $color-1;
+}
+
+.bg-color-2 {
+	background: $color-2;
+}
+
+.bg-color-3 {
+	background: $color-3;
+}
+
+.bg-color-4 {
+	background: $color-4;
+}
+
+body {
+	font-family: $font-primary;
+	background: $white;
+	font-size: 15px;
+	line-height: 1.8;
+	font-weight: 400;
+	color: lighten($black, 50%);
+
+	&.menu-show {
+		overflow: hidden;
+		position: fixed;
+		height: 100%;
+		width: 100%;
+	}
+}
+.hero-wrap {
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+
+	padding: 10em 0;
+
+	.slider-text {
+		.breadcrumbs {
+			text-transform: uppercase;
+			font-size: 12px;
+			letter-spacing: 3px;
+			font-weight: 400;
+
+			span {
+				color: white;
+
+				a {
+					color: white;
+					text-decoration: none;
+				}
+			}
+		}
+
+		.bread {
+			font-weight: 800;
+			color: #fff;
+			font-size: 30px;
+			font-family: "Poppins", Arial, sans-serif;
+			letter-spacing: 3px;
+			text-transform: uppercase;
+		}
+	}
+}
+
+.ftco-section {
+	padding: 6em 0;
+
+	// magnific pop up
+
+	.image-popup {
+		cursor: zoom-in;
+		.img-fluid{
+			object-fit: cover;
+			height: 100%;
+			width: 100%;
+		}
+	}
+	//PRODUCT DETAILS
+	.product-details {
+		h3 {
+			// text-transform: uppercase;
+			font-size: 30px;
+			font-weight: 400;
+			color: black;
+		}
+		.rating{
+			p{
+				a{
+					color: $primary;
+					//margin-right: 0.5rem;
+				}
+			}
+		}
+
+		.price {
+			span {
+				font-size: 30px;
+				color: $black;
+			}
+		}
+
+		button {
+			i {
+				color: $black;
+			}
+		}
+
+		.quantity-left-minus {
+			background: transparent;
+			padding: 0 15px;
+		}
+
+		.quantity-right-plus {
+			background: transparent;
+			padding: 0 15px;
+		}
+
+		button,
+		.form-control {
+			height: 40px !important;
+			text-align: center;
+			border: 1px solid rgba(0, 0, 0, .1) !important;
+			color: $primary;
+			padding: 10px 20px;
+			background: transparent !important;
+			border-radius: 0;
+			font-size: 14px;
+
+			&:hover,
+			&:focus {
+				text-decoration: none;
+				outline: none;
+			}
+
+		}
+
+		.form-group {
+			position: relative;
+
+			.form-control {
+				padding-right: 40px;
+				color: $black;
+				background: transparent !important;
+			}
+
+			.icon {
+				position: absolute;
+				top: 20%;
+				right: 20px;
+				font-size: 14px;
+				//transform: translateY(-50%);
+				color: $black;
+
+				span {
+					color: $black;
+				}
+			}
+
+			.select-wrap {
+				position: relative;
+
+				select {
+					font-size: 13px;
+					appearance: none;
+					text-transform: uppercase;
+					letter-spacing: 2px;
+				}
+			}
+		}
+		.input-group{
+			width: 35%!important;
+		}
+		.btn-black {
+			background: #000000;
+			border: 1px solid #000000;
+			border-radius: 30px;
+			color: #fff;
+			&:hover, &:focus{
+				background: $primary;
+				color: white;
+				border: 1px solid $primary;
+			}
+		}
+	}
+}
+
+.heading-section{
+	position: relative;
+	.subheading{
+		font-size: 18px;
+		display: block;
+		margin-bottom: 10px;
+		font-family: $font-secondary;
+		font-style: italic;
+		color: $primary;
+	}
+	h2{
+		position: relative;
+		font-size: 40px;
+		font-weight: 600;
+		color: $black;
+		font-family: $font-primary;
+	}
+	&.heading-section-white{
+		.subheading{
+			color: rgba(255,255,255,.9);
+		}
+		h2{
+			font-size: 30px;
+			color: $white;
+				&:after, &:before{
+				display: none;
+			}
+		}
+		p{
+			color: rgba(255,255,255,.9);
+		}
+	}
+}
+.product{
+	display: block;
+	width: 100%;
+	margin-bottom: 30px;
+	position: relative;
+    //@include transition(.3s);
+	border: 1px solid lighten($black,94%);
+	.img-prod{
+		position: relative;
+		display: block;
+		overflow: hidden;
+		.overlay{
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			content: '';
+			opacity:0;
+			background: $primary;
+			//@include transition(.3s);
+		}
+		span.status{
+			position: absolute;
+			top: 0;
+			left: 0;
+			padding: 2px 10px;
+			color: $white;
+			font-weight: 300;
+			background: $primary;
+			font-size: 12px;
+		}
+		img{
+			-webkit-transform: scale(1.0);
+			-moz-transform: scale(1.0);
+			-ms-transform: scale(1.0);
+			-o-transform: scale(1.0);
+			transform: scale(1.0);
+			//@include transition(.3s);
+		}
+		&:hover, &:focus{
+			img{
+				-webkit-transform: scale(1.1);
+				-moz-transform: scale(1.1);
+				-ms-transform: scale(1.1);
+				-o-transform: scale(1.1);
+				transform: scale(1.1);
+			}
+		}
+	}
+	.img{
+		display: block;
+		height: 500px;
+	}
+	.icon{
+		width: 60px;
+		height: 60px;
+		background: $white;
+		opacity: 0;
+		border-radius: 50%;
+		//@include transition(.3s);
+		span{
+			color: $black;
+		}
+	}
+	&:hover{
+		.icon{
+			opacity: 1;
+		}
+		.img-prod{
+			.overlay{
+				opacity: 0;
+			}
+		}
+	}
+	.text{
+		background: $white;
+		position: relative;
+		width: 100%;
+		h3{
+			font-size: 14px;
+			margin-bottom: 5px;
+			font-weight: 300;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			font-family: $font-primary;
+			a{
+				color: $black;
+			}
+		}
+		p.price{
+			margin-bottom: 0;
+			color: $primary;
+			font-weight: 400;
+			span.price-dc{
+				text-decoration: line-through;
+				color: lighten($black,70%);
+			}
+			span.price-sale{
+				color: $primary;
+			}
+		}
+		.pricing{
+			width: 100%;
+			//@include transition(.3s);
+		}
+
+		.bottom-area{
+			position: absolute;
+			bottom: 15px;
+			left: 0;
+			right: 0;
+			opacity: 0;
+			//@include transition(.3s);
+			a{
+				color: $white;
+				width: 100%;
+				background: $primary;
+				width: 40px;
+				height: 40px;
+				margin: 0 auto;
+				border-radius: 50%;
+			}
+			.m-auto{
+				margin: 0 auto;
+			}
+			// @include media-breakpoint-down(md){
+			// 	opacity: 1;
+			// }
+		}
+	}
+	&:hover{
+		box-shadow: 0px 7px 15px -5px rgba(0,0,0,0.07);
+		.pricing{
+			opacity: 0;
+		}
+		.text{
+			.bottom-area{
+				opacity: 1;
+			}
+		}
+	}
+}
