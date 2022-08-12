@@ -29,20 +29,34 @@ const Home = () => {
 
       <section class="ftco-section ftco-category pt-5 pb-5 mt-5">
         <div class="container">
+          <div class="row justify-content-center mb-3 pb-3">
+            <div class="col-md-12 heading-section text-center ftco-animate">
+              <span class="subheading">Category</span>
+              <h2 class="mb-4">Our Category</h2>
+            </div>
+          </div>
           <div class="row">
             <div class="col-md-8">
               <div class="row">
-                <div class="col-md-6 order-md-last align-items-stretch d-flex pb-2">
-                  <div class="category-wrap-2 ftco-animate main-category align-self-stretch d-flex">
-                    <img src={CategoryImage} alt="Category image" />
-                    <div class="text text-center">
-                      <h2>Vegetables</h2>
-                      <p>Protect the health of every home</p>
-                      <p>
-                        <a href="#" class="btn btn-success">
-                          Shop now
+                <div class="col-md-6">
+                  <div class="category-wrap ftco-animate mb-4 d-flex align-items-end">
+                    <img src={Category1} alt="Category Image" />
+                    <div class="text px-3 py-1 bottom-left">
+                      <h2 class="mb-0">
+                        <a href="#" class=" text-decoration-none">
+                          Fruits
                         </a>
-                      </p>
+                      </h2>
+                    </div>
+                  </div>
+                  <div class="category-wrap ftco-animate d-flex align-items-end">
+                    <img src={Category2} alt="Category image" />
+                    <div class="text px-3 py-1">
+                      <h2 class="mb-0">
+                        <a href="#" class=" text-decoration-none">
+                          Vegetables
+                        </a>
+                      </h2>
                     </div>
                   </div>
                 </div>
@@ -99,19 +113,15 @@ const Home = () => {
       <section class="ftco-section mt-5">
         <div class="container">
           <div class="row justify-content-center mb-3 pb-3">
-            <div class="col-md-12 heading-section text-center ftco-animate">
+            <div class="col-md-12 heading-section text-center ">
               <span class="subheading">Featured Products</span>
               <h2 class="mb-4">Our Products</h2>
-              <p>
-                Far far away, behind the word mountains, far from the countries
-                Vokalia and Consonantia
-              </p>
             </div>
           </div>
         </div>
         <div class="container">
           <div class="row">
-            <div class="col-md-6 col-lg-3 ftco-animate">
+            <div class="col-md-6 col-lg-3 ">
               <div class="product">
                 <a href="#" class="img-prod">
                   <img
@@ -261,9 +271,9 @@ const Home = () => {
           </div>
         </div>
       </section>
-  <div style={{marginTop:"6em"}}>
-  <FooterComponent/>
-  </div>
+      <div style={{ marginTop: "6em" }}>
+        <FooterComponent />
+      </div>
     </div>
   );
 };

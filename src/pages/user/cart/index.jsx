@@ -5,9 +5,10 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Product1 from "../../../assets/product-2.jpg";
 import Product2 from "../../../assets/product-6.jpg";
 import "./index.styles.scss";
+import "../../../styles/button.styles.scss";
 import HeaderComponent from "../../../components/Header";
 import FooterComponent from "../../../components/Footer";
-import "../../../styles/button.styles.scss";
+
 
 export default function CartPage() {
   const navigation = useNavigate();
