@@ -18,6 +18,8 @@ import Background3 from "../../../assets/bg_3.jpg";
 import "./index.styles.scss";
 import HeaderComponent from "../../../components/Header";
 import SliderComponent from "../../../components/Slider";
+import "../../../styles/button.styles.scss";
+import FooterComponent from "../../../components/Footer";
 const Home = () => {
   const navigation = useNavigate();
   return (
@@ -259,88 +261,9 @@ const Home = () => {
           </div>
         </div>
       </section>
-      {/* <footer class="ftco-footer ftco-section pt-5">
-		<div class="container">
-			<div class="row">
-				<div class="mouse">
-					<a href="#" class="mouse-icon">
-						<div class="mouse-wheel"><span class="ion-ios-arrow-up"></span></div>
-					</a>
-				</div>
-			</div>
-			<div class="row mb-5">
-				<div class="col-md">
-					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2">Vegefoods</h2>
-						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-						<ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-							<li class="ftco-animate"><a href="#"><span><i class="fa fa-twitter"
-											aria-hidden="true"></i></span></a></li>
-							<li class="ftco-animate"><a href="#"><span><i class="fa fa-facebook"
-											aria-hidden="true"></i></span></a></li>
-							<li class="ftco-animate"><a href="#"><span><i class="fa fa-instagram"
-											aria-hidden="true"></i></span></a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-md">
-					<div class="ftco-footer-widget mb-4 ml-md-5">
-						<h2 class="ftco-heading-2">Menu</h2>
-						<ul class="list-unstyled">
-							<li><a href="#" class="py-2 d-block text-decoration-none">Shop</a></li>
-							<li><a href="#" class="py-2 d-block text-decoration-none">About</a></li>
-							<li><a href="#" class="py-2 d-block text-decoration-none">Journal</a></li>
-							<li><a href="#" class="py-2 d-block text-decoration-none">Contact Us</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-md-4">
-					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2">Help</h2>
-						<div class="d-flex">
-							<ul class="list-unstyled mr-l-5 pr-l-3 mr-4">
-								<li><a href="#" class="py-2 d-block text-decoration-none">Shipping Information</a></li>
-								<li><a href="#" class="py-2 d-block text-decoration-none">Returns &amp; Exchange</a>
-								</li>
-								<li><a href="#" class="py-2 d-block text-decoration-none">Terms &amp; Conditions</a>
-								</li>
-								<li><a href="#" class="py-2 d-block text-decoration-none">Privacy Policy</a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div class="col-md">
-					<div class="ftco-footer-widget mb-4">
-						<h2 class="ftco-heading-2">Have a Questions?</h2>
-						<div class="block-23 mb-3">
-							<ul>
-								<li><span><i class="fa fa-map-marker" aria-hidden="true"></i></span><span
-										class="text">203 Fake St. Mountain
-										View, San Francisco, California, USA</span></li>
-								<li><a href="#" class="text-decoration-none"><span><i class="fa fa-phone"
-												aria-hidden="true"></i></span><span class="text">+2 392 3929
-											210</span></a></li>
-								<li><a href="#" class="text-decoration-none"><span><i class="fa fa-envelope"
-												aria-hidden="true"></i></span><span
-											class="text">info@yourdomain.com</span></a></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12 text-center">
-
-					<p>
-						Copyright &copy; All rights reserved | This template
-						is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="#"
-							class="text-decoration-none" target="_blank" style="color: #82ae46;">Colorlib</a>
-						
-					</p>
-				</div>
-			</div>
-		</div>
-	</footer> */}
+  <div style={{marginTop:"6em"}}>
+  <FooterComponent/>
+  </div>
     </div>
   );
 };

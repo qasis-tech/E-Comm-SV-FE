@@ -5,10 +5,13 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+
 import "../styles/footer.styles.scss";
 
 const FooterComponent = () => {
     return(
+		<div>
         <footer class="ftco-footer ftco-section pt-5">
 		<div class="container">
 			<div class="row">
@@ -86,6 +89,11 @@ const FooterComponent = () => {
 			</div>
 		</div>
 	</footer> 
+	<a href="#" class="cart_float" target="_blank"> 
+	<ShoppingCartIcon className="cart-icon"/>
+  </a>
+  </div>
+	
     );
 };
 

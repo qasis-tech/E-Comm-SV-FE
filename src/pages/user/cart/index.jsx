@@ -1,11 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import CloseIcon from '@mui/icons-material/Close';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import Product1 from "../../../assets/product-2.jpg";
 import Product2 from "../../../assets/product-6.jpg";
 import "./index.styles.scss";
 import HeaderComponent from "../../../components/Header";
 import FooterComponent from "../../../components/Footer";
+import "../../../styles/button.styles.scss";
 
 export default function CartPage() {
   const navigation = useNavigate();
@@ -154,12 +156,16 @@ export default function CartPage() {
                             <span>$17.60</span>
                         </p>
                     </div>
-                    <p><a href="checkout.html" class="btn btn-success py-3 px-4">Proceed to Checkout</a></p>
+                    <p><a href="#" class="btn btn-success py-3 px-4">Proceed to Checkout</a></p>
                 </div>
             </div>
         </div>
     </section>
     <FooterComponent/>
+
+    {/* <a href="#" class="cart_float" target="_blank"> 
+        <ShoppingCartIcon className="cart-icon"/>
+      </a> */}
     </div>
   );
 }
