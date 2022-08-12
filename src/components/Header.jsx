@@ -2,10 +2,67 @@ import React from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PersonIcon from "@mui/icons-material/Person";
+import { styled, alpha } from "@mui/material/styles";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import InputBase from "@mui/material/InputBase";
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormHelperText from '@mui/material/FormHelperText';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useNavigate } from "react-router-dom";
 
 import "../styles/header.styles.scss";
+
+const Search = styled("div")(({ theme }) => ({
+  position: "relative",
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  "&:hover": {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginRight: theme.spacing(2),
+  marginLeft: 0,
+  width: "100%",
+  [theme.breakpoints.up("sm")]: {
+    marginLeft: theme.spacing(3),
+    width: "auto",
+  },
+}));
+
+const SearchIconWrapper = styled("div")(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: "100%",
+  position: "absolute",
+  pointerEvents: "none",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("md")]: {
+      width: "20ch",
+    },
+  },
+}));
 const HeaderComponent = () => {
+  const [age, setAge] = React.useState('');
+
+  const handleChange = (event) => {
+    setAge(event.target.value);
+  };
   const navigate = useNavigate();
   return (
     <div>
@@ -36,35 +93,35 @@ const HeaderComponent = () => {
           </div>
         </div>
       </div>
-    <nav
-      class="navbar navbar-expand-lg navbar-dark ftco_navbar  ftco-navbar-light"
-      id="ftco-navbar"
-    >
-      <div class="container">
-        <div>
-          <span class="navbar-brand" onClick={() => navigate("/")}>
-            Vegefoods
-          </span>
+      <nav
+        class="navbar navbar-expand-lg navbar-dark ftco_navbar  ftco-navbar-light"
+        id="ftco-navbar"
+      >
+        <div class="container">
+          <div>
+            <span class="navbar-brand" onClick={() => navigate("/")}>
+              Vegefoods
+            </span>
 
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#ftco-nav"
-            aria-controls="ftco-nav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#ftco-nav"
+              aria-controls="ftco-nav"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="oi oi-menu"></span> Menu
+            </button>
+          </div>
+
+          <div
+            class="collapse navbar-collapse d-flex justify-content-end"
+            id="ftco-nav"
           >
-            <span class="oi oi-menu"></span> Menu
-          </button>
-        </div>
-
-        <div
-          class="collapse navbar-collapse d-flex justify-content-end"
-          id="ftco-nav"
-        >
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item d-flex">
+            <ul class="navbar-nav ml-auto">
+              {/* <li class="nav-item d-flex">
               <div class="input-group mb-4 mt-3 border-bottom">
                 <input
                   type="search"
@@ -82,66 +139,92 @@ const HeaderComponent = () => {
                   </button>
                 </div>
               </div>
-            </li>
-            <li class="nav-item active">
-              <a href="index.html" class="nav-link">
-                Home
-              </a>
-            </li>
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="dropdown04"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                Shop
-              </a>
-              <div class="dropdown-menu" aria-labelledby="dropdown04">
-                <a class="dropdown-item" href="#">
+            </li> */}
+              <Search>
+                <SearchIconWrapper>
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase
+                  style={{ marginTop: "1em", width: "15ch" }}
+                  placeholder="Search…"
+                  inputProps={{ "aria-label": "search" }}
+                />
+              </Search>
+              <li class="nav-item active">
+                <a href="index.html" class="nav-link">
+                  Home
+                </a>
+              </li>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="dropdown04"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
                   Shop
                 </a>
-                <a class="dropdown-item" href="#">
-                  Wishlist
+                <div class="dropdown-menu" aria-labelledby="dropdown04">
+                  <a class="dropdown-item" href="#">
+                    Shop
+                  </a>
+                  <a class="dropdown-item" href="#">
+                    Wishlist
+                  </a>
+                  <a class="dropdown-item" href="#">
+                    Single Product
+                  </a>
+                  <a class="dropdown-item" href="#">
+                    Cart
+                  </a>
+                  <a class="dropdown-item" href="#">
+                    Checkout
+                  </a>
+                </div>
+                {/* <FormControl className="dropdown" sx={{ m: 1, border:"none", minWidth: 120 }}>
+                  <Select
+                    value={age}
+                    onChange={handleChange}
+                    sx={{border:"none"}}
+                    displayEmpty
+                    inputProps={{ "aria-label": "Without label" }}
+                  >
+                    <MenuItem value="">
+                     <a>Shop</a>
+                    </MenuItem>
+                    <MenuItem value={10}>Ten</MenuItem>
+                    <MenuItem value={20}>Twenty</MenuItem>
+                    <MenuItem value={30}>Thirty</MenuItem>
+                  </Select>
+                </FormControl> */}
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" onClick={() => navigate("about")}>
+                  About
                 </a>
-                <a class="dropdown-item" href="#">
-                  Single Product
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  Contact
                 </a>
-                <a class="dropdown-item" href="#">
-                  Cart
+              </li>
+              <li class="nav-item cta cta-colored">
+                <a href="#" class="nav-link">
+                  <ShoppingCartIcon />
+                  [0]
                 </a>
-                <a class="dropdown-item" href="#">
-                  Checkout
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <PersonIcon />
                 </a>
-              </div>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" onClick={() => navigate("about")}>
-                About
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                Contact
-              </a>
-            </li>
-            <li class="nav-item cta cta-colored">
-              <a href="#" class="nav-link">
-                <ShoppingCartIcon />
-                [0]
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <PersonIcon />
-              </a>
-            </li>
-          </ul>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
     </div>
   );
 };

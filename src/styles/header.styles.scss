@@ -72,7 +72,9 @@ body {
 				}
 				opacity: 1!important;
 			}
-
+			.dropdown{
+				border:none!important;
+			}
 			.dropdown-menu{
 				border: none;
 				background: $white;
