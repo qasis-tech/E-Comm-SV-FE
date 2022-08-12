@@ -27,7 +27,6 @@ const productaddpageSchema = yup
       .typeError("You must specify number")
       .min(0, "Min value 0"),
     description: yup.string().required("Description is required"),
-    features: yup.string().required("Features is required"),
     price: yup.number().typeError("You must specify number").required(),
     offerQuantity: yup
       .number()
@@ -39,24 +38,15 @@ const productaddpageSchema = yup
       .required("OfferPrice is required")
       .typeError("You must specify number")
       .min(0, "Min value 0"),
-    // imageFile: yup.array().required("Upload a file"),
-
-    // .test("type", "We only support jpeg", (value) => {
-    //   return value && value[0].type === "image/jpeg";
-    // })
-    // videoFile: yup.mixed().required("Upload a file"),
-    // .test("fileSize", "The file is too large", (value) => {
-    //   return value && value[0].size <= 2000000;
-    // })
-    // .test("type", "We only support jpeg", (value) => {
-    //   return value && value[0].type === "image/jpeg";
-    // }),
+    imageFile: yup.mixed().required("Upload a file"),
+    videoFile: yup.mixed().required("Upload a file"),
   })
   .required();
 const AddProduct = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(productaddpageSchema),
@@ -64,30 +54,28 @@ const AddProduct = () => {
   const [categoryData, setCategorydata] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [selectedSubCategory, setSelectedSubCategory] = useState([]);
-  const [unitData, setUnitdata] = useState(["Kg", "Ltr", "no:"]);
+  const [unitData, setUnitdata] = useState([
+    { label: "Kg" },
+    { label: "Ltr" },
+    { label: "no:" },
+  ]);
   const [selectedUnit, setSelectedunit] = useState([]);
-  const [selectedOfferunit, setSelectedofferunit] = useState();
+  const [selectedOfferunit, setSelectedofferunit] = useState([]);
+  const [featureData, SetFeaturedata] = useState([{ key: "" }]);
 
   React.useEffect(() => {
     getCatgoryListApi();
   }, []);
-
+  const access_token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
   const getCatgoryListApi = () => {
     axios
       .get(`${process.env.REACT_APP_BASE_URL}${URLS.category}`, {
-        headers: {
-          Authorization:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQHRlc3QuY29tIiwiaWF0IjoxNjYwMjA1NzYxLCJleHAiOjE2NjEwNjk3NjF9.-c5kx3ZhFgGQdsuQi070j4teyxzQ7gK3Red7H-x-T8s",
-        },
+        headers: { Authorization: `${access_token}` },
       })
       .then((res) => {
-        res.data.data.forEach((el) => {
-          el.label = el.name;
-          if (el?.subCategory?.length) {
-            el.subCategory.forEach((sc) => (sc.label = sc.title));
-          }
-        });
         setCategorydata(res.data.data);
+        console.log("resss", res.data.data);
       })
       .catch((err) => {
         console.log("error", err);
@@ -99,34 +87,57 @@ const AddProduct = () => {
 
   const handleUnit = (e, val) => setSelectedunit(val);
   const handleOfferUnit = (e, val) => setSelectedofferunit(val);
+  console.log("category", categoryData);
+  console.log("selected category", selectedCategory);
+  console.log("selected subcategory", selectedSubCategory);
+  console.log("selected unit", selectedUnit);
+  console.log(watch("quantity"));
+
+  const handleFeatureKey = (e) => {
+    let keyData = e.target.value;
+  };
+  const handleFeatureValue = (e) => {
+    let valueData = e.target.value;
+  };
 
   const handleProductAdd = ({
     productName,
-    category,
-    subCategory,
     quantity,
+    selectedUnit,
+    selectedCategory,
+    selectedSubCategory,
     description,
     features,
     price,
+    selectedOfferunit,
     offerQuantity,
     offerPrice,
+    imageFile,
+    videoFile,
   }) => {
     var bodyFormData = new FormData();
     bodyFormData.append("name", productName);
-    // bodyFormData.append("category", category);
-    // bodyFormData.append("subCategory", subCategory);
+    bodyFormData.append("category", selectedCategory.label);
+    bodyFormData.append("subCategory", selectedSubCategory.label);
+    bodyFormData.append("unit", selectedUnit.label);
     bodyFormData.append("quantity", quantity);
     bodyFormData.append("description", description);
-    bodyFormData.append("features", features);
     bodyFormData.append("price", price);
+    bodyFormData.append("offerUnit", selectedOfferunit.label);
     bodyFormData.append("offerQuantity", offerQuantity);
     bodyFormData.append("offerPrice", offerPrice);
-    // bodyFormData.append("productImage", imageFile);
-    // bodyFormData.append("productVideo", videoFile);
+    bodyFormData.append("productImage", imageFile);
+    bodyFormData.append("productVideo", videoFile);
+
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
 
     axios
       .post("http://localhost:4000/product", bodyFormData, {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: {
+          Authorization: ` ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
       })
       .then((response) => {
         console.log("Response=>>", response);
@@ -134,8 +145,6 @@ const AddProduct = () => {
       .catch((error) => {
         console.log("Errorss=>>", error);
       });
-
-    // console.log("ProductAddpage Details", data);
   };
 
   return (
@@ -215,18 +224,35 @@ const AddProduct = () => {
                 />
                 <p>{errors?.description?.message}</p>
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  id="outlined-multiline-static"
-                  label="Features"
-                  multiline
-                  rows={4}
-                  {...register("features")}
-                />
-                <p>{errors?.features?.message}</p>
-              </Grid>
-
+              {featureData.map((item, index) => {
+                return (
+                  <Grid container spacing={2}>
+                    <Grid item xs={4}>
+                      <TextField
+                        fullWidth
+                        id="outlined-multiline-static"
+                        label="KeyFeatures"
+                        multiline
+                        onChange={(e) => handleFeatureKey(e)}
+                        value={item.key}
+                      />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <TextField
+                        fullWidth
+                        id="outlined-multiline-static"
+                        label="ValueFeatures"
+                        multiline
+                        onChange={(e) => handleFeatureValue(e)}
+                        value={item}
+                      />
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Button variant="contained">+</Button>
+                    </Grid>
+                  </Grid>
+                );
+              })}
               <Divider />
               <Grid item xs={12}>
                 <TextField

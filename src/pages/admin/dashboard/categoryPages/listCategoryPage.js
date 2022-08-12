@@ -84,9 +84,13 @@ const ListCategory = () => {
     </Box>
   );
   const [data1, setData1] = React.useState([]);
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
   React.useEffect(() => {
     axios
-      .get("http://localhost:4000/category")
+      .get("http://localhost:4000/category", {
+        headers: { Authorization: `${token}` },
+      })
       .then((res) => {
         setData1(res.data.data);
       })

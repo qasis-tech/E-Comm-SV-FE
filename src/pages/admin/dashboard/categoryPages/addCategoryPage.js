@@ -97,6 +97,7 @@ const AddCategory = () => {
                   Upload Image
                   <input type="file" hidden />
                 </Button>
+                <p>{errors?.file1?.message}</p>
                 {/* <TextField
                   fullWidth
                   id="outlined-required"
