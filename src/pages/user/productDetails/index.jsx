@@ -1,147 +1,30 @@
 import { useNavigate } from "react-router-dom";
-import "./product.details.styles.scss";
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import MenuIcon from "@mui/icons-material/Menu";
 
+import BannerImage from "../../../assets/bg_1.jpg";
+import ProductImage from "../../../assets/product-1.jpg";
+import Product1 from "../../../assets/product-2.jpg";
+import Product2 from "../../../assets/product-3.jpg";
+import Product3 from "../../../assets/product-4.jpg";
+
+
+import "./index.styles.scss";
+import HeaderComponent from "../../../components/Header";
+import FooterComponent from "../../../components/Footer";
 export default function CustomerProductDetails() {
   const navigation = useNavigate();
+  const style = { backgroundImage: "url('../../../assets/bg_1.jpg')" };
   return (
     <div>
-      <div class="py-1 top-section">
-        <div class="container">
-          <div class="row no-gutters d-flex align-items-start align-items-center px-md-0">
-            <div class="col-lg-12 d-block">
-              <div class="row d-flex">
-                <div class="col-md pr-4 d-flex topper align-items-center">
-                  <div class="icon mr-2 d-flex justify-content-center align-items-center">
-                    <i class="fa fa-phone" aria-hidden="true"></i>
-                  </div>
-                  <span class="text">+ 1235 2355 98</span>
-                </div>
-                <div class="col-md pr-4 d-flex topper align-items-center">
-                  <div class="icon mr-2 d-flex justify-content-center align-items-center">
-                    <i class="fa fa-paper-plane-o"></i>
-                  </div>
-                  <span class="text">youremail@email.com</span>
-                </div>
-                <div class="col-md pr-4 d-flex topper align-items-center text-lg-right">
-                  <span class="text">
-                    3-5 Business days delivery &amp; Free Returns
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <nav
-        class="navbar navbar-expand-lg navbar-dark ftco_navbar ftco-navbar-light"
-        id="ftco-navbar"
-      >
-        <div class="container">
-          <div>
-            <a class="navbar-brand" href="index.html">
-              Vegefoods
-            </a>
-            <button
-              class="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#ftco-nav"
-              aria-controls="ftco-nav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span class="oi oi-menu"></span> Menu
-            </button>
-          </div>
+      <HeaderComponent />
 
-          <div
-            class="collapse navbar-collapse d-flex justify-content-end"
-            id="ftco-nav"
-          >
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item d-flex">
-                <div class="input-group mb-4 mt-3 border-bottom">
-                  <input
-                    type="search"
-                    placeholder="Search"
-                    aria-describedby="button-addon3"
-                    class="form-control bg-none border-0 fs-6"
-                  />
-                  <div class="input-group-append border-0">
-                    <button
-                      id="button-addon3"
-                      type="button"
-                      class="btn btn-link text-success"
-                    >
-                      <i class="fa fa-search"></i>
-                    </button>
-                  </div>
-                </div>
-              </li>
-              <li class="nav-item active">
-                <a href="index.html" class="nav-link">
-                  Home
-                </a>
-              </li>
-              <li class="nav-item dropdown">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  id="dropdown04"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  Shop
-                </a>
-                <div class="dropdown-menu" aria-labelledby="dropdown04">
-                  <a class="dropdown-item" href="#">
-                    Shop
-                  </a>
-                  <a class="dropdown-item" href="#">
-                    Wishlist
-                  </a>
-                  <a class="dropdown-item" href="#">
-                    Single Product
-                  </a>
-                  <a class="dropdown-item" href="#">
-                    Cart
-                  </a>
-                  <a class="dropdown-item" href="#">
-                    Checkout
-                  </a>
-                </div>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  About
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  Contact
-                </a>
-              </li>
-              <li class="nav-item cta cta-colored">
-                <a href="#" class="nav-link">
-                  <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                  [0]
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="fa fa-user" aria-hidden="true"></i>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-
-      <div
-        class="hero-wrap hero-bread"
-        style="background-image: url('images/bg_1.jpg');"
-      >
+      <div class="hero-wrap hero-bread" style={style}>
         <div class="container">
           <div class="row no-gutters slider-text align-items-center justify-content-center">
             <div class="col-md-9 text-center">
@@ -161,10 +44,10 @@ export default function CustomerProductDetails() {
         <div class="container">
           <div class="row">
             <div class="col-lg-6">
-              <div style="height: 65%;">
-                <a href="images/product-1.jpg" class="image-popup">
+              <div style={{ height: "65%" }}>
+                <a href={ProductImage} class="image-popup">
                   <img
-                    src="images/product-1.jpg"
+                    src={ProductImage}
                     class="img-fluid"
                     alt="Colorlib Template"
                   />
@@ -173,21 +56,21 @@ export default function CustomerProductDetails() {
               <div class="row">
                 <div class="col-4">
                   <img
-                    src="images/product-12.jpg"
+                    src={ProductImage}
                     class="img-fluid"
                     alt="Colorlib Template"
                   />
                 </div>
                 <div class="col-4">
                   <img
-                    src="images/product-7.jpg"
+                    src={ProductImage}
                     class="img-fluid"
                     alt="Colorlib Template"
                   />
                 </div>
                 <div class="col-4">
                   <img
-                    src="images/product-5.jpg"
+                    src={ProductImage}
                     class="img-fluid"
                     alt="Colorlib Template"
                   />
@@ -203,38 +86,46 @@ export default function CustomerProductDetails() {
                   </a>
                   <a href="#">
                     <span>
-                      <i class="fa fa-star" aria-hidden="true"></i>
+                     <StarBorderIcon />
                     </span>
                   </a>
                   <a href="#">
                     <span>
-                      <i class="fa fa-star" aria-hidden="true"></i>
+                    <StarBorderIcon />
                     </span>
                   </a>
                   <a href="#">
                     <span>
-                      <i class="fa fa-star" aria-hidden="true"></i>
+                    <StarBorderIcon />
                     </span>
                   </a>
                   <a href="#">
                     <span>
-                      <i class="fa fa-star" aria-hidden="true"></i>
+                    <StarBorderIcon />
                     </span>
                   </a>
                   <a href="#">
                     <span>
-                      <i class="fa fa-star" aria-hidden="true"></i>
+                    <StarBorderIcon />
                     </span>
                   </a>
                 </p>
                 <p class="text-left me-4">
-                  <a href="#" class="text-decoration-none" style="color: #000;">
-                    100 <span style="color: #bbb;">Rating</span>
+                  <a
+                    href="#"
+                    class="text-decoration-none"
+                    style={{ color: "#000" }}
+                  >
+                    100 <span style={{ color: "#bbb" }}>Rating</span>
                   </a>
                 </p>
                 <p class="text-left">
-                  <a href="#" class="text-decoration-none" style="color: #000;">
-                    500 <span style="color: #bbb;">Sold</span>
+                  <a
+                    href="#"
+                    class="text-decoration-none"
+                    style={{ color: "#000" }}
+                  >
+                    500 <span tyle={{ color: "#bbb" }}>Sold</span>
                   </a>
                 </p>
               </div>
@@ -246,7 +137,7 @@ export default function CustomerProductDetails() {
                 with the necessary regelialia. It is a paradisematic country, in
                 which roasted parts of sentences fly into your mouth. Text
                 should turn around and return to its own, safe country. But
-                nothing the copy said could convince her and so it didn’t take
+                nothing the copy said could convince her and so it didn't take
                 long until.
               </p>
               <div class="row mt-4">
@@ -254,7 +145,7 @@ export default function CustomerProductDetails() {
                   <div class="form-group d-flex">
                     <div class="select-wrap">
                       <div class="icon">
-                        <span class="fa fa-angle-down"></span>
+                        <KeyboardArrowDownIcon />
                       </div>
                       <select name="" id="" class="form-control">
                         <option value="">Small</option>
@@ -274,7 +165,7 @@ export default function CustomerProductDetails() {
                       data-type="minus"
                       data-field=""
                     >
-                      <i class="fa fa-minus"></i>
+                     <RemoveIcon />
                     </button>
                   </span>
                   <input
@@ -293,13 +184,13 @@ export default function CustomerProductDetails() {
                       data-type="plus"
                       data-field=""
                     >
-                      <i class="fa fa-plus"></i>
+                      <AddIcon />
                     </button>
                   </span>
                 </div>
                 <div class="w-100"></div>
                 <div class="col-md-12">
-                  <p style="color: #000;">600 kg available</p>
+                  <p style={{ color: "#000" }}>600 kg available</p>
                 </div>
               </div>
               <p>
@@ -312,7 +203,7 @@ export default function CustomerProductDetails() {
         </div>
       </section>
 
-      <section class="pb-5">
+     <section class="pb-5">
         <div class="container ">
           <div class="row justify-content-center mb-3 pb-3">
             <div class="col-md-12 heading-section text-center">
@@ -332,7 +223,7 @@ export default function CustomerProductDetails() {
                 <a href="#" class="img-prod">
                   <img
                     class="img-fluid"
-                    src="images/product-1.jpg"
+                    src={ProductImage}
                     alt="Colorlib Template"
                   />
                   <span class="status">30% Off</span>
@@ -359,7 +250,7 @@ export default function CustomerProductDetails() {
                         class="add-to-cart d-flex justify-content-center align-items-center text-center"
                       >
                         <span>
-                          <i class="fa fa-bars" aria-hidden="true"></i>
+                          <MenuIcon />
                         </span>
                       </a>
                       <a
@@ -367,7 +258,7 @@ export default function CustomerProductDetails() {
                         class="buy-now d-flex justify-content-center align-items-center mx-1"
                       >
                         <span>
-                          <i class="fa fa-shopping-cart"></i>
+                          <ShoppingCartIcon />
                         </span>
                       </a>
                       <a
@@ -375,7 +266,7 @@ export default function CustomerProductDetails() {
                         class="heart d-flex justify-content-center align-items-center "
                       >
                         <span>
-                          <i class="fa fa-heart" aria-hidden="true"></i>
+                         <FavoriteBorderIcon />
                         </span>
                       </a>
                     </div>
@@ -388,7 +279,7 @@ export default function CustomerProductDetails() {
                 <a href="#" class="img-prod">
                   <img
                     class="img-fluid"
-                    src="images/product-2.jpg"
+                    src={Product1}
                     alt="Colorlib Template"
                   />
                   <div class="overlay"></div>
@@ -413,7 +304,7 @@ export default function CustomerProductDetails() {
                         class="add-to-cart d-flex justify-content-center align-items-center text-center"
                       >
                         <span>
-                          <i class="fa fa-bars" aria-hidden="true"></i>
+                        <MenuIcon />
                         </span>
                       </a>
                       <a
@@ -421,7 +312,7 @@ export default function CustomerProductDetails() {
                         class="buy-now d-flex justify-content-center align-items-center mx-1"
                       >
                         <span>
-                          <i class="fa fa-shopping-cart"></i>
+                         <ShoppingCartIcon />
                         </span>
                       </a>
                       <a
@@ -429,7 +320,7 @@ export default function CustomerProductDetails() {
                         class="heart d-flex justify-content-center align-items-center "
                       >
                         <span>
-                          <i class="fa fa-heart" aria-hidden="true"></i>
+                         <FavoriteBorderIcon />
                         </span>
                       </a>
                     </div>
@@ -442,7 +333,7 @@ export default function CustomerProductDetails() {
                 <a href="#" class="img-prod">
                   <img
                     class="img-fluid"
-                    src="images/product-3.jpg"
+                    src={Product2}
                     alt="Colorlib Template"
                   />
                   <div class="overlay"></div>
@@ -467,7 +358,7 @@ export default function CustomerProductDetails() {
                         class="add-to-cart d-flex justify-content-center align-items-center text-center"
                       >
                         <span>
-                          <i class="fa fa-bars" aria-hidden="true"></i>
+                         <MenuIcon/>
                         </span>
                       </a>
                       <a
@@ -475,7 +366,7 @@ export default function CustomerProductDetails() {
                         class="buy-now d-flex justify-content-center align-items-center mx-1"
                       >
                         <span>
-                          <i class="fa fa-shopping-cart"></i>
+                         <ShoppingCartIcon />
                         </span>
                       </a>
                       <a
@@ -483,7 +374,7 @@ export default function CustomerProductDetails() {
                         class="heart d-flex justify-content-center align-items-center "
                       >
                         <span>
-                          <i class="fa fa-heart" aria-hidden="true"></i>
+                        <FavoriteBorderIcon/>
                         </span>
                       </a>
                     </div>
@@ -496,7 +387,7 @@ export default function CustomerProductDetails() {
                 <a href="#" class="img-prod">
                   <img
                     class="img-fluid"
-                    src="images/product-4.jpg"
+                    src={Product3}
                     alt="Colorlib Template"
                   />
                   <div class="overlay"></div>
@@ -521,7 +412,7 @@ export default function CustomerProductDetails() {
                         class="add-to-cart d-flex justify-content-center align-items-center text-center"
                       >
                         <span>
-                          <i class="fa fa-bars" aria-hidden="true"></i>
+                         <MenuIcon/>
                         </span>
                       </a>
                       <a
@@ -529,7 +420,7 @@ export default function CustomerProductDetails() {
                         class="buy-now d-flex justify-content-center align-items-center mx-1"
                       >
                         <span>
-                          <i class="fa fa-shopping-cart"></i>
+                          <ShoppingCartIcon />
                         </span>
                       </a>
                       <a
@@ -537,7 +428,7 @@ export default function CustomerProductDetails() {
                         class="heart d-flex justify-content-center align-items-center "
                       >
                         <span>
-                          <i class="fa fa-heart" aria-hidden="true"></i>
+                        <FavoriteBorderIcon/>
                         </span>
                       </a>
                     </div>
@@ -548,6 +439,8 @@ export default function CustomerProductDetails() {
           </div>
         </div>
       </section>
+
+      <FooterComponent />
     </div>
   );
 }

@@ -1,3 +1,9 @@
+import React from "react";
+
+import BackgroundImage from "../assets/bg_1.jpg";
+import BackgroundImage2 from "../assets/bg_2.jpg";
+import "../styles/button.styles.scss";
+import "../pages/user/home/index.styles.scss";
 const SliderComponent = () => {
   return (
     <section id="home-section" class="hero">
@@ -8,7 +14,7 @@ const SliderComponent = () => {
       >
         <div class="carousel-inner">
           <div class="carousel-item active" style="height: 872px;">
-            <img src="images/bg_1.jpg" class="d-block w-100" alt="..." />
+            <img src={BackgroundImage} class="d-block w-100" alt="Background image" />
             <div class="row carousel-caption d-none d-md-block  justify-content-center align-items-center">
               <div class="col-md-12 slider-text text-center">
                 <h1 class="mb-2">We serve Fresh Vegestables &amp; Fruits</h1>
@@ -24,7 +30,7 @@ const SliderComponent = () => {
             </div>
           </div>
           <div class="carousel-item" style="height: 872px;">
-            <img src="images/bg_2.jpg" class="d-block w-100" alt="..." />
+            <img src={BackgroundImage2} class="d-block w-100" alt="Background Image" />
             <div class="carousel-caption d-none d-md-block">
               <div class="col-md-12 slider-text text-center">
                 <h1 class="mb-2">We serve Fresh Vegestables &amp; Fruits</h1>
