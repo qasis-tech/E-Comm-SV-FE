@@ -13,7 +13,7 @@ const SliderComponent = () => {
         data-bs-ride="carousel"
       >
         <div class="carousel-inner">
-          <div class="carousel-item active" style="height: 872px;">
+          <div class="carousel-item active" style={{height: "872px"}}>
             <img src={BackgroundImage} class="d-block w-100" alt="Background image" />
             <div class="row carousel-caption d-none d-md-block  justify-content-center align-items-center">
               <div class="col-md-12 slider-text text-center">
@@ -29,7 +29,7 @@ const SliderComponent = () => {
               </div>
             </div>
           </div>
-          <div class="carousel-item" style="height: 872px;">
+          <div class="carousel-item" style={{height: "872px"}}>
             <img src={BackgroundImage2} class="d-block w-100" alt="Background Image" />
             <div class="carousel-caption d-none d-md-block">
               <div class="col-md-12 slider-text text-center">

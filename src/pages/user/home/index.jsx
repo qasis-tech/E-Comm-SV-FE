@@ -25,7 +25,7 @@ const Home = () => {
   return (
     <div>
       <HeaderComponent />
-      {/* <SliderComponent /> */}
+      <SliderComponent />
 
       <section class="ftco-section ftco-category pt-5 pb-5 mt-5">
         <div class="container">
