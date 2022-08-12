@@ -17,38 +17,13 @@ import Background3 from "../../../assets/bg_3.jpg";
 
 import "./index.styles.scss";
 import HeaderComponent from "../../../components/Header";
+import SliderComponent from "../../../components/Slider";
 const Home = () => {
   const navigation = useNavigate();
   return (
     <div>
-      <div class="py-1 top-section">
-        <div class="container">
-          <div class="row no-gutters d-flex align-items-start align-items-center px-md-0">
-            <div class="col-lg-12 d-block">
-              <div class="row d-flex">
-                <div class="col-md pr-4 d-flex topper align-items-center">
-                  <div class="icon mr-2 d-flex justify-content-center align-items-center">
-                    <LocalPhoneIcon className="icon-color" />
-                  </div>
-                  <span class="text">+ 1235 2355 98</span>
-                </div>
-                <div class="col-md pr-4 d-flex topper align-items-center">
-                  <div class="icon mr-2 d-flex justify-content-center align-items-center">
-                    <EmailIcon className="icon-color" />
-                  </div>
-                  <span class="text">youremail@email.com</span>
-                </div>
-                <div class="col-md pr-4 d-flex topper align-items-center text-lg-right">
-                  <span class="text">
-                    3-5 Business days delivery &amp; Free Returns
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
       <HeaderComponent />
+      {/* <SliderComponent /> */}
 
       <section class="ftco-section ftco-category pt-5 pb-5 mt-5">
         <div class="container">
