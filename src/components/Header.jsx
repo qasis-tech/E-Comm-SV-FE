@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import PersonIcon from "@mui/icons-material/Person";
@@ -9,14 +10,14 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormHelperText from '@mui/material/FormHelperText';
-import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { useNavigate } from "react-router-dom";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormHelperText from "@mui/material/FormHelperText";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 import "../styles/header.styles.scss";
+import { InputAdornment, TextField } from "@mui/material";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -58,7 +59,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 const HeaderComponent = () => {
-  const [age, setAge] = React.useState('');
+  const [age, setAge] = React.useState("");
 
   const handleChange = (event) => {
     setAge(event.target.value);
@@ -66,25 +67,25 @@ const HeaderComponent = () => {
   const navigate = useNavigate();
   return (
     <div>
-      <div class="py-1 top-section">
-        <div class="container">
-          <div class="row no-gutters d-flex align-items-start align-items-center px-md-0">
-            <div class="col-lg-12 d-block">
-              <div class="row d-flex">
-                <div class="col-md pr-4 d-flex topper align-items-center">
-                  <div class="icon mr-2 d-flex justify-content-center align-items-center">
-                    <i class="fa fa-phone" aria-hidden="true"></i>
+      <div className="py-1 top-section">
+        <div className="container">
+          <div className="row no-gutters d-flex align-items-start align-items-center px-md-0">
+            <div className="col-lg-12 d-block">
+              <div className="row d-flex">
+                <div className="col-md pr-4 d-flex topper align-items-center">
+                  <div className="icon mr-2 d-flex justify-content-center align-items-center">
+                    <i className="fa fa-phone" aria-hidden="true"></i>
                   </div>
-                  <span class="text">+ 1235 2355 98</span>
+                  <span className="text">+ 1235 2355 98</span>
                 </div>
-                <div class="col-md pr-4 d-flex topper align-items-center">
-                  <div class="icon mr-2 d-flex justify-content-center align-items-center">
-                    <i class="fa fa-paper-plane-o"></i>
+                <div className="col-md pr-4 d-flex topper align-items-center">
+                  <div className="icon mr-2 d-flex justify-content-center align-items-center">
+                    <i className="fa fa-paper-plane-o"></i>
                   </div>
-                  <span class="text">youremail@email.com</span>
+                  <span className="text">youremail@email.com</span>
                 </div>
-                <div class="col-md pr-4 d-flex topper align-items-center text-lg-right">
-                  <span class="text">
+                <div className="col-md pr-4 d-flex topper align-items-center text-lg-right">
+                  <span className="text">
                     3-5 Business days delivery &amp; Free Returns
                   </span>
                 </div>
@@ -94,17 +95,17 @@ const HeaderComponent = () => {
         </div>
       </div>
       <nav
-        class="navbar navbar-expand-lg navbar-dark ftco_navbar  ftco-navbar-light"
+        className="navbar navbar-expand-lg navbar-dark ftco_navbar  ftco-navbar-light"
         id="ftco-navbar"
       >
-        <div class="container">
+        <div className="container">
           <div>
-            <span class="navbar-brand" onClick={() => navigate("/")}>
+            <span className="navbar-brand" onClick={() => navigate("/")}>
               Vegefoods
             </span>
 
             <button
-              class="navbar-toggler"
+              className="navbar-toggler"
               type="button"
               data-toggle="collapse"
               data-target="#ftco-nav"
@@ -112,52 +113,49 @@ const HeaderComponent = () => {
               aria-expanded="false"
               aria-label="Toggle navigation"
             >
-              <span class="oi oi-menu"></span> Menu
+              <span className="oi oi-menu"></span> Menu
             </button>
           </div>
+          <TextField
+            label="Search"
+            size="small"
+            variant="outlined"
+            fullWidth
+            style={{ margin: "0 2em" }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment>
+                  <IconButton>
+                    <SearchIcon />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
 
           <div
-            class="collapse navbar-collapse d-flex justify-content-end"
+            className="collapse navbar-collapse d-flex justify-content-end"
             id="ftco-nav"
           >
-            <ul class="navbar-nav ml-auto">
-              {/* <li class="nav-item d-flex">
-              <div class="input-group mb-4 mt-3 border-bottom">
-                <input
-                  type="search"
-                  placeholder="Search"
-                  aria-describedby="button-addon3"
-                  class="form-control bg-none border-0 fs-6"
-                />
-                <div class="input-group-append border-0">
-                  <button
-                    id="button-addon3"
-                    type="button"
-                    class="btn btn-link text-success"
-                  >
-                    <SearchIcon />
-                  </button>
-                </div>
-              </div>
-            </li> */}
-              <Search>
+            <ul className="navbar-nav ml-auto">
+              {/* <Search>
                 <SearchIconWrapper>
                   <SearchIcon />
                 </SearchIconWrapper>
                 <StyledInputBase
                   style={{ marginTop: "1em", width: "15ch" }}
-                  placeholder="Search…"
+                  placeholder="Search"
                   inputProps={{ "aria-label": "search" }}
                 />
-              </Search>
-              <li class="nav-item active">
-                <a href="index.html" class="nav-link">
+              </Search> */}
+              <li className="nav-item active">
+                <a href="index.html" className="nav-link">
                   Home
                 </a>
               </li>
-              <li class="nav-item dropdown">
+              <li className="nav-item dropdown">
                 <a
-                  class="nav-link dropdown-toggle"
+                  className="nav-link dropdown-toggle"
                   href="#"
                   id="dropdown04"
                   data-toggle="dropdown"
@@ -166,58 +164,36 @@ const HeaderComponent = () => {
                 >
                   Shop
                 </a>
-                <div class="dropdown-menu" aria-labelledby="dropdown04">
-                  <a class="dropdown-item" href="#">
+                <div className="dropdown-menu" aria-labelledby="dropdown04">
+                  <a className="dropdown-item" href="#">
                     Shop
                   </a>
-                  <a class="dropdown-item" href="#">
+                  <a className="dropdown-item" href="#">
                     Wishlist
                   </a>
-                  <a class="dropdown-item" href="#">
+                  <a className="dropdown-item" href="#">
                     Single Product
                   </a>
-                  <a class="dropdown-item" href="#">
+                  <a className="dropdown-item" href="#">
                     Cart
                   </a>
-                  <a class="dropdown-item" href="#">
+                  <a className="dropdown-item" href="#">
                     Checkout
                   </a>
                 </div>
-                {/* <FormControl className="dropdown" sx={{ m: 1, border:"none", minWidth: 120 }}>
-                  <Select
-                    value={age}
-                    onChange={handleChange}
-                    sx={{border:"none"}}
-                    displayEmpty
-                    inputProps={{ "aria-label": "Without label" }}
-                  >
-                    <MenuItem value="">
-                     <a>Shop</a>
-                    </MenuItem>
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
-                  </Select>
-                </FormControl> */}
               </li>
-              <li class="nav-item">
-                <a class="nav-link" onClick={() => navigate("about")}>
+              <li className="nav-item">
+                <a className="nav-link" onClick={() => navigate("about")}>
                   About
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
+              <li className="nav-item">
+                <a href="#" className="nav-link">
                   Contact
                 </a>
               </li>
-              <li class="nav-item cta cta-colored">
-                <a href="#" class="nav-link">
-                  <ShoppingCartIcon />
-                  [0]
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
+              <li className="nav-item">
+                <a href="#" className="nav-link">
                   <PersonIcon />
                 </a>
               </li>
