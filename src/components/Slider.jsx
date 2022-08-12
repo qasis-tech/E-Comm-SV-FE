@@ -4,7 +4,7 @@ import BackgroundImage from "../assets/bg_1.jpg";
 import BackgroundImage2 from "../assets/bg_2.jpg";
 
 import "../styles/button.styles.scss";
-import "../pages/user/home/index.styles.scss";
+import "../pages/user/home/home.styles.scss";
 
 const SliderComponent = () => {
   return (

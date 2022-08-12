@@ -1,7 +1,5 @@
+import React from "react";
 import Category1 from "../../../../assets/category-1.jpg";
-import Category2 from "../../../../assets/category-2.jpg";
-import Category3 from "../../../../assets/category-3.jpg";
-import Category4 from "../../../../assets/category-4.jpg";
 
 const CategoriesComponent = () => {
   return (
@@ -13,78 +11,24 @@ const CategoriesComponent = () => {
             <h2 className="mb-4">Our Category</h2>
           </div>
         </div>
-        <div className="row">
-          <div className="col-md-8">
-            <div className="row">
-              <div className="col-md-6">
-                <div className="category-wrap ftco-animate mb-4 d-flex align-items-end">
-                  <img src={Category1} alt="Category Image" />
-                  <div className="text px-3 py-1 bottom-left">
-                    <h2 className="mb-0">
-                      <a href="#" className=" text-decoration-none">
-                        Fruits
-                      </a>
-                    </h2>
-                  </div>
-                </div>
-                <div className="category-wrap ftco-animate d-flex align-items-end">
-                  <img src={Category2} alt="Category image" />
-                  <div className="text px-3 py-1">
-                    <h2 className="mb-0">
-                      <a href="#" className=" text-decoration-none">
-                        Vegetables
-                      </a>
-                    </h2>
-                  </div>
+        <div className="d-flex flex-wrap justify-content-center">
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((items) => {
+            return (
+              <div
+                className="category-wrap ftco-animate mb-4 d-flex align-items-end"
+                style={{ width: 200, margin: "0 1.5em" }}
+              >
+                <img src={Category1} alt="Category Image" />
+                <div className="text px-3 py-1 bottom-left">
+                  <h2 className="mb-0">
+                    <a href="#" className=" text-decoration-none">
+                      Fruits
+                    </a>
+                  </h2>
                 </div>
               </div>
-              <div className="col-md-6">
-                <div className="category-wrap ftco-animate mb-4 d-flex align-items-end">
-                  <img src={Category1} alt="Category Image" />
-                  <div className="text px-3 py-1 bottom-left">
-                    <h2 className="mb-0">
-                      <a href="#" className=" text-decoration-none">
-                        Fruits
-                      </a>
-                    </h2>
-                  </div>
-                </div>
-                <div className="category-wrap ftco-animate d-flex align-items-end">
-                  <img src={Category2} alt="Category image" />
-                  <div className="text px-3 py-1">
-                    <h2 className="mb-0">
-                      <a href="#" className=" text-decoration-none">
-                        Vegetables
-                      </a>
-                    </h2>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="col-md-4">
-            <div className="category-wrap ftco-animate mb-4 d-flex align-items-end">
-              <img src={Category3} alt="Category image" />
-              <div className="text px-3 py-1">
-                <h2 className="mb-0">
-                  <a href="#" className=" text-decoration-none">
-                    Juices
-                  </a>
-                </h2>
-              </div>
-            </div>
-            <div className="category-wrap ftco-animate d-flex align-items-end">
-              <img src={Category4} alt="category image" />
-              <div className="text px-3 py-1">
-                <h2 className="mb-0">
-                  <a href="#" className=" text-decoration-none">
-                    Dried
-                  </a>
-                </h2>
-              </div>
-            </div>
-          </div>
+            );
+          })}
         </div>
       </div>
     </section>
