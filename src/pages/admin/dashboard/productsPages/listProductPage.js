@@ -84,9 +84,13 @@ const ListProduct = () => {
     </Box>
   );
   const [productData, setProductData] = React.useState([]);
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
   React.useEffect(() => {
     axios
-      .get("http://localhost:4000/product")
+      .get("http://localhost:4000/product", {
+        headers: { Authorization: ` ${token}` },
+      })
       .then((res) => {
         setProductData(res.data.data);
       })

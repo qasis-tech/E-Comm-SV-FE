@@ -85,11 +85,16 @@ const StockList = () => {
     </Box>
   );
   const [listData, setListdata] = React.useState([]);
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
   console.log("listdata", listData);
   React.useEffect(() => {
     axios
       .get("http://localhost:4000/stock", {
-        "Content-Type": "application/json",
+        headers: {
+          Authorization: `${token}`,
+          "Content-Type": "application/json",
+        },
       })
       .then((res) => {
         console.log("ress", res);
