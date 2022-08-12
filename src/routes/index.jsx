@@ -27,6 +27,9 @@ import Profile from "../pages/user/accounts/profile";
 import Payment from "../pages/user/accounts/payment";
 import RegisterPage from "../pages/user/register/registerPage";
 
+import RouterList from "./routerList";
+import AboutUs from "../pages/user/about";
+
 const PageNotFound = () => {
   return <div>Page Not Found</div>;
 };
@@ -44,6 +47,7 @@ const CustomRouters = () => {
         <Route path="order-list" element={<OrderList />} />
         <Route path="order-details" element={<OrderDetails />} />
         <Route path="payments" element={<Payment />} />
+        <Route path={RouterList.user.about} element={<AboutUs />} />
       </Route>
       <Route path="/admin" element={<PrivateRouting />}>
         <Route path="/admin" element={<AdminHome />} />

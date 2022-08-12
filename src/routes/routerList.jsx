@@ -3,6 +3,7 @@ const List = {
     home: "/",
     login: "/login",
     register: "register",
+    about: "about",
   },
   admin: {
     admin: "/admin",
@@ -19,7 +20,7 @@ const List = {
     addStock: "add-stock",
     userList: "user-list",
     userDetails: "user-details",
-    addUser:"add-user",
+    addUser: "add-user",
   },
 };
 

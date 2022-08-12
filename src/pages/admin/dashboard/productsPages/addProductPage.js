@@ -74,7 +74,12 @@ const AddProduct = () => {
 
   const getCatgoryListApi = () => {
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}${URLS.category}`)
+      .get(`${process.env.REACT_APP_BASE_URL}${URLS.category}`, {
+        headers: {
+          Authorization:
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQHRlc3QuY29tIiwiaWF0IjoxNjYwMjA1NzYxLCJleHAiOjE2NjEwNjk3NjF9.-c5kx3ZhFgGQdsuQi070j4teyxzQ7gK3Red7H-x-T8s",
+        },
+      })
       .then((res) => {
         res.data.data.forEach((el) => {
           el.label = el.name;
