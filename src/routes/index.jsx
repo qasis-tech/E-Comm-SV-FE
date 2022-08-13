@@ -30,6 +30,7 @@ import PageNotFound from "../pages/user/pageNotFound";
 
 import RouterList from "./routerList";
 import AboutUs from "../pages/user/about";
+import ContactUs from "../pages/user/contact";
 
 // const PageNotFound = () => {
 //   return <div>Page Not Found</div>;
@@ -49,6 +50,7 @@ const CustomRouters = () => {
         <Route path="order-details" element={<OrderDetails />} />
         <Route path="payments" element={<Payment />} />
         <Route path={RouterList.user.about} element={<AboutUs />} />
+        <Route path={RouterList.user.contact} element={<ContactUs />} />
       </Route>
       <Route path="/admin" element={<PrivateRouting />}>
         <Route path="/admin" element={<AdminHome />} />

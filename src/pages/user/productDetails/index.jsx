@@ -7,7 +7,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import MenuIcon from "@mui/icons-material/Menu";
 
-import BannerImage from "../../../assets/bg_1.jpg";
+import BackgroundImage from "../../../assets/bg_1.jpg";
 import ProductImage from "../../../assets/product-1.jpg";
 import Product1 from "../../../assets/product-2.jpg";
 import Product2 from "../../../assets/product-3.jpg";
@@ -23,7 +23,7 @@ export default function CustomerProductDetails() {
     <div className="product-details-container">
       <HeaderComponent />
 
-      <div class="product-details-wrap hero-bread" style={style}>
+      <div class="product-details-wrap hero-bread" style={{ backgroundImage: `url(${BackgroundImage})` }}>
         <div class="container">
           <div class="row no-gutters slider-text align-items-center justify-content-center">
             <div class="col-md-9 text-center">

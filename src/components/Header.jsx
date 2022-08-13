@@ -154,7 +154,7 @@ const HeaderComponent = () => {
                 </a>
               </li>
               <li className="nav-item dropdown">
-                <a
+                {/* <a
                   className="nav-link dropdown-toggle"
                   href="#"
                   id="dropdown04"
@@ -180,7 +180,18 @@ const HeaderComponent = () => {
                   <a className="dropdown-item" href="#">
                     Checkout
                   </a>
-                </div>
+                </div> */}
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={age}
+                  label="Age"
+                  onChange={handleChange}
+                >
+                  <MenuItem value={10}>Ten</MenuItem>
+                  <MenuItem value={20}>Twenty</MenuItem>
+                  <MenuItem value={30}>Thirty</MenuItem>
+                </Select>
               </li>
               <li className="nav-item">
                 <a className="nav-link" onClick={() => navigate("about")}>

@@ -1,0 +1,213 @@
+@import "../../../../styles/button.styles.scss";
+@import "../../../../styles/footer.styles.scss";
+@import "../../../../styles/variables.styles.scss";
+@import "../../../../styles/header.styles.scss";
+
+.bg-light {
+	background: #f7f6f2 !important;
+}
+
+.bg-primary {
+	background: $primary;
+}
+
+.bg-secondary {
+	background: $secondary  !important;
+}
+
+.bg-color-1 {
+	background: $color-1;
+}
+
+.bg-color-2 {
+	background: $color-2;
+}
+
+.bg-color-3 {
+	background: $color-3;
+}
+
+.bg-color-4 {
+	background: $color-4;
+}
+
+.order-details-section {
+	font-family: $font-primary;
+	background: $white;
+	font-size: 15px;
+	line-height: 1.8;
+	font-weight: 400;
+	color: lighten($black, 50%);
+
+	&.menu-show {
+		overflow: hidden;
+		position: fixed;
+		height: 100%;
+		width: 100%;
+	}
+}
+.order-details-wrap {
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+
+	padding: 10em 0;
+
+	.slider-text {
+		.breadcrumbs {
+			text-transform: uppercase;
+			font-size: 12px;
+			letter-spacing: 3px;
+			font-weight: 400;
+
+			span {
+				color: white;
+
+				a {
+					color: white;
+					text-decoration: none;
+				}
+			}
+		}
+
+		.bread {
+			font-weight: 800;
+			color: #fff;
+			font-size: 30px;
+			font-family: "Poppins", Arial, sans-serif;
+			letter-spacing: 3px;
+			text-transform: uppercase;
+		}
+	}
+}
+
+//CART
+.ftco-cart{
+    .cart-list{
+        .table{
+            min-width: 1000px !important;
+            width: 100%;
+            text-align: center;
+            .slno{
+                width: 5%!important;
+            }
+            th{
+                font-weight: 500;
+                width: 14%;
+            }
+            .thead-primary{
+                background: $primary;
+                tr{
+                    th{
+                        padding: 20px 10px;
+                        color: $white !important;
+                        border: 1px solid transparent !important;
+                    }
+                }
+            }
+            tbody{
+                tr{
+                    td{
+                        text-align: center !important;
+                        vertical-align: middle;
+                        padding: 20px 10px;
+                        border: 1px solid transparent !important;
+                        border-bottom: 1px solid rgba(0,0,0,.05) !important;
+                        &.product-remove{
+                            a{
+                                bordeR: 1px solid rgba(0,0,0,.1);
+                                padding: 4px 10px;
+                                color: $black;
+                                &:hover{
+                                    border: 1px solid $primary;
+                                    background: $primary;
+                                    span{
+                                        color: $white;
+                                    }
+                                }
+                            }
+                        }
+                        .btn-primary{
+                            background-color: #4caf5036;
+                            color: #3f8b42;
+                            padding: .5em!important;
+                            border: none;
+                        }
+                        p{
+                            font-size: 15px;
+                            line-height: 1.8;
+                            font-weight: 400;
+                            color: gray;
+                        }
+                        &.quantity{
+                            width:0%;
+                        }
+                        
+                        &.product-name{
+                            width: 25%;
+                            h3{
+                                font-size: 16px;						
+                            }
+                        }
+                        &.total,&.price{
+                            color: $black;
+                        }
+                    }
+                }
+            }
+        }
+    }
+	.input-group{
+	}
+	button{
+		i{
+			color: $primary;
+		}
+	}
+	.quantity-left-minus{
+		background: transparent;
+		padding: 16px 20px;
+	}
+	.quantity-right-plus{
+		background: transparent;
+		padding: 16px 20px;
+	}
+	.form-control{
+		height: 54px !important;
+		text-align: center;
+		bordeR: 1px solid rgba(0,0,0,.05) !important;
+		color: $black !important;
+		padding: 0;
+		font-size: 14px;
+	}
+	.form-group{
+		position: relative;
+		.form-control{
+			padding-right: 40px;
+		}
+		.icon {
+			position: absolute;
+			top: 50%;
+			right: 20px;
+			font-size: 14px;
+			transform: translateY(-50%);
+			color: $primary;
+			span{
+				color: $primary;
+			}
+		}
+		.select-wrap {
+			position: relative;
+			select {
+				font-size: 14px;
+				appearance: none;
+			}
+		}
+	}
+	.info{
+		label{
+			font-size: 13px;
+			color: $black;
+		}
+	}
+}
