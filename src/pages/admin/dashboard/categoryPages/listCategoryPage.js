@@ -83,40 +83,34 @@ const ListCategory = () => {
       </List>
     </Box>
   );
-  const [data1, setData1] = React.useState([]);
+  const [categoryList, setCategoryList] = React.useState([]);
   const [searchInput, setSearchInput] = React.useState("");
 
   const token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
   React.useEffect(() => {
-    axios
-      .get("http://localhost:4000/category", {
-        headers: { Authorization: `${token}` },
-      })
-      .then((res) => {
-        setData1(res.data.data);
-      })
-      .catch((err) => {
-        console.log("error", err);
-      });
+    handleSearch();
   }, []);
+
   const handleSearch = (searchValue) => {
     setSearchInput(searchValue);
     axios
-      .get("http://localhost:4000/category?search", {
+      .get("http://localhost:4000/category", {
         headers: {
           Authorization: `${token}`,
         },
       })
       .then((res) => {
         if (res) {
-          setData1(res.data.data);
+          setCategoryList(res.data.data);
         }
       })
       .catch((err) => {
-        console.log("err", err);
+        console.log("err in Category LIst", err);
+        setCategoryList([]);
       });
   };
+
   const navigate = useNavigate();
   return (
     <Box>
@@ -128,7 +122,7 @@ const ListCategory = () => {
               label="Search"
               InputProps={{
                 endAdornment: (
-                  <InputAdornment>
+                  <InputAdornment position="end">
                     <IconButton>
                       <SearchIcon />
                     </IconButton>
@@ -167,34 +161,47 @@ const ListCategory = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data1.map((item) => {
-              return (
-                <TableRow>
-                  <TableCell>{item._id}</TableCell>
-                  <TableCell component="th" scope="row">
-                    {item.label}
-                  </TableCell>
-                  <ul>
-                    {item.subCategory.map((e) => {
-                      return (
-                        <TableCell>
-                          <li>{e.label}</li>
-                        </TableCell>
-                      );
-                    })}
-                  </ul>
-                  <TableCell>{item.createdAt}</TableCell>
-                  <TableCell>
-                    <Button variant="outlined">
-                      <DeleteIcon />
-                    </Button>
-                    <Button variant="outlined">
-                      <CreateIcon />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
+            {categoryList?.length ? (
+              categoryList?.map((item) => {
+                return (
+                  <TableRow key={item}>
+                    <TableCell>{item._id}</TableCell>
+                    <TableCell component="th" scope="row">
+                      {item.label}
+                    </TableCell>
+
+                    {item?.subCategory?.length ? (
+                      <TableCell
+                        sx={{ maxWidth: 350 }}
+                        className="d-flex flex-wrap"
+                      >
+                        {item?.subCategory?.map((e) => {
+                          return (
+                            <span className="border px-2 py-1 m-1 rounded shadow-sm text-center">
+                              {e.label}
+                            </span>
+                          );
+                        })}
+                      </TableCell>
+                    ) : (
+                      <TableCell>No sub categories</TableCell>
+                    )}
+
+                    <TableCell>{item.createdAt}</TableCell>
+                    <TableCell>
+                      <Button variant="outlined">
+                        <DeleteIcon />
+                      </Button>
+                      <Button variant="outlined">
+                        <CreateIcon />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                );
+              })
+            ) : (
+              <div>No Data available</div>
+            )}
           </TableBody>
         </Table>
       </TableContainer>

@@ -1,20 +1,23 @@
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Box, Grid } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import Fab from "@mui/material/Fab";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import axios from "axios";
-import { useState } from "react";
+
 import "./addCategoryPage.styles.scss";
 
 const categoryaddpageSchema = yup
   .object()
   .shape({
     mainCategory: yup.string().required("Name is required"),
-    file1: yup.mixed().required("Upload a file"),
+    // categoryFile: yup.mixed().required("Upload a file"),
     // .test("fileSize", "The file is too large", (value) => {
     //   return value && value[0].size <= 2000000;
     // })
@@ -22,7 +25,7 @@ const categoryaddpageSchema = yup
     //   return value && value[0].type === "image/jpeg";
     // })
     subCategory: yup.string().required("Name is required"),
-    file2: yup.mixed().required("Upload a file"),
+    // file2: yup.object().required("Upload a file"),
     // .test("fileSize", "The file is too large", (value) => {
     //   return value && value[0].size <= 2000000;
     // })
@@ -36,10 +39,19 @@ const AddCategory = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    watch,
+    getValues,
+    setValue,
+    getFieldState,
+    formState: { errors, isDirty },
   } = useForm({
     resolver: yupResolver(categoryaddpageSchema),
+    mode: "onChange",
+    defaultValues: {
+      categoryFile: null,
+    },
   });
+  const navigate = useNavigate();
   const [duplicate, setduplicate] = useState([{ title: "" }]);
   const [subC, setSubc] = useState(0);
   const handleAddbutton = (event) => {
@@ -53,6 +65,22 @@ const AddCategory = () => {
     newdata.splice(index, 1);
     setduplicate(newdata);
   };
+
+  const handleSubmitApi = (bodyFormData) => {
+    axios
+      .post("http://localhost:4000/category", bodyFormData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      })
+      .then((response) => {
+        console.log("Response=>>", response);
+        navigate(-1);
+      })
+      .catch((err) => {
+        //handle error
+        console.log("Errorss in add category -> submit api", err);
+      });
+  };
+
   const handleCategoryAdd = ({ mainCategory, subCategory, file1, file2 }) => {
     var bodyFormData = new FormData();
     bodyFormData.append("name", mainCategory);
@@ -61,18 +89,11 @@ const AddCategory = () => {
     // console.log("CategoryAddpage Details:", data);
     console.log("category", mainCategory);
     console.log("subcategory=>=>", subCategory);
-    axios
-      .post("http://localhost:4000/category", bodyFormData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      })
-      .then((response) => {
-        console.log("Response=>>", response);
-      })
-      .catch((err) => {
-        //handle error
-        console.log("Errorss=>>", err);
-      });
+    // handleSubmitApi(bodyFormData);
   };
+
+  console.log("Watch", watch("file2"));
+
   return (
     <div className="add-category">
       <Box noValidate autoComplete="off" className="wrapper">
@@ -88,11 +109,29 @@ const AddCategory = () => {
                   error={errors?.mainCategory}
                 />
                 <p>{errors?.mainCategory?.message}</p>
+                {getValues("categoryFile[0].name") && (
+                  <div className="d-flex justify-content-between my-3 border-bottom pb-2">
+                    <div>{getValues("categoryFile[0].name")}</div>
+                    <div>
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => setValue("categoryFile", null)}
+                      >
+                        x
+                      </button>
+                    </div>
+                  </div>
+                )}
                 <Button variant="contained" fullWidth component="label">
                   Upload Image
-                  <input type="file" hidden />
+                  <input
+                    type="file"
+                    hidden
+                    {...register("categoryFile", { required: true })}
+                  />
                 </Button>
-                <p>{errors?.file1?.message}</p>
+
+                {/* <p>{errors?.file1?.message}</p> */}
                 {/* <TextField
                   fullWidth
                   id="outlined-required"
@@ -130,15 +169,15 @@ const AddCategory = () => {
                         fullWidth
                         variant="outlined"
                         label="Name"
-                        {...register("subCategory")}
-                        error={errors?.subCategory}
+                        // {...register("subCategory")}
+                        // error={errors?.subCategory}
                       />
-                      <p>{errors?.subCategory?.message}</p>
+                      {/* <p>{errors?.subCategory?.message}</p> */}
                       <Button variant="contained" fullWidth component="label">
                         Upload Image
                         <input type="file" hidden />
                       </Button>
-                      <p>{errors?.file2?.message}</p>
+                      {/* <p>{errors?.file2?.message}</p> */}
                       {duplicate.length > 1 && (
                         <button
                           onClick={() => handleRemovebutton(index)}
@@ -153,7 +192,9 @@ const AddCategory = () => {
               </Grid>
 
               <Grid className="my-5">
-                <Button variant="outlined">Cancel</Button>
+                <Button variant="outlined" onClick={() => navigate(-1)}>
+                  Cancel
+                </Button>
                 <Button type="submit" variant="contained" color="primary">
                   submit
                 </Button>
