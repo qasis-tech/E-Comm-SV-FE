@@ -84,6 +84,8 @@ const ListCategory = () => {
     </Box>
   );
   const [data1, setData1] = React.useState([]);
+  const [searchInput, setSearchInput] = React.useState("");
+
   const token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
   React.useEffect(() => {
@@ -98,6 +100,23 @@ const ListCategory = () => {
         console.log("error", err);
       });
   }, []);
+  const handleSearch = (searchValue) => {
+    setSearchInput(searchValue);
+    axios
+      .get("http://localhost:4000/category?search", {
+        headers: {
+          Authorization: `${token}`,
+        },
+      })
+      .then((res) => {
+        if (res) {
+          setData1(res.data.data);
+        }
+      })
+      .catch((err) => {
+        console.log("err", err);
+      });
+  };
   const navigate = useNavigate();
   return (
     <Box>
@@ -105,6 +124,7 @@ const ListCategory = () => {
         <Grid item xs={2} style={{ display: "flex" }}>
           <Grid item xs={4}>
             <TextField
+              onChange={(e) => handleSearch(e.target.value)}
               label="Search"
               InputProps={{
                 endAdornment: (

@@ -61,7 +61,7 @@ const AddProduct = () => {
   ]);
   const [selectedUnit, setSelectedunit] = useState([]);
   const [selectedOfferunit, setSelectedofferunit] = useState([]);
-  const [featureData, SetFeaturedata] = useState([{ key: "" }]);
+  const [featureData, SetFeaturedata] = useState([{}]);
 
   React.useEffect(() => {
     getCatgoryListApi();
@@ -87,17 +87,13 @@ const AddProduct = () => {
 
   const handleUnit = (e, val) => setSelectedunit(val);
   const handleOfferUnit = (e, val) => setSelectedofferunit(val);
-  console.log("category", categoryData);
-  console.log("selected category", selectedCategory);
-  console.log("selected subcategory", selectedSubCategory);
-  console.log("selected unit", selectedUnit);
-  console.log(watch("quantity"));
 
-  const handleFeatureKey = (e) => {
-    let keyData = e.target.value;
-  };
-  const handleFeatureValue = (e) => {
-    let valueData = e.target.value;
+  const handleFeatureKey = (key, val) => {
+    let temp = [...featureData];
+    let obj = {};
+    obj[key.target.value] = val?.target?.value;
+    temp.push(obj);
+    SetFeaturedata(temp);
   };
 
   const handleProductAdd = ({
@@ -147,6 +143,7 @@ const AddProduct = () => {
       });
   };
 
+  console.log("featureData", featureData);
   return (
     <React.Fragment>
       <Container maxWidth="md">
@@ -175,6 +172,7 @@ const AddProduct = () => {
                 {unitData?.length && (
                   <Autocomplete
                     options={unitData}
+                    getOptionLabel={(option) => (option ? option.label : "")}
                     onChange={(e, val) => handleUnit(e, val)}
                     value={selectedUnit}
                     renderInput={(params) => (
@@ -224,35 +222,33 @@ const AddProduct = () => {
                 />
                 <p>{errors?.description?.message}</p>
               </Grid>
-              {featureData.map((item, index) => {
-                return (
-                  <Grid container spacing={2}>
-                    <Grid item xs={4}>
-                      <TextField
-                        fullWidth
-                        id="outlined-multiline-static"
-                        label="KeyFeatures"
-                        multiline
-                        onChange={(e) => handleFeatureKey(e)}
-                        value={item.key}
-                      />
+              {featureData.length &&
+                featureData.map((item, index) => {
+                  return (
+                    <Grid key={index} container spacing={2}>
+                      <Grid item xs={4}>
+                        <TextField
+                          fullWidth
+                          id="outlined-multiline-static"
+                          label="name"
+                          onChange={(e) => handleFeatureKey(e, null)}
+                        />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <TextField
+                          fullWidth
+                          id="outlined-multiline-static"
+                          label="value"
+                          onChange={(e) => handleFeatureKey(null, e)}
+                          value={item}
+                        />
+                      </Grid>
+                      <Grid item xs={4}>
+                        <Button variant="contained">+</Button>
+                      </Grid>
                     </Grid>
-                    <Grid item xs={4}>
-                      <TextField
-                        fullWidth
-                        id="outlined-multiline-static"
-                        label="ValueFeatures"
-                        multiline
-                        onChange={(e) => handleFeatureValue(e)}
-                        value={item}
-                      />
-                    </Grid>
-                    <Grid item xs={4}>
-                      <Button variant="contained">+</Button>
-                    </Grid>
-                  </Grid>
-                );
-              })}
+                  );
+                })}
               <Divider />
               <Grid item xs={12}>
                 <TextField

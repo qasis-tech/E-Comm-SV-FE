@@ -109,7 +109,7 @@ const UserList = () => {
               label="Search"
               InputProps={{
                 endAdornment: (
-                  <InputAdornment>
+                  <InputAdornment position="end">
                     <IconButton>
                       <SearchIcon />
                     </IconButton>
@@ -153,9 +153,12 @@ const UserList = () => {
           <TableBody>
             {userData.map((useritem) => {
               return (
-                <TableRow onClick={() => navigate("/admin/users-details")}>
+                <TableRow
+                  key={useritem._id}
+                  onClick={() => navigate("/admin/users-details")}
+                >
                   <TableCell component="th" scope="row">
-                    {useritem.firstName}
+                    {useritem.firstName + " " + useritem.lastName}
                   </TableCell>
                   <TableCell component="th" scope="row">
                     {useritem.email}

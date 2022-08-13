@@ -53,12 +53,7 @@ const AddCategory = () => {
     newdata.splice(index, 1);
     setduplicate(newdata);
   };
-  const handleCategoryAddpage = ({
-    mainCategory,
-    subCategory,
-    file1,
-    file2,
-  }) => {
+  const handleCategoryAdd = ({ mainCategory, subCategory, file1, file2 }) => {
     var bodyFormData = new FormData();
     bodyFormData.append("name", mainCategory);
     bodyFormData.append("image", file1);
@@ -83,7 +78,7 @@ const AddCategory = () => {
       <Box noValidate autoComplete="off" className="wrapper">
         <Grid container direction="row" className="add-category-container">
           <Grid item xs={6} className="category-form-section ">
-            <form onSubmit={handleSubmit(handleCategoryAddpage)}>
+            <form onSubmit={handleSubmit(handleCategoryAdd)}>
               <h3 className="heading">Category</h3>
               <div>
                 <TextField
