@@ -30,6 +30,7 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import NotDataAvailable from "../../../../components/NoDataAvailable";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -167,7 +168,8 @@ const ListCategory = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data1.map((item) => {
+            <NotDataAvailable />
+            {/* {data1.map((item) => {
               return (
                 <TableRow>
                   <TableCell>{item._id}</TableCell>
@@ -194,7 +196,7 @@ const ListCategory = () => {
                   </TableCell>
                 </TableRow>
               );
-            })}
+            })} */}
           </TableBody>
         </Table>
       </TableContainer>
