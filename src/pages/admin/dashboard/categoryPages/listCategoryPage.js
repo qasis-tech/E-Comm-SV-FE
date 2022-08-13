@@ -103,7 +103,8 @@ const ListCategory = () => {
       })
       .then((res) => {
         if (res) {
-          setCategoryList(res.data.data);
+          // setCategoryList(res.data.data);
+          setCategoryList([]);
         }
       })
       .catch((err) => {
@@ -162,50 +163,50 @@ const ListCategory = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {categoryList?.length ? (
-              categoryList?.map((item) => {
-                return (
-                  <TableRow key={item}>
-                    <TableCell>{item._id}</TableCell>
-                    <TableCell component="th" scope="row">
-                      {item.label}
-                    </TableCell>
-
-                    {item?.subCategory?.length ? (
-                      <TableCell
-                        sx={{ maxWidth: 350 }}
-                        className="d-flex flex-wrap"
-                      >
-                        {item?.subCategory?.map((e) => {
-                          return (
-                            <span className="border px-2 py-1 m-1 rounded shadow-sm text-center">
-                              {e.label}
-                            </span>
-                          );
-                        })}
+            {categoryList?.length
+              ? categoryList?.map((item) => {
+                  return (
+                    <TableRow key={item}>
+                      <TableCell>{item._id}</TableCell>
+                      <TableCell component="th" scope="row">
+                        {item.label}
                       </TableCell>
-                    ) : (
-                      <TableCell>No sub categories</TableCell>
-                    )}
 
-                    <TableCell>{item.createdAt}</TableCell>
-                    <TableCell>
-                      <Button variant="outlined">
-                        <DeleteIcon />
-                      </Button>
-                      <Button variant="outlined">
-                        <CreateIcon />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                );
-              })
-            ) : (
-              <div>No Data available</div>
-            )}
+                      {item?.subCategory?.length ? (
+                        <TableCell
+                          sx={{ maxWidth: 350 }}
+                          className="d-flex flex-wrap"
+                        >
+                          {item?.subCategory?.map((e) => {
+                            return (
+                              <span className="border px-2 py-1 m-1 rounded shadow-sm text-center">
+                                {e.label}
+                              </span>
+                            );
+                          })}
+                        </TableCell>
+                      ) : (
+                        <TableCell>No sub categories</TableCell>
+                      )}
+
+                      <TableCell>{item.createdAt}</TableCell>
+                      <TableCell>
+                        <Button variant="outlined">
+                          <DeleteIcon />
+                        </Button>
+                        <Button variant="outlined">
+                          <CreateIcon />
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
+              : null}
           </TableBody>
         </Table>
       </TableContainer>
+
+      {!categoryList?.length && <NotDataAvailable />}
 
       <div style={{ position: "absolute", bottom: "4em", right: "4em" }}>
         <Fab
