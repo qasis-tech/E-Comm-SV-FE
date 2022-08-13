@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
-import StarBorderIcon from '@mui/icons-material/StarBorder';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
+import StarBorderIcon from "@mui/icons-material/StarBorder";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -13,8 +13,7 @@ import Product1 from "../../../assets/product-2.jpg";
 import Product2 from "../../../assets/product-3.jpg";
 import Product3 from "../../../assets/product-4.jpg";
 
-
-import "./index.styles.scss";
+import "./product-details.styles.scss";
 import HeaderComponent from "../../../components/Header";
 import FooterComponent from "../../../components/Footer";
 export default function CustomerProductDetails() {
@@ -86,27 +85,27 @@ export default function CustomerProductDetails() {
                   </a>
                   <a href="#">
                     <span>
-                     <StarBorderIcon />
+                      <StarBorderIcon />
                     </span>
                   </a>
                   <a href="#">
                     <span>
-                    <StarBorderIcon />
+                      <StarBorderIcon />
                     </span>
                   </a>
                   <a href="#">
                     <span>
-                    <StarBorderIcon />
+                      <StarBorderIcon />
                     </span>
                   </a>
                   <a href="#">
                     <span>
-                    <StarBorderIcon />
+                      <StarBorderIcon />
                     </span>
                   </a>
                   <a href="#">
                     <span>
-                    <StarBorderIcon />
+                      <StarBorderIcon />
                     </span>
                   </a>
                 </p>
@@ -165,7 +164,7 @@ export default function CustomerProductDetails() {
                       data-type="minus"
                       data-field=""
                     >
-                     <RemoveIcon />
+                      <RemoveIcon />
                     </button>
                   </span>
                   <input
@@ -203,7 +202,7 @@ export default function CustomerProductDetails() {
         </div>
       </section>
 
-     <section class="pb-5">
+      <section class="pb-5">
         <div class="container ">
           <div class="row justify-content-center mb-3 pb-3">
             <div class="col-md-12 heading-section text-center">
@@ -266,7 +265,7 @@ export default function CustomerProductDetails() {
                         class="heart d-flex justify-content-center align-items-center "
                       >
                         <span>
-                         <FavoriteBorderIcon />
+                          <FavoriteBorderIcon />
                         </span>
                       </a>
                     </div>
@@ -304,7 +303,7 @@ export default function CustomerProductDetails() {
                         class="add-to-cart d-flex justify-content-center align-items-center text-center"
                       >
                         <span>
-                        <MenuIcon />
+                          <MenuIcon />
                         </span>
                       </a>
                       <a
@@ -312,7 +311,7 @@ export default function CustomerProductDetails() {
                         class="buy-now d-flex justify-content-center align-items-center mx-1"
                       >
                         <span>
-                         <ShoppingCartIcon />
+                          <ShoppingCartIcon />
                         </span>
                       </a>
                       <a
@@ -320,7 +319,7 @@ export default function CustomerProductDetails() {
                         class="heart d-flex justify-content-center align-items-center "
                       >
                         <span>
-                         <FavoriteBorderIcon />
+                          <FavoriteBorderIcon />
                         </span>
                       </a>
                     </div>
@@ -358,7 +357,7 @@ export default function CustomerProductDetails() {
                         class="add-to-cart d-flex justify-content-center align-items-center text-center"
                       >
                         <span>
-                         <MenuIcon/>
+                          <MenuIcon />
                         </span>
                       </a>
                       <a
@@ -366,7 +365,7 @@ export default function CustomerProductDetails() {
                         class="buy-now d-flex justify-content-center align-items-center mx-1"
                       >
                         <span>
-                         <ShoppingCartIcon />
+                          <ShoppingCartIcon />
                         </span>
                       </a>
                       <a
@@ -374,7 +373,7 @@ export default function CustomerProductDetails() {
                         class="heart d-flex justify-content-center align-items-center "
                       >
                         <span>
-                        <FavoriteBorderIcon/>
+                          <FavoriteBorderIcon />
                         </span>
                       </a>
                     </div>
@@ -412,7 +411,7 @@ export default function CustomerProductDetails() {
                         class="add-to-cart d-flex justify-content-center align-items-center text-center"
                       >
                         <span>
-                         <MenuIcon/>
+                          <MenuIcon />
                         </span>
                       </a>
                       <a
@@ -428,7 +427,7 @@ export default function CustomerProductDetails() {
                         class="heart d-flex justify-content-center align-items-center "
                       >
                         <span>
-                        <FavoriteBorderIcon/>
+                          <FavoriteBorderIcon />
                         </span>
                       </a>
                     </div>
