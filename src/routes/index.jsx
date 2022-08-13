@@ -26,7 +26,7 @@ import OrderDetails from "../pages/user/accounts/order/orderDetailsPage";
 import Profile from "../pages/user/accounts/profile";
 import Payment from "../pages/user/accounts/payment";
 import RegisterPage from "../pages/user/register/registerPage";
-import PageNotFound from "../pages/user/error";
+import PageNotFound from "../pages/user/pageNotFound";
 
 import RouterList from "./routerList";
 import AboutUs from "../pages/user/about";
@@ -68,7 +68,7 @@ const CustomRouters = () => {
        
       </Route>
 
-      <Route path="error" element={<PageNotFound />} />
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 };

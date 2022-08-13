@@ -7,10 +7,8 @@ const PageNotFound = () => {
   return (
     <div className="error-page">
       <div className="error-page-container">
-        <h1>404 Error Page</h1>
-        {/* <p class="zoom-area">
-          <b>CSS</b> animations to make a cool 404 page.{" "}
-        </p> */}
+        <h1>404 Error</h1>
+       <h1 className="error-text-color">Page Not Found</h1>
         <section class="error-container">
           <span>4</span>
           <span>

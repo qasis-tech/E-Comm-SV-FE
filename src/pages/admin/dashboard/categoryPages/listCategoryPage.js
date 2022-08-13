@@ -30,8 +30,11 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import NotDataAvailable from "../../../../components/NoDataAvailable";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+
+import "./list-category.styles.scss";
 
 const ListCategory = () => {
   const [state, setState] = React.useState({
@@ -83,52 +86,46 @@ const ListCategory = () => {
       </List>
     </Box>
   );
-  const [data1, setData1] = React.useState([]);
+  const [categoryList, setCategoryList] = React.useState([]);
   const [searchInput, setSearchInput] = React.useState("");
 
   const token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
   React.useEffect(() => {
-    axios
-      .get("http://localhost:4000/category", {
-        headers: { Authorization: `${token}` },
-      })
-      .then((res) => {
-        setData1(res.data.data);
-      })
-      .catch((err) => {
-        console.log("error", err);
-      });
+    handleSearch();
   }, []);
+
   const handleSearch = (searchValue) => {
     setSearchInput(searchValue);
     axios
-      .get("http://localhost:4000/category?search", {
+      .get("http://localhost:4000/category", {
         headers: {
           Authorization: `${token}`,
         },
       })
       .then((res) => {
         if (res) {
-          setData1(res.data.data);
+          setCategoryList(res.data.data);
         }
       })
       .catch((err) => {
-        console.log("err", err);
+        console.log("err in Category LIst", err);
+        setCategoryList([]);
       });
   };
+
   const navigate = useNavigate();
   return (
-    <Box>
-      <TableContainer component={Paper}>
-        <Grid item xs={2} style={{ display: "flex" }}>
-          <Grid item xs={4}>
+    <Box className="list-category">
+      <Grid container spacing={2} className="category-search">
+          <Grid item xs={11}>
             <TextField
+            fullWidth
               onChange={(e) => handleSearch(e.target.value)}
               label="Search"
               InputProps={{
                 endAdornment: (
-                  <InputAdornment>
+                  <InputAdornment position="end">
                     <IconButton>
                       <SearchIcon />
                     </IconButton>
@@ -137,7 +134,7 @@ const ListCategory = () => {
               }}
             />
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={1}>
             <div>
               {["right"].map((anchor) => (
                 <React.Fragment key={anchor}>
@@ -156,6 +153,7 @@ const ListCategory = () => {
             </div>
           </Grid>
         </Grid>
+      <TableContainer className="table-wrapper" component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
@@ -167,37 +165,50 @@ const ListCategory = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data1.map((item) => {
-              return (
-                <TableRow>
-                  <TableCell>{item._id}</TableCell>
-                  <TableCell component="th" scope="row">
-                    {item.label}
-                  </TableCell>
-                  <ul>
-                    {item.subCategory.map((e) => {
-                      return (
-                        <TableCell>
-                          <li>{e.label}</li>
+            {categoryList?.length
+              ? categoryList?.map((item) => {
+                  return (
+                    <TableRow key={item}>
+                      <TableCell>{item._id}</TableCell>
+                      <TableCell component="th" scope="row">
+                        {item.label}
+                      </TableCell>
+
+                      {item?.subCategory?.length ? (
+                        <TableCell
+                          sx={{ maxWidth: 350 }}
+                          className="d-flex flex-wrap"
+                        >
+                          {item?.subCategory?.map((e) => {
+                            return (
+                              <span className="border px-2 py-1 m-1 rounded shadow-sm text-center">
+                                {e.label}
+                              </span>
+                            );
+                          })}
                         </TableCell>
-                      );
-                    })}
-                  </ul>
-                  <TableCell>{item.createdAt}</TableCell>
-                  <TableCell>
-                    <Button variant="outlined">
-                      <DeleteIcon />
-                    </Button>
-                    <Button variant="outlined">
-                      <CreateIcon />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
+                      ) : (
+                        <TableCell>No sub categories</TableCell>
+                      )}
+
+                      <TableCell>{item.createdAt}</TableCell>
+                      <TableCell>
+                        <Button variant="outlined">
+                          <DeleteIcon />
+                        </Button>
+                        <Button variant="outlined">
+                          <CreateIcon />
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
+              : null}
           </TableBody>
         </Table>
       </TableContainer>
+
+      {!categoryList?.length && <NotDataAvailable />}
 
       <div style={{ position: "absolute", bottom: "4em", right: "4em" }}>
         <Fab
