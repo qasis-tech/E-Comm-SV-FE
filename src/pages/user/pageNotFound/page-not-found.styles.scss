@@ -1,6 +1,5 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,600,700');
-@import url('https://fonts.googleapis.com/css?family=Catamaran:400,800');
-
+@import url("https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300&display=swap");
+@import "../../../styles/variables.styles.scss";
 @keyframes shadowsdancing {
   0% {
     box-shadow: inset 30px 0 0 rgba(209, 242, 165, 0.4),
@@ -71,12 +70,20 @@
 /* demo stuff */
 .error-page {
   background-color: #416475;
-  height: 730px;
+  height: 750px;
+  font-family: "Comic Neue", cursive;
   .error-page-container{
     padding: 10em 0;
     h1 {
         text-align: center;
         color: white;
+        font-weight: 600;
+
+    }
+    .error-text-color{
+      color: #f85c91;
+      font-size: xxx-large;
+
     }
     .error-container {
         text-align: center;
