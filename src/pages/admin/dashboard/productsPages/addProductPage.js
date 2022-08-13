@@ -172,7 +172,10 @@ const AddProduct = () => {
                 {unitData?.length && (
                   <Autocomplete
                     options={unitData}
-                    getOptionLabel={(option) => (option ? option.label : "")}
+                    getOptionLabel={(option) => option.label || ""}
+                    isOptionEqualToValue={(option, value) =>
+                      option.label === value.label
+                    }
                     onChange={(e, val) => handleUnit(e, val)}
                     value={selectedUnit}
                     renderInput={(params) => (
@@ -187,6 +190,10 @@ const AddProduct = () => {
                 {categoryData?.length && (
                   <Autocomplete
                     options={categoryData}
+                    getOptionLabel={(option) => option.label || ""}
+                    isOptionEqualToValue={(option, value) =>
+                      option._id === value._id
+                    }
                     onChange={(e, val) => handleCategory(e, val)}
                     value={selectedCategory}
                     renderInput={(params) => (
@@ -201,6 +208,10 @@ const AddProduct = () => {
                     selectedCategory?.subCategory?.length
                       ? selectedCategory?.subCategory
                       : []
+                  }
+                  getOptionLabel={(option) => option.label || ""}
+                  isOptionEqualToValue={(option, value) =>
+                    option.label === value.label
                   }
                   onChange={(e, val) => handleSubCategory(e, val)}
                   value={selectedSubCategory}
@@ -263,6 +274,10 @@ const AddProduct = () => {
                 {unitData?.length && (
                   <Autocomplete
                     options={unitData}
+                    getOptionLabel={(option) => option.label || ""}
+                    isOptionEqualToValue={(option, value) =>
+                      option.label === value.label
+                    }
                     onChange={(e, val) => handleOfferUnit(e, val)}
                     value={selectedOfferunit}
                     renderInput={(params) => (
