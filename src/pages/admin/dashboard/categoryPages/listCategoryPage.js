@@ -103,8 +103,7 @@ const ListCategory = () => {
       })
       .then((res) => {
         if (res) {
-          // setCategoryList(res.data.data);
-          setCategoryList([]);
+          setCategoryList(res.data.data);
         }
       })
       .catch((err) => {
