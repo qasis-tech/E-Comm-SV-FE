@@ -66,7 +66,7 @@ const HeaderComponent = () => {
   };
   const navigate = useNavigate();
   return (
-    <div>
+    <div className="header-container">
       <div className="py-1 top-section">
         <div className="container">
           <div className="row no-gutters d-flex align-items-start align-items-center px-md-0">

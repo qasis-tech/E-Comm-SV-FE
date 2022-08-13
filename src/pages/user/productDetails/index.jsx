@@ -20,10 +20,10 @@ export default function CustomerProductDetails() {
   const navigation = useNavigate();
   const style = { backgroundImage: "url('../../../assets/bg_1.jpg')" };
   return (
-    <div>
+    <div className="product-details-container">
       <HeaderComponent />
 
-      <div class="hero-wrap hero-bread" style={style}>
+      <div class="product-details-wrap hero-bread" style={style}>
         <div class="container">
           <div class="row no-gutters slider-text align-items-center justify-content-center">
             <div class="col-md-9 text-center">
@@ -39,11 +39,11 @@ export default function CustomerProductDetails() {
         </div>
       </div>
 
-      <section class="ftco-section">
+      <section class="product-details-section">
         <div class="container">
           <div class="row">
             <div class="col-lg-6">
-              <div style={{ height: "65%" }}>
+              <div style={{ height: "55%" }}>
                 <a href={ProductImage} class="image-popup">
                   <img
                     src={ProductImage}
