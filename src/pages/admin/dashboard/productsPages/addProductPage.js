@@ -172,6 +172,7 @@ const AddProduct = () => {
                 {unitData?.length && (
                   <Autocomplete
                     options={unitData}
+                    getOptionLabel={(option) => (option ? option.label : "")}
                     onChange={(e, val) => handleUnit(e, val)}
                     value={selectedUnit}
                     renderInput={(params) => (
@@ -224,7 +225,7 @@ const AddProduct = () => {
               {featureData.length &&
                 featureData.map((item, index) => {
                   return (
-                    <Grid container spacing={2}>
+                    <Grid key={index} container spacing={2}>
                       <Grid item xs={4}>
                         <TextField
                           fullWidth

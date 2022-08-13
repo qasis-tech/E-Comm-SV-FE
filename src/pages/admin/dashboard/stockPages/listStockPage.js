@@ -115,7 +115,7 @@ const StockList = () => {
               label="Search"
               InputProps={{
                 endAdornment: (
-                  <InputAdornment>
+                  <InputAdornment position="end">
                     <IconButton>
                       <SearchIcon />
                     </IconButton>
@@ -186,7 +186,10 @@ const StockList = () => {
           <TableBody>
             {listData.map((listitem) => {
               return (
-                <TableRow onClick={() => navigate("/stock-details")}>
+                <TableRow
+                  key={listitem._id}
+                  onClick={() => navigate("/stock-details")}
+                >
                   <TableCell component="th" scope="row">
                     {listitem.category}
                   </TableCell>
@@ -214,7 +217,7 @@ const StockList = () => {
         <Fab
           color="primary"
           aria-label="add"
-          onClick={() => navigate("/add-stock")}
+          onClick={() => navigate("/admin/add-stock")}
         >
           <AddIcon />
         </Fab>

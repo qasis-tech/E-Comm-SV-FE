@@ -108,7 +108,7 @@ const ListProduct = () => {
               label="Search"
               InputProps={{
                 endAdornment: (
-                  <InputAdornment>
+                  <InputAdornment position="end">
                     <IconButton>
                       <SearchIcon />
                     </IconButton>
@@ -150,7 +150,7 @@ const ListProduct = () => {
           <TableBody>
             {productData?.map((product) => {
               return (
-                <TableRow>
+                <TableRow key={product._id}>
                   <TableCell component="th" scope="row">
                     {product.name}
                   </TableCell>
