@@ -34,6 +34,8 @@ import NotDataAvailable from "../../../../components/NoDataAvailable";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+import "./list-category.styles.scss";
+
 const ListCategory = () => {
   const [state, setState] = React.useState({
     right: false,
@@ -114,11 +116,11 @@ const ListCategory = () => {
 
   const navigate = useNavigate();
   return (
-    <Box>
-      <TableContainer component={Paper}>
-        <Grid item xs={2} style={{ display: "flex" }}>
-          <Grid item xs={4}>
+    <Box className="list-category">
+      <Grid container spacing={2} className="category-search">
+          <Grid item xs={11}>
             <TextField
+            fullWidth
               onChange={(e) => handleSearch(e.target.value)}
               label="Search"
               InputProps={{
@@ -132,7 +134,7 @@ const ListCategory = () => {
               }}
             />
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={1}>
             <div>
               {["right"].map((anchor) => (
                 <React.Fragment key={anchor}>
@@ -151,6 +153,7 @@ const ListCategory = () => {
             </div>
           </Grid>
         </Grid>
+      <TableContainer className="table-wrapper" component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
