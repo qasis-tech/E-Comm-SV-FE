@@ -153,9 +153,18 @@
   width: 100%;
   margin-bottom: 30px;
   position: relative;
-  //@include transition(.3s);
   border: 1px solid lighten($black, 94%);
-
+  &:hover {
+    box-shadow: 0px 7px 15px -5px $shadow-color;
+    .pricing {
+      opacity: 0;
+    }
+    .text {
+      .bottom-area {
+        opacity: 1;
+      }
+    }
+  }
   .img-prod {
     position: relative;
     display: block;
@@ -169,7 +178,6 @@
       content: "";
       opacity: 0;
       background: $primary;
-      //@include transition(.3s);
     }
     .status-left {
       position: absolute;
@@ -199,22 +207,11 @@
       -ms-transform: scale(1);
       -o-transform: scale(1);
       transform: scale(1);
-      //@include transition(.3s);
-    }
-    &:hover,
-    &:focus {
-      img {
-        -webkit-transform: scale(1.1);
-        -moz-transform: scale(1.1);
-        -ms-transform: scale(1.1);
-        -o-transform: scale(1.1);
+      &:hover,
+      &:focus {
         transform: scale(1.1);
       }
     }
-  }
-  .img {
-    display: block;
-    height: 500px;
   }
   .icon {
     width: 60px;
@@ -222,19 +219,8 @@
     background: $white;
     opacity: 0;
     border-radius: 50%;
-    //@include transition(.3s);
     span {
       color: $black;
-    }
-  }
-  &:hover {
-    .icon {
-      opacity: 1;
-    }
-    .img-prod {
-      .overlay {
-        opacity: 0;
-      }
     }
   }
   .text {
@@ -267,44 +253,9 @@
     }
     .pricing {
       width: 100%;
-      //@include transition(.3s);
-    }
-
-    .bottom-area {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      opacity: 0;
-      //@include transition(.3s);
-      a {
-        color: $white;
-        width: 100%;
-        background: $primary;
-        width: 40px;
-        height: 40px;
-        margin: 0 auto;
-        border-radius: 50%;
-      }
-      .m-auto {
-        margin: 0 auto;
-      }
-      // @include media-breakpoint-down(md){
-      // 	opacity: 1;
-      // }
     }
   }
-  &:hover {
-    box-shadow: 0px 7px 15px -5px $shadow-color;
-    .pricing {
-      opacity: 0;
-    }
-    .text {
-      .bottom-area {
-        opacity: 1;
-      }
-    }
-  }
+ 
 }
 
 //DEAL OF THE DAY

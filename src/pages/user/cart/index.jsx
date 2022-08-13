@@ -12,7 +12,7 @@ import FooterComponent from "../../../components/Footer";
 export default function CartPage() {
   const navigation = useNavigate();
   return (
-    <div>
+    <div className="cart-container">
       <HeaderComponent />
       <div class="hero-wrap hero-bread">
         <div class="container">
@@ -29,7 +29,7 @@ export default function CartPage() {
           </div>
         </div>
       </div>
-      <section class="ftco-section ftco-cart mt-5 mb-5">
+      <section class="ftco-cart mt-5 mb-5">
         <div class="container">
           <div class="row">
             <div class="col-md-12 ftco-animate">
@@ -230,10 +230,6 @@ export default function CartPage() {
         </div>
       </section>
       <FooterComponent />
-
-      {/* <a href="#" class="cart_float" target="_blank"> 
-        <ShoppingCartIcon className="cart-icon"/>
-      </a> */}
     </div>
   );
 }

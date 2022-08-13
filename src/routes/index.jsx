@@ -26,13 +26,14 @@ import OrderDetails from "../pages/user/accounts/order/orderDetailsPage";
 import Profile from "../pages/user/accounts/profile";
 import Payment from "../pages/user/accounts/payment";
 import RegisterPage from "../pages/user/register/registerPage";
+import PageNotFound from "../pages/user/error";
 
 import RouterList from "./routerList";
 import AboutUs from "../pages/user/about";
 
-const PageNotFound = () => {
-  return <div>Page Not Found</div>;
-};
+// const PageNotFound = () => {
+//   return <div>Page Not Found</div>;
+// };
 
 const CustomRouters = () => {
   return (
@@ -67,7 +68,7 @@ const CustomRouters = () => {
        
       </Route>
 
-      <Route path="*" element={<PageNotFound />} />
+      <Route path="error" element={<PageNotFound />} />
     </Routes>
   );
 };
