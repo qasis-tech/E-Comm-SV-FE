@@ -4,6 +4,7 @@ const List = {
     login: "/login",
     register: "register",
     about: "about",
+    contact:"contact",
   },
   admin: {
     admin: "/admin",

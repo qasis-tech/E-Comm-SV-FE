@@ -126,7 +126,7 @@ const FooterComponent = () => {
                         USA
                       </span>
                     </li>
-                    <li>
+                    <li style={{marginTop:"1em"}}>
                       <a href="#" className="text-decoration-none">
                         <span>
                           <LocalPhoneIcon />

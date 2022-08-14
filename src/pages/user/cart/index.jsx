@@ -4,6 +4,8 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 import Product1 from "../../../assets/product-2.jpg";
 import Product2 from "../../../assets/product-6.jpg";
+import BackgroundImage from "../../../assets/bg_1.jpg";
+
 import "./cart.styles.scss";
 import "../../../styles/button.styles.scss";
 import HeaderComponent from "../../../components/Header";
@@ -14,7 +16,7 @@ export default function CartPage() {
   return (
     <div className="cart-container">
       <HeaderComponent />
-      <div class="hero-wrap hero-bread">
+      <div class="hero-wrap hero-bread" style={{ backgroundImage: `url(${BackgroundImage})` }}>
         <div class="container">
           <div class="row no-gutters slider-text align-items-center justify-content-center">
             <div class="col-md-9 text-center">
@@ -22,9 +24,9 @@ export default function CartPage() {
                 <span class="mr-2">
                   <a href="index.html">Home</a>
                 </span>{" "}
-                <span>Product</span>
+                <span>Cart</span>
               </p>
-              <h1 class="mb-0 bread">Product</h1>
+              <h1 class="mb-0 bread">Cart</h1>
             </div>
           </div>
         </div>
