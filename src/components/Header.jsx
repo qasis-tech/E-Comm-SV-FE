@@ -138,18 +138,8 @@ const HeaderComponent = () => {
             id="ftco-nav"
           >
             <ul className="navbar-nav ml-auto">
-              {/* <Search>
-                <SearchIconWrapper>
-                  <SearchIcon />
-                </SearchIconWrapper>
-                <StyledInputBase
-                  style={{ marginTop: "1em", width: "15ch" }}
-                  placeholder="Search"
-                  inputProps={{ "aria-label": "search" }}
-                />
-              </Search> */}
               <li className="nav-item active">
-                <a href="index.html" className="nav-link">
+                <a onClick={() => navigate("/")} className="nav-link">
                   Home
                 </a>
               </li>
@@ -194,12 +184,12 @@ const HeaderComponent = () => {
                 </Select>
               </li>
               <li className="nav-item">
-                <a className="nav-link" onClick={() => navigate("about")}>
+                <a className="nav-link" onClick={() => navigate("/about")}>
                   About
                 </a>
               </li>
               <li className="nav-item">
-                <a href="#" className="nav-link">
+                <a onClick={() => navigate("/contact")} className="nav-link">
                   Contact
                 </a>
               </li>

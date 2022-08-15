@@ -7,7 +7,7 @@ const PageNotFound = () => {
 };
 
 const App = () => {
-  return <CustomRouters></CustomRouters>;
+  return <CustomRouters />;
 };
 
 export default App;
