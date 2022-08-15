@@ -10,16 +10,21 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import "yup-phone";
+import axios from "axios";
+import { BASE_URL, URLS } from "../../../../config/urls.config";
+import { useNavigate } from "react-router-dom";
 
-const userdetailspageSchema = yup
+const userdetailsSchema = yup
   .object()
   .shape({
-    userName: yup.string().required(),
+    userFirstName: yup.string().required(),
+    userLastName: yup.string().required(),
     userEmail: yup.string().email().required(),
     userMobilenumber: yup
       .string()
       .phone("IN", true, "Mobile Number is invalid")
       .required(),
+    userPassword: yup.string().min(8).required("Password is required"),
     userLocation: yup.string().required(),
     userPrimaryaddress: yup.string().required(),
     userOtheraddress: yup.string().required(),
@@ -35,32 +40,78 @@ const AddUser = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(userdetailspageSchema),
+    resolver: yupResolver(userdetailsSchema),
   });
+  const navigate = useNavigate();
 
-  const handleUserDetailspage = (data) => {
-    console.log("UserDetailspage Details", data);
+  const handleUserDetails = ({
+    userFirstName,
+    userLastName,
+    userEmail,
+    userMobilenumber,
+    userLocation,
+    userDob,
+    userPassword,
+    userPrimaryaddress,
+    userOtheraddress,
+    userPincode,
+    userGender,
+  }) => {
+    let payload = {
+      firstName: userFirstName,
+      lastName: userLastName,
+      mobileNumber: userMobilenumber,
+      email: userEmail,
+      gender: userGender,
+      dob: userDob,
+      pinCode: userPincode,
+      password: userPassword,
+    };
+    axios
+      .post("http://localhost:4000/signup", payload, {
+        "Content-Type": "application/json",
+      })
+      .then((res) => {
+        console.log("ress=>=>", res);
+        // if (res.data.data) {
+        //   // if (res.data.success === false) {
+        //   //   alert(res.data.message);
+        //   // }
+        //   navigate("/login");
+        // }
+      })
+      .catch((err) => {
+        console.log("errors swwer", err);
+      });
   };
+
   return (
     <React.Fragment>
       <Container maxWidth="sm">
         <Box sx={{ flexGrow: 1 }} noValidate autoComplete="off">
-          <form onSubmit={handleSubmit(handleUserDetailspage)}>
+          <form onSubmit={handleSubmit(handleUserDetails)}>
             <h3>User </h3>
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <TextField
-                  {...register("userName")}
-                  id="outlined-read-only-input"
-                  label="Name"
-                  error={errors?.userName}
+                  {...register("userFirstName")}
+                  label="UserFirstName"
+                  error={errors?.userFirstName}
                 />
-                <p>{errors?.userName?.message}</p>
+                <p>{errors?.userFirstName?.message}</p>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  label="UserLastName"
+                  {...register("userLastName")}
+                  variant="outlined"
+                  error={errors?.userLastName}
+                />
+                <p>{errors?.userLastName?.message}</p>
               </Grid>
               <Grid item xs={6}>
                 <TextField
                   {...register("userEmail")}
-                  id="outlined-read-only-input"
                   label="Email"
                   error={errors?.userEmail}
                 />
@@ -69,7 +120,6 @@ const AddUser = () => {
               <Grid item xs={6}>
                 <TextField
                   {...register("userMobilenumber")}
-                  id="outlined-read-only-input"
                   label="Phone Number"
                   error={errors?.userMobilenumber}
                 />
@@ -78,17 +128,38 @@ const AddUser = () => {
               <Grid item xs={6}>
                 <TextField
                   {...register("userLocation")}
-                  id="outlined-read-only-input"
                   label="Location"
                   error={errors?.userLocation}
                 />
                 <p>{errors?.userLocation?.message}</p>
               </Grid>
+              <Grid item xs={6} className="dob">
+                <TextField
+                  id="date"
+                  label="DOB"
+                  type="date"
+                  fullWidth
+                  variant="outlined"
+                  {...register("userDob")}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  type="password"
+                  label="Password"
+                  {...register("userPassword")}
+                  variant="outlined"
+                  error={errors?.userPassword}
+                />
+                <p>{errors?.userPassword?.message}</p>
+              </Grid>
               <Grid item xs={12}>
                 <TextField
                   {...register("userPrimaryaddress")}
                   fullWidth
-                  id="outlined-multiline-static"
                   label="Primary Address"
                   multiline
                   rows={4}
@@ -100,7 +171,6 @@ const AddUser = () => {
                 <TextField
                   {...register("userOtheraddress")}
                   fullWidth
-                  id="outlined-multiline-static"
                   label="Other Address"
                   multiline
                   rows={4}
@@ -111,7 +181,6 @@ const AddUser = () => {
               <Grid item xs={4}>
                 <TextField
                   {...register("userPincode")}
-                  id="outlined-read-only-input"
                   label="Pin"
                   error={errors?.userPincode}
                 />

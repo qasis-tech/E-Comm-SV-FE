@@ -164,7 +164,7 @@ const UserList = () => {
                     {useritem.email}
                   </TableCell>
                   <TableCell>{useritem.mobileNumber}</TableCell>
-                  <TableCell>thrissur</TableCell>
+                  <TableCell>{useritem.location}</TableCell>
                   <TableCell>25-03-2022</TableCell>
                   <TableCell>25-03-2022</TableCell>
                   <TableCell>
