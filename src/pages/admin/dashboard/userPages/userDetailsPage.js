@@ -4,6 +4,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import "yup-phone";
 import { useParams } from "react-router-dom";
+import axios from "axios";
+import { URLS } from "../../../../config/urls.config";
 
 import { Box, Button, TextField } from "@mui/material";
 import Container from "@mui/material/Container";
@@ -16,7 +18,8 @@ import FormLabel from "@mui/material/FormLabel";
 const userdetailspageSchema = yup
   .object()
   .shape({
-    userName: yup.string().required(),
+    userFirstName: yup.string().required(),
+    userLastName: yup.string().required(),
     userEmail: yup.string().email().required(),
     userMobilenumber: yup
       .string()
@@ -36,6 +39,7 @@ const UserDetails = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm({
     resolver: yupResolver(userdetailspageSchema),
   });
@@ -47,32 +51,57 @@ const UserDetails = () => {
     getDetailsApi();
   }, []);
 
-  const getDetailsApi = () => {};
+  const getDetailsApi = () => {
+    axios
+      .get(`${process.env.REACT_APP_BASE_URL}${URLS.signup}/${id}`)
+      .then((res) => {
+        console.log("ress =>>", res);
+        setValue("userFirstName", res.data.data.firstName);
+        setValue("userLastName", res.data.data.lastName);
+        setValue("userMobilenumber", res.data.data.mobileNumber);
+        setValue("userEmail", res.data.data.email);
+        setValue("userPincode", res.data.data.pinCode);
+        setValue("userGender", res.data.data.gender);
+      })
+      .catch((err) => {
+        console.log("err in Category LIst", err);
+      });
+  };
 
-  const handleUserDetailspage = (data) => {
-    console.log("UserDetailspage Details", data);
+  const handleUserDetails = ({
+    userLocation,
+    userPrimaryaddress,
+    userOtheraddress,
+  }) => {
+    // console.log("UserDetailspage Details", data);
   };
   return (
     <React.Fragment>
       <Container maxWidth="sm">
         <Box sx={{ flexGrow: 1 }} noValidate autoComplete="off">
-          <form onSubmit={handleSubmit(handleUserDetailspage)}>
+          <form onSubmit={handleSubmit(handleUserDetails)}>
             <h3>User Details</h3>
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <TextField
-                  {...register("userName")}
-                  id="outlined-read-only-input"
-                  label="Name"
-                  error={errors?.userName}
+                  {...register("userFirstName")}
+                  placeholder="Firstname"
+                  error={errors?.userFirstName}
                 />
-                <p>{errors?.userName?.message}</p>
+                <p>{errors?.userFirstName?.message}</p>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  {...register("userLastName")}
+                  placeholder="LastName"
+                  error={errors?.userLastName}
+                />
+                <p>{errors?.userLastName?.message}</p>
               </Grid>
               <Grid item xs={6}>
                 <TextField
                   {...register("userEmail")}
-                  id="outlined-read-only-input"
-                  label="Email"
+                  placeholder="Email"
                   error={errors?.userEmail}
                 />
                 <p>{errors?.userEmail?.message}</p>
@@ -80,8 +109,7 @@ const UserDetails = () => {
               <Grid item xs={6}>
                 <TextField
                   {...register("userMobilenumber")}
-                  id="outlined-read-only-input"
-                  label="Phone Number"
+                  placeholder="Phone Number"
                   error={errors?.userMobilenumber}
                 />
                 <p>{errors?.userMobilenumber?.message}</p>
@@ -89,8 +117,7 @@ const UserDetails = () => {
               <Grid item xs={6}>
                 <TextField
                   {...register("userLocation")}
-                  id="outlined-read-only-input"
-                  label="Location"
+                  placeholder="Location"
                   error={errors?.userLocation}
                 />
                 <p>{errors?.userLocation?.message}</p>
@@ -99,8 +126,7 @@ const UserDetails = () => {
                 <TextField
                   {...register("userPrimaryaddress")}
                   fullWidth
-                  id="outlined-multiline-static"
-                  label="Primary Address"
+                  placeholder="Primary Address"
                   multiline
                   rows={4}
                   error={errors?.userPrimaryaddress}
@@ -111,8 +137,7 @@ const UserDetails = () => {
                 <TextField
                   {...register("userOtheraddress")}
                   fullWidth
-                  id="outlined-multiline-static"
-                  label="Other Address"
+                  placeholder="Other Address"
                   multiline
                   rows={4}
                   error={errors?.userOtheraddress}
@@ -122,8 +147,7 @@ const UserDetails = () => {
               <Grid item xs={4}>
                 <TextField
                   {...register("userPincode")}
-                  id="outlined-read-only-input"
-                  label="Pin"
+                  placeholder="Pin"
                   error={errors?.userPincode}
                 />
                 <p>{errors?.userPincode?.message}</p>

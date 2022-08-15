@@ -73,12 +73,6 @@ const AddUser = () => {
       })
       .then((res) => {
         console.log("ress=>=>", res);
-        // if (res.data.data) {
-        //   // if (res.data.success === false) {
-        //   //   alert(res.data.message);
-        //   // }
-        //   navigate("/login");
-        // }
       })
       .catch((err) => {
         console.log("errors swwer", err);
