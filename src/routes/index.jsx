@@ -65,9 +65,8 @@ const CustomRouters = () => {
         <Route path="stock-details" element={<StockDetails />} />
         <Route path="users" element={<UserList />} />
         <Route path="add-users" element={<AddUser />} />
-        <Route path="users-details" element={<UserDetails />} />
+        <Route path="users-details/:id" element={<UserDetails />} />
         <Route path="add-user" element={<AddUser />} />
-       
       </Route>
 
       <Route path="*" element={<PageNotFound />} />

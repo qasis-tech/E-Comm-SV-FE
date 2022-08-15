@@ -155,7 +155,9 @@ const UserList = () => {
               return (
                 <TableRow
                   key={useritem._id}
-                  onClick={() => navigate("/admin/users-details")}
+                  onClick={() =>
+                    navigate(`/admin/users-details/${useritem._id}`)
+                  }
                 >
                   <TableCell component="th" scope="row">
                     {useritem.firstName + " " + useritem.lastName}

@@ -1,15 +1,17 @@
-import { Box, Button, TextField } from "@mui/material";
 import * as React from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import "yup-phone";
+import { useParams } from "react-router-dom";
+
+import { Box, Button, TextField } from "@mui/material";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import "yup-phone";
 
 const userdetailspageSchema = yup
   .object()
@@ -37,6 +39,15 @@ const UserDetails = () => {
   } = useForm({
     resolver: yupResolver(userdetailspageSchema),
   });
+
+  const { id } = useParams();
+  console.log("parms ==>", id);
+
+  React.useEffect(() => {
+    getDetailsApi();
+  }, []);
+
+  const getDetailsApi = () => {};
 
   const handleUserDetailspage = (data) => {
     console.log("UserDetailspage Details", data);
