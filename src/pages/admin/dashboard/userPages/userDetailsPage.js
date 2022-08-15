@@ -14,6 +14,7 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
+import { getValue } from "@testing-library/user-event/dist/utils";
 
 const userdetailspageSchema = yup
   .object()
@@ -31,6 +32,7 @@ const userdetailspageSchema = yup
     userPincode: yup
       .string()
       .matches(/^[1-9][0-9]{5}$/, "Invalid zipcode (682315)"),
+    userGender: yup.string().required(),
   })
   .required();
 
@@ -40,6 +42,7 @@ const UserDetails = () => {
     handleSubmit,
     formState: { errors },
     setValue,
+    getValues,
   } = useForm({
     resolver: yupResolver(userdetailspageSchema),
   });
@@ -62,6 +65,9 @@ const UserDetails = () => {
         setValue("userEmail", res.data.data.email);
         setValue("userPincode", res.data.data.pinCode);
         setValue("userGender", res.data.data.gender);
+      })
+      .then(() => {
+        console.log("getvalues", getValues("userGender"));
       })
       .catch((err) => {
         console.log("err in Category LIst", err);
@@ -159,7 +165,6 @@ const UserDetails = () => {
                 <RadioGroup
                   row
                   aria-labelledby="demo-row-radio-buttons-group-label"
-                  defaultValue="female"
                   name="row-radio-buttons-group"
                 >
                   <FormControlLabel
@@ -167,12 +172,17 @@ const UserDetails = () => {
                     value="female"
                     control={<Radio />}
                     label="Female"
+                    type="radio"
+                    checked={true}
                   />
                   <FormControlLabel
                     {...register("userGender", { required: true })}
                     value="male"
                     control={<Radio />}
                     label="Male"
+                    type="radio"
+                    checked={false}
+                    // checked={getValues("userGender") == "male"}
                   />
                 </RadioGroup>
               </Grid>
