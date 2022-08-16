@@ -3,4 +3,5 @@ export const URLS = {
   signup: "/signup",
   product: "/product",
   stock: "/stock",
+  order: "/order",
 };

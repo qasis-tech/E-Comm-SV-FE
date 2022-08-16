@@ -21,12 +21,14 @@ import PublicRouting from "../routes/publicRoutes";
 import PrivateRouting from "../routes/privateRoutes";
 import CustomerProductDetails from "../pages/user/productDetails";
 import CartPage from "../pages/user/cart";
-import OrderList from "../pages/user/accounts/order";
-import OrderDetails from "../pages/user/accounts/order/orderDetailsPage";
+// import OrderList from "../pages/user/accounts/order";
+// import OrderDetails from "../pages/user/accounts/order/orderDetailsPage";
 import Profile from "../pages/user/accounts/profile";
 import Payment from "../pages/user/accounts/payment";
 import RegisterPage from "../pages/user/register/registerPage";
 import PageNotFound from "../pages/user/pageNotFound";
+import OrderDetails from "../pages/admin/dashboard/orderPages/orderDetailsPage";
+import OrderList from "../pages/admin/dashboard/orderPages/orderPage";
 
 import RouterList from "./routerList";
 import AboutUs from "../pages/user/about";
@@ -75,6 +77,9 @@ const CustomRouters = () => {
         <Route path="add-users" element={<AddUser />} />
         <Route path="users-details/:id" element={<UserDetails />} />
         <Route path="add-user" element={<AddUser />} />
+        <Route path="order-details" element={<OrderDetails />} />
+        <Route path="order-list" element={<OrderList />} />
+        
       </Route>
 
       <Route path="*" element={<PageNotFound />} />

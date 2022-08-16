@@ -4,6 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
 import { URLS } from "../../../../config/urls.config";
+import { useParams } from "react-router-dom";
 
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -12,20 +13,19 @@ import { Box, Button, MenuItem, TextField } from "@mui/material";
 const orderdetailsSchema = yup
   .object()
   .shape({
-    userFirstName: yup.string().required(),
-    userLastName: yup.string().required(),
-    userEmail: yup.string().email().required(),
-    userMobilenumber: yup
+    orderName: yup.string().required(),
+    orderCategory: yup.string().required(),
+    orderSubcategory: yup.string().required(),
+    orderEmail: yup.string().email().required(),
+    orderAddress: yup.string().required(),
+    orderLocation: yup.string().required(),
+    orderMobilenumber: yup
       .string()
       .phone("IN", true, "Mobile Number is invalid")
       .required(),
-    userLocation: yup.string().required(),
-    userPrimaryaddress: yup.string().required(),
-    userOtheraddress: yup.string().required(),
-    userPincode: yup
+    orderPincode: yup
       .string()
       .matches(/^[1-9][0-9]{5}$/, "Invalid zipcode (682315)"),
-    userGender: yup.string().required(),
   })
   .required();
 const currencies = [
@@ -57,6 +57,31 @@ const OrderDetails = () => {
     resolver: yupResolver(orderdetailsSchema),
   });
 
+  const { id } = useParams();
+  console.log("parms ==>", id);
+
+  React.useEffect(() => {
+    getOrderDetailsApi();
+  }, []);
+
+  const getOrderDetailsApi = () => {
+    axios
+      .get(`${process.env.REACT_APP_BASE_URL}${URLS.order}/${id}`)
+      .then((res) => {
+        console.log("ress =>>", res);
+        // setValue("userFirstName", res.data.data.firstName);
+        // setValue("userLastName", res.data.data.lastName);
+        // setValue("userMobilenumber", res.data.data.mobileNumber);
+        // setValue("userEmail", res.data.data.email);
+        // setValue("userPincode", res.data.data.pinCode);
+        // setValue("userGender", res.data.data.gender);
+      })
+
+      .catch((err) => {
+        console.log("err in Category LIst", err);
+      });
+  };
+
   const [currency, setCurrency] = React.useState("Fruits");
   const handleOrderDetails = () => {};
 
@@ -75,7 +100,6 @@ const OrderDetails = () => {
                   {...register("orderName")}
                   id="outlined-read-only-input"
                   label="Name"
-                  defaultValue="Apple"
                   InputProps={{
                     readOnly: true,
                   }}
@@ -86,7 +110,6 @@ const OrderDetails = () => {
                   {...register("orderCategory")}
                   id="outlined-read-only-input"
                   label="Category"
-                  defaultValue="Fruits"
                   InputProps={{
                     readOnly: true,
                   }}
@@ -97,7 +120,6 @@ const OrderDetails = () => {
                   {...register("orderSubcategory")}
                   id="outlined-read-only-input"
                   label="Subcategory"
-                  defaultValue="Dry fruits"
                   InputProps={{
                     readOnly: true,
                   }}
@@ -108,7 +130,6 @@ const OrderDetails = () => {
                   {...register("orderEmail")}
                   id="outlined-read-only-input"
                   label="Email"
-                  defaultValue="abc@gmail.com"
                   InputProps={{
                     readOnly: true,
                   }}
@@ -120,7 +141,6 @@ const OrderDetails = () => {
                   fullWidth
                   id="outlined-multiline-static"
                   label="Address"
-                  defaultValue="jhbguydfwdixkwsuxdsuhxsx"
                   multiline
                   rows={4}
                   InputProps={{
@@ -133,7 +153,6 @@ const OrderDetails = () => {
                   {...register("orderLocation")}
                   id="outlined-read-only-input"
                   label="Location"
-                  defaultValue="Kaloor"
                   InputProps={{
                     readOnly: true,
                   }}
@@ -144,7 +163,6 @@ const OrderDetails = () => {
                   {...register("orderMobilenumber")}
                   id="outlined-read-only-input"
                   label="Phone Number"
-                  defaultValue="+91-76490254"
                   InputProps={{
                     readOnly: true,
                   }}
@@ -155,7 +173,6 @@ const OrderDetails = () => {
                   {...register("orderPincode")}
                   id="outlined-read-only-input"
                   label="Pincode"
-                  defaultValue="680586"
                   InputProps={{
                     readOnly: true,
                   }}

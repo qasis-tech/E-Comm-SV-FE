@@ -22,6 +22,8 @@ import ShoppingCartCheckoutIcon from "@mui/icons-material/ShoppingCartCheckout";
 import CheckIcon from "@mui/icons-material/Check";
 import { useNavigate } from "react-router-dom";
 import * as React from "react";
+import axios from "axios";
+import { URLS } from "../../../../config/urls.config";
 
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
@@ -84,6 +86,24 @@ const OrderList = () => {
       </List>
     </Box>
   );
+  const [orderData, setOrderData] = React.useState([]);
+  const [orderListData, setOrderListData] = React.useState([]);
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
+  React.useEffect(() => {
+    axios
+      .get(`${process.env.REACT_APP_BASE_URL}${URLS.order}`, {
+        headers: { Authorization: ` ${token}` },
+      })
+      .then((res) => {
+        console.log("reesss order", res);
+        console.log("product details", res.data.data);
+        setOrderData(res.data.data);
+      })
+      .catch((err) => {
+        console.log("error", err);
+      });
+  }, []);
   const navigate = useNavigate();
   return (
     <Box>
@@ -175,19 +195,42 @@ const OrderList = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableRow onClick={() => navigate("/order-details")}>
-              <TableCell component="th" scope="row">
-                #80632
-              </TableCell>
-              <TableCell component="th" scope="row">
-                Fruits
-              </TableCell>
-              <TableCell>dry fruits</TableCell>
-              <TableCell>+91-8953013692</TableCell>
-              <TableCell>
-                <Chip label="Shipped" color="primary" />
-              </TableCell>
-            </TableRow>
+            {orderData?.length
+              ? orderData.map((orderItem) => {
+                  return (
+                    <TableRow
+                      key={orderItem._id}
+                      onClick={() => navigate("/order-details")}
+                    >
+                      <TableCell component="th" scope="row">
+                        {orderItem._id}
+                      </TableCell>
+                      {orderItem?.product?.productList?.length ? (
+                        <TableCell
+                          sx={{ maxWidth: 350 }}
+                          className="d-flex flex-wrap"
+                        >
+                          {orderItem?.product?.productList?.map((e) => {
+                            return (
+                              <span className="border px-2 py-1 m-1 rounded shadow-sm text-center">
+                                {e.name}
+                              </span>
+                            );
+                          })}
+                        </TableCell>
+                      ) : (
+                        <TableCell>No categories</TableCell>
+                      )}
+
+                      <TableCell>dry fruits</TableCell>
+                      <TableCell>{orderItem.mobileNumber}</TableCell>
+                      <TableCell>
+                        <Chip label="Shipped" color="primary" />
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
+              : null}
           </TableBody>
         </Table>
       </TableContainer>
