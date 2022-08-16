@@ -2,6 +2,7 @@ import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { URLS } from "../../../../config/urls.config";
+import "./list-product.styles.scss";
 
 import {
   Table,
@@ -101,42 +102,43 @@ const ListProduct = () => {
   }, []);
   const navigate = useNavigate();
   return (
-    <Box>
-      <TableContainer component={Paper}>
-        <Grid item xs={2} style={{ display: "flex" }}>
-          <Grid item xs={4}>
-            <TextField
-              label="Search"
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton>
-                      <SearchIcon />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Grid>
-          <Grid item xs={2}>
-            <div>
-              {["right"].map((anchor) => (
-                <React.Fragment key={anchor}>
-                  <Button onClick={toggleDrawer(anchor, true)}>
-                    <FilterListIcon />
-                  </Button>
-                  <Drawer
-                    anchor={anchor}
-                    open={state[anchor]}
-                    onClose={toggleDrawer(anchor, false)}
-                  >
-                    {list(anchor)}
-                  </Drawer>
-                </React.Fragment>
-              ))}
-            </div>
-          </Grid>
+    <Box className="list-product">
+      <Grid container spacing={2} className="product-search">
+        <Grid item xs={11}>
+          <TextField
+            fullWidth
+            label="Search"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton>
+                    <SearchIcon />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
         </Grid>
+        <Grid item xs={1}>
+          <div>
+            {["right"].map((anchor) => (
+              <React.Fragment key={anchor}>
+                <Button onClick={toggleDrawer(anchor, true)}>
+                  <FilterListIcon />
+                </Button>
+                <Drawer
+                  anchor={anchor}
+                  open={state[anchor]}
+                  onClose={toggleDrawer(anchor, false)}
+                >
+                  {list(anchor)}
+                </Drawer>
+              </React.Fragment>
+            ))}
+          </div>
+        </Grid>
+      </Grid>
+      <TableContainer className="product-table-wrapper" component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
