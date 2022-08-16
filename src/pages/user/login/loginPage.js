@@ -84,7 +84,7 @@ function LoginPage() {
     <div className="main-container">
       <Box noValidate autoComplete="off" className="wrapper">
         <Grid container direction="row" className="login-container">
-          <Grid item xs={5} className="form-section ">
+          <Grid item xs={6} className="form-section ">
             <form onSubmit={handleSubmit(handleLogin)} className="">
               <Grid item xs={12} marginBottom={3} className="profile-container">
                 <h1>Login</h1>
