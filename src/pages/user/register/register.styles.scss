@@ -9,12 +9,13 @@
   background-image: radial-gradient(farthest-side at 50% 20%, #fffefaed, #ffe77aff);
   background-color: #ffe77aff;
   .wrapper {
+    height: 100vh;
    .register-container {
       justify-content: center;
       width: 100%;
       .form-section {
        // margin-top: 2em;
-       margin-top: 87px;
+       margin-top: 31px;
         border-radius: 15px;
         backdrop-filter: blur(10px);
         max-width: 550px !important;
@@ -68,7 +69,7 @@
     .bottom-image {
       img {
         width: 100%;
-        height: 294px;
+        height: 100%;
       }
     }
   }
