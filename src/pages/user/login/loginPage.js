@@ -65,12 +65,12 @@ function LoginPage() {
           } else {
             localStorage.removeItem("loginDetails");
           }
-          const { isUser, isAdmin } = authCheck();
-          if (isUser) {
-            navigate("/");
-          } else {
-            navigate("/admin");
-          }
+          // const { isUser, isAdmin } = authCheck();
+          // if (isUser) {
+          //   navigate("/");
+          // } else {
+          //   navigate("/admin");
+          // }
         }
       })
 

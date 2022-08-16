@@ -36,12 +36,12 @@ import WhishList from "../pages/user/accounts/whishlist";
 import { authCheck } from "./auth";
 
 const CustomRouters = () => {
-  const [isUser, setUser] = useState(false);
-  const [isAdmin, setAdmin] = useState(false);
+  // const [isUser, setUser] = useState(false);
+  // const [isAdmin, setAdmin] = useState(false);
   useEffect(() => {
-    const { isUser, isAdmin, ...other } = authCheck();
-    setUser(isUser);
-    setAdmin(isAdmin);
+    //   const { isUser, isAdmin, ...other } = authCheck();
+    //   setUser(isUser);
+    //   setAdmin(isAdmin);
   }, []);
 
   return (
@@ -60,7 +60,7 @@ const CustomRouters = () => {
         <Route path={RouterList.user.about} element={<AboutUs />} />
         <Route path={RouterList.user.contact} element={<ContactUs />} />
       </Route>
-      <Route path="/admin" element={<PrivateRouting />} isAdmin={isAdmin}>
+      <Route path="/admin" element={<PrivateRouting />} isAdmin={true}>
         <Route path="/admin" element={<AdminHome />} />
         <Route path="dashboard" element={<DashboardPage />} />
         <Route path="category" element={<ListCategory />} />

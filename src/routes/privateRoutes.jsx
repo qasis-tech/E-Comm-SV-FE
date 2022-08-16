@@ -3,14 +3,14 @@ import DashboardPage from "../pages/admin/dashboard/mainContainer";
 
 export default function PrivateRouting({ isAdmin }) {
   return (
-    <>
-      {isAdmin ? (
-        <DashboardPage>
-          <Outlet />
-        </DashboardPage>
-      ) : (
-        <Navigate to={"/login"} />
-      )}
-    </>
+    <DashboardPage>
+      <Outlet />
+    </DashboardPage>
   );
 }
+
+{
+  /* {isAdmin ? ( */
+}
+// ) : ( // <Navigate to={"/login"} />
+// )}
