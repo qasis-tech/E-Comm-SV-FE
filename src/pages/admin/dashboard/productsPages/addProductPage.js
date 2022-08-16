@@ -1,3 +1,11 @@
+import * as React from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import axios from "axios";
+import { useState } from "react";
+import { URLS } from "../../../../config/urls.config";
+
 import {
   Autocomplete,
   Box,
@@ -6,18 +14,10 @@ import {
   MenuItem,
   TextField,
 } from "@mui/material";
-import * as React from "react";
-
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import axios from "axios";
-import { useState } from "react";
-import { BASE_URL, URLS } from "../../../../config/urls.config";
 
-const productaddpageSchema = yup
+const productaddSchema = yup
   .object()
   .shape({
     productName: yup.string().required("Product is required"),
@@ -42,6 +42,7 @@ const productaddpageSchema = yup
     videoFile: yup.mixed().required("Upload a file"),
   })
   .required();
+
 const AddProduct = () => {
   const {
     register,
@@ -49,8 +50,9 @@ const AddProduct = () => {
     watch,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(productaddpageSchema),
+    resolver: yupResolver(productaddSchema),
   });
+
   const [categoryData, setCategorydata] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [selectedSubCategory, setSelectedSubCategory] = useState([]);
@@ -129,7 +131,7 @@ const AddProduct = () => {
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
 
     axios
-      .post("http://localhost:4000/product", bodyFormData, {
+      .post(`${process.env.REACT_APP_BASE_URL}${URLS.product}`, bodyFormData, {
         headers: {
           Authorization: ` ${token}`,
           "Content-Type": "multipart/form-data",

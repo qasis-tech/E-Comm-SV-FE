@@ -1,12 +1,13 @@
-import { Box, Button, MenuItem, TextField } from "@mui/material";
 import * as React from "react";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-const stockaddpageSchema = yup
+import { Box, Button, MenuItem, TextField } from "@mui/material";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+
+const stockaddSchema = yup
   .object()
   .shape({
     productname: yup.string().required(),
@@ -37,7 +38,7 @@ const AddStock = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(stockaddpageSchema),
+    resolver: yupResolver(stockaddSchema),
   });
   const [currency, setCurrency] = React.useState("Fruits");
 

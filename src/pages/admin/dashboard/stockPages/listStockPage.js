@@ -1,3 +1,8 @@
+import * as React from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { URLS } from "../../../../config/urls.config";
+
 import {
   Table,
   TableCell,
@@ -29,10 +34,7 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import * as React from "react";
 import AddIcon from "@mui/icons-material/Add";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const StockList = () => {
   const [state, setState] = React.useState({
@@ -90,7 +92,7 @@ const StockList = () => {
   console.log("listdata", listData);
   React.useEffect(() => {
     axios
-      .get("http://localhost:4000/stock", {
+      .get(`${process.env.REACT_APP_BASE_URL}${URLS.stock}`, {
         headers: {
           Authorization: `${token}`,
           "Content-Type": "application/json",

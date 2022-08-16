@@ -1,3 +1,8 @@
+import * as React from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { URLS } from "../../../../config/urls.config";
+
 import {
   Table,
   TableCell,
@@ -18,9 +23,6 @@ import CreateIcon from "@mui/icons-material/Create";
 import AddIcon from "@mui/icons-material/Add";
 import Fab from "@mui/material/Fab";
 import SearchIcon from "@mui/icons-material/Search";
-import { useNavigate } from "react-router-dom";
-import * as React from "react";
-
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
@@ -31,7 +33,6 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import axios from "axios";
 
 const ListProduct = () => {
   const [state, setState] = React.useState({
@@ -88,7 +89,7 @@ const ListProduct = () => {
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
   React.useEffect(() => {
     axios
-      .get("http://localhost:4000/product", {
+      .get(`${process.env.REACT_APP_BASE_URL}${URLS.product}`, {
         headers: { Authorization: ` ${token}` },
       })
       .then((res) => {
