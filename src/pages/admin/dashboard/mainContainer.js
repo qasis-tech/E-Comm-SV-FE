@@ -28,6 +28,7 @@ function DashboardPage() {
     { path: "/admin", title: "Dashboard" },
     { path: "category", title: "Category" },
     { path: "products", title: "Products" },
+    { path: "order-list", title: "Orders" },
     { path: "stocks", title: "Stocks" },
     { path: "users", title: "Users" },
   ]);

@@ -86,7 +86,9 @@ const OrderList = () => {
       </List>
     </Box>
   );
+
   const [orderData, setOrderData] = React.useState([]);
+  const [orderShortDetails, setOrderShortDetails] = React.useState(null);
   const [orderListData, setOrderListData] = React.useState([]);
   const token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
@@ -96,8 +98,8 @@ const OrderList = () => {
         headers: { Authorization: ` ${token}` },
       })
       .then((res) => {
-        console.log("reesss order", res);
-        console.log("product details", res.data.data);
+        console.log("product details", res.data);
+        setOrderShortDetails(res.data.shorthanddetails);
         setOrderData(res.data.data);
       })
       .catch((err) => {
@@ -154,7 +156,7 @@ const OrderList = () => {
             >
               <ShoppingCartIcon />
               <h3>Total Orders</h3>
-              <h3>100</h3>
+              <h3>{orderShortDetails?.totalorders}</h3>
             </Box>
           </Grid>
           <Grid item xs={4}>
@@ -167,7 +169,7 @@ const OrderList = () => {
             >
               <ShoppingCartCheckoutIcon />
               <h3>Order Pending</h3>
-              <h3>100</h3>
+              <h3>{orderShortDetails?.pendingOrders}</h3>
             </Box>
           </Grid>
           <Grid item xs={4}>
@@ -180,14 +182,14 @@ const OrderList = () => {
             >
               <CheckIcon />
               <h3>Order Completed</h3>
-              <h3>100</h3>
+              <h3>{orderShortDetails?.completedOrders}</h3>
             </Box>
           </Grid>
         </Grid>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
+              <TableCell>Order ID </TableCell>
               <TableCell>Category</TableCell>
               <TableCell> Subcategory</TableCell>
               <TableCell>Phone Number</TableCell>
@@ -196,36 +198,42 @@ const OrderList = () => {
           </TableHead>
           <TableBody>
             {orderData?.length
-              ? orderData.map((orderItem) => {
+              ? orderData?.map((orderItem) => {
+                  console.log("orderItem ===>", orderItem);
                   return (
                     <TableRow
                       key={orderItem._id}
                       onClick={() => navigate("/order-details")}
                     >
                       <TableCell component="th" scope="row">
-                        {orderItem._id}
+                        {orderItem?.orderId}
                       </TableCell>
-                      {orderItem.product.length &&
-                        orderItem.product.map((e) => {
-                          return (
-                            <TableRow>
-                              <TableCell
-                                sx={{ maxWidth: 350 }}
-                                className="d-flex flex-wrap"
-                              >
-                                <span className="border px-2 py-1 m-1 rounded shadow-sm text-center">
-                                  {e.category}
-                                </span>
-                              </TableCell>
-                              <TableCell>dry fruits</TableCell>
-                              <TableCell>{orderItem.mobileNumber}</TableCell>
-                            </TableRow>
-                          );
-                        })}
+                      <TableCell
+                        sx={{ maxWidth: 350 }}
+                        className="d-flex flex-wrap"
+                      >
+                        {orderItem?.product?.length &&
+                          orderItem.product.map((e) => {
+                            return (
+                              <span className="border px-2 py-1 m-1 rounded shadow-sm text-center">
+                                {e.category}
+                              </span>
+                            );
+                          })}
+                      </TableCell>
 
                       <TableCell>
-                        <Chip label="Shipped" color="primary" />
+                        {orderItem.product.length &&
+                          orderItem.product.map((e) => {
+                            return (
+                              <span className="border px-2 py-1 m-1 rounded shadow-sm text-center">
+                                {e.subCategory}
+                              </span>
+                            );
+                          })}
                       </TableCell>
+                      <TableCell>{orderItem.user.mobileNumber}</TableCell>
+                      <TableCell>{orderItem.status}</TableCell>
                     </TableRow>
                   );
                 })
