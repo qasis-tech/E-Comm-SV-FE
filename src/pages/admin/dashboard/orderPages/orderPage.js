@@ -199,11 +199,13 @@ const OrderList = () => {
           <TableBody>
             {orderData?.length
               ? orderData?.map((orderItem) => {
-                  console.log("orderItem ===>", orderItem);
+                  console.log("orderItem ===>", orderItem.orderId);
                   return (
                     <TableRow
                       key={orderItem._id}
-                      onClick={() => navigate("/order-details")}
+                      onClick={() =>
+                        navigate(`/admin/order-details/${orderItem.orderId}`)
+                      }
                     >
                       <TableCell component="th" scope="row">
                         {orderItem?.orderId}

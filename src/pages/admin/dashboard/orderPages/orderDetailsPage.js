@@ -59,8 +59,8 @@ const OrderDetails = () => {
     resolver: yupResolver(orderdetailsSchema),
   });
 
-  const { id } = useParams();
-  console.log("parms ==>", id);
+  const { orderId } = useParams();
+  console.log("parms ==>", orderId);
 
   React.useEffect(() => {
     getOrderDetailsApi();
@@ -70,7 +70,7 @@ const OrderDetails = () => {
 
   const getOrderDetailsApi = () => {
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}${URLS.order}`, {
+      .get(`${process.env.REACT_APP_BASE_URL}${URLS.order}/${orderId}`, {
         headers: { Authorization: ` ${token}` },
       })
       .then((res) => {
