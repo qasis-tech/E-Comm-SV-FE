@@ -186,7 +186,7 @@ const StockList = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {listData.map((listitem) => {
+            {listData?.map((listitem) => {
               return (
                 <TableRow
                   key={listitem._id}

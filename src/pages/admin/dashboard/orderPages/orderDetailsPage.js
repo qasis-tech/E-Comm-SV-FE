@@ -18,7 +18,7 @@ const orderdetailsSchema = yup
     orderSubcategory: yup.string().required(),
     orderEmail: yup.string().email().required(),
     orderAddress: yup.string().required(),
-    orderLocation: yup.string().required(),
+
     orderMobilenumber: yup
       .string()
       .phone("IN", true, "Mobile Number is invalid")
@@ -26,8 +26,10 @@ const orderdetailsSchema = yup
     orderPincode: yup
       .string()
       .matches(/^[1-9][0-9]{5}$/, "Invalid zipcode (682315)"),
+    orderStatus: yup.string().required(),
   })
   .required();
+
 const currencies = [
   {
     value: "Fruits",
@@ -63,13 +65,17 @@ const OrderDetails = () => {
   React.useEffect(() => {
     getOrderDetailsApi();
   }, []);
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
 
   const getOrderDetailsApi = () => {
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}${URLS.order}/${id}`)
+      .get(`${process.env.REACT_APP_BASE_URL}${URLS.order}`, {
+        headers: { Authorization: ` ${token}` },
+      })
       .then((res) => {
         console.log("ress =>>", res);
-        // setValue("userFirstName", res.data.data.firstName);
+        // setValue("orderName", res.data.data);
         // setValue("userLastName", res.data.data.lastName);
         // setValue("userMobilenumber", res.data.data.mobileNumber);
         // setValue("userEmail", res.data.data.email);
@@ -180,10 +186,11 @@ const OrderDetails = () => {
               </Grid>
               <Grid item xs={6}>
                 <TextField
+                  {...register("orderStatus")}
                   fullWidth
                   id="outlined-select-currency"
                   select
-                  label="Subcategory"
+                  label="Status"
                   value={currency}
                   onChange={handleChange}
                 >
