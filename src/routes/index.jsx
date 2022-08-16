@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 // User
 import HomePage from "../pages/user/home";
 import UserLoginPage from "../pages/user/login/loginPage";
@@ -31,12 +31,19 @@ import PageNotFound from "../pages/user/pageNotFound";
 import RouterList from "./routerList";
 import AboutUs from "../pages/user/about";
 import ContactUs from "../pages/user/contact";
-
-// const PageNotFound = () => {
-//   return <div>Page Not Found</div>;
-// };
+import { useEffect, useState } from "react";
+import WhishList from "../pages/user/accounts/whishlist";
+import { authCheck } from "./auth";
 
 const CustomRouters = () => {
+  const [isUser, setUser] = useState(false);
+  const [isAdmin, setAdmin] = useState(false);
+  useEffect(() => {
+    const { isUser, isAdmin, ...other } = authCheck();
+    setUser(isUser);
+    setAdmin(isAdmin);
+  }, []);
+
   return (
     <Routes>
       <Route element={<PublicRouting />}>
@@ -49,10 +56,11 @@ const CustomRouters = () => {
         <Route path="order-list" element={<OrderList />} />
         <Route path="order-details" element={<OrderDetails />} />
         <Route path="payments" element={<Payment />} />
+        <Route path="whishlist" element={<WhishList />} />
         <Route path={RouterList.user.about} element={<AboutUs />} />
         <Route path={RouterList.user.contact} element={<ContactUs />} />
       </Route>
-      <Route path="/admin" element={<PrivateRouting />}>
+      <Route path="/admin" element={<PrivateRouting />} isAdmin={isAdmin}>
         <Route path="/admin" element={<AdminHome />} />
         <Route path="dashboard" element={<DashboardPage />} />
         <Route path="category" element={<ListCategory />} />

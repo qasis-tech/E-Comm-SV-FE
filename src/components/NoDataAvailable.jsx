@@ -7,12 +7,14 @@ const NoDataAvailable = () => {
   const navigate = useNavigate();
   return (
     <div className="no-data-found">
-      <div class="empty-state">
-        <div class="empty-state__content">
-          <div class="empty-state__icon">
+      <div className="empty-state">
+        <div className="empty-state__content">
+          <div className="empty-state__icon">
             <img src={BackgroundImage} alt="background image" />
           </div>
-          <div class="empty-state__message">No records has been added yet.</div>
+          <div className="empty-state__message">
+            No records has been added yet.
+          </div>
         </div>
       </div>
     </div>

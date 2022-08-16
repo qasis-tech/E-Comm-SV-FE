@@ -22,6 +22,7 @@ import { useNavigate } from "react-router-dom";
 import BackgoundImg from "../../../assets/bg-pic.png";
 
 import axios from "axios";
+import { authCheck } from "../../../routes/auth";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -60,13 +61,15 @@ function LoginPage() {
               "loginDetails",
               JSON.stringify({ email, password })
             );
-            localStorage.setItem(
-              "Login data details",
-              JSON.stringify(res.data.data)
-            );
-            navigate("/admin");
+            localStorage.setItem("LoginDatas", JSON.stringify(res.data.data));
           } else {
             localStorage.removeItem("loginDetails");
+          }
+          const { isUser, isAdmin } = authCheck();
+          if (isUser) {
+            navigate("/");
+          } else {
+            navigate("/admin");
           }
         }
       })

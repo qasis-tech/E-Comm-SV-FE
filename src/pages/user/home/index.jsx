@@ -36,8 +36,8 @@ const Home = () => {
         </div>
         <div className="container">
           <div className="row">
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((items) => {
-              return <ProductComponent />;
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((items, index) => {
+              return <ProductComponent key={index} />;
             })}
           </div>
         </div>

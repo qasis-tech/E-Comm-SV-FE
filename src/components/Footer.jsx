@@ -8,8 +8,10 @@ import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 import "../styles/footer.styles.scss";
+import { useNavigate } from "react-router-dom";
 
 const FooterComponent = () => {
+  const navigate = useNavigate();
   return (
     <div>
       <footer className="ftco-footer ftco-section pt-5">
@@ -126,7 +128,7 @@ const FooterComponent = () => {
                         USA
                       </span>
                     </li>
-                    <li style={{marginTop:"1em"}}>
+                    <li style={{ marginTop: "1em" }}>
                       <a href="#" className="text-decoration-none">
                         <span>
                           <LocalPhoneIcon />
@@ -167,7 +169,7 @@ const FooterComponent = () => {
           </div>
         </div>
       </footer>
-      <a href="#" className="cart_float" target="_blank">
+      <a onClick={() => navigate("/cart")} className="cart_float">
         <ShoppingCartIcon className="cart-icon" />
       </a>
     </div>

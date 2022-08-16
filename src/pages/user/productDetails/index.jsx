@@ -23,64 +23,67 @@ export default function CustomerProductDetails() {
     <div className="product-details-container">
       <HeaderComponent />
 
-      <div class="product-details-wrap hero-bread" style={{ backgroundImage: `url(${BackgroundImage})` }}>
-        <div class="container">
-          <div class="row no-gutters slider-text align-items-center justify-content-center">
-            <div class="col-md-9 text-center">
-              <p class="breadcrumbs">
-                <span class="mr-2">
+      <div
+        className="product-details-wrap hero-bread"
+        style={{ backgroundImage: `url(${BackgroundImage})` }}
+      >
+        <div className="container">
+          <div className="row no-gutters slider-text align-items-center justify-content-center">
+            <div className="col-md-9 text-center">
+              <p className="breadcrumbs">
+                <span className="mr-2">
                   <a href="index.html">Home</a>
                 </span>{" "}
                 <span>Product</span>
               </p>
-              <h1 class="mb-0 bread">Product</h1>
+              <h1 className="mb-0 bread">Product</h1>
             </div>
           </div>
         </div>
       </div>
 
-      <section class="product-details-section">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-6">
+      <section className="product-details-section">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-6">
               <div style={{ height: "55%" }}>
-                <a href={ProductImage} class="image-popup">
+                <a href={ProductImage} className="image-popup">
                   <img
                     src={ProductImage}
-                    class="img-fluid"
+                    className="img-fluid"
                     alt="Colorlib Template"
                   />
                 </a>
               </div>
-              <div class="row">
-                <div class="col-4">
+              <div className="row">
+                <div className="col-4">
                   <img
                     src={ProductImage}
-                    class="img-fluid"
+                    className="img-fluid"
                     alt="Colorlib Template"
                   />
                 </div>
-                <div class="col-4">
+                <div className="col-4">
                   <img
                     src={ProductImage}
-                    class="img-fluid"
+                    className="img-fluid"
                     alt="Colorlib Template"
                   />
                 </div>
-                <div class="col-4">
+                <div className="col-4">
                   <img
                     src={ProductImage}
-                    class="img-fluid"
+                    className="img-fluid"
                     alt="Colorlib Template"
                   />
                 </div>
               </div>
             </div>
-            <div class="col-lg-6 product-details pl-md-5">
+            <div className="col-lg-6 product-details pl-md-5">
               <h3>Bell Pepper</h3>
-              <div class="rating d-flex">
-                <p class="text-left me-4">
-                  <a href="#" class="me-2 text-decoration-none">
+              <div className="rating d-flex">
+                <p className="text-left me-4">
+                  <a href="#" className="me-2 text-decoration-none">
                     5.0
                   </a>
                   <a href="#">
@@ -109,26 +112,26 @@ export default function CustomerProductDetails() {
                     </span>
                   </a>
                 </p>
-                <p class="text-left me-4">
+                <p className="text-left me-4">
                   <a
                     href="#"
-                    class="text-decoration-none"
+                    className="text-decoration-none"
                     style={{ color: "#000" }}
                   >
                     100 <span style={{ color: "#bbb" }}>Rating</span>
                   </a>
                 </p>
-                <p class="text-left">
+                <p className="text-left">
                   <a
                     href="#"
-                    class="text-decoration-none"
+                    className="text-decoration-none"
                     style={{ color: "#000" }}
                   >
                     500 <span tyle={{ color: "#bbb" }}>Sold</span>
                   </a>
                 </p>
               </div>
-              <p class="price">
+              <p className="price">
                 <span>$120.00</span>
               </p>
               <p>
@@ -139,14 +142,14 @@ export default function CustomerProductDetails() {
                 nothing the copy said could convince her and so it didn't take
                 long until.
               </p>
-              <div class="row mt-4">
-                <div class="col-md-6 mb-3">
-                  <div class="form-group d-flex">
-                    <div class="select-wrap">
-                      <div class="icon">
+              <div className="row mt-4">
+                <div className="col-md-6 mb-3">
+                  <div className="form-group d-flex">
+                    <div className="select-wrap">
+                      <div className="icon">
                         <KeyboardArrowDownIcon />
                       </div>
-                      <select name="" id="" class="form-control">
+                      <select name="" id="" className="form-control">
                         <option value="">Small</option>
                         <option value="">Medium</option>
                         <option value="">Large</option>
@@ -155,12 +158,12 @@ export default function CustomerProductDetails() {
                     </div>
                   </div>
                 </div>
-                <div class="w-100"></div>
-                <div class="input-group col-md-6 d-flex mb-3">
-                  <span class="input-group-btn me-2">
+                <div className="w-100"></div>
+                <div className="input-group col-md-6 d-flex mb-3">
+                  <span className="input-group-btn me-2">
                     <button
                       type="button"
-                      class="quantity-left-minus btn"
+                      className="quantity-left-minus btn"
                       data-type="minus"
                       data-field=""
                     >
@@ -171,15 +174,15 @@ export default function CustomerProductDetails() {
                     type="text"
                     id="quantity"
                     name="quantity"
-                    class="form-control input-number"
+                    className="form-control input-number"
                     value="1"
                     min="1"
                     max="100"
                   />
-                  <span class="input-group-btn ms-2">
+                  <span className="input-group-btn ms-2">
                     <button
                       type="button"
-                      class="quantity-right-plus btn"
+                      className="quantity-right-plus btn"
                       data-type="plus"
                       data-field=""
                     >
@@ -187,13 +190,13 @@ export default function CustomerProductDetails() {
                     </button>
                   </span>
                 </div>
-                <div class="w-100"></div>
-                <div class="col-md-12">
+                <div className="w-100"></div>
+                <div className="col-md-12">
                   <p style={{ color: "#000" }}>600 kg available</p>
                 </div>
               </div>
               <p>
-                <a href="cart.html" class="btn btn-black py-3 px-5">
+                <a href="cart.html" className="btn btn-black py-3 px-5">
                   Add to Cart
                 </a>
               </p>
@@ -202,12 +205,12 @@ export default function CustomerProductDetails() {
         </div>
       </section>
 
-      <section class="pb-5">
-        <div class="container ">
-          <div class="row justify-content-center mb-3 pb-3">
-            <div class="col-md-12 heading-section text-center">
-              <span class="subheading">Products</span>
-              <h2 class="mb-4">Related Products</h2>
+      <section className="pb-5">
+        <div className="container ">
+          <div className="row justify-content-center mb-3 pb-3">
+            <div className="col-md-12 heading-section text-center">
+              <span className="subheading">Products</span>
+              <h2 className="mb-4">Related Products</h2>
               <p>
                 Far far away, behind the word mountains, far from the countries
                 Vokalia and Consonantia
@@ -215,38 +218,38 @@ export default function CustomerProductDetails() {
             </div>
           </div>
         </div>
-        <div class="container">
-          <div class="row">
-            <div class="col-md-6 col-lg-3">
-              <div class="product">
-                <a href="#" class="img-prod">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-6 col-lg-3">
+              <div className="product">
+                <a href="#" className="img-prod">
                   <img
-                    class="img-fluid"
+                    className="img-fluid"
                     src={ProductImage}
                     alt="Colorlib Template"
                   />
-                  <span class="status">30% Off</span>
-                  <div class="overlay"></div>
+                  <span className="status">30% Off</span>
+                  <div className="overlay"></div>
                 </a>
-                <div class="text py-3 pb-4 px-3 text-center">
+                <div className="text py-3 pb-4 px-3 text-center">
                   <h3>
-                    <a href="#" class=" text-decoration-none">
+                    <a href="#" className=" text-decoration-none">
                       Bell Pepper
                     </a>
                   </h3>
-                  <div class="d-flex">
-                    <div class="pricing">
-                      <p class="price">
-                        <span class="mr-2 price-dc">$120.00</span>
-                        <span class="price-sale">$80.00</span>
+                  <div className="d-flex">
+                    <div className="pricing">
+                      <p className="price">
+                        <span className="mr-2 price-dc">$120.00</span>
+                        <span className="price-sale">$80.00</span>
                       </p>
                     </div>
                   </div>
-                  <div class="bottom-area d-flex px-3">
-                    <div class="m-auto d-flex">
+                  <div className="bottom-area d-flex px-3">
+                    <div className="m-auto d-flex">
                       <a
                         href="#"
-                        class="add-to-cart d-flex justify-content-center align-items-center text-center"
+                        className="add-to-cart d-flex justify-content-center align-items-center text-center"
                       >
                         <span>
                           <MenuIcon />
@@ -254,7 +257,7 @@ export default function CustomerProductDetails() {
                       </a>
                       <a
                         href="#"
-                        class="buy-now d-flex justify-content-center align-items-center mx-1"
+                        className="buy-now d-flex justify-content-center align-items-center mx-1"
                       >
                         <span>
                           <ShoppingCartIcon />
@@ -262,7 +265,7 @@ export default function CustomerProductDetails() {
                       </a>
                       <a
                         href="#"
-                        class="heart d-flex justify-content-center align-items-center "
+                        className="heart d-flex justify-content-center align-items-center "
                       >
                         <span>
                           <FavoriteBorderIcon />
@@ -273,34 +276,34 @@ export default function CustomerProductDetails() {
                 </div>
               </div>
             </div>
-            <div class="col-md-6 col-lg-3 ftco-animate">
-              <div class="product">
-                <a href="#" class="img-prod">
+            <div className="col-md-6 col-lg-3 ftco-animate">
+              <div className="product">
+                <a href="#" className="img-prod">
                   <img
-                    class="img-fluid"
+                    className="img-fluid"
                     src={Product1}
                     alt="Colorlib Template"
                   />
-                  <div class="overlay"></div>
+                  <div className="overlay"></div>
                 </a>
-                <div class="text py-3 pb-4 px-3 text-center">
+                <div className="text py-3 pb-4 px-3 text-center">
                   <h3>
-                    <a href="#" class=" text-decoration-none">
+                    <a href="#" className=" text-decoration-none">
                       Strawberry
                     </a>
                   </h3>
-                  <div class="d-flex">
-                    <div class="pricing">
-                      <p class="price">
+                  <div className="d-flex">
+                    <div className="pricing">
+                      <p className="price">
                         <span>$120.00</span>
                       </p>
                     </div>
                   </div>
-                  <div class="bottom-area d-flex px-3">
-                    <div class="m-auto d-flex">
+                  <div className="bottom-area d-flex px-3">
+                    <div className="m-auto d-flex">
                       <a
                         href="#"
-                        class="add-to-cart d-flex justify-content-center align-items-center text-center"
+                        className="add-to-cart d-flex justify-content-center align-items-center text-center"
                       >
                         <span>
                           <MenuIcon />
@@ -308,7 +311,7 @@ export default function CustomerProductDetails() {
                       </a>
                       <a
                         href="#"
-                        class="buy-now d-flex justify-content-center align-items-center mx-1"
+                        className="buy-now d-flex justify-content-center align-items-center mx-1"
                       >
                         <span>
                           <ShoppingCartIcon />
@@ -316,7 +319,7 @@ export default function CustomerProductDetails() {
                       </a>
                       <a
                         href="#"
-                        class="heart d-flex justify-content-center align-items-center "
+                        className="heart d-flex justify-content-center align-items-center "
                       >
                         <span>
                           <FavoriteBorderIcon />
@@ -327,34 +330,34 @@ export default function CustomerProductDetails() {
                 </div>
               </div>
             </div>
-            <div class="col-md-6 col-lg-3 ftco-animate">
-              <div class="product">
-                <a href="#" class="img-prod">
+            <div className="col-md-6 col-lg-3 ftco-animate">
+              <div className="product">
+                <a href="#" className="img-prod">
                   <img
-                    class="img-fluid"
+                    className="img-fluid"
                     src={Product2}
                     alt="Colorlib Template"
                   />
-                  <div class="overlay"></div>
+                  <div className="overlay"></div>
                 </a>
-                <div class="text py-3 pb-4 px-3 text-center">
+                <div className="text py-3 pb-4 px-3 text-center">
                   <h3>
-                    <a href="#" class=" text-decoration-none">
+                    <a href="#" className=" text-decoration-none">
                       Green Beans
                     </a>
                   </h3>
-                  <div class="d-flex">
-                    <div class="pricing">
-                      <p class="price">
+                  <div className="d-flex">
+                    <div className="pricing">
+                      <p className="price">
                         <span>$120.00</span>
                       </p>
                     </div>
                   </div>
-                  <div class="bottom-area d-flex px-3">
-                    <div class="m-auto d-flex">
+                  <div className="bottom-area d-flex px-3">
+                    <div className="m-auto d-flex">
                       <a
                         href="#"
-                        class="add-to-cart d-flex justify-content-center align-items-center text-center"
+                        className="add-to-cart d-flex justify-content-center align-items-center text-center"
                       >
                         <span>
                           <MenuIcon />
@@ -362,7 +365,7 @@ export default function CustomerProductDetails() {
                       </a>
                       <a
                         href="#"
-                        class="buy-now d-flex justify-content-center align-items-center mx-1"
+                        className="buy-now d-flex justify-content-center align-items-center mx-1"
                       >
                         <span>
                           <ShoppingCartIcon />
@@ -370,7 +373,7 @@ export default function CustomerProductDetails() {
                       </a>
                       <a
                         href="#"
-                        class="heart d-flex justify-content-center align-items-center "
+                        className="heart d-flex justify-content-center align-items-center "
                       >
                         <span>
                           <FavoriteBorderIcon />
@@ -381,34 +384,34 @@ export default function CustomerProductDetails() {
                 </div>
               </div>
             </div>
-            <div class="col-md-6 col-lg-3 ftco-animate">
-              <div class="product">
-                <a href="#" class="img-prod">
+            <div className="col-md-6 col-lg-3 ftco-animate">
+              <div className="product">
+                <a href="#" className="img-prod">
                   <img
-                    class="img-fluid"
+                    className="img-fluid"
                     src={Product3}
                     alt="Colorlib Template"
                   />
-                  <div class="overlay"></div>
+                  <div className="overlay"></div>
                 </a>
-                <div class="text py-3 pb-4 px-3 text-center">
+                <div className="text py-3 pb-4 px-3 text-center">
                   <h3>
-                    <a href="#" class=" text-decoration-none">
+                    <a href="#" className=" text-decoration-none">
                       Purple Cabbage
                     </a>
                   </h3>
-                  <div class="d-flex">
-                    <div class="pricing">
-                      <p class="price">
+                  <div className="d-flex">
+                    <div className="pricing">
+                      <p className="price">
                         <span>$120.00</span>
                       </p>
                     </div>
                   </div>
-                  <div class="bottom-area d-flex px-3">
-                    <div class="m-auto d-flex">
+                  <div className="bottom-area d-flex px-3">
+                    <div className="m-auto d-flex">
                       <a
                         href="#"
-                        class="add-to-cart d-flex justify-content-center align-items-center text-center"
+                        className="add-to-cart d-flex justify-content-center align-items-center text-center"
                       >
                         <span>
                           <MenuIcon />
@@ -416,7 +419,7 @@ export default function CustomerProductDetails() {
                       </a>
                       <a
                         href="#"
-                        class="buy-now d-flex justify-content-center align-items-center mx-1"
+                        className="buy-now d-flex justify-content-center align-items-center mx-1"
                       >
                         <span>
                           <ShoppingCartIcon />
@@ -424,7 +427,7 @@ export default function CustomerProductDetails() {
                       </a>
                       <a
                         href="#"
-                        class="heart d-flex justify-content-center align-items-center "
+                        className="heart d-flex justify-content-center align-items-center "
                       >
                         <span>
                           <FavoriteBorderIcon />

@@ -1,10 +1,16 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
 import DashboardPage from "../pages/admin/dashboard/mainContainer";
 
-export default function PrivateRouting() {
+export default function PrivateRouting({ isAdmin }) {
   return (
-    <DashboardPage>
-      <Outlet />
-    </DashboardPage>
+    <>
+      {isAdmin ? (
+        <DashboardPage>
+          <Outlet />
+        </DashboardPage>
+      ) : (
+        <Navigate to={"/login"} />
+      )}
+    </>
   );
 }

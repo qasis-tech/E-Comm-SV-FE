@@ -12,9 +12,10 @@ const CategoriesComponent = () => {
           </div>
         </div>
         <div className="d-flex flex-wrap justify-content-center">
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((items) => {
+          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((items, index) => {
             return (
               <div
+                key={index}
                 className="category-wrap ftco-animate mb-4 d-flex align-items-end"
                 style={{ width: 200, margin: "0 1.5em" }}
               >
