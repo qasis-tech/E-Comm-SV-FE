@@ -1,3 +1,8 @@
+import * as React from "react";
+import { URLS } from "../../../../config/urls.config";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
 import {
   Table,
   TableCell,
@@ -18,8 +23,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
 import SearchIcon from "@mui/icons-material/Search";
 import Chip from "@mui/material/Chip";
-import * as React from "react";
-
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
@@ -30,9 +33,7 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import FilterListIcon from "@mui/icons-material/FilterList";
-import { useNavigate } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
-import axios from "axios";
 
 const UserList = () => {
   const [state, setState] = React.useState({
@@ -87,7 +88,7 @@ const UserList = () => {
   const [userData, setUserData] = React.useState([]);
   React.useEffect(() => {
     axios
-      .get("http://localhost:4000/signup", {
+      .get(`${process.env.REACT_APP_BASE_URL}${URLS.signup}`, {
         "Content-Type": "application/json",
       })
       .then((res) => {

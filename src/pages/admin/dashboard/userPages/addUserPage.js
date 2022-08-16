@@ -1,18 +1,19 @@
-import { Box, Button, TextField } from "@mui/material";
 import * as React from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import "yup-phone";
+import axios from "axios";
+import { URLS } from "../../../../config/urls.config";
+import { useNavigate } from "react-router-dom";
+
+import { Box, Button, TextField } from "@mui/material";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import "yup-phone";
-import axios from "axios";
-import { BASE_URL, URLS } from "../../../../config/urls.config";
-import { useNavigate } from "react-router-dom";
 
 const userdetailsSchema = yup
   .object()
@@ -68,7 +69,7 @@ const AddUser = () => {
       password: userPassword,
     };
     axios
-      .post("http://localhost:4000/signup", payload, {
+      .post(`${process.env.REACT_APP_BASE_URL}${URLS.signup}`, payload, {
         "Content-Type": "application/json",
       })
       .then((res) => {

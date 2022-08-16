@@ -1,3 +1,21 @@
+import * as React from "react";
+import { URLS } from "../../../../config/urls.config";
+import NotDataAvailable from "../../../../components/NoDataAvailable";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+import "./list-category.styles.scss";
+
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import MailIcon from "@mui/icons-material/Mail";
+import FilterListIcon from "@mui/icons-material/FilterList";
 import {
   Table,
   TableCell,
@@ -18,23 +36,6 @@ import CreateIcon from "@mui/icons-material/Create";
 import AddIcon from "@mui/icons-material/Add";
 import Fab from "@mui/material/Fab";
 import SearchIcon from "@mui/icons-material/Search";
-import * as React from "react";
-
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-import FilterListIcon from "@mui/icons-material/FilterList";
-import NotDataAvailable from "../../../../components/NoDataAvailable";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-
-import "./list-category.styles.scss";
 
 const ListCategory = () => {
   const [state, setState] = React.useState({
@@ -98,7 +99,7 @@ const ListCategory = () => {
   const handleSearch = (searchValue) => {
     setSearchInput(searchValue);
     axios
-      .get("http://localhost:4000/category", {
+      .get(`${process.env.REACT_APP_BASE_URL}${URLS.category}`, {
         headers: {
           Authorization: `${token}`,
         },
@@ -118,41 +119,41 @@ const ListCategory = () => {
   return (
     <Box className="list-category">
       <Grid container spacing={2} className="category-search">
-          <Grid item xs={11}>
-            <TextField
+        <Grid item xs={11}>
+          <TextField
             fullWidth
-              onChange={(e) => handleSearch(e.target.value)}
-              label="Search"
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton>
-                      <SearchIcon />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Grid>
-          <Grid item xs={1}>
-            <div>
-              {["right"].map((anchor) => (
-                <React.Fragment key={anchor}>
-                  <Button onClick={toggleDrawer(anchor, true)}>
-                    <FilterListIcon />
-                  </Button>
-                  <Drawer
-                    anchor={anchor}
-                    open={state[anchor]}
-                    onClose={toggleDrawer(anchor, false)}
-                  >
-                    {list(anchor)}
-                  </Drawer>
-                </React.Fragment>
-              ))}
-            </div>
-          </Grid>
+            onChange={(e) => handleSearch(e.target.value)}
+            label="Search"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton>
+                    <SearchIcon />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
         </Grid>
+        <Grid item xs={1}>
+          <div>
+            {["right"].map((anchor) => (
+              <React.Fragment key={anchor}>
+                <Button onClick={toggleDrawer(anchor, true)}>
+                  <FilterListIcon />
+                </Button>
+                <Drawer
+                  anchor={anchor}
+                  open={state[anchor]}
+                  onClose={toggleDrawer(anchor, false)}
+                >
+                  {list(anchor)}
+                </Drawer>
+              </React.Fragment>
+            ))}
+          </div>
+        </Grid>
+      </Grid>
       <TableContainer className="table-wrapper" component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>

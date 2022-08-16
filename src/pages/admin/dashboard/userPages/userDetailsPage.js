@@ -6,6 +6,7 @@ import "yup-phone";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { URLS } from "../../../../config/urls.config";
+import { getValue } from "@testing-library/user-event/dist/utils";
 
 import { Box, Button, TextField } from "@mui/material";
 import Container from "@mui/material/Container";
@@ -14,9 +15,8 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
-import { getValue } from "@testing-library/user-event/dist/utils";
 
-const userdetailspageSchema = yup
+const userdetailsSchema = yup
   .object()
   .shape({
     userFirstName: yup.string().required(),
@@ -44,7 +44,7 @@ const UserDetails = () => {
     setValue,
     getValues,
   } = useForm({
-    resolver: yupResolver(userdetailspageSchema),
+    resolver: yupResolver(userdetailsSchema),
   });
 
   const { id } = useParams();
