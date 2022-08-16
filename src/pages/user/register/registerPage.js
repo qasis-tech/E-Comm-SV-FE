@@ -94,7 +94,7 @@ function RegisterPage() {
     <div className="register">
       <Box noValidate autoComplete="off" className="wrapper">
         <Grid container direction="row" className="register-container">
-          <Grid item xs={5} className="form-section ">
+          <Grid item xs={6} className="form-section ">
             <form onSubmit={handleSubmit(handleRegister)}>
               <Grid item xs={12} marginBottom={3} className="profile-container">
                 <h1>Create Account</h1>
