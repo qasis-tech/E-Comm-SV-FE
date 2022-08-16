@@ -1,8 +1,26 @@
 import { Box, Button, MenuItem, TextField } from "@mui/material";
 import * as React from "react";
+import { useParams } from "react-router-dom";
+import { URLS } from "../../../../config/urls.config";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+
+const productdetailsSchema = yup
+  .object()
+  .shape({
+    productName: yup.string().required(),
+    productCategory: yup.string().required(),
+    productSubcategory: yup.string().required(),
+    productUnit: yup.string().required(),
+    productQuantity: yup.string().required(),
+    productDescription: yup.string().required(),
+    productFeatures: yup.string().required(),
+    productPrice: yup.string().required(),
+  })
+  .required();
 
 const currencies = [
   {

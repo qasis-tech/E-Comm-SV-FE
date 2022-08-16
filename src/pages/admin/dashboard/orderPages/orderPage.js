@@ -205,25 +205,24 @@ const OrderList = () => {
                       <TableCell component="th" scope="row">
                         {orderItem._id}
                       </TableCell>
-                      {orderItem?.product?.productList?.length ? (
-                        <TableCell
-                          sx={{ maxWidth: 350 }}
-                          className="d-flex flex-wrap"
-                        >
-                          {orderItem?.product?.productList?.map((e) => {
-                            return (
-                              <span className="border px-2 py-1 m-1 rounded shadow-sm text-center">
-                                {e.name}
-                              </span>
-                            );
-                          })}
-                        </TableCell>
-                      ) : (
-                        <TableCell>No categories</TableCell>
-                      )}
+                      {orderItem.product.length &&
+                        orderItem.product.map((e) => {
+                          return (
+                            <TableRow>
+                              <TableCell
+                                sx={{ maxWidth: 350 }}
+                                className="d-flex flex-wrap"
+                              >
+                                <span className="border px-2 py-1 m-1 rounded shadow-sm text-center">
+                                  {e.category}
+                                </span>
+                              </TableCell>
+                              <TableCell>dry fruits</TableCell>
+                              <TableCell>{orderItem.mobileNumber}</TableCell>
+                            </TableRow>
+                          );
+                        })}
 
-                      <TableCell>dry fruits</TableCell>
-                      <TableCell>{orderItem.mobileNumber}</TableCell>
                       <TableCell>
                         <Chip label="Shipped" color="primary" />
                       </TableCell>
