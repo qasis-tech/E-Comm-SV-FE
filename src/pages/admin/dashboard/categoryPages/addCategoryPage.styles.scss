@@ -1,14 +1,67 @@
 @import "../../../../styles/common.styles.scss";
-  
-.add-category{
-    font-family: $main-font-family;
-    .wrapper{
-        .add-category-container{
-            justify-content: center;
-            .category-form-section{
-                padding: 3em;
-                border: 1px solid black;
-            }
+
+.add-category {
+  font-family: $main-font-family;
+  margin-top: 3em;
+  .wrapper {
+    .add-category-container {
+      justify-content: center;
+      .category-form-section {
+        //padding: 3em 3em 0 3em;
+        box-shadow: 2px 5px 5px 3px #888888;
+        border-radius: 10px;
+        // border: 1px solid black;
+        .main-heading{
+            background-color: #1976d2;
+            padding: 1em 0;
+            border-radius: 10px 10px 1px 1px;
+            h3 {
+                padding: 0px 50px;
+                color: white;
+              }
         }
+        .category-section {
+          padding: 2em 3em 1em 3em;
+          // background-color: #f3f3f3;
+          // box-shadow:  1px 2px 5px 1px #888888;
+        
+          .css-mhc70k-MuiGrid-root > .MuiGrid-item {
+            padding-left: 16px;
+            padding-right: 16px;
+          }
+        }
+        hr{
+            border-style: dashed;
+            opacity: 1.25;
+        }
+        .subcategory-section {
+          padding: 0 3em 0 3em;
+          // background-color: #f3f3f3;
+          // box-shadow:  1px 2px 5px 1px #888888;
+          .css-mhc70k-MuiGrid-root > .MuiGrid-item {
+            padding-left: 16px;
+            padding-right: 16px;
+          }
+          .add-icon-section {
+            font-size: 25px;
+            background-color: #1973bb;
+            color: white;
+            margin: 0 2em;
+            border-radius: 25px;
+          }
+        }
+        .submit-button {
+          background-color: #cbc9c959;
+          padding: 0;
+          margin: 2em 0 0 0;
+          padding: 1em 0;
+          display: flex!important;
+          justify-content: end;
+          .btn-button{
+            border-radius: 25px!important;
+          }
+        }
+      }
     }
+  }
 }

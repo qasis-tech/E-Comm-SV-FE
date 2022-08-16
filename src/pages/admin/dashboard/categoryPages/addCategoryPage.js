@@ -32,38 +32,50 @@ const AddCategory = () => {
         <Grid container direction="row" className="add-category-container">
           <Grid item xs={6} className="category-form-section ">
             <form onSubmit={handleSubmit(console.log)}>
-              <h3 className="heading">Category</h3>
-              <div>
-                <TextField
-                  fullWidth
-                  label="Name"
-                  {...register("mainCategory", {
-                    required: "This is required.",
-                  })}
-                />
-                <ErrorMessage
-                  errors={errors}
-                  name="mainCategory"
-                  render={({ message }) => <p>{message}</p>}
-                />
-                <Button variant="contained" fullWidth component="label">
-                  Upload Image
-                  <input
-                    {...register("imageCategory", {
+              <div className="main-heading">
+                <h3 className="heading">Category</h3>
+              </div>
+              <Grid container spacing={2} className="category-section">
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    label="Name"
+                    {...register("mainCategory", {
                       required: "This is required.",
                     })}
-                    type="file"
-                    hidden
                   />
-                </Button>
+                  <ErrorMessage
+                    errors={errors}
+                    name="mainCategory"
+                    render={({ message }) => <p>{message}</p>}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Button variant="contained" fullWidth component="label">
+                    Upload Image
+                    <input
+                      {...register("imageCategory", {
+                        required: "This is required.",
+                      })}
+                      type="file"
+                      hidden
+                    />
+                  </Button>
 
-                <ErrorMessage
-                  errors={errors}
-                  name="imageCategory"
-                  render={({ message }) => <p>{message}</p>}
-                />
-              </div>
-              <Grid container spacing={2} marginTop={4}>
+                  <ErrorMessage
+                    errors={errors}
+                    name="imageCategory"
+                    render={({ message }) => <p>{message}</p>}
+                  />
+                </Grid>
+              </Grid>
+              <hr />
+              <Grid
+                container
+                spacing={2}
+                marginTop={4}
+                className="subcategory-section"
+              >
                 <Grid container spacing={2} paddingLeft={2}>
                   <Grid item xs={10}>
                     <h3>Subcategory</h3>
@@ -71,12 +83,44 @@ const AddCategory = () => {
                   <Grid item xs={2}>
                     <AddIcon
                       color="primary"
-                      style={{ fontSize: 25, backgroundColor: "red" }}
+                      className="add-icon-section"
                       onClick={() => append({})}
                     />
                   </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      label="Name"
+                      {...register("mainCategory", {
+                        required: "This is required.",
+                      })}
+                    />
+                    <ErrorMessage
+                      errors={errors}
+                      name="mainCategory"
+                      render={({ message }) => <p>{message}</p>}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Button variant="contained" fullWidth component="label">
+                      Upload Image
+                      <input
+                        {...register("imageCategory", {
+                          required: "This is required.",
+                        })}
+                        type="file"
+                        hidden
+                      />
+                    </Button>
+
+                    <ErrorMessage
+                      errors={errors}
+                      name="imageCategory"
+                      render={({ message }) => <p>{message}</p>}
+                    />
+                  </Grid>
                 </Grid>
-                {fields.map((list, index) => {
+                {/* {fields.map((list, index) => {
                   return (
                     <Grid key={list.id} item xs={12}>
                       <TextField
@@ -106,17 +150,24 @@ const AddCategory = () => {
                       )}
                     </Grid>
                   );
-                })}
+                })} */}
               </Grid>
-
-              <Grid className="my-5">
-                <Button variant="outlined" onClick={() => navigate(-1)}>
-                  Cancel
-                </Button>
-                <Button type="submit" variant="contained" color="primary">
-                  submit
-                </Button>
-              </Grid>
+              <div className="row submit-button">
+                <Grid item xs={2}>
+                  <Button onClick={() => navigate(-1)}>Cancel</Button>
+                </Grid>
+                <Grid item xs={4}>
+                  <Button
+                    fullWidth
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    className="btn-button"
+                  >
+                    submit
+                  </Button>
+                </Grid>
+              </div>
             </form>
           </Grid>
         </Grid>
