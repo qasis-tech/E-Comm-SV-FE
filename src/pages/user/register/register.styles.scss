@@ -68,10 +68,10 @@
     .bottom-image {
       height: 350px;
       @media only screen and (min-width: 800px) and (max-width: 1024px) {
-        height: 294px;
+        height: 291px;
       }
-      @media only screen and (min-width: 1024px) and (max-width: 1444px) {
-        height: 247px;
+      @media only screen and (min-width: 1026px) and (max-width: 1444px) {
+        height:  244px;
       }
       img {
         width: 100%;
