@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -16,10 +16,20 @@ import {
   ListItemIcon,
   ListItemText,
   Divider,
+  TablePagination,
 } from "@mui/material";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import CloseIcon from "@mui/icons-material/Close";
+
+import NotDataAvailable from "../../../../components/NoDataAvailable";
+import { URLS } from "../../../../config/urls.config";
+import RouterList from "../../../../routes/routerList";
+import Loader from "../../../../components/Loader";
+
+import "./list-category.styles.scss";
+
 import {
   Table,
   TableCell,
@@ -43,8 +53,29 @@ import Pagination from "@mui/material/Pagination";
 import SearchIcon from "@mui/icons-material/Search";
 import { formatDate } from "../../../../utils/dateFormat";
 
+const ListSubCat = ({ item }) => {
+  return (
+    <div style={{ display: "flex", flexWrap: "wrap" }}>
+      {item?.subCategory?.length ? (
+        item?.subCategory?.map((e, index) => {
+          return (
+            <span
+              key={index}
+              className="border px-2 py-1 m-1 rounded shadow-sm text-center"
+            >
+              {e.label}
+            </span>
+          );
+        })
+      ) : (
+        <sapn>No sub categories</sapn>
+      )}
+    </div>
+  );
+};
+
 const ListCategory = () => {
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     right: false,
   });
 
@@ -93,30 +124,56 @@ const ListCategory = () => {
       </List>
     </Box>
   );
-  const [categoryList, setCategoryList] = React.useState([]);
-  const [searchInput, setSearchInput] = React.useState("");
+
+  const [categoryList, setCategoryList] = useState([]);
+  const [count, setCount] = useState(0);
+  const [searchInput, setSearchInput] = useState("");
+
   const navigate = useNavigate();
 
-  React.useEffect(() => {
+  const [isLoading, setLoader] = useState(false);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const handleChangePage = (event, newPage) => setPage(newPage);
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  useEffect(() => {
     handleSearch();
   }, []);
 
+  useEffect(() => {
+    handleSearch();
+  }, [page, rowsPerPage]);
+
   const handleSearch = (searchValue) => {
+    setLoader(true);
     const token =
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
     setSearchInput(searchValue);
+
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}${URLS.category}`, {
-        headers: {
-          Authorization: `${token}`,
-        },
-      })
+      .get(
+        `${process.env.REACT_APP_BASE_URL}${
+          URLS.category
+        }?limit=${rowsPerPage}&skip=${page * rowsPerPage}`,
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
+      )
       .then((res) => {
+        setLoader(false);
         if (res) {
           setCategoryList(res.data.data);
+          setCount(res.data.count);
         }
       })
       .catch((err) => {
+        setLoader(false);
         console.log("err in Category LIst", err);
         setCategoryList([]);
       });
@@ -127,13 +184,20 @@ const ListCategory = () => {
       <Grid container spacing={2} className="category-search">
         <Grid item xs={11}>
           <TextField
+            label="Search"
             fullWidth
             size="small"
             onChange={(e) => handleSearch(e.target.value)}
-            label="Search"
+            value={searchInput}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
+                  <IconButton
+                    sx={{ visibility: searchInput ? "visible" : "hidden" }}
+                    onClick={() => handleSearch("")}
+                  >
+                    <CloseIcon />
+                  </IconButton>
                   <IconButton>
                     <SearchIcon />
                   </IconButton>
@@ -162,10 +226,9 @@ const ListCategory = () => {
         </Grid>
       </Grid>
       <TableContainer className="table-wrapper" component={Paper}>
-        <Table stickyHeader sx={{ minWidth: 650 }} aria-label="sticky table">
-          <TableHead className="sticky">
+        <Table>
+          <TableHead>
             <TableRow>
-              <TableCell className="table-heading">Sl No</TableCell>
               <TableCell className="table-heading">Category</TableCell>
               <TableCell className="table-heading"> Subcategory</TableCell>
               <TableCell className="table-heading">Created Date</TableCell>
@@ -173,38 +236,26 @@ const ListCategory = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {categoryList?.length ? (
+            {isLoading ? (
+              <Loader />
+            ) : categoryList?.length ? (
               categoryList?.map((item, index) => {
                 return (
-                  <TableRow
-                    className="row-section"
-                    key={item?._id}
-                    onClick={() =>
-                      navigate(
-                        `${RouterList.admin.admin}/${RouterList.admin.addCategory}`
-                      )
-                    }
-                  >
-                    <TableCell>{index}</TableCell>
-                    <TableCell component="th" scope="row">
+                  <TableRow hover className="row-section" key={item?._id}>
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      onClick={() =>
+                        navigate(
+                          `${RouterList.admin.admin}/${RouterList.admin.addCategory}`
+                        )
+                      }
+                    >
                       {item.label}
                     </TableCell>
 
                     <TableCell className="max-width-sc">
-                      {item?.subCategory?.length ? (
-                        item?.subCategory?.map((e, index) => {
-                          return (
-                            <span
-                              key={index}
-                              className="border px-2 py-1 m-1 rounded shadow-sm text-center"
-                            >
-                              {e.label}
-                            </span>
-                          );
-                        })
-                      ) : (
-                        <span>No sub categories</span>
-                      )}
+                      <ListSubCat item={item} />
                     </TableCell>
 
                     <TableCell>{formatDate(item?.createdAt)}</TableCell>
@@ -225,9 +276,18 @@ const ListCategory = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <div className="pagination-section">
-        <Pagination count={10} color="primary" />
-      </div>
+      {!isLoading ? (
+        <div className="pagination-section">
+          <TablePagination
+            component="div"
+            count={count}
+            page={page}
+            onPageChange={handleChangePage}
+            rowsPerPage={rowsPerPage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </div>
+      ) : null}
       <div style={{ position: "fixed", bottom: "2em", right: "1em" }}>
         <Fab
           color="primary"

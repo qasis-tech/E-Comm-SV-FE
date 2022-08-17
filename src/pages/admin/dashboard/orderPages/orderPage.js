@@ -199,7 +199,6 @@ const OrderList = () => {
           <TableBody>
             {orderData?.length
               ? orderData?.map((orderItem) => {
-                  console.log("orderItem ===>", orderItem.orderId);
                   return (
                     <TableRow
                       key={orderItem._id}
