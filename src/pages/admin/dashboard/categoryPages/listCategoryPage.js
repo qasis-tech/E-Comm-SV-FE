@@ -39,6 +39,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
 import AddIcon from "@mui/icons-material/Add";
 import Fab from "@mui/material/Fab";
+import Pagination from "@mui/material/Pagination";
 import SearchIcon from "@mui/icons-material/Search";
 import { formatDate } from "../../../../utils/dateFormat";
 
@@ -164,11 +165,11 @@ const ListCategory = () => {
         <Table stickyHeader sx={{ minWidth: 650 }} aria-label="sticky table">
           <TableHead className="sticky">
             <TableRow>
-              <TableCell>Sl No</TableCell>
-              <TableCell>Category</TableCell>
-              <TableCell> Subcategory</TableCell>
-              <TableCell>Created Date</TableCell>
-              <TableCell>Actions</TableCell>
+              <TableCell className="table-heading">Sl No</TableCell>
+              <TableCell className="table-heading">Category</TableCell>
+              <TableCell className="table-heading"> Subcategory</TableCell>
+              <TableCell className="table-heading">Created Date</TableCell>
+              <TableCell className="table-heading">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -224,7 +225,9 @@ const ListCategory = () => {
           </TableBody>
         </Table>
       </TableContainer>
-
+      <div className="pagination-section">
+        <Pagination count={10} color="primary" />
+      </div>
       <div style={{ position: "fixed", bottom: "2em", right: "1em" }}>
         <Fab
           color="primary"
