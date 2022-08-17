@@ -85,7 +85,7 @@ const AddCategory = () => {
     <div className="add-category">
       <Box noValidate autoComplete="off" className="wrapper">
         <Grid container direction="row" className="add-category-container">
-          <div className="category-form-section col-md-6">
+          <div className="category-form-section col-md-8 col-lg-6 col-sm-10">
             <form onSubmit={handleSubmit((res) => handleSubmitApi(res))}>
               <div className="main-heading">
                 <h3 className="heading">Category</h3>
@@ -190,7 +190,7 @@ const AddCategory = () => {
                                 className="mt-3"
                                 onClick={() => remove(index)}
                               >
-                                remove
+                                Remove
                               </Button>
                             </>
                           ) : null}
