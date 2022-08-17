@@ -65,7 +65,7 @@ const CustomRouters = () => {
       <Route path="/admin" element={<PrivateRouting />} isAdmin={true}>
         <Route path="/admin" element={<AdminHome />} />
         <Route path="dashboard" element={<DashboardPage />} />
-        <Route path="category" element={<ListCategory />} />
+        <Route path={RouterList.admin.categoryList} element={<ListCategory />} />
         <Route path={RouterList.admin.addCategory} element={<AddCategory />} />
         <Route path="products" element={<ListProduct />} />
         <Route path="add-products" element={<AddProduct />} />

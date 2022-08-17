@@ -1,18 +1,17 @@
 import { useState } from "react";
+import axios from "axios";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useForm, useFieldArray, Controller, useWatch } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
-
-import "./addCategoryPage.styles.scss";
-import "./addCategoryPage.styles.scss";
-
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import { Box, Grid } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
+import RouterList from "../../../../routes/routerList";
 import { URLS } from "../../../../config/urls.config";
+
+import "./addCategoryPage.styles.scss";
+import "./addCategoryPage.styles.scss";
+
+import { Box, Grid, Button, TextField } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 
 const AddCategory = () => {
   const navigate = useNavigate();
@@ -28,7 +27,7 @@ const AddCategory = () => {
   } = useForm({
     defaultValues: {
       mainCategory: null,
-      imageCategory: null,
+      categoryImageFile: null,
       subcategory: [{ subCategoryName: "", imageFile: "" }],
     },
   });
@@ -47,12 +46,11 @@ const AddCategory = () => {
   });
 
   const handleSubmitApi = (params) => {
-    console.log("params", params);
-    const { imageCategory, mainCategory, subcategory } = params;
+    const { categoryImageFile, mainCategory, subcategory } = params;
     const formData = new FormData();
 
     formData.append("label", mainCategory);
-    formData.append("image", imageCategory[0]);
+    formData.append("image", categoryImageFile[0]);
 
     for (const values of subcategory) {
       formData.append(`${values.subCategoryName}`, values.imageFile[0]);
@@ -74,10 +72,15 @@ const AddCategory = () => {
       })
       .then((res) => {
         console.log("Category Add ===> ", res);
-        // navigate to cat list page
+        if (res.data.data) {
+          navigate(
+            `${RouterList.admin.admin}/${RouterList.admin.categoryList}`
+          );
+          // navigate to cat list page
+        }
       })
       .catch((err) => {
-        console.log("err in Category Add", err);
+        console.log("Error in Category Add", err);
       });
   };
 
@@ -108,14 +111,14 @@ const AddCategory = () => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  {getValues("imageCategory") ? (
+                  {getValues("categoryImageFile") ? (
                     <>
-                      <span>{getValues("imageCategory[0].name")}</span>
+                      <span>{getValues("categoryImageFile[0].name")}</span>
                       <Button
                         variant="contained"
                         component="label"
                         className="mt-3"
-                        onClick={() => reset({ imageCategory: null })}
+                        onClick={() => reset({ categoryImageFile: null })}
                       >
                         remove
                       </Button>
@@ -124,7 +127,7 @@ const AddCategory = () => {
                     <Button variant="contained" fullWidth component="label">
                       Upload Image
                       <input
-                        {...register("imageCategory", {
+                        {...register("categoryImageFile", {
                           required: "This is required.",
                         })}
                         type="file"
@@ -134,7 +137,7 @@ const AddCategory = () => {
                   )}
                   <ErrorMessage
                     errors={errors}
-                    name="imageCategory"
+                    name="categoryImageFile"
                     render={({ message }) => <p>{message}</p>}
                   />
                 </Grid>

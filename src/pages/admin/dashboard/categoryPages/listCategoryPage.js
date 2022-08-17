@@ -2,6 +2,12 @@ import * as React from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+import NotDataAvailable from "../../../../components/NoDataAvailable";
+import { URLS } from "../../../../config/urls.config";
+import RouterList from "../../../../routes/routerList";
+
+import "./list-category.styles.scss";
+
 import {
   Drawer,
   List,
@@ -14,13 +20,6 @@ import {
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import FilterListIcon from "@mui/icons-material/FilterList";
-
-import NotDataAvailable from "../../../../components/NoDataAvailable";
-import { URLS } from "../../../../config/urls.config";
-import RouterList from "../../../../routes/routerList";
-
-import "./list-category.styles.scss";
-
 import {
   Table,
   TableCell,
@@ -95,6 +94,7 @@ const ListCategory = () => {
   );
   const [categoryList, setCategoryList] = React.useState([]);
   const [searchInput, setSearchInput] = React.useState("");
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     handleSearch();
@@ -121,7 +121,6 @@ const ListCategory = () => {
       });
   };
 
-  const navigate = useNavigate();
   return (
     <Box className="list-category">
       <Grid container spacing={2} className="category-search">
