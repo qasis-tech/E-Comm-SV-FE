@@ -30,7 +30,7 @@ const AddCategory = () => {
     <div className="add-category">
       <Box noValidate autoComplete="off" className="wrapper">
         <Grid container direction="row" className="add-category-container">
-          <Grid item xs={6} className="category-form-section ">
+          <div className="category-form-section ">
             <form onSubmit={handleSubmit(console.log)}>
               <div className="main-heading">
                 <h3 className="heading">Category</h3>
@@ -61,7 +61,6 @@ const AddCategory = () => {
                       hidden
                     />
                   </Button>
-
                   <ErrorMessage
                     errors={errors}
                     name="imageCategory"
@@ -169,7 +168,7 @@ const AddCategory = () => {
                 </Grid>
               </div>
             </form>
-          </Grid>
+          </div>
         </Grid>
       </Box>
     </div>

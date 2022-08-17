@@ -11,6 +11,9 @@
         box-shadow: 2px 5px 5px 3px #888888;
         border-radius: 10px;
         // border: 1px solid black;
+        @media only screen and (min-width: 800px) and (max-width: 1024px) {
+          
+        }
         .main-heading{
             background-color: #1976d2;
             padding: 1em 0;
