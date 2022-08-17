@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { URLS } from "../../../../config/urls.config";
 import "./add-product.styles.scss";
@@ -17,6 +18,7 @@ import {
 } from "@mui/material";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+import AddIcon from "@mui/icons-material/Add";
 
 const productaddSchema = yup
   .object()
@@ -147,6 +149,8 @@ const AddProduct = () => {
   };
 
   console.log("featureData", featureData);
+  const navigate = useNavigate();
+
   return (
     <div className="add-product">
       <Box noValidate autoComplete="off" className="product-wrapper">
@@ -156,111 +160,210 @@ const AddProduct = () => {
           spacing={2}
           className="add-product-container"
         >
-          <Grid item xs={6} className="product-form-section ">
+          <div className="product-form-section col-md-8">
             <form onSubmit={handleSubmit(handleProductAdd)}>
               <div className="main-product-heading">
                 <h3 className="product-heading">Product</h3>
               </div>
-              <Grid container spacing={2} className="product-section">
-                <Grid item xs={4}>
-                  <TextField
-                    fullWidth
-                    variant="outlined"
-                    label="Name"
-                    {...register("productName")}
-                  />
-                  <p>{errors?.productName?.message}</p>
-                </Grid>
-                <Grid item xs={4}>
-                  <TextField
-                    fullWidth
-                    variant="outlined"
-                    label="Quantity"
-                    {...register("quantity")}
-                  />
-                  <p>{errors?.quantity?.message}</p>
-                </Grid>
-                <Grid item xs={4}>
-                  {unitData?.length && (
-                    <Autocomplete
-                      options={unitData}
-                      getOptionLabel={(option) => option.label || ""}
-                      isOptionEqualToValue={(option, value) =>
-                        option.label === value.label
-                      }
-                      onChange={(e, val) => handleUnit(e, val)}
-                      value={selectedUnit}
-                      renderInput={(params) => (
-                        <TextField {...params} label="Units" />
-                      )}
-                    />
-                  )}
-                </Grid>
-              </Grid>
-              <Grid container spacing={2}>
-                <Grid item xs={6}>
-                  {unitData?.length && (
-                    <Autocomplete
-                      options={unitData}
-                      getOptionLabel={(option) => option.label || ""}
-                      isOptionEqualToValue={(option, value) =>
-                        option.label === value.label
-                      }
-                      onChange={(e, val) => handleUnit(e, val)}
-                      value={selectedUnit}
-                      renderInput={(params) => (
-                        <TextField {...params} label="Category" />
-                      )}
-                    />
-                  )}
-                </Grid>
-                <Grid item xs={6}>
-                  <Autocomplete
-                    options={
-                      selectedCategory?.subCategory?.length
-                        ? selectedCategory?.subCategory
-                        : []
-                    }
-                    getOptionLabel={(option) => option.label || ""}
-                    isOptionEqualToValue={(option, value) =>
-                      option.label === value.label
-                    }
-                    onChange={(e, val) => handleSubCategory(e, val)}
-                    value={selectedSubCategory}
-                    renderInput={(params) => (
-                      <TextField {...params} label="Subcategories" />
-                    )}
-                  />
-                </Grid>
-              </Grid>
-              <Grid container spacing={2}>
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    id="outlined-multiline-static"
-                    label="Description"
-                    multiline
-                    rows={4}
-                    {...register("description")}
-                  />
-                  <p>{errors?.description?.message}</p>
-                </Grid>
-              </Grid>
-              <Grid container spacing={2}>
-                <Grid item xs={5}>
+              <div className="main-form-container">
+                <Grid container spacing={2}>
                   <Grid item xs={4}>
-                    //{" "}
                     <TextField
                       fullWidth
-                      id="outlined-multiline-static"
-                      label="name"
-                      onChange={(e) => handleFeatureKey(e, null)}
+                      variant="outlined"
+                      label="Name"
+                      {...register("productName")}
+                    />
+                    <p>{errors?.productName?.message}</p>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <TextField
+                      fullWidth
+                      variant="outlined"
+                      label="Quantity"
+                      {...register("quantity")}
+                    />
+                    <p>{errors?.quantity?.message}</p>
+                  </Grid>
+                  <Grid item xs={4}>
+                    {unitData?.length && (
+                      <Autocomplete
+                        options={unitData}
+                        getOptionLabel={(option) => option.label || ""}
+                        isOptionEqualToValue={(option, value) =>
+                          option.label === value.label
+                        }
+                        onChange={(e, val) => handleUnit(e, val)}
+                        value={selectedUnit}
+                        renderInput={(params) => (
+                          <TextField {...params} label="Units" />
+                        )}
+                      />
+                    )}
+                  </Grid>
+                </Grid>
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    {unitData?.length && (
+                      <Autocomplete
+                        options={unitData}
+                        getOptionLabel={(option) => option.label || ""}
+                        isOptionEqualToValue={(option, value) =>
+                          option.label === value.label
+                        }
+                        onChange={(e, val) => handleUnit(e, val)}
+                        value={selectedUnit}
+                        renderInput={(params) => (
+                          <TextField {...params} label="Category" />
+                        )}
+                      />
+                    )}
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Autocomplete
+                      options={
+                        selectedCategory?.subCategory?.length
+                          ? selectedCategory?.subCategory
+                          : []
+                      }
+                      getOptionLabel={(option) => option.label || ""}
+                      isOptionEqualToValue={(option, value) =>
+                        option.label === value.label
+                      }
+                      onChange={(e, val) => handleSubCategory(e, val)}
+                      value={selectedSubCategory}
+                      renderInput={(params) => (
+                        <TextField {...params} label="Subcategories" />
+                      )}
                     />
                   </Grid>
                 </Grid>
-              </Grid>
+                <Grid container marginTop={1} spacing={2}>
+                  <Grid item xs={12}>
+                    <TextField
+                      fullWidth
+                      id="outlined-multiline-static"
+                      label="Description"
+                      multiline
+                      rows={4}
+                      {...register("description")}
+                    />
+                    <p>{errors?.description?.message}</p>
+                  </Grid>
+                </Grid>
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <TextField
+                      fullWidth
+                      id="outlined-multiline-static"
+                      label="Features"
+                      onChange={(e) => handleFeatureKey(e, null)}
+                    />
+                  </Grid>
+                  <Grid item xs={5}>
+                    <TextField
+                      fullWidth
+                      id="outlined-multiline-static"
+                      label="value"
+                      onChange={(e) => handleFeatureKey(null, e)}
+                    />
+                  </Grid>
+                  <Grid item xs={1}>
+                    <AddIcon color="primary" className="add-icon-section" />
+                  </Grid>
+                </Grid>
+                <Grid container marginTop={1} spacing={2}>
+                  <Grid item xs={6}>
+                    <TextField
+                      fullWidth
+                      variant="outlined"
+                      label="Price"
+                      {...register("price")}
+                    />
+                    <p>{errors?.price?.message}</p>
+                  </Grid>
+                  <Grid item xs={6}>
+                    {unitData?.length && (
+                      <Autocomplete
+                        options={unitData}
+                        getOptionLabel={(option) => option.label || ""}
+                        isOptionEqualToValue={(option, value) =>
+                          option.label === value.label
+                        }
+                        onChange={(e, val) => handleOfferUnit(e, val)}
+                        value={selectedOfferunit}
+                        renderInput={(params) => (
+                          <TextField {...params} label="Offer Units" />
+                        )}
+                      />
+                    )}
+                  </Grid>
+                </Grid>
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <TextField
+                      fullWidth
+                      variant="outlined"
+                      label="Quantity"
+                      {...register("offerQuantity")}
+                    />
+                    <p>{errors?.offerQuantity?.message}</p>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      fullWidth
+                      variant="outlined"
+                      label="Offer Price"
+                      {...register("offerPrice")}
+                    />
+                    <p>{errors?.offerPrice?.message}</p>
+                  </Grid>
+                </Grid>
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <Button variant="contained" fullWidth component="label">
+                      Upload Image
+                      <input
+                        {...register("imageCategory", {
+                          required: "This is required.",
+                        })}
+                        type="file"
+                        hidden
+                      />
+                    </Button>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Button variant="contained" fullWidth component="label">
+                      Upload Video
+                      <input
+                        {...register("imageCategory", {
+                          required: "This is required.",
+                        })}
+                        type="file"
+                        hidden
+                      />
+                    </Button>
+                  </Grid>
+                </Grid>
+              </div>
+              <div className="row submit-button">
+                <Grid item xs={2}>
+                  <Button onClick={() => navigate(-1)}>Cancel</Button>
+                </Grid>
+                <Grid item xs={4}>
+                  <Button
+                    fullWidth
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    className="btn-button"
+                  >
+                    submit
+                  </Button>
+                </Grid>
+              </div>
             </form>
-          </Grid>
+          </div>
         </Grid>
       </Box>
     </div>
