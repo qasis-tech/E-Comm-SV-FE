@@ -66,7 +66,7 @@ const CustomRouters = () => {
         <Route path="/admin" element={<AdminHome />} />
         <Route path="dashboard" element={<DashboardPage />} />
         <Route path="category" element={<ListCategory />} />
-        <Route path="add-category" element={<AddCategory />} />
+        <Route path={RouterList.admin.addCategory} element={<AddCategory />} />
         <Route path="products" element={<ListProduct />} />
         <Route path="add-products" element={<AddProduct />} />
         <Route path="products-details" element={<ProductDetails />} />
@@ -79,7 +79,6 @@ const CustomRouters = () => {
         <Route path="add-user" element={<AddUser />} />
         <Route path="order-details/:id" element={<OrderDetails />} />
         <Route path="order-list" element={<OrderList />} />
-        
       </Route>
 
       <Route path="*" element={<PageNotFound />} />

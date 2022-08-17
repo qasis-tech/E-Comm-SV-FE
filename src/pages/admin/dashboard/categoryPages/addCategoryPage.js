@@ -2,16 +2,16 @@ import { useState } from "react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./addCategoryPage.styles.scss";
 import { useForm, useFieldArray, Controller, useWatch } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
-
-import "./addCategoryPage.styles.scss";
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Box, Grid } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+
+import "./addCategoryPage.styles.scss";
+import "./addCategoryPage.styles.scss";
 
 const AddCategory = () => {
   const {

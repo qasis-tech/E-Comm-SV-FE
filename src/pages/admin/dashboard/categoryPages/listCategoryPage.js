@@ -1,21 +1,26 @@
 import * as React from "react";
-import { URLS } from "../../../../config/urls.config";
-import NotDataAvailable from "../../../../components/NoDataAvailable";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-import "./list-category.styles.scss";
-
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
+import {
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Divider,
+} from "@mui/material";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import FilterListIcon from "@mui/icons-material/FilterList";
+
+import NotDataAvailable from "../../../../components/NoDataAvailable";
+import { URLS } from "../../../../config/urls.config";
+import RouterList from "../../../../routes/routerList";
+
+import "./list-category.styles.scss";
+
 import {
   Table,
   TableCell,
@@ -36,6 +41,7 @@ import CreateIcon from "@mui/icons-material/Create";
 import AddIcon from "@mui/icons-material/Add";
 import Fab from "@mui/material/Fab";
 import SearchIcon from "@mui/icons-material/Search";
+import { formatDate } from "../../../../utils/dateFormat";
 
 const ListCategory = () => {
   const [state, setState] = React.useState({
@@ -90,13 +96,13 @@ const ListCategory = () => {
   const [categoryList, setCategoryList] = React.useState([]);
   const [searchInput, setSearchInput] = React.useState("");
 
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
   React.useEffect(() => {
     handleSearch();
   }, []);
 
   const handleSearch = (searchValue) => {
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
     setSearchInput(searchValue);
     axios
       .get(`${process.env.REACT_APP_BASE_URL}${URLS.category}`, {
@@ -122,6 +128,7 @@ const ListCategory = () => {
         <Grid item xs={11}>
           <TextField
             fullWidth
+            size="small"
             onChange={(e) => handleSearch(e.target.value)}
             label="Search"
             InputProps={{
@@ -158,7 +165,7 @@ const ListCategory = () => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
+              <TableCell>Sl No</TableCell>
               <TableCell>Category</TableCell>
               <TableCell> Subcategory</TableCell>
               <TableCell>Created Date</TableCell>
@@ -166,56 +173,60 @@ const ListCategory = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {categoryList?.length
-              ? categoryList?.map((item) => {
-                  return (
-                    <TableRow key={item}>
-                      <TableCell>{item._id}</TableCell>
-                      <TableCell component="th" scope="row">
-                        {item.label}
-                      </TableCell>
+            {categoryList?.length ? (
+              categoryList?.map((item, index) => {
+                return (
+                  <TableRow key={item?._id}>
+                    <TableCell>{index}</TableCell>
+                    <TableCell component="th" scope="row">
+                      {item.label}
+                    </TableCell>
 
+                    <TableCell className="max-width-sc">
                       {item?.subCategory?.length ? (
-                        <TableCell
-                          sx={{ maxWidth: 350 }}
-                          className="d-flex flex-wrap"
-                        >
-                          {item?.subCategory?.map((e) => {
-                            return (
-                              <span className="border px-2 py-1 m-1 rounded shadow-sm text-center">
-                                {e.label}
-                              </span>
-                            );
-                          })}
-                        </TableCell>
+                        item?.subCategory?.map((e, index) => {
+                          return (
+                            <span
+                              key={index}
+                              className="border px-2 py-1 m-1 rounded shadow-sm text-center"
+                            >
+                              {e.label}
+                            </span>
+                          );
+                        })
                       ) : (
-                        <TableCell>No sub categories</TableCell>
+                        <span>No sub categories</span>
                       )}
+                    </TableCell>
 
-                      <TableCell>{item.createdAt}</TableCell>
-                      <TableCell>
-                        <Button variant="outlined">
-                          <DeleteIcon />
-                        </Button>
-                        <Button variant="outlined">
-                          <CreateIcon />
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })
-              : null}
+                    <TableCell>{formatDate(item?.createdAt)}</TableCell>
+                    <TableCell>
+                      <Button variant="outlined">
+                        <DeleteIcon />
+                      </Button>
+                      <Button variant="outlined">
+                        <CreateIcon />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                );
+              })
+            ) : (
+              <NotDataAvailable />
+            )}
           </TableBody>
         </Table>
       </TableContainer>
-
-      {!categoryList?.length && <NotDataAvailable />}
 
       <div style={{ position: "absolute", bottom: "4em", right: "4em" }}>
         <Fab
           color="primary"
           aria-label="add"
-          onClick={() => navigate("/admin/add-category")}
+          onClick={() =>
+            navigate(
+              `${RouterList.admin.admin}/${RouterList.admin.addCategory}`
+            )
+          }
         >
           <AddIcon />
         </Fab>

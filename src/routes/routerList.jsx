@@ -4,7 +4,7 @@ const List = {
     login: "/login",
     register: "register",
     about: "about",
-    contact:"contact",
+    contact: "contact",
   },
   admin: {
     admin: "/admin",
@@ -22,7 +22,6 @@ const List = {
     userList: "user-list",
     userDetails: "user-details",
     addUser: "add-user",
-    
   },
 };
 
