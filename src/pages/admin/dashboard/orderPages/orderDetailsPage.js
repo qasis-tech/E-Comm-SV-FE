@@ -9,6 +9,13 @@ import { useParams } from "react-router-dom";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import { Box, Button, MenuItem, TextField } from "@mui/material";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 
 const orderdetailsSchema = yup
   .object()
@@ -18,7 +25,7 @@ const orderdetailsSchema = yup
     orderSubcategory: yup.string().required(),
     orderEmail: yup.string().email().required(),
     orderAddress: yup.string().required(),
-
+    orderLocation: yup.string().required(),
     orderMobilenumber: yup
       .string()
       .phone("IN", true, "Mobile Number is invalid")
@@ -58,29 +65,33 @@ const OrderDetails = () => {
   } = useForm({
     resolver: yupResolver(orderdetailsSchema),
   });
+  const [orderDetailData, setOrderDetail] = React.useState([]);
+  const [selectedStatus, setSelectedStatus] = React.useState([]);
 
-  const { orderId } = useParams();
-  console.log("parms ==>", orderId);
+  const { id } = useParams();
+  console.log("parms ==>", id);
 
   React.useEffect(() => {
     getOrderDetailsApi();
   }, []);
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
 
   const getOrderDetailsApi = () => {
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
+    console.log("url", `${process.env.REACT_APP_BASE_URL}${URLS.order}/${id}`);
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}${URLS.order}/${orderId}`, {
+      .get(`${process.env.REACT_APP_BASE_URL}${URLS.order}/${id}`, {
         headers: { Authorization: ` ${token}` },
       })
       .then((res) => {
-        console.log("ress =>>", res);
-        // setValue("orderName", res.data.data);
-        // setValue("userLastName", res.data.data.lastName);
-        // setValue("userMobilenumber", res.data.data.mobileNumber);
-        // setValue("userEmail", res.data.data.email);
-        // setValue("userPincode", res.data.data.pinCode);
-        // setValue("userGender", res.data.data.gender);
+        console.log("ress =>>", res.data.data);
+        setOrderDetail(res.data.data);
+
+        setValue("orderMobilenumber", res.data.data.user.mobileNumber);
+        setValue("orderEmail", res.data.data.user.email);
+        setValue("orderPincode", res.data.data.user.pinCode);
+        setValue("orderLocation", res.data.data.user.location);
+        setValue("orderAddress", res.data.data.user.primaryAddress);
       })
 
       .catch((err) => {
@@ -96,12 +107,12 @@ const OrderDetails = () => {
   };
   return (
     <React.Fragment>
-      <Container maxWidth="sm">
-        <Box sx={{ flexGrow: 1 }} noValidate autoComplete="off">
+      <Container>
+        <Box noValidate autoComplete="off">
           <form onSubmit={handleSubmit(handleOrderDetails)}>
             <h3>Order Details</h3>
             <Grid container spacing={2}>
-              <Grid item xs={6}>
+              {/* <Grid item xs={6}>
                 <TextField
                   {...register("orderName")}
                   id="outlined-read-only-input"
@@ -110,8 +121,8 @@ const OrderDetails = () => {
                     readOnly: true,
                   }}
                 />
-              </Grid>
-              <Grid item xs={6}>
+              </Grid> */}
+              {/* <Grid item xs={6}>
                 <TextField
                   {...register("orderCategory")}
                   id="outlined-read-only-input"
@@ -120,8 +131,8 @@ const OrderDetails = () => {
                     readOnly: true,
                   }}
                 />
-              </Grid>
-              <Grid item xs={6}>
+              </Grid> */}
+              {/* <Grid item xs={6}>
                 <TextField
                   {...register("orderSubcategory")}
                   id="outlined-read-only-input"
@@ -130,12 +141,12 @@ const OrderDetails = () => {
                     readOnly: true,
                   }}
                 />
-              </Grid>
+              </Grid> */}
               <Grid item xs={6}>
                 <TextField
                   {...register("orderEmail")}
                   id="outlined-read-only-input"
-                  label="Email"
+                  placeholder="Email"
                   InputProps={{
                     readOnly: true,
                   }}
@@ -146,7 +157,7 @@ const OrderDetails = () => {
                   {...register("orderAddress")}
                   fullWidth
                   id="outlined-multiline-static"
-                  label="Address"
+                  placeholder="Address"
                   multiline
                   rows={4}
                   InputProps={{
@@ -158,7 +169,7 @@ const OrderDetails = () => {
                 <TextField
                   {...register("orderLocation")}
                   id="outlined-read-only-input"
-                  label="Location"
+                  placeholder="Location"
                   InputProps={{
                     readOnly: true,
                   }}
@@ -168,7 +179,7 @@ const OrderDetails = () => {
                 <TextField
                   {...register("orderMobilenumber")}
                   id="outlined-read-only-input"
-                  label="Phone Number"
+                  placeholder="Phone Number"
                   InputProps={{
                     readOnly: true,
                   }}
@@ -178,7 +189,7 @@ const OrderDetails = () => {
                 <TextField
                   {...register("orderPincode")}
                   id="outlined-read-only-input"
-                  label="Pincode"
+                  placeholder="Pincode"
                   InputProps={{
                     readOnly: true,
                   }}
@@ -207,6 +218,44 @@ const OrderDetails = () => {
               Change
             </Button>
           </form>
+          <TableContainer component={Paper}>
+            <Table aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell align="right">name</TableCell>
+                  <TableCell align="right">category</TableCell>
+                  <TableCell align="right">Subcategory</TableCell>
+                  <TableCell align="right">unit</TableCell>
+                  <TableCell align="right">status</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {orderDetailData?.product?.length
+                  ? orderDetailData?.product?.map((orderdetail) => {
+                      return (
+                        <TableRow key={orderdetail._id}>
+                          <TableCell align="right">
+                            {orderdetail.name}
+                          </TableCell>
+                          <TableCell align="right">
+                            {orderdetail.category}
+                          </TableCell>
+                          <TableCell align="right">
+                            {orderdetail.subCategory}
+                          </TableCell>
+                          <TableCell align="right">
+                            {orderdetail.unit}
+                          </TableCell>
+                          <TableCell align="right">
+                            {orderDetailData.status}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })
+                  : null}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </Box>
       </Container>
     </React.Fragment>

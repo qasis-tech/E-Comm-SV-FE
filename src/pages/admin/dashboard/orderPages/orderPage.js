@@ -204,7 +204,7 @@ const OrderList = () => {
                     <TableRow
                       key={orderItem._id}
                       onClick={() =>
-                        navigate(`/admin/order-details/${orderItem.orderId}`)
+                        navigate(`/admin/order-details/${orderItem._id}`)
                       }
                     >
                       <TableCell component="th" scope="row">
