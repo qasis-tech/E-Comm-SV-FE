@@ -85,7 +85,7 @@ const AddCategory = () => {
     <div className="add-category">
       <Box noValidate autoComplete="off" className="wrapper">
         <Grid container direction="row" className="add-category-container">
-          <div className="category-form-section ">
+          <div className="category-form-section col-md-6">
             <form onSubmit={handleSubmit((res) => handleSubmitApi(res))}>
               <div className="main-heading">
                 <h3 className="heading">Category</h3>
