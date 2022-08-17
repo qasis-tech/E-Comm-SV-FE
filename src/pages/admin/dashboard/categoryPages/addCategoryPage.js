@@ -5,13 +5,13 @@ import axios from "axios";
 import { useForm, useFieldArray, Controller, useWatch } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 
+import "./addCategoryPage.styles.scss";
+import "./addCategoryPage.styles.scss";
+
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Box, Grid } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
-
-import "./addCategoryPage.styles.scss";
-import "./addCategoryPage.styles.scss";
 
 const AddCategory = () => {
   const {
@@ -19,7 +19,11 @@ const AddCategory = () => {
     handleSubmit,
     formState: { errors },
     control,
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      subcategory: [{ subCategoryName: "addwd", imageFile: "null" }],
+    },
+  });
   const { fields, append, remove } = useFieldArray({
     control,
     name: "subcategory",
@@ -83,73 +87,64 @@ const AddCategory = () => {
                     <AddIcon
                       color="primary"
                       className="add-icon-section"
-                      onClick={() => append({})}
+                      onClick={() =>
+                        append({ subCategoryName: " sfsf", imageFile: "vgsgx" })
+                      }
                     />
                   </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      label="Name"
-                      {...register("mainCategory", {
-                        required: "This is required.",
-                      })}
-                    />
-                    <ErrorMessage
-                      errors={errors}
-                      name="mainCategory"
-                      render={({ message }) => <p>{message}</p>}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Button variant="contained" fullWidth component="label">
-                      Upload Image
-                      <input
-                        {...register("imageCategory", {
-                          required: "This is required.",
-                        })}
-                        type="file"
-                        hidden
-                      />
-                    </Button>
 
-                    <ErrorMessage
-                      errors={errors}
-                      name="imageCategory"
-                      render={({ message }) => <p>{message}</p>}
-                    />
-                  </Grid>
+                  {fields.map((list, index) => {
+                    return (
+                      <Grid key={list.id} item xs={12}>
+                        <Grid item xs={12}>
+                          <TextField
+                            {...register(
+                              `subcategory.${index}.subCategoryName`
+                            )}
+                            fullWidth
+                            variant="outlined"
+                            label="Name"
+                          />
+                          <ErrorMessage
+                            errors={errors}
+                            name="subCategoryName"
+                            render={({ message }) => <p>{message}</p>}
+                          />
+                        </Grid>
+                        <Grid item xs={12}>
+                          <Button
+                            variant="contained"
+                            fullWidth
+                            component="label"
+                          >
+                            Upload Image
+                            <TextField
+                              {...register(`subcategory.${index}.imageFile`)}
+                              fullWidth
+                              variant="outlined"
+                              hidden
+                              label="file"
+                              type="file"
+                            />
+                          </Button>
+                          <ErrorMessage
+                            errors={errors}
+                            name="imageFile"
+                            render={({ message }) => <p>{message}</p>}
+                          />
+                        </Grid>
+                        {fields.length > 1 && (
+                          <button
+                            onClick={() => remove(index)}
+                            className="btn btn-primary"
+                          >
+                            remove
+                          </button>
+                        )}
+                      </Grid>
+                    );
+                  })}
                 </Grid>
-                {/* {fields.map((list, index) => {
-                  return (
-                    <Grid key={list.id} item xs={12}>
-                      <TextField
-                        fullWidth
-                        variant="outlined"
-                        label="Name"
-                        {...register(`subCategoryName ${index}`)}
-                      />
-
-                      <Button
-                        {...register(`imageFile ${index}`)}
-                        variant="contained"
-                        fullWidth
-                        component="label"
-                      >
-                        Upload Image
-                        <input type="file" hidden />
-                      </Button>
-
-                      {fields.length > 1 && (
-                        <button
-                          onClick={() => remove(index)}
-                          className="btn btn-primary"
-                        >
-                          remove
-                        </button>
-                      )}
-                    </Grid>
-                  );
-                })} */}
               </Grid>
               <div className="row submit-button">
                 <Grid item xs={2}>
