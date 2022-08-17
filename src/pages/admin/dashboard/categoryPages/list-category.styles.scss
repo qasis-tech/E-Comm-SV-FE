@@ -2,13 +2,32 @@
   .category-search {
     display: flex;
     justify-content: space-between;
+    position: -webkit-sticky;
+    position: sticky !important;
+    top: 70px;
     .css-i4bv87-MuiSvgIcon-root {
       font-size: 1.5rem !important;
     }
   }
   .table-wrapper {
     margin-top: 2em;
-
+    .sticky {
+      position: -webkit-sticky;
+      position: sticky !important;
+    }
+    .css-1rwt2y5-MuiButtonBase-root-MuiButton-root {
+      border-radius: 0 !important;
+    }
+    .row-section {
+      cursor: -webkit-grab;
+      cursor: grab;
+      .delete-icon {
+        color: #ef4141 !important;
+      }
+      .edit-icon {
+        color: #0a870a !important;
+      }
+    }
     .max-width-sc {
       max-width: 350px;
       display: flex;

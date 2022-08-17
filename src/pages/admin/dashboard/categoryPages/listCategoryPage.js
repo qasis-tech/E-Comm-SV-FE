@@ -162,8 +162,8 @@ const ListCategory = () => {
         </Grid>
       </Grid>
       <TableContainer className="table-wrapper" component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
+        <Table stickyHeader sx={{ minWidth: 650 }} aria-label="sticky table">
+          <TableHead className="sticky">
             <TableRow>
               <TableCell>Sl No</TableCell>
               <TableCell>Category</TableCell>
@@ -177,6 +177,7 @@ const ListCategory = () => {
               categoryList?.map((item, index) => {
                 return (
                   <TableRow
+                    className="row-section"
                     key={item?._id}
                     onClick={() =>
                       navigate(
@@ -208,11 +209,11 @@ const ListCategory = () => {
 
                     <TableCell>{formatDate(item?.createdAt)}</TableCell>
                     <TableCell>
-                      <Button variant="outlined">
-                        <DeleteIcon />
+                      <Button>
+                        <DeleteIcon className="delete-icon" />
                       </Button>
-                      <Button variant="outlined">
-                        <CreateIcon />
+                      <Button>
+                        <CreateIcon className="edit-icon" />
                       </Button>
                     </TableCell>
                   </TableRow>
