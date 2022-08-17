@@ -176,7 +176,14 @@ const ListCategory = () => {
             {categoryList?.length ? (
               categoryList?.map((item, index) => {
                 return (
-                  <TableRow key={item?._id}>
+                  <TableRow
+                    key={item?._id}
+                    onClick={() =>
+                      navigate(
+                        `${RouterList.admin.admin}/${RouterList.admin.addCategory}`
+                      )
+                    }
+                  >
                     <TableCell>{index}</TableCell>
                     <TableCell component="th" scope="row">
                       {item.label}
@@ -218,7 +225,7 @@ const ListCategory = () => {
         </Table>
       </TableContainer>
 
-      <div style={{ position: "absolute", bottom: "4em", right: "4em" }}>
+      <div style={{ position: "fixed", bottom: "2em", right: "1em" }}>
         <Fab
           color="primary"
           aria-label="add"
