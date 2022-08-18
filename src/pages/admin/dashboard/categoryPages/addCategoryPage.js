@@ -76,7 +76,6 @@ const AddCategory = () => {
         },
       })
       .then((res) => {
-        console.log("Category Add ===> ", res);
         if (res.data.data) {
           navigate(
             `${RouterList.admin.admin}/${RouterList.admin.categoryList}`
@@ -170,7 +169,15 @@ const AddCategory = () => {
                   {/* sub category list */}
                   {controlledFields?.map((list, index) => {
                     return (
-                      <Grid key={list.id} item xs={12}>
+                      <Grid
+                        key={list.id}
+                        item
+                        xs={12}
+                        sx={{
+                          borderBottom: "1px solid red",
+                          padding: "1em 0 ",
+                        }}
+                      >
                         <Grid item xs={12}>
                           <TextField
                             label="Name"
@@ -200,23 +207,24 @@ const AddCategory = () => {
                                 Remove
                               </Button>
                             </>
-                          ) : null}
-                          <Button
-                            variant="contained"
-                            fullWidth
-                            component="label"
-                            className="mt-3"
-                          >
-                            Upload Image
-                            <TextField
-                              label="file"
-                              type="file"
-                              variant="outlined"
+                          ) : (
+                            <Button
+                              variant="contained"
                               fullWidth
-                              hidden
-                              {...register(`subcategory.${index}.imageFile`)}
-                            />
-                          </Button>
+                              component="label"
+                              className="mt-3"
+                            >
+                              Upload Image
+                              <TextField
+                                label="file"
+                                type="file"
+                                variant="outlined"
+                                fullWidth
+                                hidden
+                                {...register(`subcategory.${index}.imageFile`)}
+                              />
+                            </Button>
+                          )}
                           <ErrorMessage
                             errors={errors}
                             name="imageFile"

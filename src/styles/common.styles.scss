@@ -1,3 +1,5 @@
+@import "./variables.styles.scss";
+
 $primary: "#1976d2";
 $secondary: "#009688";
 
@@ -24,4 +26,12 @@ $main-font-size: 15px;
 
 .pointer {
   cursor: pointer;
+}
+table {
+  thead {
+    background-color: $table-header;
+    th {
+      color: $white!important;
+    }
+  }
 }

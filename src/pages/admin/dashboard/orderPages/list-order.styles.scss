@@ -1,46 +1,45 @@
-.list-stock {
-  .stock-search {
+@import "../../../../styles/variables.styles.scss";
+@import "../../../../styles/button.styles.scss";
+
+.list-order {
+  .oder-search {
     display: flex;
     justify-content: space-between;
     .css-i4bv87-MuiSvgIcon-root {
       font-size: 1.5rem !important;
     }
   }
-  .shorthand-main-section {
+  .order-shorthand-main-section {
     margin-left: 3px;
-    .cart-icon-section {
+    .order-cart-icon-section {
       font-size: 4rem;
       color: white;
       margin: 31px 21px;
     }
-    .shorthand-section {
+    .order-shorthand-section {
       color: white;
       margin: 20px 0px;
-      padding: 0px 37px;
+      padding: 0px 7px;
     }
-    .out-stock {
+    .order-out-stock {
       @media only screen and (min-width: 800px) and (max-width: 1024px) {
         margin-left: 9em;
       }
     }
   }
-  .stock-table-wrapper {
+  .order-table-wrapper {
     margin-top: 2em;
-    .sticky {
-      position: -webkit-sticky;
-      position: sticky !important;
-    }
-    .css-1rwt2y5-MuiButtonBase-root-MuiButton-root {
-      border-radius: 0 !important;
-    }
-    .stock-row-section {
+    .order-row-section {
       cursor: -webkit-grab;
       cursor: pointer;
     }
     .max-width-sc {
       max-width: 250px;
-      // display: flex;
-      // flex-wrap: wrap;
+    }
+  }
+  .order-section{
+    .order-cart-icon-section{
+        color: white!important;
     }
   }
   .pagination-section {

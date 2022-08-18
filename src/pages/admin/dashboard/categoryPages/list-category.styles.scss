@@ -1,4 +1,6 @@
 @import "../../../../styles/variables.styles.scss";
+@import "../../../../styles/button.styles.scss";
+
 .list-category {
   .category-search {
     display: flex;
@@ -13,14 +15,7 @@
   .table-wrapper {
     margin-top: 2em;
 
-    table {
-      thead {
-        background-color: $table-header;
-        th {
-          color: $white;
-        }
-      }
-    }
+    
     .sticky {
       position: -webkit-sticky;
       position: sticky !important;
@@ -34,13 +29,6 @@
     .row-section {
       cursor: -webkit-grab;
       cursor: pointer;
-      .delete-icon {
-        color: #ef4141 !important;
-      }
-      .edit-icon {
-        color: #000 !important;
-        font-size: 18px;
-      }
     }
     .max-width-sc {
       max-width: 250px;
@@ -52,5 +40,13 @@
     display: flex;
     justify-content: flex-start;
     margin-top: 1em;
+    .MuiTablePagination-root{
+      .MuiToolbar-root{
+        p{
+          margin-top: 15px!important;
+
+        }
+      }
+    }
   }
 }
