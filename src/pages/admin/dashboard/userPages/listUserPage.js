@@ -36,6 +36,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import AddIcon from "@mui/icons-material/Add";
 
+import { formatDate } from "../../../../utils/dateFormat";
 import "./list-user.styles.scss";
 const UserList = () => {
   const [state, setState] = React.useState({
@@ -179,8 +180,8 @@ const UserList = () => {
                   </TableCell>
                   <TableCell>{useritem.mobileNumber}</TableCell>
                   <TableCell>{useritem.location}</TableCell>
-                  <TableCell>25-03-2022</TableCell>
-                  <TableCell>25-03-2022</TableCell>
+                  <TableCell>{formatDate(useritem?.createdAt)}</TableCell>
+                  <TableCell>{formatDate(useritem?.updatedAt)}</TableCell>
                   <TableCell>
                     <Chip label="Active" color="success" />
                     <Chip label="Inactive" color="error" />

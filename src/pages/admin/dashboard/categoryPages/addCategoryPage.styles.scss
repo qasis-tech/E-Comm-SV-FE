@@ -2,35 +2,35 @@
 
 .add-category {
   font-family: $main-font-family;
-  margin-top: 3em;
   .wrapper {
     .add-category-container {
       justify-content: center;
       .category-form-section {
-        //padding: 3em 3em 0 3em;
         box-shadow: 2px 5px 5px 3px #888888;
         border-radius: 10px;
-        // border: 1px solid black;
         @media only screen and (min-width: 800px) and (max-width: 1600px) {
-          // width: "80%";
         }
         .main-heading {
           background-color: #1976d2;
-          padding: 1em 0;
+          padding: 5px 0;
           border-radius: 10px 10px 1px 1px;
-          h3 {
+          h5 {
             padding: 0px 50px;
             color: white;
           }
         }
         .category-section {
           padding: 2em 3em 1em 3em;
-          // background-color: #f3f3f3;
-          // box-shadow:  1px 2px 5px 1px #888888;
-
           .css-mhc70k-MuiGrid-root > .MuiGrid-item {
             padding-left: 16px;
             padding-right: 16px;
+          }
+          .image-remove-section {
+            display: flex;
+            justify-content: space-between;
+            .remove-icon {
+              color: red;
+            }
           }
         }
         hr {
@@ -39,8 +39,6 @@
         }
         .subcategory-section {
           padding: 0 3em 0 3em;
-          // background-color: #f3f3f3;
-          // box-shadow:  1px 2px 5px 1px #888888;
           .css-mhc70k-MuiGrid-root > .MuiGrid-item {
             padding-left: 16px;
             padding-right: 16px;
@@ -51,6 +49,28 @@
             color: white;
             margin: 0 2em;
             border-radius: 25px;
+          }
+
+          .image-remove-section {
+            display: flex;
+            justify-content: space-between;
+            .remove-icon {
+              color: red;
+            }
+          }
+          .subcategory-add-section {
+            display: flex;
+            justify-content: space-between;
+            border: 1px solid;
+            border-radius: 10px;
+            /* box-shadow: 10px 10px 10px; */
+            border-color: lilac;
+            border-color: #281e5d;
+            margin-top: 0.5em;
+            .close-section{
+              align-items: center;
+              margin: 1.5em 1em;
+            }
           }
         }
         .submit-button {

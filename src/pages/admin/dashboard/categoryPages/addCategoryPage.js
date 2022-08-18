@@ -10,12 +10,15 @@ import RouterList from "../../../../routes/routerList";
 import { URLS } from "../../../../config/urls.config";
 import { popupVar } from "../../../../utils/globalVar";
 
-import "./addCategoryPage.styles.scss";
-import "./addCategoryPage.styles.scss";
-
 import { Box, Grid, Button, TextField } from "@mui/material";
+import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import PopupAlert from "../../../../components/popupAlerts";
+import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
+import DeleteIcon from "@mui/icons-material/Delete";
+
+import "./addCategoryPage.styles.scss";
+import "./addCategoryPage.styles.scss";
 
 const AddCategory = () => {
   const navigate = useNavigate();
@@ -94,7 +97,7 @@ const AddCategory = () => {
           <div className="category-form-section col-md-8 col-lg-9 col-sm-10">
             <form onSubmit={handleSubmit((res) => handleSubmitApi(res))}>
               <div className="main-heading">
-                <h3 className="heading">Category</h3>
+                <h5 className="heading">Category</h5>
               </div>
               <Grid container spacing={2} className="category-section">
                 <Grid item xs={12}>
@@ -102,29 +105,29 @@ const AddCategory = () => {
                     fullWidth
                     label="Name"
                     size="small"
+                    error={errors?.mainCategory}
                     {...register("mainCategory", {
                       required: "This is required.",
                     })}
                   />
-
-                  <ErrorMessage
-                    errors={errors}
-                    name="mainCategory"
-                    render={({ message }) => <p>{message}</p>}
-                  />
+                  <div className="error">{errors?.mainCategory?.message}</div>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} className="">
                   {getValues("categoryImageFile") ? (
                     <>
-                      <span>{getValues("categoryImageFile[0].name")}</span>
-                      <Button
-                        variant="contained"
-                        component="label"
-                        className="mt-3"
-                        onClick={() => reset({ categoryImageFile: null })}
-                      >
-                        remove
-                      </Button>
+                      <div className="image-remove-section">
+                        <div className="col-md-10">
+                          <span>{getValues("categoryImageFile[0].name")}</span>
+                        </div>
+                        <div className="col-md-2">
+                          <Button
+                            style={{ float: "right" }}
+                            onClick={() => reset({ categoryImageFile: null })}
+                          >
+                            <DeleteIcon className="remove-icon" />
+                          </Button>
+                        </div>
+                      </div>
                     </>
                   ) : (
                     <Button variant="contained" fullWidth component="label">
@@ -138,11 +141,9 @@ const AddCategory = () => {
                       />
                     </Button>
                   )}
-                  <ErrorMessage
-                    errors={errors}
-                    name="categoryImageFile"
-                    render={({ message }) => <p>{message}</p>}
-                  />
+                  <div className="error">
+                    {errors?.categoryImageFile?.message}
+                  </div>
                 </Grid>
               </Grid>
               <hr />
@@ -154,7 +155,7 @@ const AddCategory = () => {
               >
                 <Grid container spacing={2} paddingLeft={2}>
                   <Grid item xs={10}>
-                    <h3>Subcategory</h3>
+                    <h5>Subcategory</h5>
                   </Grid>
                   <Grid item xs={2}>
                     <AddIcon
@@ -173,72 +174,80 @@ const AddCategory = () => {
                         key={list.id}
                         item
                         xs={12}
+                        className="subcategory-add-section"
                         sx={{
-                          borderBottom: "1px solid red",
                           padding: "1em 0 ",
                         }}
                       >
-                        <Grid item xs={12}>
-                          <TextField
-                            label="Name"
-                            variant="outlined"
-                            fullWidth
-                            size="small"
-                            {...register(
-                              `subcategory.${index}.subCategoryName`
-                            )}
-                          />
-                          <ErrorMessage
-                            errors={errors}
-                            name="subCategoryName"
-                            render={({ message }) => <p>{message}</p>}
-                          />
-                        </Grid>
-                        <Grid item xs={12}>
-                          {list?.imageFile?.length ? (
-                            <>
-                              <span>{list?.imageFile[0]?.name}</span>
+                        <Grid item xs={11}>
+                          <Grid item xs={12}>
+                            <TextField
+                              label="Name"
+                              variant="outlined"
+                              fullWidth
+                              size="small"
+                              error={errors?.subCategoryName}
+                              {...register("subCategoryName", {
+                                required: "This is required.",
+                              })}
+                              {...register(
+                                `subcategory.${index}.subCategoryName`
+                              )}
+                            />
+                            <div className="error">
+                              {errors?.subCategoryName?.message}
+                            </div>
+                          </Grid>
+                          <Grid item xs={12} className="image-remove-section">
+                            {list?.imageFile?.length ? (
+                              <>
+                                <div className="col-md-10">
+                                  <span>{list?.imageFile[0]?.name}</span>
+                                </div>
+                                <div className="col-md-2">
+                                  <Button
+                                    style={{ float: "right" }}
+                                    onClick={() => remove(index)}
+                                  >
+                                    <DeleteIcon className="remove-icon" />
+                                  </Button>
+                                </div>
+                              </>
+                            ) : (
                               <Button
                                 variant="contained"
+                                fullWidth
                                 component="label"
                                 className="mt-3"
-                                onClick={() => remove(index)}
                               >
-                                Remove
+                                Upload Image
+                                <TextField
+                                  label="file"
+                                  type="file"
+                                  variant="outlined"
+                                  fullWidth
+                                  hidden
+                                  {...register(
+                                    `subcategory.${index}.imageFile`
+                                  )}
+                                />
                               </Button>
-                            </>
-                          ) : (
-                            <Button
-                              variant="contained"
-                              fullWidth
-                              component="label"
-                              className="mt-3"
-                            >
-                              Upload Image
-                              <TextField
-                                label="file"
-                                type="file"
-                                variant="outlined"
-                                fullWidth
-                                hidden
-                                {...register(`subcategory.${index}.imageFile`)}
-                              />
-                            </Button>
-                          )}
-                          <ErrorMessage
-                            errors={errors}
-                            name="imageFile"
-                            render={({ message }) => <p>{message}</p>}
-                          />
+                            )}
+                            <div className="error">
+                              {errors?.imageFile?.message}
+                            </div>
+                          </Grid>
                         </Grid>
-                        {fields.length > 1 && (
-                          <button
-                            onClick={() => remove(index)}
-                            className="btn btn-primary"
-                          >
-                            remove
-                          </button>
-                        )}
+                        <Grid item xs={1}>
+                          {fields.length > 1 && (
+                            <button
+                              onClick={() => remove(index)}
+                              className="close-section"
+                            >
+                              <DisabledByDefaultIcon />
+                            </button>
+                          )}
+                        </Grid>
                       </Grid>
                     );
                   })}
