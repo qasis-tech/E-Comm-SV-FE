@@ -6,8 +6,6 @@ import NotDataAvailable from "../../../../components/NoDataAvailable";
 import { URLS } from "../../../../config/urls.config";
 import RouterList from "../../../../routes/routerList";
 
-import "./list-category.styles.scss";
-
 import {
   Drawer,
   List,
@@ -22,10 +20,6 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import CloseIcon from "@mui/icons-material/Close";
-
-import Loader from "../../../../components/Loader";
-
-import "./list-category.styles.scss";
 
 import {
   Table,
@@ -48,7 +42,10 @@ import AddIcon from "@mui/icons-material/Add";
 import Fab from "@mui/material/Fab";
 import Pagination from "@mui/material/Pagination";
 import SearchIcon from "@mui/icons-material/Search";
+
+import "./list-category.styles.scss";
 import { formatDate } from "../../../../utils/dateFormat";
+import Loader from "../../../../components/Loader";
 
 const ListSubCat = ({ item }) => {
   return (

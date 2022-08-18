@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import { URLS } from "../../../../config/urls.config";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -18,6 +18,7 @@ import {
   Grid,
   TextField,
   Fab,
+  TablePagination,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
@@ -35,6 +36,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import AddIcon from "@mui/icons-material/Add";
 
+import "./list-user.styles.scss";
 const UserList = () => {
   const [state, setState] = React.useState({
     right: false,
@@ -86,6 +88,14 @@ const UserList = () => {
     </Box>
   );
   const [userData, setUserData] = React.useState([]);
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const handleChangePage = (event, newPage) => setPage(newPage);
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
   React.useEffect(() => {
     axios
       .get(`${process.env.REACT_APP_BASE_URL}${URLS.signup}`, {
@@ -101,46 +111,47 @@ const UserList = () => {
   }, []);
   const navigate = useNavigate();
   return (
-    <Box>
-      <TableContainer component={Paper}>
-        <h1>User</h1>
-        <Grid item xs={2} style={{ display: "flex" }}>
-          <Grid item xs={4}>
-            <TextField
-              label="Search"
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton>
-                      <SearchIcon />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Grid>
-          <Grid item xs={2}>
-            <div>
-              {["right"].map((anchor) => (
-                <React.Fragment key={anchor}>
-                  <Button onClick={toggleDrawer(anchor, true)}>
-                    <FilterListIcon />
-                  </Button>
-                  <Drawer
-                    anchor={anchor}
-                    open={state[anchor]}
-                    onClose={toggleDrawer(anchor, false)}
-                  >
-                    {list(anchor)}
-                  </Drawer>
-                </React.Fragment>
-              ))}
-            </div>
-          </Grid>
+    <Box className="list-user">
+      <Grid container spacing={2} className="user-search">
+        <Grid item xs={11}>
+          <TextField
+            label="Search"
+            fullWidth
+            size="small"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton>
+                    <SearchIcon />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
         </Grid>
+        <Grid item xs={1}>
+          <div>
+            {["right"].map((anchor) => (
+              <React.Fragment key={anchor}>
+                <Button onClick={toggleDrawer(anchor, true)}>
+                  <FilterListIcon />
+                </Button>
+                <Drawer
+                  anchor={anchor}
+                  open={state[anchor]}
+                  onClose={toggleDrawer(anchor, false)}
+                >
+                  {list(anchor)}
+                </Drawer>
+              </React.Fragment>
+            ))}
+          </div>
+        </Grid>
+      </Grid>
+      <TableContainer className="user-table-wrapper" component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
-            <TableRow>
+            <TableRow hover className="stock-row-section">
               <TableCell>Name</TableCell>
               <TableCell>Email</TableCell>
               <TableCell> Phone Number</TableCell>
@@ -175,11 +186,11 @@ const UserList = () => {
                     <Chip label="Inactive" color="error" />
                   </TableCell>
                   <TableCell>
-                    <Button variant="outlined">
-                      <DeleteIcon />
+                    <Button>
+                      <DeleteIcon className="delete-icon" />
                     </Button>
-                    <Button variant="outlined">
-                      <CreateIcon />
+                    <Button>
+                      <CreateIcon className="edit-icon" />
                     </Button>
                   </TableCell>
                 </TableRow>
@@ -188,7 +199,17 @@ const UserList = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <div style={{ position: "absolute", bottom: "4em", right: "4em" }}>
+      <div className="pagination-section">
+        <TablePagination
+          component="div"
+          count={20}
+          page={page}
+          onPageChange={handleChangePage}
+          rowsPerPage={rowsPerPage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </div>
+      <div style={{ position: "fixed", bottom: "2em", right: "1em" }}>
         <Fab
           color="primary"
           aria-label="add"

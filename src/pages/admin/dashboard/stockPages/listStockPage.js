@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { URLS } from "../../../../config/urls.config";
@@ -18,6 +18,7 @@ import {
   Button,
   Grid,
   Fab,
+  TablePagination,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -35,6 +36,9 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import AddIcon from "@mui/icons-material/Add";
+
+import { formatDate } from "../../../../utils/dateFormat";
+import "./list-stock.styles.scss";
 
 const StockList = () => {
   const [state, setState] = React.useState({
@@ -87,6 +91,15 @@ const StockList = () => {
     </Box>
   );
   const [listData, setListdata] = React.useState([]);
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const handleChangePage = (event, newPage) => setPage(newPage);
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   const token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
   console.log("listdata", listData);
@@ -108,71 +121,87 @@ const StockList = () => {
   }, []);
   const navigate = useNavigate();
   return (
-    <Box>
-      <TableContainer component={Paper}>
-        <h1>Stock</h1>
-        <Grid item xs={2} style={{ display: "flex" }}>
-          <Grid item xs={4}>
-            <TextField
-              label="Search"
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton>
-                      <SearchIcon />
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Grid>
-          <Grid item xs={2}>
-            <div>
-              {["right"].map((anchor) => (
-                <React.Fragment key={anchor}>
-                  <Button onClick={toggleDrawer(anchor, true)}>
-                    <FilterListIcon />
-                  </Button>
-                  <Drawer
-                    anchor={anchor}
-                    open={state[anchor]}
-                    onClose={toggleDrawer(anchor, false)}
-                  >
-                    {list(anchor)}
-                  </Drawer>
-                </React.Fragment>
-              ))}
-            </div>
-          </Grid>
+    <Box className="list-stock">
+      <Grid container spacing={2} className="stock-search">
+        <Grid item xs={11}>
+          <TextField
+            label="Search"
+            fullWidth
+            size="small"
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton>
+                    <SearchIcon />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
         </Grid>
-        <Grid container spacing={2}>
-          <Grid item xs={4}>
-            <Box
-              sx={{
-                width: 300,
-                height: 125,
-                backgroundColor: "primary.dark",
-              }}
-            >
-              <ShoppingCartIcon />
+        <Grid item xs={1}>
+          <div>
+            {["right"].map((anchor) => (
+              <React.Fragment key={anchor}>
+                <Button onClick={toggleDrawer(anchor, true)}>
+                  <FilterListIcon />
+                </Button>
+                <Drawer
+                  anchor={anchor}
+                  open={state[anchor]}
+                  onClose={toggleDrawer(anchor, false)}
+                >
+                  {list(anchor)}
+                </Drawer>
+              </React.Fragment>
+            ))}
+          </div>
+        </Grid>
+      </Grid>
+      <Grid
+        container
+        spacing={2}
+        marginTop={2}
+        className="shorthand-main-section"
+      >
+        <Grid item xs={4}>
+          <Box
+            sx={{
+              width: 300,
+              height: 125,
+              backgroundColor: "primary.dark",
+              display: "flex",
+            }}
+          >
+            <div className="col-md-4">
+              <ShoppingCartIcon className="cart-icon-section" />
+            </div>
+            <div className="col-md-8 shorthand-section">
               <h3>In Stock</h3>
               <h3>100</h3>
-            </Box>
-          </Grid>
-          <Grid item xs={4}>
-            <Box
-              sx={{
-                width: 300,
-                height: 125,
-                backgroundColor: "primary.dark",
-              }}
-            >
-              <ShoppingCartCheckoutIcon />
+            </div>
+          </Box>
+        </Grid>
+        <Grid item xs={4} className="out-stock">
+          <Box
+            sx={{
+              width: 300,
+              height: 125,
+              backgroundColor: "primary.dark",
+              display: "flex",
+            }}
+          >
+            <div className="col-md-4">
+              <ShoppingCartCheckoutIcon className="cart-icon-section" />
+            </div>
+            <div className="col-md-8 shorthand-section">
               <h3>Out Stock</h3>
               <h3>100</h3>
-            </Box>
-          </Grid>
+            </div>
+          </Box>
         </Grid>
+      </Grid>
+      <TableContainer className="stock-table-wrapper" component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
@@ -189,6 +218,8 @@ const StockList = () => {
             {listData?.map((listitem) => {
               return (
                 <TableRow
+                  hover
+                  className="stock-row-section"
                   key={listitem._id}
                   onClick={() => navigate("/stock-details")}
                 >
@@ -198,14 +229,14 @@ const StockList = () => {
                   <TableCell>{listitem.subCategory}</TableCell>
                   <TableCell>{listitem.product}</TableCell>
                   <TableCell>{listitem.quantity}</TableCell>
-                  <TableCell>{listitem.createdAt}</TableCell>
-                  <TableCell>{listitem.updatedAt}</TableCell>
+                  <TableCell>{formatDate(listitem?.createdAt)}</TableCell>
+                  <TableCell>{formatDate(listitem?.updatedAt)}</TableCell>
                   <TableCell>
-                    <Button variant="outlined">
-                      <DeleteIcon />
+                    <Button>
+                      <DeleteIcon className="delete-icon" />
                     </Button>
-                    <Button variant="outlined">
-                      <CreateIcon />
+                    <Button>
+                      <CreateIcon className="edit-icon" />
                     </Button>
                   </TableCell>
                 </TableRow>
@@ -214,8 +245,17 @@ const StockList = () => {
           </TableBody>
         </Table>
       </TableContainer>
-
-      <div style={{ position: "absolute", bottom: "4em", right: "4em" }}>
+      <div className="pagination-section">
+        <TablePagination
+          component="div"
+          count={20}
+          page={page}
+          onPageChange={handleChangePage}
+          rowsPerPage={rowsPerPage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </div>
+      <div style={{ position: "fixed", bottom: "2em", right: "1em" }}>
         <Fab
           color="primary"
           aria-label="add"

@@ -1,12 +1,22 @@
 @import "../styles/variables.styles.scss";
 
-.btn-success{
-    border: 1px solid rgba(255,255,255,.4)!important;
-    border-radius: 30px !important;
-    background-color: $primary !important;
-    &:hover, &:focus{
-        background: transparent!important;
-        color: $primary !important;
-        border: 1px solid $primary !important;
-    }
+.btn-success {
+  border: 1px solid rgba(255, 255, 255, 0.4) !important;
+  border-radius: 30px !important;
+  background-color: $primary !important;
+  &:hover,
+  &:focus {
+    background: transparent !important;
+    color: $primary !important;
+    border: 1px solid $primary !important;
+  }
+}
+
+.delete-icon {
+  color: $delete-color !important;
+  font-size: 18px;
+}
+.edit-icon {
+  color: $edit-color !important;
+  font-size: 18px;
 }
