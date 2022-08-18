@@ -11,31 +11,31 @@
         box-shadow: 2px 5px 5px 3px #888888;
         border-radius: 10px;
         // border: 1px solid black;
-        @media only screen and (min-width: 800px) and (max-width: 1024px) {
-          
+        @media only screen and (min-width: 800px) and (max-width: 1600px) {
+          // width: "80%";
         }
-        .main-heading{
-            background-color: #1976d2;
-            padding: 1em 0;
-            border-radius: 10px 10px 1px 1px;
-            h3 {
-                padding: 0px 50px;
-                color: white;
-              }
+        .main-heading {
+          background-color: #1976d2;
+          padding: 1em 0;
+          border-radius: 10px 10px 1px 1px;
+          h3 {
+            padding: 0px 50px;
+            color: white;
+          }
         }
         .category-section {
           padding: 2em 3em 1em 3em;
           // background-color: #f3f3f3;
           // box-shadow:  1px 2px 5px 1px #888888;
-        
+
           .css-mhc70k-MuiGrid-root > .MuiGrid-item {
             padding-left: 16px;
             padding-right: 16px;
           }
         }
-        hr{
-            border-style: dashed;
-            opacity: 1.25;
+        hr {
+          border-style: dashed;
+          opacity: 1.25;
         }
         .subcategory-section {
           padding: 0 3em 0 3em;
@@ -58,10 +58,10 @@
           padding: 0;
           margin: 2em 0 0 0;
           padding: 1em 0;
-          display: flex!important;
+          display: flex !important;
           justify-content: end;
-          .btn-button{
-            border-radius: 25px!important;
+          .btn-button {
+            border-radius: 25px !important;
           }
         }
       }

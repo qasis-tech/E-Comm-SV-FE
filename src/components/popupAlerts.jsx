@@ -1,22 +1,18 @@
-import { Snackbar } from "@mui/material";
-import { useState } from "react";
-import { useEffect } from "react";
+import { Alert, Snackbar } from "@mui/material";
+import { useState, useEffect } from "react";
+import { popupVar } from "../utils/globalVar";
 
-const PopupAlert = ({ open, message }) => {
-  const [show, setShow] = useState(open ? open : false);
-  useEffect(() => {
-    setTimeout(() => {
-      setShow(false);
-    }, 3500);
-  }, []);
+const PopupAlert = ({ show, message }) => {
   return (
     <Snackbar
-      anchorOrigin={{ vertical, horizontal }}
+      anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
       open={show}
-      onClose={handleClose}
       message={message}
-      key={vertical + horizontal}
-    />
+      autoHideDuration={3000}
+      TransitionComponent={"TransitionRight"}
+    >
+      <Alert severity="success">{message}</Alert>
+    </Snackbar>
   );
 };
 

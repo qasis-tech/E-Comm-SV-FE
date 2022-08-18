@@ -108,6 +108,7 @@ const ListProduct = () => {
           <TextField
             fullWidth
             label="Search"
+            size="small"
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">

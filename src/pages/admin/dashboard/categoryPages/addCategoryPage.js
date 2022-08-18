@@ -1,20 +1,25 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useNavigate } from "react-router-dom";
 import { useForm, useFieldArray, Controller, useWatch } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
+import { useReactiveVar } from "@apollo/client";
+
 import RouterList from "../../../../routes/routerList";
 import { URLS } from "../../../../config/urls.config";
+import { popupVar } from "../../../../utils/globalVar";
 
 import "./addCategoryPage.styles.scss";
 import "./addCategoryPage.styles.scss";
 
 import { Box, Grid, Button, TextField } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import PopupAlert from "../../../../components/popupAlerts";
 
 const AddCategory = () => {
   const navigate = useNavigate();
+  const popups = useReactiveVar(popupVar);
 
   const {
     register,
@@ -76,7 +81,6 @@ const AddCategory = () => {
           navigate(
             `${RouterList.admin.admin}/${RouterList.admin.categoryList}`
           );
-          // navigate to cat list page
         }
       })
       .catch((err) => {
@@ -88,7 +92,7 @@ const AddCategory = () => {
     <div className="add-category">
       <Box noValidate autoComplete="off" className="wrapper">
         <Grid container direction="row" className="add-category-container">
-          <div className="category-form-section col-md-8 col-lg-6 col-sm-10">
+          <div className="category-form-section col-md-8 col-lg-9 col-sm-10">
             <form onSubmit={handleSubmit((res) => handleSubmitApi(res))}>
               <div className="main-heading">
                 <h3 className="heading">Category</h3>
@@ -252,6 +256,7 @@ const AddCategory = () => {
           </div>
         </Grid>
       </Box>
+      {/* <PopupAlert show={true} message="Testing" /> */}
     </div>
   );
 };

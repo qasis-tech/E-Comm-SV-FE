@@ -23,9 +23,6 @@ import MailIcon from "@mui/icons-material/Mail";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import CloseIcon from "@mui/icons-material/Close";
 
-import NotDataAvailable from "../../../../components/NoDataAvailable";
-import { URLS } from "../../../../config/urls.config";
-import RouterList from "../../../../routes/routerList";
 import Loader from "../../../../components/Loader";
 
 import "./list-category.styles.scss";
@@ -141,30 +138,40 @@ const ListCategory = () => {
   };
 
   useEffect(() => {
-    handleSearch();
+    handleSubmitApi();
   }, []);
 
   useEffect(() => {
-    handleSearch();
+    handleSubmitApi();
   }, [page, rowsPerPage]);
 
-  const handleSearch = (searchValue) => {
+  useEffect(() => {
+    if (searchInput === "") {
+      handleSubmitApi();
+    }
+  }, [searchInput]);
+
+  const handleSubmitApi = () => {
     setLoader(true);
     const token =
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
-    setSearchInput(searchValue);
 
+    let URL =
+      searchInput !== ""
+        ? `${process.env.REACT_APP_BASE_URL}${
+            URLS.category
+          }?search=${searchInput}&limit=${rowsPerPage}&skip=${
+            page * rowsPerPage
+          }`
+        : `${process.env.REACT_APP_BASE_URL}${
+            URLS.category
+          }?limit=${rowsPerPage}&skip=${page * rowsPerPage}`;
     axios
-      .get(
-        `${process.env.REACT_APP_BASE_URL}${
-          URLS.category
-        }?limit=${rowsPerPage}&skip=${page * rowsPerPage}`,
-        {
-          headers: {
-            Authorization: `${token}`,
-          },
-        }
-      )
+      .get(URL, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      })
       .then((res) => {
         setLoader(false);
         if (res) {
@@ -187,18 +194,22 @@ const ListCategory = () => {
             label="Search"
             fullWidth
             size="small"
-            onChange={(e) => handleSearch(e.target.value)}
+            onChange={(e) => setSearchInput(e.target.value)}
             value={searchInput}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
                   <IconButton
-                    sx={{ visibility: searchInput ? "visible" : "hidden" }}
-                    onClick={() => handleSearch("")}
+                    sx={{
+                      visibility: searchInput !== "" ? "visible" : "hidden",
+                    }}
+                    onClick={() => {
+                      setSearchInput("");
+                    }}
                   >
                     <CloseIcon />
                   </IconButton>
-                  <IconButton>
+                  <IconButton onClick={() => handleSubmitApi()}>
                     <SearchIcon />
                   </IconButton>
                 </InputAdornment>
@@ -260,9 +271,9 @@ const ListCategory = () => {
 
                     <TableCell>{formatDate(item?.createdAt)}</TableCell>
                     <TableCell>
-                      <Button>
+                      {/* <Button>
                         <DeleteIcon className="delete-icon" />
-                      </Button>
+                      </Button> */}
                       <Button>
                         <CreateIcon className="edit-icon" />
                       </Button>
@@ -276,7 +287,7 @@ const ListCategory = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      {!isLoading ? (
+      {!isLoading && count > 10 ? (
         <div className="pagination-section">
           <TablePagination
             component="div"
