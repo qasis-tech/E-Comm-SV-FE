@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-import { Box, Button, MenuItem, TextField } from "@mui/material";
+import { Box, Button, MenuItem, TextField, Autocomplete } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -37,22 +37,14 @@ const orderdetailsSchema = yup
   })
   .required();
 
-const currencies = [
+const status = [
   {
-    value: "Fruits",
-    label: "Fruits",
+    value: "Pending",
+    label: "Pending",
   },
   {
-    value: "EUR",
-    label: "€",
-  },
-  {
-    value: "BTC",
-    label: "฿",
-  },
-  {
-    value: "JPY",
-    label: "¥",
+    value: "Completed",
+    label: "Completed",
   },
 ];
 const OrderDetails = () => {
@@ -66,7 +58,6 @@ const OrderDetails = () => {
     resolver: yupResolver(orderdetailsSchema),
   });
   const [orderDetailData, setOrderDetail] = React.useState([]);
-  const [selectedStatus, setSelectedStatus] = React.useState([]);
 
   const { id } = useParams();
   console.log("parms ==>", id);
@@ -75,10 +66,9 @@ const OrderDetails = () => {
     getOrderDetailsApi();
   }, []);
 
+  const token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
   const getOrderDetailsApi = () => {
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
-    console.log("url", `${process.env.REACT_APP_BASE_URL}${URLS.order}/${id}`);
     axios
       .get(`${process.env.REACT_APP_BASE_URL}${URLS.order}/${id}`, {
         headers: { Authorization: ` ${token}` },
@@ -90,8 +80,8 @@ const OrderDetails = () => {
         setValue("orderMobilenumber", res.data.data.user.mobileNumber);
         setValue("orderEmail", res.data.data.user.email);
         setValue("orderPincode", res.data.data.user.pinCode);
-        setValue("orderLocation", res.data.data.user.location);
-        setValue("orderAddress", res.data.data.user.primaryAddress);
+        // setValue("orderLocation", res.data.data.user.location);
+        // setValue("orderAddress", res.data.data.user.primaryAddress);
       })
 
       .catch((err) => {
@@ -99,11 +89,29 @@ const OrderDetails = () => {
       });
   };
 
-  const [currency, setCurrency] = React.useState("Fruits");
-  const handleOrderDetails = () => {};
+  const [selectedStatus, setSelectedStatus] = React.useState("select");
+  const handleOrderDetails = (data) => {
+    const { orderLocation, orderAddress, selectedStatus } = data;
+    let payload = {
+      location: orderLocation,
+      primaryAddress: orderAddress,
+      status: selectedStatus,
+    };
+    axios
+      .put(`${process.env.REACT_APP_BASE_URL}${URLS.order}/${id}`, payload, {
+        headers: { Authorization: ` ${token}` },
+        "Content-Type": "application/json",
+      })
+      .then((res) => {
+        console.log("put ress===>>>", res.data.data);
+      })
+      .catch((err) => {
+        console.log("error===>>>", err);
+      });
+  };
 
-  const handleChange = (event) => {
-    setCurrency(event.target.value);
+  const handleChange = (e, val) => {
+    setSelectedStatus(val);
   };
   return (
     <React.Fragment>
@@ -112,36 +120,6 @@ const OrderDetails = () => {
           <form onSubmit={handleSubmit(handleOrderDetails)}>
             <h3>Order Details</h3>
             <Grid container spacing={2}>
-              {/* <Grid item xs={6}>
-                <TextField
-                  {...register("orderName")}
-                  id="outlined-read-only-input"
-                  label="Name"
-                  InputProps={{
-                    readOnly: true,
-                  }}
-                />
-              </Grid> */}
-              {/* <Grid item xs={6}>
-                <TextField
-                  {...register("orderCategory")}
-                  id="outlined-read-only-input"
-                  label="Category"
-                  InputProps={{
-                    readOnly: true,
-                  }}
-                />
-              </Grid> */}
-              {/* <Grid item xs={6}>
-                <TextField
-                  {...register("orderSubcategory")}
-                  id="outlined-read-only-input"
-                  label="Subcategory"
-                  InputProps={{
-                    readOnly: true,
-                  }}
-                />
-              </Grid> */}
               <Grid item xs={6}>
                 <TextField
                   {...register("orderEmail")}
@@ -160,9 +138,6 @@ const OrderDetails = () => {
                   placeholder="Address"
                   multiline
                   rows={4}
-                  InputProps={{
-                    readOnly: true,
-                  }}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -170,9 +145,6 @@ const OrderDetails = () => {
                   {...register("orderLocation")}
                   id="outlined-read-only-input"
                   placeholder="Location"
-                  InputProps={{
-                    readOnly: true,
-                  }}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -196,26 +168,25 @@ const OrderDetails = () => {
                 />
               </Grid>
               <Grid item xs={6}>
-                <TextField
-                  {...register("orderStatus")}
-                  fullWidth
-                  id="outlined-select-currency"
-                  select
-                  label="Status"
-                  value={currency}
-                  onChange={handleChange}
-                >
-                  {currencies.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
+                {status?.length && (
+                  <Autocomplete
+                    options={status}
+                    getOptionLabel={(option) => option.label || ""}
+                    isOptionEqualToValue={(option, value) =>
+                      option.label === value.label
+                    }
+                    value={selectedStatus}
+                    onChange={(e, val) => handleChange(e, val)}
+                    renderInput={(params) => (
+                      <TextField {...params} label="Status" />
+                    )}
+                  />
+                )}
               </Grid>
             </Grid>
             <Button variant="outlined">Cancel</Button>
-            <Button variant="contained" color="primary">
-              Change
+            <Button type="submit" variant="contained" color="primary">
+              Submit
             </Button>
           </form>
           <TableContainer component={Paper}>
