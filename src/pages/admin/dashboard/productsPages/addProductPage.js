@@ -200,7 +200,7 @@ const AddProduct = () => {
           <div className="product-form-section col-md-8">
             <form onSubmit={handleSubmit((res) => handleProductAdd(res))}>
               <div className="main-product-heading">
-                <h3 className="product-heading">Product</h3>
+                <h5 className="product-heading">Product</h5>
               </div>
               <div className="main-form-container">
                 <Grid container spacing={2}>
@@ -209,6 +209,7 @@ const AddProduct = () => {
                       fullWidth
                       variant="outlined"
                       label="Name"
+                      size="small"
                       {...register("productName")}
                     />
                     <p>{errors?.productName?.message}</p>
@@ -218,6 +219,7 @@ const AddProduct = () => {
                       fullWidth
                       variant="outlined"
                       label="Quantity"
+                      size="small"
                       {...register("quantity")}
                     />
                     <p>{errors?.quantity?.message}</p>
@@ -233,7 +235,7 @@ const AddProduct = () => {
                         onChange={(e, val) => handleUnit(e, val)}
                         value={selectedUnit}
                         renderInput={(params) => (
-                          <TextField {...params} label="Units" />
+                          <TextField {...params} label="Units" size="small" />
                         )}
                       />
                     )}
@@ -251,7 +253,11 @@ const AddProduct = () => {
                         onChange={(e, val) => handleCategory(e, val)}
                         value={selectedCategory}
                         renderInput={(params) => (
-                          <TextField {...params} label="Categories" />
+                          <TextField
+                            {...params}
+                            label="Categories"
+                            size="small"
+                          />
                         )}
                       />
                     )}
@@ -270,7 +276,11 @@ const AddProduct = () => {
                       onChange={(e, val) => handleSubCategory(e, val)}
                       value={selectedSubCategory}
                       renderInput={(params) => (
-                        <TextField {...params} label="Subcategories" />
+                        <TextField
+                          {...params}
+                          label="Subcategories"
+                          size="small"
+                        />
                       )}
                     />
                   </Grid>
@@ -283,6 +293,7 @@ const AddProduct = () => {
                       label="Description"
                       multiline
                       rows={4}
+                      size="small"
                       {...register("description")}
                     />
                     <p>{errors?.description?.message}</p>
@@ -294,6 +305,7 @@ const AddProduct = () => {
                       <Grid item xs={6}>
                         <TextField
                           fullWidth
+                          size="small"
                           id="outlined-multiline-static"
                           label="Features"
                           onChange={(e) => handleFeatureKey(e, null)}
@@ -305,6 +317,7 @@ const AddProduct = () => {
                           fullWidth
                           id="outlined-multiline-static"
                           label="value"
+                          size="small"
                           onChange={(e) => handleFeatureKey(null, e)}
                           {...register(`features.${index}.featureValue`)}
                         />
@@ -328,6 +341,7 @@ const AddProduct = () => {
                       fullWidth
                       variant="outlined"
                       label="Price"
+                      size="small"
                       {...register("price")}
                     />
                     <p>{errors?.price?.message}</p>
@@ -343,7 +357,11 @@ const AddProduct = () => {
                         onChange={(e, val) => handleOfferUnit(e, val)}
                         value={selectedOfferunit}
                         renderInput={(params) => (
-                          <TextField {...params} label="Offer Units" />
+                          <TextField
+                            {...params}
+                            label="Offer Units"
+                            size="small"
+                          />
                         )}
                       />
                     )}
@@ -355,6 +373,7 @@ const AddProduct = () => {
                       fullWidth
                       variant="outlined"
                       label="Quantity"
+                      size="small"
                       {...register("offerQuantity")}
                     />
                     <p>{errors?.offerQuantity?.message}</p>
@@ -364,6 +383,7 @@ const AddProduct = () => {
                       fullWidth
                       variant="outlined"
                       label="Offer Price"
+                      size="small"
                       {...register("offerPrice")}
                     />
                     <p>{errors?.offerPrice?.message}</p>
