@@ -100,10 +100,11 @@ const AddCategory = () => {
                 <h5 className="heading">Category</h5>
               </div>
               <Grid container spacing={2} className="category-section">
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <TextField
                     fullWidth
                     label="Name"
+                    defaultValue="Name"
                     size="small"
                     error={errors?.mainCategory}
                     {...register("mainCategory", {
@@ -112,6 +113,7 @@ const AddCategory = () => {
                   />
                   <div className="error">{errors?.mainCategory?.message}</div>
                 </Grid>
+                <Grid item xs={12}></Grid>
                 <Grid item xs={12} className="">
                   {getValues("categoryImageFile") ? (
                     <>
