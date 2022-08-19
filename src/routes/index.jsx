@@ -29,6 +29,7 @@ import RegisterPage from "../pages/user/register/registerPage";
 import PageNotFound from "../pages/user/pageNotFound";
 import OrderDetails from "../pages/admin/dashboard/orderPages/orderDetailsPage";
 import OrderList from "../pages/admin/dashboard/orderPages/orderPage";
+import Categorydetails from "../pages/admin/dashboard/categoryPages/categorydetailspage";
 
 import RouterList from "./routerList";
 import AboutUs from "../pages/user/about";
@@ -67,6 +68,7 @@ const CustomRouters = () => {
         <Route path="dashboard" element={<DashboardPage />} />
         <Route path={RouterList.admin.categoryList} element={<ListCategory />} />
         <Route path={RouterList.admin.addCategory} element={<AddCategory />} />
+        <Route path="category-details/:id" element={<Categorydetails />} />
         <Route path="products" element={<ListProduct />} />
         <Route path="add-products" element={<AddProduct />} />
         <Route path={RouterList.admin.productDetails} element={<ProductDetails />} />
@@ -79,6 +81,7 @@ const CustomRouters = () => {
         <Route path="add-user" element={<AddUser />} />
         <Route path="order-details/:id" element={<OrderDetails />} />
         <Route path="order-list" element={<OrderList />} />
+       
       </Route>
 
       <Route path="*" element={<PageNotFound />} />

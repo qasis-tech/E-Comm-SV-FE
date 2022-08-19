@@ -12,6 +12,7 @@ const List = {
     dashboard: "dashboard",
     categoryList: "category",
     addCategory: "add-category",
+    categoryDetails:"category-details",
     productList: "product-list",
     addProduct: "add-product",
     productDetails: "product-details",
@@ -23,6 +24,7 @@ const List = {
     userList: "user-list",
     userDetails: "users-details",
     addUser: "add-user",
+
   },
 };
 

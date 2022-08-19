@@ -254,9 +254,7 @@ const ListCategory = () => {
                       component="th"
                       scope="row"
                       onClick={() =>
-                        navigate(
-                          `${RouterList.admin.admin}/${RouterList.admin.addCategory}`
-                        )
+                        navigate(`/admin/category-details/${item._id}`)
                       }
                     >
                       {item.label}
