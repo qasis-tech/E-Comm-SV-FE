@@ -11,12 +11,28 @@
         border-radius: 10px;
         .main-form-container {
           padding: 1em 2em;
-          .add-icon-section {
-            font-size: 25px;
-            background-color: #1973bb;
-            color: white;
-           margin-top: 6px;
-            border-radius: 25px;
+          .feature-add{
+            display: flex;
+            flex-direction: column;
+            .add-icon{
+              display: flex;
+              justify-content: end;
+              .add-icon-section {
+                font-size: 25px;
+                background-color: #1973bb;
+                color: white;
+               margin-top: 6px;
+                border-radius: 25px;
+              }
+            }
+            .add-section{
+              border:1px solid #bbb7b7;
+              padding-bottom: 1em;
+              border-radius: 10px;
+              .close-btn{
+                margin: 6px 0;
+              }
+            }
           }
         }
         .main-product-heading {
