@@ -16,6 +16,7 @@ import AddIcon from "@mui/icons-material/Add";
 import PopupAlert from "../../../../components/popupAlerts";
 import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
 import DeleteIcon from "@mui/icons-material/Delete";
+import CloseIcon from "@mui/icons-material/Close";
 
 import "./addCategoryPage.styles.scss";
 import "./addCategoryPage.styles.scss";
@@ -243,7 +244,7 @@ const AddCategory = () => {
                               onClick={() => remove(index)}
                               className="close-section"
                             >
-                              <DisabledByDefaultIcon />
+                              <CloseIcon />
                             </button>
                           )}
                         </Grid>
