@@ -5,6 +5,8 @@ import * as yup from "yup";
 import axios from "axios";
 import { URLS } from "../../../../config/urls.config";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import RouterList from "../../../../routes/routerList";
 
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -20,34 +22,63 @@ import Paper from "@mui/material/Paper";
 const orderdetailsSchema = yup
   .object()
   .shape({
-    orderName: yup.string().required(),
-    orderCategory: yup.string().required(),
-    orderSubcategory: yup.string().required(),
-    orderEmail: yup.string().email().required(),
-    orderAddress: yup.string().required(),
-    orderLocation: yup.string().required(),
+    orderName: yup.string(),
+    orderCategory: yup.string(),
+    orderSubcategory: yup.string(),
+    orderEmail: yup.string().email(),
+    orderAddress: yup.string(),
+    orderLocation: yup.string(),
     orderMobilenumber: yup
       .string()
-      .phone("IN", true, "Mobile Number is invalid")
-      .required(),
+      .phone("IN", true, "Mobile Number is invalid"),
     orderPincode: yup
       .string()
       .matches(/^[1-9][0-9]{5}$/, "Invalid zipcode (682315)"),
-    orderStatus: yup.string().required(),
+    orderStatus: yup.string(),
   })
   .required();
 
 const status = [
   {
-    value: "Pending",
-    label: "Pending",
+    label: "Awaiting Order Confirming",
   },
   {
-    value: "Completed",
-    label: "Completed",
+    label: "Awaiting Payment",
+  },
+  {
+    label: "Order Pending",
+  },
+  {
+    label: "Order Received",
+  },
+  {
+    label: "Awaiting Pickup",
+  },
+  {
+    label: "Shipped",
+  },
+  {
+    label: "Cancelled",
+  },
+  {
+    label: "Awaiting Refunding",
+  },
+  {
+    label: "Refunded",
+  },
+  {
+    label: "Delivered",
   },
 ];
+
 const OrderDetails = () => {
+  const [orderDetailData, setOrderDetail] = React.useState([]);
+  const [selectedStatus, setSelectedStatus] = React.useState([]);
+
+  const { id } = useParams();
+
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -57,10 +88,6 @@ const OrderDetails = () => {
   } = useForm({
     resolver: yupResolver(orderdetailsSchema),
   });
-  const [orderDetailData, setOrderDetail] = React.useState([]);
-
-  const { id } = useParams();
-  console.log("parms ==>", id);
 
   React.useEffect(() => {
     getOrderDetailsApi();
@@ -68,20 +95,19 @@ const OrderDetails = () => {
 
   const token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
+
   const getOrderDetailsApi = () => {
     axios
       .get(`${process.env.REACT_APP_BASE_URL}${URLS.order}/${id}`, {
         headers: { Authorization: ` ${token}` },
       })
       .then((res) => {
-        console.log("ress =>>", res.data.data);
         setOrderDetail(res.data.data);
-
         setValue("orderMobilenumber", res.data.data.user.mobileNumber);
         setValue("orderEmail", res.data.data.user.email);
         setValue("orderPincode", res.data.data.user.pinCode);
-        // setValue("orderLocation", res.data.data.user.location);
-        // setValue("orderAddress", res.data.data.user.primaryAddress);
+        setValue("orderLocation", res.data.data.user.location);
+        setValue("orderAddress", res.data.data.user.primaryAddress);
       })
 
       .catch((err) => {
@@ -89,13 +115,9 @@ const OrderDetails = () => {
       });
   };
 
-  const [selectedStatus, setSelectedStatus] = React.useState("select");
-  const handleOrderDetails = (data) => {
-    const { orderLocation, orderAddress, selectedStatus } = data;
+  const putOrderDetailsApi = () => {
     let payload = {
-      location: orderLocation,
-      primaryAddress: orderAddress,
-      status: selectedStatus,
+      status: selectedStatus.label,
     };
     axios
       .put(`${process.env.REACT_APP_BASE_URL}${URLS.order}/${id}`, payload, {
@@ -103,68 +125,71 @@ const OrderDetails = () => {
         "Content-Type": "application/json",
       })
       .then((res) => {
-        console.log("put ress===>>>", res.data.data);
+        if (res) {
+          navigate(`${RouterList.admin.admin}/${RouterList.admin.orderList}`);
+        }
       })
       .catch((err) => {
-        console.log("error===>>>", err);
+        console.log("error in put api===>>>", err);
       });
   };
 
   const handleChange = (e, val) => {
     setSelectedStatus(val);
   };
+
   return (
     <React.Fragment>
       <Container>
         <Box noValidate autoComplete="off">
-          <form onSubmit={handleSubmit(handleOrderDetails)}>
+          <form onSubmit={handleSubmit(putOrderDetailsApi)}>
             <h3>Order Details</h3>
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <TextField
-                  {...register("orderEmail")}
                   id="outlined-read-only-input"
                   placeholder="Email"
                   InputProps={{
                     readOnly: true,
                   }}
+                  {...register("orderEmail")}
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  {...register("orderAddress")}
                   fullWidth
                   id="outlined-multiline-static"
                   placeholder="Address"
                   multiline
                   rows={4}
+                  {...register("orderAddress")}
                 />
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  {...register("orderLocation")}
                   id="outlined-read-only-input"
                   placeholder="Location"
+                  {...register("orderLocation")}
                 />
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  {...register("orderMobilenumber")}
                   id="outlined-read-only-input"
                   placeholder="Phone Number"
                   InputProps={{
                     readOnly: true,
                   }}
+                  {...register("orderMobilenumber")}
                 />
               </Grid>
               <Grid item xs={6}>
                 <TextField
-                  {...register("orderPincode")}
                   id="outlined-read-only-input"
                   placeholder="Pincode"
                   InputProps={{
                     readOnly: true,
                   }}
+                  {...register("orderPincode")}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -178,7 +203,7 @@ const OrderDetails = () => {
                     value={selectedStatus}
                     onChange={(e, val) => handleChange(e, val)}
                     renderInput={(params) => (
-                      <TextField {...params} label="Status" />
+                      <TextField {...params} label="Status" size="small" />
                     )}
                   />
                 )}
