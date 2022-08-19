@@ -187,9 +187,6 @@ const AddCategory = () => {
                               fullWidth
                               size="small"
                               error={errors?.subCategoryName}
-                              {...register("subCategoryName", {
-                                required: "This is required.",
-                              })}
                               {...register(
                                 `subcategory.${index}.subCategoryName`
                               )}

@@ -290,15 +290,6 @@ const OrderList = () => {
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
       </div>
-      <div style={{ position: "fixed", bottom: "2em", right: "1em" }}>
-        <Fab
-          color="primary"
-          aria-label="add"
-          onClick={() => navigate("/add-stock")}
-        >
-          <AddIcon />
-        </Fab>
-      </div>
     </Box>
   );
 };
