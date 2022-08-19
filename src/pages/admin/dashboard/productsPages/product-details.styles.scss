@@ -1,12 +1,12 @@
 @import "../../../../styles/common.styles.scss";
 
-.add-product {
+.details-product {
   font-family: $main-font-family;
-  margin-top: 3em;
-  .product-wrapper {
-    .add-product-container {
+  margin-top: 1em;
+  .product-details-wrapper {
+    .details-product-container {
       justify-content: center;
-      .product-form-section {
+      .product-details-form-section {
         box-shadow: 2px 5px 5px 3px #888888;
         border-radius: 10px;
         .main-form-container {
@@ -19,7 +19,7 @@
             border-radius: 25px;
           }
         }
-        .main-product-heading {
+        .main-product-details-heading {
           .product-heading {
             background-color: #1976d2;
             padding: 0.5em 1.5em;
