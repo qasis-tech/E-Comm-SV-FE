@@ -21,7 +21,7 @@ const List = {
     stockDetails:"stock-details",
     addStock: "add-stock",
     userList: "user-list",
-    userDetails: "user-details",
+    userDetails: "users-details",
     addUser: "add-user",
   },
 };

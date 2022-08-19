@@ -16,6 +16,8 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 
+import "./user-details.styles.scss";
+
 const userdetailsSchema = yup
   .object()
   .shape({
@@ -82,121 +84,185 @@ const UserDetails = () => {
     // console.log("UserDetailspage Details", data);
   };
   return (
-    <React.Fragment>
-      <Container maxWidth="sm">
-        <Box sx={{ flexGrow: 1 }} noValidate autoComplete="off">
-          <form onSubmit={handleSubmit(handleUserDetails)}>
-            <h3>User Details</h3>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <TextField
-                  id="outlined-helperText"
-                  label="Name"
-                  {...register("userFirstName")}
-                  defaultValue="Firstname"
-                  error={errors?.userFirstName}
-                />
-                <p>{errors?.userFirstName?.message}</p>
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  {...register("userLastName")}
-                  placeholder="LastName"
-                  error={errors?.userLastName}
-                />
-                <p>{errors?.userLastName?.message}</p>
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  {...register("userEmail")}
-                  placeholder="Email"
-                  error={errors?.userEmail}
-                />
-                <p>{errors?.userEmail?.message}</p>
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  {...register("userMobilenumber")}
-                  placeholder="Phone Number"
-                  error={errors?.userMobilenumber}
-                />
-                <p>{errors?.userMobilenumber?.message}</p>
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  {...register("userLocation")}
-                  placeholder="Location"
-                  error={errors?.userLocation}
-                />
-                <p>{errors?.userLocation?.message}</p>
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  {...register("userPrimaryaddress")}
-                  fullWidth
-                  placeholder="Primary Address"
-                  multiline
-                  rows={4}
-                  error={errors?.userPrimaryaddress}
-                />
-                <p>{errors?.userPrimaryaddress?.message}</p>
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  {...register("userOtheraddress")}
-                  fullWidth
-                  placeholder="Other Address"
-                  multiline
-                  rows={4}
-                  error={errors?.userOtheraddress}
-                />
-                <p>{errors?.userOtheraddress?.message}</p>
-              </Grid>
-              <Grid item xs={4}>
-                <TextField
-                  {...register("userPincode")}
-                  placeholder="Pin"
-                  error={errors?.userPincode}
-                />
-                <p>{errors?.userPincode?.message}</p>
-              </Grid>
-              <Grid item xs={8}>
-                <FormLabel id="demo-row-radio-buttons-group-label">
-                  Gender
-                </FormLabel>
-                <RadioGroup
-                  row
-                  aria-labelledby="demo-row-radio-buttons-group-label"
-                  name="row-radio-buttons-group"
-                >
-                  <FormControlLabel
-                    {...register("userGender", { required: true })}
-                    value="female"
-                    control={<Radio />}
-                    label="Female"
-                    type="radio"
-                    checked={true}
-                  />
-                  <FormControlLabel
-                    {...register("userGender", { required: true })}
-                    value="male"
-                    control={<Radio />}
-                    label="Male"
-                    type="radio"
-                    checked={false}
-                    // checked={getValues("userGender") == "male"}
-                  />
-                </RadioGroup>
-              </Grid>
-            </Grid>
-            <Button variant="outlined">Cancel</Button>
-            <Button type="submit" variant="contained" color="primary">
-              Submit
-            </Button>
-          </form>
-        </Box>
-      </Container>
-    </React.Fragment>
+    <div className="details-user">
+      <Box noValidate autoComplete="off" className="user-details-wrapper">
+        <Grid
+          container
+          direction="row"
+          spacing={2}
+          className="details-user-container"
+        >
+          <div className="user-details-form-section col-md-8">
+            <form onSubmit={handleSubmit(handleUserDetails)}>
+              <div className="main-user-details-heading">
+                <h5 className="user-heading">User Details</h5>
+              </div>
+              <div className="main-form-container">
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <TextField
+                      id="outlined-helperText"
+                      fullWidth
+                      size="small"
+                      label="First Name"
+                      {...register("userFirstName")}
+                      defaultValue="Firstname"
+                      error={errors?.userFirstName}
+                    />
+                    <p>{errors?.userFirstName?.message}</p>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      id="outlined-helperText"
+                      fullWidth
+                      size="small"
+                      label="Last Name"
+                      {...register("userLastName")}
+                      defaultValue="LastName"
+                      error={errors?.userLastName}
+                    />
+                    <p>{errors?.userLastName?.message}</p>
+                  </Grid>
+                </Grid>
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <TextField
+                      id="outlined-helperText"
+                      fullWidth
+                      size="small"
+                      label="Email"
+                      {...register("userEmail")}
+                      defaultValue="Email"
+                      error={errors?.userEmail}
+                    />
+                    <p>{errors?.userEmail?.message}</p>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      id="outlined-helperText"
+                      fullWidth
+                      size="small"
+                      label="Location"
+                      {...register("userLocation")}
+                      defaultValue="Location"
+                      error={errors?.userLocation}
+                    />
+                    <p>{errors?.userLocation?.message}</p>
+                  </Grid>
+                </Grid>
+                <Grid container spacing={2}>
+                  <Grid item xs={4}>
+                    <TextField
+                      id="outlined-helperText"
+                      fullWidth
+                      size="small"
+                      label="Phone Number"
+                      {...register("userMobilenumber")}
+                      defaultValue="Phone Number"
+                      error={errors?.userMobilenumber}
+                    />
+                    <p>{errors?.userMobilenumber?.message}</p>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <TextField
+                      id="outlined-helperText"
+                      fullWidth
+                      size="small"
+                      label="Pincode"
+                      {...register("userPincode")}
+                      defaultValue="Pin"
+                      error={errors?.userPincode}
+                    />
+                    <p>{errors?.userPincode?.message}</p>
+                  </Grid>
+                  <Grid item xs={5} className="gender-section">
+                    <Grid item xs={2}>
+                      <FormLabel
+                        className="gender-label"
+                        id="demo-row-radio-buttons-group-label"
+                      >
+                        Gender
+                      </FormLabel>
+                    </Grid>
+                    <Grid item xs={10} className="radio-btn">
+                      <RadioGroup
+                        row
+                        aria-labelledby="demo-row-radio-buttons-group-label"
+                        name="row-radio-buttons-group"
+                      >
+                        <FormControlLabel
+                          {...register("userGender", { required: true })}
+                          value="female"
+                          control={<Radio />}
+                          label="Female"
+                          type="radio"
+                          checked={true}
+                        />
+                        <FormControlLabel
+                          {...register("userGender", { required: true })}
+                          value="male"
+                          control={<Radio />}
+                          label="Male"
+                          type="radio"
+                          checked={false}
+                          // checked={getValues("userGender") == "male"}
+                        />
+                      </RadioGroup>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <TextField
+                      id="outlined-helperText"
+                      fullWidth
+                      label="Primary Address"
+                      {...register("userPrimaryaddress")}
+                      defaultValue="Primary Address"
+                      multiline
+                      rows={4}
+                      error={errors?.userPrimaryaddress}
+                    />
+                    <p>{errors?.userPrimaryaddress?.message}</p>
+                  </Grid>
+                </Grid>
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    <TextField
+                      {...register("userOtheraddress")}
+                      id="outlined-helperText"
+                      fullWidth
+                      label="Other Address"
+                      defaultValue="Other Address"
+                      multiline
+                      rows={4}
+                      error={errors?.userOtheraddress}
+                    />
+                    <p>{errors?.userOtheraddress?.message}</p>
+                  </Grid>
+                </Grid>
+              </div>
+              <div className="row submit-button">
+                <Grid item xs={2}>
+                  <Button>Cancel</Button>
+                </Grid>
+                <Grid item xs={4}>
+                  <Button
+                    fullWidth
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    className="btn-button"
+                  >
+                    submit
+                  </Button>
+                </Grid>
+              </div>
+            </form>
+          </div>
+        </Grid>
+      </Box>
+    </div>
   );
 };
 

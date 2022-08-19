@@ -1,12 +1,12 @@
 @import "../../../../styles/common.styles.scss";
 
-.add-user {
+.details-user {
   font-family: $main-font-family;
   margin-top: 1em;
-  .user-wrapper {
-    .add-user-container {
+  .user-details-wrapper {
+    .details-user-container {
       justify-content: center;
-      .user-form-section {
+      .user-details-form-section {
         box-shadow: 2px 5px 5px 3px #888888;
         border-radius: 10px;
         .main-form-container {
@@ -28,7 +28,7 @@
             }
           }
         }
-        .main-user-heading {
+        .main-user-details-heading {
           .user-heading {
             background-color: #1976d2;
             padding: 0.5em 1.5em;

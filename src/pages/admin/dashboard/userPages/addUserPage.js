@@ -171,43 +171,57 @@ const AddUser = () => {
                       type="password"
                       label="Password"
                       fullWidth
+                      size="small"
                       {...register("userPassword")}
                       variant="outlined"
                       error={errors?.userPassword}
                     />
                     <div className="error">{errors?.userPassword?.message}</div>
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item xs={3}>
                     <TextField
                       {...register("userPincode")}
                       label="Pin"
+                      size="small"
                       fullWidth
                       error={errors?.userPincode}
                     />
                     <div className="error">{errors?.userPincode?.message}</div>
                   </Grid>
-                  <Grid item xs={4}>
-                    <FormLabel id="demo-row-radio-buttons-group-label">
-                      Gender
-                    </FormLabel>
-                    <RadioGroup
-                      row
-                      aria-labelledby="demo-row-radio-buttons-group-label"
-                      name="row-radio-buttons-group"
-                    >
-                      <FormControlLabel
-                        value="female"
-                        {...register("userGender", { required: true })}
-                        control={<Radio />}
-                        label="Female"
-                      />
-                      <FormControlLabel
-                        {...register("userGender", { required: true })}
-                        value="male"
-                        control={<Radio />}
-                        label="Male"
-                      />
-                    </RadioGroup>
+                  <Grid item xs={5} className="gender-section">
+                    <Grid item xs={2}>
+                      <FormLabel
+                        className="gender-label"
+                        id="demo-row-radio-buttons-group-label"
+                      >
+                        Gender
+                      </FormLabel>
+                    </Grid>
+                    <Grid item xs={10} className="radio-btn">
+                      <RadioGroup
+                        row
+                        aria-labelledby="demo-row-radio-buttons-group-label"
+                        name="row-radio-buttons-group"
+                      >
+                        <FormControlLabel
+                          {...register("userGender", { required: true })}
+                          value="female"
+                          control={<Radio />}
+                          label="Female"
+                          type="radio"
+                          checked={true}
+                        />
+                        <FormControlLabel
+                          {...register("userGender", { required: true })}
+                          value="male"
+                          control={<Radio />}
+                          label="Male"
+                          type="radio"
+                          checked={false}
+                          // checked={getValues("userGender") == "male"}
+                        />
+                      </RadioGroup>
+                    </Grid>
                   </Grid>
                   <Grid item xs={12}>
                     <TextField

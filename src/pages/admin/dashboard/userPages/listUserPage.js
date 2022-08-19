@@ -153,16 +153,8 @@ const UserList = () => {
       <TableContainer className="user-table-wrapper" component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
-            <TableRow hover className="user-row-section">
-              <TableCell
-                onClick={() =>
-                  navigate(
-                    `${RouterList.admin.admin}/${RouterList.admin.userDetails}`
-                  )
-                }
-              >
-                Name
-              </TableCell>
+            <TableRow>
+              <TableCell>Name</TableCell>
               <TableCell>Email</TableCell>
               <TableCell> Phone Number</TableCell>
               <TableCell>Location</TableCell>
@@ -176,10 +168,12 @@ const UserList = () => {
             {userData.map((useritem) => {
               return (
                 <TableRow
+                  hover
                   key={useritem._id}
                   onClick={() =>
                     navigate(`/admin/users-details/${useritem._id}`)
                   }
+                  className="user-row-section"
                 >
                   <TableCell component="th" scope="row">
                     {useritem.firstName + " " + useritem.lastName}
