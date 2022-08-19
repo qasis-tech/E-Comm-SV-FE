@@ -1,0 +1,44 @@
+@import "../../../../styles/common.styles.scss";
+
+.details-stock {
+  font-family: $main-font-family;
+  margin-top: 3em;
+  .stock-details-wrapper {
+    .details-stock-container {
+      justify-content: center;
+      .stock-details-form-section {
+        box-shadow: 2px 5px 5px 3px #888888;
+        border-radius: 10px;
+        .main-form-container {
+          padding: 1em 2em;
+          .add-icon-section {
+            font-size: 25px;
+            background-color: #1973bb;
+            color: white;
+           margin-top: 0.5em;
+            border-radius: 25px;
+          }
+        }
+        .main-stock-details-heading {
+          .stock-heading {
+            background-color: #1976d2;
+            padding: 0.5em 1.5em;
+            border-radius: 10px 10px 1px 1px;
+            color: white;
+          }
+        }
+        .submit-button {
+          background-color: #cbc9c959;
+          padding: 0;
+          margin: 2em 0 0 0;
+          padding: 1em 0;
+          display: flex!important;
+          justify-content: end;
+          .btn-button{
+            border-radius: 25px!important;
+          }
+        }
+      }
+    }
+  }
+}

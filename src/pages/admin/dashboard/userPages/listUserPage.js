@@ -36,6 +36,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import AddIcon from "@mui/icons-material/Add";
 
+import RouterList from "../../../../routes/routerList";
 import { formatDate } from "../../../../utils/dateFormat";
 import "./list-user.styles.scss";
 const UserList = () => {
@@ -152,8 +153,16 @@ const UserList = () => {
       <TableContainer className="user-table-wrapper" component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
-            <TableRow hover className="stock-row-section">
-              <TableCell>Name</TableCell>
+            <TableRow hover className="user-row-section">
+              <TableCell
+                onClick={() =>
+                  navigate(
+                    `${RouterList.admin.admin}/${RouterList.admin.userDetails}`
+                  )
+                }
+              >
+                Name
+              </TableCell>
               <TableCell>Email</TableCell>
               <TableCell> Phone Number</TableCell>
               <TableCell>Location</TableCell>

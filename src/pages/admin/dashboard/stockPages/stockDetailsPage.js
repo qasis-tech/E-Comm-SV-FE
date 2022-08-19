@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
+import "./stock-details.styles.scss";
 const stockaddpageSchema = yup
   .object()
   .shape({
@@ -48,69 +49,82 @@ const StockDetails = () => {
     console.log("StockAddpage Details", data);
   };
   return (
-    <React.Fragment>
-      <Container maxWidth="sm">
-        <Box sx={{ flexGrow: 1 }} noValidate autoComplete="off">
-          <form onSubmit={handleSubmit(handleStockAddpage)}>
-            <h3>Stock</h3>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <TextField
-                  id="outlined-read-only-input"
-                  label="Name"
-                  {...register("productname")}
-                />
-                <p>{errors?.productname?.message}</p>
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  id="outlined-read-only-input"
-                  label="Quantity"
-                  {...register("productquantity")}
-                />
-                <p>{errors?.productquantity?.message}</p>
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  fullWidth
-                  id="outlined-select-currency"
-                  select
-                  label="Category"
-                  value={currency}
-                  onChange={handleChange}
-                >
-                  {currencies.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  fullWidth
-                  id="outlined-select-currency"
-                  select
-                  label="Subcategory"
-                  value={currency}
-                  onChange={handleChange}
-                >
-                  {currencies.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </Grid>
-            </Grid>
-            <Button variant="outlined">Cancel</Button>
-            <Button type="submit" variant="contained" color="primary">
-              Submit
-            </Button>
-          </form>
-        </Box>
-      </Container>
-    </React.Fragment>
+    <div className="details-stock">
+      <Box noValidate autoComplete="off" className="stock-details-wrapper">
+        <Grid
+          container
+          direction="row"
+          spacing={2}
+          className="details-stock-container"
+        >
+          <div className="stock-details-form-section col-md-8">
+            <form onSubmit={handleSubmit(handleStockAddpage)}>
+              <div className="main-stock-details-heading">
+                <h5 className="stock-heading">Stock Details</h5>
+              </div>
+              <div className="main-form-container">
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <TextField
+                      id="outlined-helperText"
+                      label="Name"
+                      fullWidth
+                      size="small"
+                      defaultValue="Kiwi"
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      id="outlined-helperText"
+                      label="Quantity"
+                      fullWidth
+                      size="small"
+                      defaultValue="100"
+                    />
+                  </Grid>
+                </Grid>
+                <Grid container spacing={2} marginTop={1}>
+                  <Grid item xs={6}>
+                    <TextField
+                      id="outlined-helperText"
+                      label="category"
+                      fullWidth
+                      size="small"
+                      defaultValue="Fruits"
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      id="outlined-helperText"
+                      label="Subcategory"
+                      fullWidth
+                      size="small"
+                      defaultValue="Fresh"
+                    />
+                  </Grid>
+                </Grid>
+              </div>
+              <div className="row submit-button">
+                <Grid item xs={2}>
+                  <Button>Cancel</Button>
+                </Grid>
+                <Grid item xs={4}>
+                  <Button
+                    fullWidth
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    className="btn-button"
+                  >
+                    submit
+                  </Button>
+                </Grid>
+              </div>
+            </form>
+          </div>
+        </Grid>
+      </Box>
+    </div>
   );
 };
 

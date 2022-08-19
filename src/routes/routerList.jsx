@@ -18,6 +18,7 @@ const List = {
     orderList: "order-list",
     orderDetails: "order-details",
     stockList: "stock-list",
+    stockDetails:"stock-details",
     addStock: "add-stock",
     userList: "user-list",
     userDetails: "user-details",

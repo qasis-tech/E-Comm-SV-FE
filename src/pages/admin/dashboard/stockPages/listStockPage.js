@@ -37,6 +37,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import AddIcon from "@mui/icons-material/Add";
 
+import RouterList from "../../../../routes/routerList";
 import { formatDate } from "../../../../utils/dateFormat";
 import "./list-stock.styles.scss";
 
@@ -205,7 +206,15 @@ const StockList = () => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Category</TableCell>
+              <TableCell
+                onClick={() =>
+                  navigate(
+                    `${RouterList.admin.admin}/${RouterList.admin.stockDetails}`
+                  )
+                }
+              >
+                Category
+              </TableCell>
               <TableCell> Subcategory</TableCell>
               <TableCell> Name</TableCell>
               <TableCell>Quantity</TableCell>
@@ -221,7 +230,11 @@ const StockList = () => {
                   hover
                   className="stock-row-section"
                   key={listitem._id}
-                  onClick={() => navigate("/stock-details")}
+                  onClick={() =>
+                    navigate(
+                      `${RouterList.admin.admin}/${RouterList.admin.stockDetails}`
+                    )
+                  }
                 >
                   <TableCell component="th" scope="row">
                     {listitem.category}
