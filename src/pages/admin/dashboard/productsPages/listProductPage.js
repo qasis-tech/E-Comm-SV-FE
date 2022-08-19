@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { URLS } from "../../../../config/urls.config";
+import RouterList from "../../../../routes/routerList";
 
 import {
   Table,
@@ -172,7 +173,15 @@ const ListProduct = () => {
                   className="product-row-section"
                   key={product._id}
                 >
-                  <TableCell component="th" scope="row">
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    onClick={() =>
+                      navigate(
+                        `${RouterList.admin.admin}/${RouterList.admin.productDetails}`
+                      )
+                    }
+                  >
                     {product.name}
                   </TableCell>
                   <TableCell component="th" scope="row">

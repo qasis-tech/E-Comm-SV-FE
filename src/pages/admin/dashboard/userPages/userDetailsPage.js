@@ -90,8 +90,10 @@ const UserDetails = () => {
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <TextField
+                  id="outlined-helperText"
+                  label="Name"
                   {...register("userFirstName")}
-                  placeholder="Firstname"
+                  defaultValue="Firstname"
                   error={errors?.userFirstName}
                 />
                 <p>{errors?.userFirstName?.message}</p>
