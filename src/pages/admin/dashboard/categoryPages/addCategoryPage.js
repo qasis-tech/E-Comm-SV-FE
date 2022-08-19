@@ -16,6 +16,7 @@ import AddIcon from "@mui/icons-material/Add";
 import PopupAlert from "../../../../components/popupAlerts";
 import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
 import DeleteIcon from "@mui/icons-material/Delete";
+import CloseIcon from "@mui/icons-material/Close";
 
 import "./addCategoryPage.styles.scss";
 import "./addCategoryPage.styles.scss";
@@ -100,10 +101,11 @@ const AddCategory = () => {
                 <h5 className="heading">Category</h5>
               </div>
               <Grid container spacing={2} className="category-section">
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <TextField
                     fullWidth
                     label="Name"
+                    defaultValue="Name"
                     size="small"
                     error={errors?.mainCategory}
                     {...register("mainCategory", {
@@ -112,6 +114,7 @@ const AddCategory = () => {
                   />
                   <div className="error">{errors?.mainCategory?.message}</div>
                 </Grid>
+                <Grid item xs={12}></Grid>
                 <Grid item xs={12} className="">
                   {getValues("categoryImageFile") ? (
                     <>
@@ -241,7 +244,7 @@ const AddCategory = () => {
                               onClick={() => remove(index)}
                               className="close-section"
                             >
-                              <DisabledByDefaultIcon />
+                              <CloseIcon />
                             </button>
                           )}
                         </Grid>

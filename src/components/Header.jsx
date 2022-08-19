@@ -16,6 +16,7 @@ import { styled, alpha } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
 import PersonIcon from "@mui/icons-material/Person";
 import IconButton from "@mui/material/IconButton";
+import MenuIcon from '@mui/icons-material/Menu';
 
 import "../styles/header.styles.scss";
 import { InputAdornment, MenuItem, TextField, Tooltip } from "@mui/material";
@@ -53,13 +54,13 @@ const HeaderComponent = () => {
                   </div>
                   <span className="text">+ 1235 2355 98</span>
                 </div>
-                <div className="col-md pr-4 d-flex topper align-items-center">
+                <div className="col-md pr-4 d-flex topper align-items-center header-email">
                   <div className="icon mr-2 d-flex justify-content-center align-items-center">
                     <i className="fa fa-paper-plane-o"></i>
                   </div>
                   <span className="text">youremail@email.com</span>
                 </div>
-                <div className="col-md pr-4 d-flex topper align-items-center text-lg-right">
+                <div className="col-md pr-4 d-flex topper align-items-center header-text text-lg-right">
                   <span className="text">
                     3-5 Business days delivery &amp; Free Returns
                   </span>
@@ -74,12 +75,24 @@ const HeaderComponent = () => {
         id="ftco-navbar"
       >
         <div className="container">
-          <div>
+          <div className="mobile-menu">
+            <div>
             <span className="navbar-brand" onClick={() => navigate("/")}>
               Vegefoods
             </span>
+            </div>
 
-            <button
+           <div>
+           <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="menu"
+              className="menu-icon"
+            >
+              <MenuIcon />
+            </IconButton>
+           </div>
+            {/* <button
               className="navbar-toggler"
               type="button"
               data-toggle="collapse"
@@ -89,7 +102,7 @@ const HeaderComponent = () => {
               aria-label="Toggle navigation"
             >
               <span className="oi oi-menu"></span> Menu
-            </button>
+            </button> */}
           </div>
           <TextField
             label="Search"

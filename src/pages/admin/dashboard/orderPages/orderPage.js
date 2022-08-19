@@ -238,7 +238,7 @@ const OrderList = () => {
                   return (
                     <TableRow
                       hover
-                      className="stock-row-section"
+                      className="order-row-section"
                       key={orderItem._id}
                       onClick={() =>
                         navigate(`/admin/order-details/${orderItem._id}`)

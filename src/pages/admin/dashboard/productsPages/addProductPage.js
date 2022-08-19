@@ -21,6 +21,7 @@ import {
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import AddIcon from "@mui/icons-material/Add";
+import CloseIcon from "@mui/icons-material/Close";
 
 const productaddSchema = yup
   .object()
@@ -210,9 +211,10 @@ const AddProduct = () => {
                       variant="outlined"
                       label="Name"
                       size="small"
+                      error={errors?.productName}
                       {...register("productName")}
                     />
-                    <p>{errors?.productName?.message}</p>
+                    <div className="error">{errors?.productName?.message}</div>
                   </Grid>
                   <Grid item xs={4}>
                     <TextField
@@ -220,9 +222,10 @@ const AddProduct = () => {
                       variant="outlined"
                       label="Quantity"
                       size="small"
+                      error={errors?.quantity}
                       {...register("quantity")}
                     />
-                    <p>{errors?.quantity?.message}</p>
+                    <div className="error">{errors?.quantity?.message}</div>
                   </Grid>
                   <Grid item xs={4}>
                     {unitData?.length && (
@@ -241,7 +244,7 @@ const AddProduct = () => {
                     )}
                   </Grid>
                 </Grid>
-                <Grid container spacing={2}>
+                <Grid container marginTop={1} spacing={2}>
                   <Grid item xs={6}>
                     {categoryData?.length && (
                       <Autocomplete
@@ -294,47 +297,60 @@ const AddProduct = () => {
                       multiline
                       rows={4}
                       size="small"
+                      error={errors?.description}
                       {...register("description")}
                     />
-                    <p>{errors?.description?.message}</p>
+                    <div className="error">{errors?.description?.message}</div>
                   </Grid>
                 </Grid>
-                {controlledFields?.map((list, index) => {
-                  return (
-                    <Grid key={list.id} container spacing={2}>
-                      <Grid item xs={6}>
-                        <TextField
-                          fullWidth
-                          size="small"
-                          id="outlined-multiline-static"
-                          label="Features"
-                          onChange={(e) => handleFeatureKey(e, null)}
-                          {...register(`features.${index}.featureKey`)}
-                        />
-                      </Grid>
-                      <Grid item xs={5}>
-                        <TextField
-                          fullWidth
-                          id="outlined-multiline-static"
-                          label="value"
-                          size="small"
-                          onChange={(e) => handleFeatureKey(null, e)}
-                          {...register(`features.${index}.featureValue`)}
-                        />
-                      </Grid>
 
-                      <Grid item xs={1}>
-                        <AddIcon
-                          onClick={() =>
-                            append({ featureKey: "", featureValue: "" })
-                          }
-                          color="primary"
-                          className="add-icon-section"
-                        />
+                <div className="feature-add">
+                  <Grid item className="add-icon">
+                    <AddIcon
+                      onClick={() =>
+                        append({ featureKey: "", featureValue: "" })
+                      }
+                      color="primary"
+                      className="add-icon-section"
+                    />
+                  </Grid>
+                  {controlledFields?.map((list, index) => {
+                    return (
+                      <Grid
+                        key={list.id}
+                        className="add-section"
+                        container
+                        spacing={2}
+                        marginTop={1}
+                      >
+                        <Grid item xs={6}>
+                          <TextField
+                            fullWidth
+                            size="small"
+                            id="outlined-multiline-static"
+                            label="Features"
+                            onChange={(e) => handleFeatureKey(e, null)}
+                            {...register(`features.${index}.featureKey`)}
+                          />
+                        </Grid>
+                        <Grid item xs={5}>
+                          <TextField
+                            fullWidth
+                            id="outlined-multiline-static"
+                            label="value"
+                            size="small"
+                            onChange={(e) => handleFeatureKey(null, e)}
+                            {...register(`features.${index}.featureValue`)}
+                          />
+                        </Grid>
+                        <Grid item xs={1} className="close-btn">
+                          <CloseIcon />
+                        </Grid>
                       </Grid>
-                    </Grid>
-                  );
-                })}
+                    );
+                  })}
+                </div>
+
                 <Grid container marginTop={1} spacing={2}>
                   <Grid item xs={6}>
                     <TextField
@@ -342,9 +358,10 @@ const AddProduct = () => {
                       variant="outlined"
                       label="Price"
                       size="small"
+                      error={errors?.price}
                       {...register("price")}
                     />
-                    <p>{errors?.price?.message}</p>
+                    <div className="error">{errors?.price?.message}</div>
                   </Grid>
                   <Grid item xs={6}>
                     {unitData?.length && (
@@ -367,16 +384,19 @@ const AddProduct = () => {
                     )}
                   </Grid>
                 </Grid>
-                <Grid container spacing={2}>
+                <Grid container spacing={2} marginTop={1}>
                   <Grid item xs={6}>
                     <TextField
                       fullWidth
                       variant="outlined"
                       label="Quantity"
                       size="small"
+                      error={errors?.offerQuantity}
                       {...register("offerQuantity")}
                     />
-                    <p>{errors?.offerQuantity?.message}</p>
+                    <div className="error">
+                      {errors?.offerQuantity?.message}
+                    </div>
                   </Grid>
                   <Grid item xs={6}>
                     <TextField
@@ -384,12 +404,13 @@ const AddProduct = () => {
                       variant="outlined"
                       label="Offer Price"
                       size="small"
+                      error={errors?.offerPrice}
                       {...register("offerPrice")}
                     />
-                    <p>{errors?.offerPrice?.message}</p>
+                    <div className="error">{errors?.offerPrice?.message}</div>
                   </Grid>
                 </Grid>
-                <Grid container spacing={2}>
+                <Grid container spacing={2} marginTop={1}>
                   <Grid item xs={6}>
                     <Button variant="contained" fullWidth component="label">
                       Upload Image
@@ -399,11 +420,15 @@ const AddProduct = () => {
                         hidden
                       />
                     </Button>
-                    <ErrorMessage
+                    <div className="error">
+                      {errors?.productImageFile?.message}
+                    </div>
+
+                    {/* <ErrorMessage
                       errors={errors}
                       name="productImageFile"
                       render={({ message }) => <p>{message}</p>}
-                    />
+                    /> */}
                   </Grid>
                   <Grid item xs={6}>
                     <Button variant="contained" fullWidth component="label">

@@ -19,6 +19,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
+import "./order-details.styles.scss";
 const orderdetailsSchema = yup
   .object()
   .shape({
@@ -139,122 +140,166 @@ const OrderDetails = () => {
   };
 
   return (
-    <React.Fragment>
-      <Container>
-        <Box noValidate autoComplete="off">
-          <form onSubmit={handleSubmit(putOrderDetailsApi)}>
-            <h3>Order Details</h3>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <TextField
-                  id="outlined-read-only-input"
-                  placeholder="Email"
-                  InputProps={{
-                    readOnly: true,
-                  }}
-                  {...register("orderEmail")}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  id="outlined-multiline-static"
-                  placeholder="Address"
-                  multiline
-                  rows={4}
-                  {...register("orderAddress")}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  id="outlined-read-only-input"
-                  placeholder="Location"
-                  {...register("orderLocation")}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  id="outlined-read-only-input"
-                  placeholder="Phone Number"
-                  InputProps={{
-                    readOnly: true,
-                  }}
-                  {...register("orderMobilenumber")}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                <TextField
-                  id="outlined-read-only-input"
-                  placeholder="Pincode"
-                  InputProps={{
-                    readOnly: true,
-                  }}
-                  {...register("orderPincode")}
-                />
-              </Grid>
-              <Grid item xs={6}>
-                {status?.length && (
-                  <Autocomplete
-                    options={status}
-                    getOptionLabel={(option) => option.label || ""}
-                    isOptionEqualToValue={(option, value) =>
-                      option.label === value.label
-                    }
-                    value={selectedStatus}
-                    onChange={(e, val) => handleChange(e, val)}
-                    renderInput={(params) => (
-                      <TextField {...params} label="Status" size="small" />
-                    )}
-                  />
-                )}
-              </Grid>
-            </Grid>
-            <Button variant="outlined">Cancel</Button>
-            <Button type="submit" variant="contained" color="primary">
-              Submit
-            </Button>
-          </form>
-          <TableContainer component={Paper}>
-            <Table aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell align="right">name</TableCell>
-                  <TableCell align="right">category</TableCell>
-                  <TableCell align="right">Subcategory</TableCell>
-                  <TableCell align="right">unit</TableCell>
-                  <TableCell align="right">status</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {orderDetailData?.product?.length
-                  ? orderDetailData?.product?.map((orderdetail) => {
-                      return (
-                        <TableRow key={orderdetail._id}>
-                          <TableCell align="right">
-                            {orderdetail.name}
-                          </TableCell>
-                          <TableCell align="right">
-                            {orderdetail.category}
-                          </TableCell>
-                          <TableCell align="right">
-                            {orderdetail.subCategory}
-                          </TableCell>
-                          <TableCell align="right">
-                            {orderdetail.unit}
-                          </TableCell>
-                          <TableCell align="right">
-                            {orderDetailData.status}
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })
-                  : null}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Box>
-      </Container>
-    </React.Fragment>
+    <div className="order-details">
+      <Box noValidate autoComplete="off" className="order-details-wrapper">
+        <Grid
+          container
+          direction="row"
+          spacing={2}
+          className="order-details-container"
+        >
+          <div className="order-details-form-section col-md-8">
+            <form onSubmit={handleSubmit(putOrderDetailsApi)}>
+              <div className="main-order-details-heading">
+                <div className="col-md-4">
+                  <h5 className="heading">Order Details</h5>
+                </div>
+                <div
+                  className="order-buttons col-md-8"
+                  style={{ display: "flex" }}
+                >
+                  <Grid item xs={2}>
+                    <Button className="order-cancel-btn">Cancel</Button>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Button
+                      fullWidth
+                      type="submit"
+                      className="order-submit-btn"
+                    >
+                      Submit
+                    </Button>
+                  </Grid>
+                </div>
+              </div>
+              <div className="order-details-container ">
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <TextField
+                      id="outlined-helperText"
+                      label="Name"
+                      fullWidth
+                      size="small"
+                      defaultValue="Email"
+                      {...register("orderEmail")}
+                      InputProps={{
+                        readOnly: true,
+                      }}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      id="outlined-helperText"
+                      label="Location"
+                      fullWidth
+                      size="small"
+                      defaultValue="Location"
+                      {...register("orderLocation")}
+                      InputProps={{
+                        readOnly: true,
+                      }}
+                    />
+                  </Grid>
+                  <Grid container spacing={2} marginTop={1} className="address">
+                    <Grid item xs={12}>
+                      <TextField
+                        id="outlined-helperText"
+                        label="Location"
+                        fullWidth
+                        size="small"
+                        defaultValue="Address"
+                        multiline
+                        rows={4}
+                        {...register("orderAddress")}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid container spacing={2} marginTop={1} className="address">
+                    <Grid item xs={4}>
+                      <TextField
+                        id="outlined-helperText"
+                        label="Phone Number"
+                        fullWidth
+                        size="small"
+                        defaultValue="Phone Number"
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                        {...register("orderMobilenumber")}
+                      />
+                    </Grid>
+                    <Grid item xs={3}>
+                      <TextField
+                        label="Pincode"
+                        fullWidth
+                        size="small"
+                        defaultValue="Pincode"
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                        {...register("orderPincode")}
+                      />
+                    </Grid>
+                    <Grid item xs={5}>
+                      {status?.length && (
+                        <Autocomplete
+                          options={status}
+                          getOptionLabel={(option) => option.label || ""}
+                          isOptionEqualToValue={(option, value) =>
+                            option.label === value.label
+                          }
+                          value={selectedStatus}
+                          onChange={(e, val) => handleChange(e, val)}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              label="Status"
+                              size="small"
+                            />
+                          )}
+                        />
+                      )}
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </div>
+            </form>
+          </div>
+        </Grid>
+      </Box>
+
+      <TableContainer component={Paper} style={{ marginTop: "2em" }}>
+        <Table aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>name</TableCell>
+              <TableCell>category</TableCell>
+              <TableCell>Subcategory</TableCell>
+              <TableCell>unit</TableCell>
+              <TableCell>status</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {orderDetailData?.product?.length
+              ? orderDetailData?.product?.map((orderdetail) => {
+                  return (
+                    <TableRow key={orderdetail._id}>
+                      <TableCell>{orderdetail.name}</TableCell>
+                      <TableCell>{orderdetail.category}</TableCell>
+                      <TableCell>{orderdetail.subCategory}</TableCell>
+                      <TableCell>{orderdetail.unit}</TableCell>
+                      <TableCell>{orderDetailData.status}</TableCell>
+                    </TableRow>
+                  );
+                })
+              : null}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
 };
 
