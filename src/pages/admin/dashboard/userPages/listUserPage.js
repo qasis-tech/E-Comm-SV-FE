@@ -237,7 +237,7 @@ const UserList = () => {
                   <TableCell>{formatDate(useritem?.createdAt)}</TableCell>
                   <TableCell>{formatDate(useritem?.updatedAt)}</TableCell>
                   <TableCell>
-                    <span className="active">Active</span>
+                    <span className="actives">Active</span>
                     <span className="inactive">Inactive</span>
                   </TableCell>
                   <TableCell>

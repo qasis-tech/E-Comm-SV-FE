@@ -93,7 +93,7 @@ table {
   }
 }
 
-.active,
+.actives,
 .inactive {
   font-size: 13px;
   color: #fff;
@@ -102,7 +102,7 @@ table {
   border-radius: 12px;
   text-transform: capitalize;
 }
-.active {
+.actives {
   background-color: $active-color;
 }
 .inactive {
