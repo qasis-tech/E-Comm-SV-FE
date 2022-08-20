@@ -2,6 +2,9 @@ import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { URLS } from "../../../../config/urls.config";
+import NotDataAvailable from "../../../../components/NoDataAvailable";
+import RouterList from "../../../../routes/routerList";
+import Loader from "../../../../components/Loader";
 
 import {
   Table,
@@ -37,8 +40,10 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import CloseIcon from "@mui/icons-material/Close";
 
 import "./list-order.styles.scss";
+
 const OrderList = () => {
   const [state, setState] = React.useState({
     right: false,
@@ -90,10 +95,12 @@ const OrderList = () => {
     </Box>
   );
 
-  const [orderData, setOrderData] = React.useState([]);
-  const [orderShortDetails, setOrderShortDetails] = React.useState(null);
-  const [orderListData, setOrderListData] = React.useState([]);
+  const [orderData, setOrderData] = useState([]);
+  const [orderShortDetails, setOrderShortDetails] = useState(null);
+  const [searchInput, setSearchInput] = useState("");
 
+  const [count, setCount] = useState(0);
+  const [isLoading, setLoader] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const handleChangePage = (event, newPage) => setPage(newPage);
@@ -102,23 +109,55 @@ const OrderList = () => {
     setPage(0);
   };
 
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
-  React.useEffect(() => {
+  useEffect(() => {
+    getOrderListApi();
+  }, []);
+
+  useEffect(() => {
+    getOrderListApi();
+  }, [page, rowsPerPage]);
+
+  useEffect(() => {
+    if (searchInput === "") {
+      getOrderListApi();
+    }
+  }, [searchInput]);
+
+  const getOrderListApi = () => {
+    console.log("order api");
+    setLoader(true);
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
+    let URL =
+      searchInput !== ""
+        ? `${process.env.REACT_APP_BASE_URL}${
+            URLS.order
+          }?search=${searchInput}&limit=${rowsPerPage}&skip=${
+            page * rowsPerPage
+          }`
+        : `${process.env.REACT_APP_BASE_URL}${
+            URLS.order
+          }?limit=${rowsPerPage}&skip=${page * rowsPerPage}`;
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}${URLS.order}`, {
+      .get(URL, {
         headers: { Authorization: ` ${token}` },
       })
       .then((res) => {
-        console.log("product details", res.data);
+        setLoader(false);
+        console.log("ORDER details", res.data);
         setOrderShortDetails(res.data.shorthanddetails);
         setOrderData(res.data.data);
+        setCount(res.data.count);
       })
       .catch((err) => {
+        setLoader(false);
         console.log("error", err);
+        setOrderData([]);
       });
-  }, []);
+  };
+
   const navigate = useNavigate();
+
   return (
     <Box className="list-order">
       <Grid container spacing={2} className="oder-search">
@@ -127,10 +166,22 @@ const OrderList = () => {
             label="Search"
             fullWidth
             size="small"
+            onChange={(e) => setSearchInput(e.target.value)}
+            value={searchInput}
             InputProps={{
               endAdornment: (
-                <InputAdornment>
-                  <IconButton>
+                <InputAdornment position="end">
+                  <IconButton
+                    sx={{
+                      visibility: searchInput !== "" ? "visible" : "hidden",
+                    }}
+                    onClick={() => {
+                      setSearchInput("");
+                    }}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                  <IconButton onClick={() => getOrderListApi()}>
                     <SearchIcon />
                   </IconButton>
                 </InputAdornment>
@@ -219,71 +270,77 @@ const OrderList = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {orderData?.length
-              ? orderData?.map((orderItem) => {
-                  return (
-                    <TableRow
-                      hover
-                      className="order-row-section"
-                      key={orderItem._id}
-                      onClick={() =>
-                        navigate(`/admin/order-details/${orderItem._id}`)
-                      }
+            {isLoading ? (
+              <Loader />
+            ) : orderData?.length ? (
+              orderData?.map((orderItem) => {
+                return (
+                  <TableRow
+                    hover
+                    className="order-row-section"
+                    key={orderItem._id}
+                    onClick={() =>
+                      navigate(`/admin/order-details/${orderItem._id}`)
+                    }
+                  >
+                    <TableCell component="th" scope="row">
+                      #{orderItem?.orderId}
+                    </TableCell>
+                    <TableCell
+                      sx={{ maxWidth: 350 }}
+                      className="d-flex flex-wrap"
                     >
-                      <TableCell component="th" scope="row">
-                        #{orderItem?.orderId}
-                      </TableCell>
-                      <TableCell
-                        sx={{ maxWidth: 350 }}
-                        className="d-flex flex-wrap"
-                      >
-                        {orderItem?.product?.length &&
-                          orderItem.product.map((e) => {
-                            return (
-                              <span className="border px-2 py-1 m-1 rounded shadow-sm text-center">
-                                {e.category}
-                              </span>
-                            );
-                          })}
-                      </TableCell>
+                      {orderItem?.product?.length &&
+                        orderItem.product.map((e) => {
+                          return (
+                            <span className="border px-2 py-1 m-1 rounded shadow-sm text-center">
+                              {e.category}
+                            </span>
+                          );
+                        })}
+                    </TableCell>
 
-                      <TableCell>
-                        {orderItem.product.length &&
-                          orderItem.product.map((e) => {
-                            return (
-                              <span className="border px-2 py-1 m-1 rounded shadow-sm text-center">
-                                {e.subCategory}
-                              </span>
-                            );
-                          })}
-                      </TableCell>
-                      <TableCell>{orderItem.user.mobileNumber}</TableCell>
-                      <TableCell>
-                        <span
-                          className={
-                            orderItem.status === "pending" ? "pending" : ""
-                          }
-                        >
-                          {orderItem.status}
-                        </span>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })
-              : null}
+                    <TableCell>
+                      {orderItem.product.length &&
+                        orderItem.product.map((e) => {
+                          return (
+                            <span className="border px-2 py-1 m-1 rounded shadow-sm text-center">
+                              {e.subCategory}
+                            </span>
+                          );
+                        })}
+                    </TableCell>
+                    <TableCell>{orderItem.user.mobileNumber}</TableCell>
+                    <TableCell>
+                      <span
+                        className={
+                          orderItem.status === "pending" ? "pending" : ""
+                        }
+                      >
+                        {orderItem.status}
+                      </span>
+                    </TableCell>
+                  </TableRow>
+                );
+              })
+            ) : (
+              <NotDataAvailable />
+            )}
           </TableBody>
         </Table>
       </TableContainer>
-      <div className="pagination-section">
-        <TablePagination
-          component="div"
-          count={20}
-          page={page}
-          onPageChange={handleChangePage}
-          rowsPerPage={rowsPerPage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </div>
+      {!isLoading && count > 10 ? (
+        <div className="pagination-section">
+          <TablePagination
+            component="div"
+            count={count}
+            page={page}
+            onPageChange={handleChangePage}
+            rowsPerPage={rowsPerPage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </div>
+      ) : null}
     </Box>
   );
 };
