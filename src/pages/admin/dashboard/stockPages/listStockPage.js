@@ -221,16 +221,12 @@ const StockList = () => {
           <Box className="shorthand">
             <div className="col-md-8 stock-shorthand-section">
               <h3 className="head">In Stock</h3>
-              <h3 className="order-number">100</h3>
+              <h3 className="order-number">{stockShortDetails?.inStock}</h3>
             </div>
             <div className="col-md-4 icon-part">
               <div className="cart-order-icon">
                 <ShoppingCartIcon className="order-cart-icon-section" />
               </div>
-            </div>
-            <div className="col-md-8 shorthand-section">
-              <h3>In Stock</h3>
-              <h3>{stockShortDetails?.inStock}</h3>
             </div>
           </Box>
         </Grid>
@@ -238,16 +234,12 @@ const StockList = () => {
           <Box className="shorthand">
             <div className="col-md-8 stock-shorthand-section">
               <h3 className="head">Out Stock</h3>
-              <h3 className="order-number">100</h3>
+              <h3 className="order-number">{stockShortDetails?.outStock}</h3>
             </div>
             <div className="col-md-4 icon-part">
               <div className="cart-order-icon">
                 <ShoppingCartCheckoutIcon className="order-cart-icon-section" />
               </div>
-            </div>
-            <div className="col-md-8 shorthand-section">
-              <h3>Out Stock</h3>
-              <h3>{stockShortDetails?.outStock}</h3>
             </div>
           </Box>
         </Grid>
