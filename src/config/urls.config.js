@@ -1,6 +1,6 @@
 export const URLS = {
   category: "/category",
-  signup: "/signup",
+  user: "/user",
   product: "/product",
   stock: "/stock",
   order: "/order",

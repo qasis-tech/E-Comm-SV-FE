@@ -1,3 +1,5 @@
+
+
 import { Routes, Route, Navigate } from "react-router-dom";
 // User
 import HomePage from "../pages/user/home";
@@ -76,7 +78,7 @@ const CustomRouters = () => {
         <Route path="add-stock" element={<AddStock />} />
         <Route path={RouterList.admin.stockDetails} element={<StockDetails />} />
         <Route path="users" element={<UserList />} />
-        <Route path="add-users" element={<AddUser />} />
+        <Route path={RouterList.admin.addUser} element={<AddUser />} />
         <Route path="users-details/:id" element={<UserDetails />} />
         <Route path="add-user" element={<AddUser />} />
         <Route path="order-details/:id" element={<OrderDetails />} />
@@ -90,3 +92,6 @@ const CustomRouters = () => {
 };
 
 export default CustomRouters;
+
+
+

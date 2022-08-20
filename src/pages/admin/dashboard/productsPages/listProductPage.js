@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import NotDataAvailable from "../../../../components/NoDataAvailable";
 import { URLS } from "../../../../config/urls.config";
 import RouterList from "../../../../routes/routerList";
 
@@ -35,6 +36,7 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import CloseIcon from "@mui/icons-material/Close";
 
 import "./list-product.styles.scss";
 import Loader from "../../../../components/Loader";
@@ -90,7 +92,10 @@ const ListProduct = () => {
     </Box>
   );
   const [productData, setProductData] = React.useState([]);
+  const [searchInput, setSearchInput] = useState("");
 
+  const [count, setCount] = useState(0);
+  const [isLoading, setLoader] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const handleChangePage = (event, newPage) => setPage(newPage);
@@ -99,20 +104,50 @@ const ListProduct = () => {
     setPage(0);
   };
 
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
   React.useEffect(() => {
+    getProductListApi();
+  }, []);
+
+  useEffect(() => {
+    getProductListApi();
+  }, [page, rowsPerPage]);
+
+  useEffect(() => {
+    if (searchInput === "") {
+      getProductListApi();
+    }
+  }, [searchInput]);
+
+  const getProductListApi = () => {
+    setLoader(true);
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
+    let URL =
+      searchInput !== ""
+        ? `${process.env.REACT_APP_BASE_URL}${
+            URLS.product
+          }?search=${searchInput}&limit=${rowsPerPage}&skip=${
+            page * rowsPerPage
+          }`
+        : `${process.env.REACT_APP_BASE_URL}${
+            URLS.product
+          }?limit=${rowsPerPage}&skip=${page * rowsPerPage}`;
+
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}${URLS.product}`, {
+      .get(URL, {
         headers: { Authorization: ` ${token}` },
       })
       .then((res) => {
+        setLoader(false);
         setProductData(res.data.data);
+        setCount(res.data.count);
       })
       .catch((err) => {
+        setLoader(false);
         console.log("error", err);
+        setProductData([]);
       });
-  }, []);
+  };
   const navigate = useNavigate();
 
   return (
@@ -123,10 +158,22 @@ const ListProduct = () => {
             fullWidth
             label="Search"
             size="small"
+            onChange={(e) => setSearchInput(e.target.value)}
+            value={searchInput}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton>
+                  <IconButton
+                    sx={{
+                      visibility: searchInput !== "" ? "visible" : "hidden",
+                    }}
+                    onClick={() => {
+                      setSearchInput("");
+                    }}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                  <IconButton onClick={() => getProductListApi()}>
                     <SearchIcon />
                   </IconButton>
                 </InputAdornment>
@@ -166,54 +213,62 @@ const ListProduct = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {productData?.map((product) => {
-              return (
-                <TableRow
-                  hover
-                  className="product-row-section"
-                  key={product._id}
-                >
-                  <TableCell
-                    component="th"
-                    scope="row"
-                    onClick={() =>
-                      navigate(
-                        `${RouterList.admin.admin}/${RouterList.admin.productDetails}`
-                      )
-                    }
+            {isLoading ? (
+              <Loader />
+            ) : productData?.length ? (
+              productData?.map((product) => {
+                return (
+                  <TableRow
+                    hover
+                    className="product-row-section"
+                    key={product._id}
                   >
-                    {product.name}
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    {product.category}
-                  </TableCell>
-                  <TableCell>{product.subCategory}</TableCell>
-                  <TableCell>{product.unit}</TableCell>
-                  <TableCell>{product.price}</TableCell>
-                  <TableCell>
-                    <Button>
-                      <DeleteIcon className="delete-icon" />
-                    </Button>
-                    <Button>
-                      <CreateIcon className="edit-icon" />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      onClick={() =>
+                        navigate(
+                          `${RouterList.admin.admin}/${RouterList.admin.productDetails}`
+                        )
+                      }
+                    >
+                      {product.name}
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      {product.category}
+                    </TableCell>
+                    <TableCell>{product.subCategory}</TableCell>
+                    <TableCell>{product.unit}</TableCell>
+                    <TableCell>{product.price}</TableCell>
+                    <TableCell>
+                      <Button>
+                        <DeleteIcon className="delete-icon" />
+                      </Button>
+                      <Button>
+                        <CreateIcon className="edit-icon" />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                );
+              })
+            ) : (
+              <NotDataAvailable />
+            )}
           </TableBody>
         </Table>
       </TableContainer>
-      <div className="pagination-section">
-        <TablePagination
-          component="div"
-          count={20}
-          page={page}
-          onPageChange={handleChangePage}
-          rowsPerPage={rowsPerPage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </div>
+      {!isLoading && count > 10 ? (
+        <div className="pagination-section">
+          <TablePagination
+            component="div"
+            count={count}
+            page={page}
+            onPageChange={handleChangePage}
+            rowsPerPage={rowsPerPage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </div>
+      ) : null}
       <div style={{ position: "fixed", bottom: "2em", right: "1em" }}>
         <Fab
           color="primary"
