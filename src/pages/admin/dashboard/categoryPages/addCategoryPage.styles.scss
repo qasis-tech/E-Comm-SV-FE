@@ -10,15 +10,6 @@
         border-radius: 10px;
         @media only screen and (min-width: 800px) and (max-width: 1600px) {
         }
-        .main-heading {
-          background-color: #1976d2;
-          padding: 5px 0;
-          border-radius: 10px 10px 1px 1px;
-          h5 {
-            padding: 0px 50px;
-            color: white;
-          }
-        }
         .category-section {
           padding: 2em 3em 1em 3em;
           .css-mhc70k-MuiGrid-root > .MuiGrid-item {
@@ -28,8 +19,10 @@
           .image-remove-section {
             display: flex;
             justify-content: space-between;
-            .remove-icon {
-              color: red;
+            .delete-section{
+              display: flex;
+              justify-content: end;
+              
             }
           }
         }
@@ -54,8 +47,8 @@
           .image-remove-section {
             display: flex;
             justify-content: space-between;
-            .remove-icon {
-              color: red;
+            div{
+              margin-top: 10px;
             }
           }
           .subcategory-add-section {
@@ -65,13 +58,16 @@
             border-radius: 10px;
             /* box-shadow: 10px 10px 10px; */
             border-color: lilac;
-            border-color: #281e5d;
+            border-color:#c9c9c9;
             margin-top: 0.5em;
-            .close-section{
-              align-items: center;
-              margin: 1.5em 1em;
-              border: none;
-              background: white;
+            .remove-section{
+              display: flex;
+              justify-content: center;
+              .close-section{
+                align-items: center;
+                border: none;
+                background: white;
+              }
             }
           }
         }
@@ -79,12 +75,10 @@
           background-color: #cbc9c959;
           padding: 0;
           margin: 2em 0 0 0;
-          padding: 1em 0;
+          padding: 0.5em 0;
           display: flex !important;
           justify-content: end;
-          .btn-button {
-            border-radius: 25px !important;
-          }
+          
         }
       }
     }

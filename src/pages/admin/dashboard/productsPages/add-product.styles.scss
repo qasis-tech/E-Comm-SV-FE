@@ -29,30 +29,25 @@
               border:1px solid #bbb7b7;
               padding-bottom: 1em;
               border-radius: 10px;
-              .close-btn{
-                margin: 6px 0;
+              .remove-section{
+                display: flex;
+                justify-content: center;
+                .close-section{
+                  align-items: center;
+                  border: none;
+                  background: white;
+                }
               }
             }
-          }
-        }
-        .main-product-heading {
-          .product-heading {
-            background-color: #1976d2;
-            padding: 0.5em 1.5em;
-            border-radius: 10px 10px 1px 1px;
-            color: white;
           }
         }
         .submit-button {
           background-color: #cbc9c959;
           padding: 0;
-          margin: 2em 0 0 0;
-          padding: 1em 0;
+          margin: 0em 0 0 0;
+          padding: 0.5em 0;
           display: flex!important;
           justify-content: end;
-          .btn-button{
-            border-radius: 25px!important;
-          }
         }
       }
     }

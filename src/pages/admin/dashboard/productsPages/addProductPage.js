@@ -8,8 +8,6 @@ import { useState } from "react";
 import { URLS } from "../../../../config/urls.config";
 import { ErrorMessage } from "@hookform/error-message";
 
-import "./add-product.styles.scss";
-
 import {
   Autocomplete,
   Box,
@@ -22,6 +20,9 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+
+import "./add-product.styles.scss";
 
 const productaddSchema = yup
   .object()
@@ -200,8 +201,8 @@ const AddProduct = () => {
         >
           <div className="product-form-section col-md-8">
             <form onSubmit={handleSubmit((res) => handleProductAdd(res))}>
-              <div className="main-product-heading">
-                <h5 className="product-heading">Product</h5>
+              <div className="main-heading">
+                <h5 className="heading">Product</h5>
               </div>
               <div className="main-form-container">
                 <Grid container spacing={2}>
@@ -343,8 +344,12 @@ const AddProduct = () => {
                             {...register(`features.${index}.featureValue`)}
                           />
                         </Grid>
-                        <Grid item xs={1} className="close-btn">
-                          <CloseIcon />
+                        <Grid item xs={1} className="remove-section">
+                          {fields.length > 1 && (
+                            <button className="close-section">
+                              <HighlightOffIcon />
+                            </button>
+                          )}
                         </Grid>
                       </Grid>
                     );
@@ -412,7 +417,12 @@ const AddProduct = () => {
                 </Grid>
                 <Grid container spacing={2} marginTop={1}>
                   <Grid item xs={6}>
-                    <Button variant="contained" fullWidth component="label">
+                    <Button
+                      variant="contained"
+                      className="file-btn"
+                      fullWidth
+                      component="label"
+                    >
                       Upload Image
                       <input
                         {...register("productImageFile")}
@@ -431,7 +441,12 @@ const AddProduct = () => {
                     /> */}
                   </Grid>
                   <Grid item xs={6}>
-                    <Button variant="contained" fullWidth component="label">
+                    <Button
+                      variant="contained"
+                      className="file-btn"
+                      fullWidth
+                      component="label"
+                    >
                       Upload Video
                       <input
                         {...register("productVideoFile", {
@@ -459,7 +474,7 @@ const AddProduct = () => {
                     type="submit"
                     variant="contained"
                     color="primary"
-                    className="btn-button"
+                    className="submit-btn"
                   >
                     submit
                   </Button>

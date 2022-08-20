@@ -1,4 +1,5 @@
 @import "./variables.styles.scss";
+@import "./button.styles.scss";
 
 $primary: "#1976d2";
 $secondary: "#009688";
@@ -46,7 +47,11 @@ table {
 
 .await,
 .pending,
-.completed {
+.received,
+.shipped,
+.cancelled,
+.refund,
+.delivered {
   font-size: 13px;
   color: #fff;
   font-weight: 200;
@@ -55,6 +60,51 @@ table {
   text-transform: capitalize;
 }
 
-.pending {
+.delivered {
   background-color: green;
+}
+.cancelled{
+  background-color: red;
+}
+.await{
+  background-color: #0275d8;
+}
+.pending{
+  background-color: #e99804;
+}
+.shipped{
+  background-color: rgb(112, 64, 112);
+}
+.refund{
+  background-color: rgb(43, 23, 43);
+}
+.received{
+  background-color: rgb(10, 243, 10);
+}
+.main-heading {
+  background-color: $table-header;
+  padding: 5px 0;
+  border-radius: 10px 10px 1px 1px;
+  h5 {
+    padding: 0px 2em;
+    color: $white;
+    font-size: 18px !important;
+    margin-bottom: 0 !important;
+  }
+}
+
+.active,
+.inactive {
+  font-size: 13px;
+  color: #fff;
+  font-weight: 200;
+  padding: 5px 12px;
+  border-radius: 12px;
+  text-transform: capitalize;
+}
+.active {
+  background-color: $active-color;
+}
+.inactive {
+  background-color: $inactive-color;
 }

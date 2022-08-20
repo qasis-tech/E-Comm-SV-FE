@@ -20,3 +20,32 @@
   color: $edit-color !important;
   font-size: 18px;
 }
+
+.file-btn {
+  background-color: $table-header !important;
+  color: $white !important;
+}
+.submit-button {
+  background-color: #cbc9c959;
+  padding: 0;
+  margin: 0em 0 0 0;
+  padding: 0.5em 0;
+  display: flex!important;
+  justify-content: end;
+  .submit-btn {
+    border-radius: 25px !important;
+    background-color: $table-header !important;
+    color: $white !important;
+  }
+}
+.delete-section {
+  display: flex;
+  justify-content: end;
+  .delete-btn {
+    min-width: 0 !important;
+    padding: 0 !important;
+    .remove-icon {
+      color: red;
+    }
+  }
+}

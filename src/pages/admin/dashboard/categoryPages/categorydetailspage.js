@@ -17,8 +17,8 @@ import AddIcon from "@mui/icons-material/Add";
 import PopupAlert from "../../../../components/popupAlerts";
 import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
 import DeleteIcon from "@mui/icons-material/Delete";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
-import "./addCategoryPage.styles.scss";
 import "./addCategoryPage.styles.scss";
 
 function Categorydetails() {
@@ -161,14 +161,15 @@ function Categorydetails() {
                   <TextField
                     id="outlined-helperText"
                     fullWidth
-                    label="Name"
                     size="small"
-                    defaultValue="Categoryname"
+                    label="Name"
+                    // defaultValue="mainCategory"
                     error={errors?.mainCategory}
                     {...register("mainCategory", {
                       required: "This is required.",
                     })}
                   />
+
                   <div className="error">{errors?.mainCategory?.message}</div>
                 </Grid>
                 <Grid item xs={12} className="">
@@ -178,9 +179,9 @@ function Categorydetails() {
                         <div className="col-md-10">
                           <span>{getValues("categoryImageFile[0].name")}</span>
                         </div>
-                        <div className="col-md-2">
+                        <div className="col-md-2 delete-section">
                           <Button
-                            style={{ float: "right" }}
+                            className="delete-btn"
                             onClick={() => resetField("categoryImageFile")}
                           >
                             <DeleteIcon className="remove-icon" />
@@ -189,7 +190,12 @@ function Categorydetails() {
                       </div>
                     </>
                   ) : (
-                    <Button variant="contained" fullWidth component="label">
+                    <Button
+                      variant="contained"
+                      className="file-btn"
+                      fullWidth
+                      component="label"
+                    >
                       Upload Image
                       <input
                         {...register("categoryImageFile", {
@@ -262,9 +268,9 @@ function Categorydetails() {
                                     {getfileName(list?.imageFile[0]?.name)}
                                   </span>
                                 </div>
-                                <div className="col-md-2">
+                                <div className="col-md-2 delete-section">
                                   <Button
-                                    style={{ float: "right" }}
+                                    className="delete-btn"
                                     onClick={() => remove(index)}
                                   >
                                     <DeleteIcon className="remove-icon" />
@@ -276,7 +282,7 @@ function Categorydetails() {
                                 variant="contained"
                                 fullWidth
                                 component="label"
-                                className="mt-3"
+                                className="mt-3 file-btn"
                               >
                                 Upload Image
                                 <TextField
@@ -296,13 +302,13 @@ function Categorydetails() {
                             </div>
                           </Grid>
                         </Grid>
-                        <Grid item xs={1}>
+                        <Grid item xs={1} className="remove-section">
                           {fields.length > 1 && (
                             <button
                               onClick={() => remove(index)}
                               className="close-section"
                             >
-                              <DisabledByDefaultIcon />
+                              <HighlightOffIcon />
                             </button>
                           )}
                         </Grid>
@@ -321,7 +327,7 @@ function Categorydetails() {
                     type="submit"
                     variant="contained"
                     color="primary"
-                    className="btn-button"
+                    className="submit-btn"
                   >
                     submit
                   </Button>

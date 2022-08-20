@@ -163,60 +163,46 @@ const OrderList = () => {
         marginTop={2}
         className="order-shorthand-main-section"
       >
-        <Grid item xs={2}>
-          <Box
-            sx={{
-              width: 150,
-              backgroundColor: "primary.dark",
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <div className="col-md-4">
-              <ShoppingCartIcon className="order-cart-icon-section" />
-            </div>
+        <Grid item xs={3}>
+          <Box className="shorthand">
             <div className="col-md-8 order-shorthand-section">
-              <h3>Total Orders</h3>
-              <h3>{orderShortDetails?.totalorders}</h3>
+              <h3 className="head">Total Orders</h3>
+              <h3 className="order-number">{orderShortDetails?.totalorders}</h3>
+            </div>
+            <div className="col-md-4 icon-part">
+              <div className="cart-order-icon">
+                <ShoppingCartIcon className="order-cart-icon-section" />
+              </div>
             </div>
           </Box>
         </Grid>
-        <Grid item xs={4} className="order-out-stock">
-          <Box
-            sx={{
-              width: 300,
-              height: 125,
-              backgroundColor: "primary.dark",
-              display: "flex",
-            }}
-          >
-            <div className="col-md-4">
-              <ShoppingCartCheckoutIcon className="order-cart-icon-section" />
-            </div>
+        <Grid item xs={3}>
+          <Box className="shorthand">
             <div className="col-md-8 order-shorthand-section">
-              <h3>Order Pending</h3>
-              <h3>{orderShortDetails?.pendingOrders}</h3>
+              <h3 className="head">Orders Pending</h3>
+              <h3 className="order-number">
+                {orderShortDetails?.pendingOrders}
+              </h3>
+            </div>
+            <div className="col-md-4 icon-part">
+              <div className="cart-order-icon">
+                <ShoppingCartCheckoutIcon className="order-cart-icon-section" />
+              </div>
             </div>
           </Box>
         </Grid>
-        <Grid item xs={4}>
-          <Box
-            sx={{
-              width: 320,
-              height: 125,
-              backgroundColor: "primary.dark",
-              display: "flex",
-            }}
-          >
-            <div className="col-md-2">
-              <CheckIcon className="order-cart-icon-section" />
+        <Grid item xs={3}>
+          <Box className="shorthand">
+            <div className="col-md-8 order-shorthand-section">
+              <h3 className="head">Order Completed</h3>
+              <h3 className="order-number">
+                {orderShortDetails?.completedOrders}
+              </h3>
             </div>
-            <div
-              className="col-md-10 order-shorthand-section"
-              style={{ paddingLeft: "30px" }}
-            >
-              <h3>Order Completed</h3>
-              <h3>{orderShortDetails?.completedOrders}</h3>
+            <div className="col-md-4 icon-part">
+              <div className="cart-order-icon">
+                <CheckIcon className="order-cart-icon-section" />
+              </div>
             </div>
           </Box>
         </Grid>

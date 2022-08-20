@@ -16,8 +16,7 @@ import AddIcon from "@mui/icons-material/Add";
 import PopupAlert from "../../../../components/popupAlerts";
 import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
 import DeleteIcon from "@mui/icons-material/Delete";
-import CloseIcon from "@mui/icons-material/Close";
-
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import "./addCategoryPage.styles.scss";
 import "./addCategoryPage.styles.scss";
 
@@ -101,7 +100,7 @@ const AddCategory = () => {
                 <h5 className="heading">Category</h5>
               </div>
               <Grid container spacing={2} className="category-section">
-                <Grid item xs={6}>
+                <Grid item xs={12}>
                   <TextField
                     fullWidth
                     label="Name"
@@ -114,7 +113,6 @@ const AddCategory = () => {
                   />
                   <div className="error">{errors?.mainCategory?.message}</div>
                 </Grid>
-                <Grid item xs={12}></Grid>
                 <Grid item xs={12} className="">
                   {getValues("categoryImageFile") ? (
                     <>
@@ -122,9 +120,9 @@ const AddCategory = () => {
                         <div className="col-md-10">
                           <span>{getValues("categoryImageFile[0].name")}</span>
                         </div>
-                        <div className="col-md-2">
+                        <div className="col-md-2 delete-section">
                           <Button
-                            style={{ float: "right" }}
+                            className="delete-btn"
                             onClick={() => reset({ categoryImageFile: null })}
                           >
                             <DeleteIcon className="remove-icon" />
@@ -133,7 +131,12 @@ const AddCategory = () => {
                       </div>
                     </>
                   ) : (
-                    <Button variant="contained" fullWidth component="label">
+                    <Button
+                      variant="contained"
+                      className="file-btn"
+                      fullWidth
+                      component="label"
+                    >
                       Upload Image
                       <input
                         {...register("categoryImageFile", {
@@ -175,14 +178,14 @@ const AddCategory = () => {
                     return (
                       <Grid
                         key={list.id}
-                        item
-                        xs={12}
+                        container
+                        spacing={2}
                         className="subcategory-add-section"
                         sx={{
                           padding: "1em 0 ",
                         }}
                       >
-                        <Grid item xs={11}>
+                        <Grid item spacing={2} xs={11}>
                           <Grid item xs={12}>
                             <TextField
                               label="Name"
@@ -201,12 +204,12 @@ const AddCategory = () => {
                           <Grid item xs={12} className="image-remove-section">
                             {list?.imageFile?.length ? (
                               <>
-                                <div className="col-md-10">
+                                <div className="col-md-10 name-section">
                                   <span>{list?.imageFile[0]?.name}</span>
                                 </div>
-                                <div className="col-md-2">
+                                <div className="col-md-2 delete-section">
                                   <Button
-                                    style={{ float: "right" }}
+                                    className="delete-btn"
                                     onClick={() => remove(index)}
                                   >
                                     <DeleteIcon className="remove-icon" />
@@ -218,7 +221,7 @@ const AddCategory = () => {
                                 variant="contained"
                                 fullWidth
                                 component="label"
-                                className="mt-3"
+                                className="mt-3 file-btn"
                               >
                                 Upload Image
                                 <TextField
@@ -238,13 +241,13 @@ const AddCategory = () => {
                             </div>
                           </Grid>
                         </Grid>
-                        <Grid item xs={1}>
+                        <Grid item xs={1} className="remove-section">
                           {fields.length > 1 && (
                             <button
                               onClick={() => remove(index)}
                               className="close-section"
                             >
-                              <CloseIcon />
+                              <HighlightOffIcon />
                             </button>
                           )}
                         </Grid>
@@ -262,8 +265,7 @@ const AddCategory = () => {
                     fullWidth
                     type="submit"
                     variant="contained"
-                    color="primary"
-                    className="btn-button"
+                    className="submit-btn"
                   >
                     submit
                   </Button>

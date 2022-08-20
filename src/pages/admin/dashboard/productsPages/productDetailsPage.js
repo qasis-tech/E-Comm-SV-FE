@@ -65,8 +65,8 @@ const ProductDetails = () => {
         >
           <div className="product-details-form-section col-md-8">
             <form>
-              <div className="main-product-details-heading">
-                <h5 className="product-heading">Product Details</h5>
+              <div className="main-heading">
+                <h5 className="heading">Product Details</h5>
               </div>
               <div className="main-form-container">
                 <Grid container spacing={2}>
@@ -203,18 +203,13 @@ const ProductDetails = () => {
                         image={ProductImage}
                         alt="green iguana"
                       />
-                      {/* <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                          Lizard
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Lizards are a widespread group of squamate reptiles,
-                          with over 6,000 species, ranging across all continents
-                          except Antarctica
-                        </Typography>
-                      </CardContent> */}
                       <CardActions>
-                        <Button variant="contained" fullWidth component="label">
+                        <Button
+                          variant="contained"
+                          className="file-btn"
+                          fullWidth
+                          component="label"
+                        >
                           Upload Image
                           <input type="file" hidden />
                         </Button>
@@ -229,18 +224,13 @@ const ProductDetails = () => {
                         image={ProductImage}
                         alt="green iguana"
                       />
-                      {/* <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                          Lizard
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Lizards are a widespread group of squamate reptiles,
-                          with over 6,000 species, ranging across all continents
-                          except Antarctica
-                        </Typography>
-                      </CardContent> */}
                       <CardActions>
-                        <Button variant="contained" fullWidth component="label">
+                        <Button
+                          variant="contained"
+                          className="file-btn"
+                          fullWidth
+                          component="label"
+                        >
                           Upload Video
                           <input type="file" hidden />
                         </Button>
@@ -259,7 +249,7 @@ const ProductDetails = () => {
                     type="submit"
                     variant="contained"
                     color="primary"
-                    className="btn-button"
+                    className="submit-btn"
                   >
                     submit
                   </Button>

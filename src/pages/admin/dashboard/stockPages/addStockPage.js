@@ -61,8 +61,8 @@ const AddStock = () => {
         >
           <div className="stock-form-section col-md-8">
             <form onSubmit={handleSubmit(handleStockAddpage)}>
-              <div className="main-stock-heading">
-                <h5 className="stock-heading">Stock</h5>
+              <div className="main-heading">
+                <h5 className="heading">Stock</h5>
               </div>
               <div className="main-form-container">
                 <Grid container spacing={2}>
@@ -140,7 +140,7 @@ const AddStock = () => {
                     type="submit"
                     variant="contained"
                     color="primary"
-                    className="btn-button"
+                    className="submit-btn"
                   >
                     submit
                   </Button>

@@ -163,41 +163,31 @@ const StockList = () => {
         container
         spacing={2}
         marginTop={2}
-        className="shorthand-main-section"
+        className="stock-shorthand-main-section"
       >
-        <Grid item xs={4}>
-          <Box
-            sx={{
-              width: 300,
-              height: 125,
-              backgroundColor: "primary.dark",
-              display: "flex",
-            }}
-          >
-            <div className="col-md-4">
-              <ShoppingCartIcon className="cart-icon-section" />
+        <Grid item xs={3}>
+          <Box className="shorthand">
+            <div className="col-md-8 stock-shorthand-section">
+              <h3 className="head">In Stock</h3>
+              <h3 className="order-number">100</h3>
             </div>
-            <div className="col-md-8 shorthand-section">
-              <h3>In Stock</h3>
-              <h3>100</h3>
+            <div className="col-md-4 icon-part">
+              <div className="cart-order-icon">
+                <ShoppingCartIcon className="order-cart-icon-section" />
+              </div>
             </div>
           </Box>
         </Grid>
-        <Grid item xs={4} className="out-stock">
-          <Box
-            sx={{
-              width: 300,
-              height: 125,
-              backgroundColor: "primary.dark",
-              display: "flex",
-            }}
-          >
-            <div className="col-md-4">
-              <ShoppingCartCheckoutIcon className="cart-icon-section" />
+        <Grid item xs={3}>
+          <Box className="shorthand">
+            <div className="col-md-8 stock-shorthand-section">
+              <h3 className="head">Out Stock</h3>
+              <h3 className="order-number">100</h3>
             </div>
-            <div className="col-md-8 shorthand-section">
-              <h3>Out Stock</h3>
-              <h3>100</h3>
+            <div className="col-md-4 icon-part">
+              <div className="cart-order-icon">
+                <ShoppingCartCheckoutIcon className="order-cart-icon-section" />
+              </div>
             </div>
           </Box>
         </Grid>

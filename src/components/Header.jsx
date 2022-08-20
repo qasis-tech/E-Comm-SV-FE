@@ -16,7 +16,7 @@ import { styled, alpha } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
 import PersonIcon from "@mui/icons-material/Person";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from '@mui/icons-material/Menu';
+import MenuIcon from "@mui/icons-material/Menu";
 
 import "../styles/header.styles.scss";
 import { InputAdornment, MenuItem, TextField, Tooltip } from "@mui/material";
@@ -77,21 +77,21 @@ const HeaderComponent = () => {
         <div className="container">
           <div className="mobile-menu">
             <div>
-            <span className="navbar-brand" onClick={() => navigate("/")}>
-              Vegefoods
-            </span>
+              <span className="navbar-brand" onClick={() => navigate("/")}>
+                Vegefoods
+              </span>
             </div>
 
-           <div>
-           <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              className="menu-icon"
-            >
-              <MenuIcon />
-            </IconButton>
-           </div>
+            <div>
+              <IconButton
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                className="menu-icon"
+              >
+                <MenuIcon />
+              </IconButton>
+            </div>
             {/* <button
               className="navbar-toggler"
               type="button"

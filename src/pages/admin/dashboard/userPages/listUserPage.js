@@ -186,8 +186,8 @@ const UserList = () => {
                   <TableCell>{formatDate(useritem?.createdAt)}</TableCell>
                   <TableCell>{formatDate(useritem?.updatedAt)}</TableCell>
                   <TableCell>
-                    <Chip label="Active" color="success" />
-                    <Chip label="Inactive" color="error" />
+                    <span className="active">Active</span>
+                    <span className="inactive">Inactive</span>
                   </TableCell>
                   <TableCell>
                     <Button>

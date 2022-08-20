@@ -92,8 +92,8 @@ const AddUser = () => {
         >
           <div className="user-form-section col-md-8">
             <form onSubmit={handleSubmit(handleUserDetails)}>
-              <div className="main-user-heading">
-                <h5 className="user-heading">User</h5>
+              <div className="main-heading">
+                <h5 className="heading">User</h5>
               </div>
               <div className="main-form-container">
                 <Grid container spacing={2}>
@@ -263,7 +263,7 @@ const AddUser = () => {
                     type="submit"
                     variant="contained"
                     color="primary"
-                    className="btn-button"
+                    className="submit-btn"
                   >
                     submit
                   </Button>
