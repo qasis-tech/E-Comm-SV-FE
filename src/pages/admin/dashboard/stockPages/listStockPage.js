@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import NotDataAvailable from "../../../../components/NoDataAvailable";
 import { URLS } from "../../../../config/urls.config";
+import RouterList from "../../../../routes/routerList";
+import Loader from "../../../../components/Loader";
 
 import {
   Table,
@@ -36,8 +39,8 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import AddIcon from "@mui/icons-material/Add";
+import CloseIcon from "@mui/icons-material/Close";
 
-import RouterList from "../../../../routes/routerList";
 import { formatDate } from "../../../../utils/dateFormat";
 import "./list-stock.styles.scss";
 
@@ -91,8 +94,12 @@ const StockList = () => {
       </List>
     </Box>
   );
-  const [listData, setListdata] = React.useState([]);
+  const [listData, setListdata] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
+  const [stockShortDetails, setStockShortDetails] = React.useState(null);
 
+  const [count, setCount] = useState(0);
+  const [isLoading, setLoader] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const handleChangePage = (event, newPage) => setPage(newPage);
@@ -101,26 +108,59 @@ const StockList = () => {
     setPage(0);
   };
 
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
-  console.log("listdata", listData);
-  React.useEffect(() => {
+  useEffect(() => {
+    getStockListApi();
+  }, []);
+
+  useEffect(() => {
+    getStockListApi();
+  }, [page, rowsPerPage]);
+
+  useEffect(() => {
+    if (searchInput === "") {
+      getStockListApi();
+    }
+  }, [searchInput]);
+
+  const getStockListApi = () => {
+    console.log("jdjhdgja");
+    setLoader(true);
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
+
+    let URL =
+      searchInput !== ""
+        ? `${process.env.REACT_APP_BASE_URL}${
+            URLS.stock
+          }?search=${searchInput}&limit=${rowsPerPage}&skip=${
+            page * rowsPerPage
+          }`
+        : `${process.env.REACT_APP_BASE_URL}${
+            URLS.stock
+          }?limit=${rowsPerPage}&skip=${page * rowsPerPage}`;
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}${URLS.stock}`, {
+      .get(URL, {
         headers: {
           Authorization: `${token}`,
           "Content-Type": "application/json",
         },
       })
       .then((res) => {
+        setLoader(false);
         console.log("ress", res);
         setListdata(res.data.data.totalStock);
+        setCount(res.data.count);
+        setStockShortDetails(res.data.shorthanddetails);
       })
       .catch((err) => {
+        setLoader(false);
         console.log("error", err);
+        setListdata([]);
       });
-  }, []);
+  };
+
   const navigate = useNavigate();
+
   return (
     <Box className="list-stock">
       <Grid container spacing={2} className="stock-search">
@@ -129,10 +169,22 @@ const StockList = () => {
             label="Search"
             fullWidth
             size="small"
+            onChange={(e) => setSearchInput(e.target.value)}
+            value={searchInput}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton>
+                  <IconButton
+                    sx={{
+                      visibility: searchInput !== "" ? "visible" : "hidden",
+                    }}
+                    onClick={() => {
+                      setSearchInput("");
+                    }}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                  <IconButton onClick={() => getStockListApi()}>
                     <SearchIcon />
                   </IconButton>
                 </InputAdornment>
@@ -176,6 +228,10 @@ const StockList = () => {
                 <ShoppingCartIcon className="order-cart-icon-section" />
               </div>
             </div>
+            <div className="col-md-8 shorthand-section">
+              <h3>In Stock</h3>
+              <h3>{stockShortDetails?.inStock}</h3>
+            </div>
           </Box>
         </Grid>
         <Grid item xs={3}>
@@ -189,6 +245,10 @@ const StockList = () => {
                 <ShoppingCartCheckoutIcon className="order-cart-icon-section" />
               </div>
             </div>
+            <div className="col-md-8 shorthand-section">
+              <h3>Out Stock</h3>
+              <h3>{stockShortDetails?.outStock}</h3>
+            </div>
           </Box>
         </Grid>
       </Grid>
@@ -196,15 +256,7 @@ const StockList = () => {
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell
-                onClick={() =>
-                  navigate(
-                    `${RouterList.admin.admin}/${RouterList.admin.stockDetails}`
-                  )
-                }
-              >
-                Category
-              </TableCell>
+              <TableCell>Category</TableCell>
               <TableCell> Subcategory</TableCell>
               <TableCell> Name</TableCell>
               <TableCell>Quantity</TableCell>
@@ -214,50 +266,62 @@ const StockList = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {listData?.map((listitem) => {
-              return (
-                <TableRow
-                  hover
-                  className="stock-row-section"
-                  key={listitem._id}
-                  onClick={() =>
-                    navigate(
-                      `${RouterList.admin.admin}/${RouterList.admin.stockDetails}`
-                    )
-                  }
-                >
-                  <TableCell component="th" scope="row">
-                    {listitem.category}
-                  </TableCell>
-                  <TableCell>{listitem.subCategory}</TableCell>
-                  <TableCell>{listitem.product}</TableCell>
-                  <TableCell>{listitem.quantity}</TableCell>
-                  <TableCell>{formatDate(listitem?.createdAt)}</TableCell>
-                  <TableCell>{formatDate(listitem?.updatedAt)}</TableCell>
-                  <TableCell>
-                    <Button>
-                      <DeleteIcon className="delete-icon" />
-                    </Button>
-                    <Button>
-                      <CreateIcon className="edit-icon" />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
+            {isLoading ? (
+              <Loader />
+            ) : listData?.length ? (
+              listData?.map((listitem) => {
+                console.log("yfsas", listitem);
+                return (
+                  <TableRow
+                    hover
+                    className="stock-row-section"
+                    key={listitem._id}
+                  >
+                    <TableCell
+                      onClick={() =>
+                        navigate(
+                          `${RouterList.admin.admin}/${RouterList.admin.stockDetails}`
+                        )
+                      }
+                      component="th"
+                      scope="row"
+                    >
+                      {listitem.category}
+                    </TableCell>
+                    <TableCell>{listitem.subCategory}</TableCell>
+                    <TableCell>{listitem.product}</TableCell>
+                    <TableCell>{listitem.quantity}</TableCell>
+                    <TableCell>{formatDate(listitem?.createdAt)}</TableCell>
+                    <TableCell>{formatDate(listitem?.updatedAt)}</TableCell>
+                    <TableCell>
+                      <Button>
+                        <DeleteIcon className="delete-icon" />
+                      </Button>
+                      <Button>
+                        <CreateIcon className="edit-icon" />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                );
+              })
+            ) : (
+              <NotDataAvailable />
+            )}
           </TableBody>
         </Table>
       </TableContainer>
-      <div className="pagination-section">
-        <TablePagination
-          component="div"
-          count={20}
-          page={page}
-          onPageChange={handleChangePage}
-          rowsPerPage={rowsPerPage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </div>
+      {!isLoading && count > 10 ? (
+        <div className="pagination-section">
+          <TablePagination
+            component="div"
+            count={count}
+            page={page}
+            onPageChange={handleChangePage}
+            rowsPerPage={rowsPerPage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </div>
+      ) : null}
       <div style={{ position: "fixed", bottom: "2em", right: "1em" }}>
         <Fab
           color="primary"

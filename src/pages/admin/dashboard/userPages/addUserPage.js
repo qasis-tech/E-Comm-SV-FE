@@ -70,7 +70,7 @@ const AddUser = () => {
       password: userPassword,
     };
     axios
-      .post(`${process.env.REACT_APP_BASE_URL}${URLS.signup}`, payload, {
+      .post(`${process.env.REACT_APP_BASE_URL}${URLS.user}`, payload, {
         "Content-Type": "application/json",
       })
       .then((res) => {

@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { URLS } from "../../../../config/urls.config";
 import { useNavigate } from "react-router-dom";
+import NotDataAvailable from "../../../../components/NoDataAvailable";
 import axios from "axios";
+import RouterList from "../../../../routes/routerList";
+import Loader from "../../../../components/Loader";
 
 import {
   Table,
@@ -35,10 +38,11 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import AddIcon from "@mui/icons-material/Add";
+import CloseIcon from "@mui/icons-material/Close";
 
-import RouterList from "../../../../routes/routerList";
 import { formatDate } from "../../../../utils/dateFormat";
 import "./list-user.styles.scss";
+
 const UserList = () => {
   const [state, setState] = React.useState({
     right: false,
@@ -90,7 +94,10 @@ const UserList = () => {
     </Box>
   );
   const [userData, setUserData] = React.useState([]);
+  const [searchInput, setSearchInput] = useState("");
 
+  const [count, setCount] = useState(0);
+  const [isLoading, setLoader] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const handleChangePage = (event, newPage) => setPage(newPage);
@@ -98,20 +105,52 @@ const UserList = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  React.useEffect(() => {
+
+  useEffect(() => {
+    getUserListApi();
+  }, []);
+
+  useEffect(() => {
+    getUserListApi();
+  }, [page, rowsPerPage]);
+
+  useEffect(() => {
+    if (searchInput === "") {
+      getUserListApi();
+    }
+  }, [searchInput]);
+
+  const getUserListApi = () => {
+    console.log("api");
+    setLoader(true);
+    let URL =
+      searchInput !== ""
+        ? `${process.env.REACT_APP_BASE_URL}${
+            URLS.user
+          }?search=${searchInput}&limit=${rowsPerPage}&skip=${
+            page * rowsPerPage
+          }`
+        : `${process.env.REACT_APP_BASE_URL}${
+            URLS.user
+          }?limit=${rowsPerPage}&skip=${page * rowsPerPage}`;
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}${URLS.signup}`, {
+      .get(URL, {
         "Content-Type": "application/json",
       })
       .then((res) => {
+        setLoader(false);
         console.log("ressss=>", res);
         setUserData(res.data.data);
+        setCount(res.data.count);
       })
       .catch((err) => {
+        setLoader(false);
         console.log("error", err);
+        setUserData([]);
       });
-  }, []);
+  };
   const navigate = useNavigate();
+
   return (
     <Box className="list-user">
       <Grid container spacing={2} className="user-search">
@@ -120,10 +159,22 @@ const UserList = () => {
             label="Search"
             fullWidth
             size="small"
+            onChange={(e) => setSearchInput(e.target.value)}
+            value={searchInput}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton>
+                  <IconButton
+                    sx={{
+                      visibility: searchInput !== "" ? "visible" : "hidden",
+                    }}
+                    onClick={() => {
+                      setSearchInput("");
+                    }}
+                  >
+                    <CloseIcon />
+                  </IconButton>
+                  <IconButton onClick={() => getUserListApi()}>
                     <SearchIcon />
                   </IconButton>
                 </InputAdornment>
@@ -200,24 +251,72 @@ const UserList = () => {
                 </TableRow>
               );
             })}
+            {isLoading ? (
+              <Loader />
+            ) : userData?.length ? (
+              userData.map((useritem) => {
+                return (
+                  <TableRow
+                    hover
+                    key={useritem._id}
+                    className="user-row-section"
+                  >
+                    <TableCell
+                      onClick={() =>
+                        navigate(`/admin/users-details/${useritem._id}`)
+                      }
+                      component="th"
+                      scope="row"
+                    >
+                      {useritem.firstName + " " + useritem.lastName}
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      {useritem.email}
+                    </TableCell>
+                    <TableCell>{useritem.mobileNumber}</TableCell>
+                    <TableCell>{useritem.location}</TableCell>
+                    <TableCell>{formatDate(useritem?.createdAt)}</TableCell>
+                    <TableCell>{formatDate(useritem?.updatedAt)}</TableCell>
+                    <TableCell>
+                      <Chip label="Active" color="success" />
+                      <Chip label="Inactive" color="error" />
+                    </TableCell>
+                    <TableCell>
+                      <Button>
+                        <DeleteIcon className="delete-icon" />
+                      </Button>
+                      <Button>
+                        <CreateIcon className="edit-icon" />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                );
+              })
+            ) : (
+              <NotDataAvailable />
+            )}
           </TableBody>
         </Table>
       </TableContainer>
-      <div className="pagination-section">
-        <TablePagination
-          component="div"
-          count={20}
-          page={page}
-          onPageChange={handleChangePage}
-          rowsPerPage={rowsPerPage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </div>
+      {!isLoading && count > 10 ? (
+        <div className="pagination-section">
+          <TablePagination
+            component="div"
+            count={count}
+            page={page}
+            onPageChange={handleChangePage}
+            rowsPerPage={rowsPerPage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </div>
+      ) : null}
       <div style={{ position: "fixed", bottom: "2em", right: "1em" }}>
         <Fab
           color="primary"
           aria-label="add"
-          onClick={() => navigate("/admin/add-user")}
+          onClick={() =>
+            navigate(`${RouterList.admin.admin}/${RouterList.admin.addUser}`)
+          }
         >
           <AddIcon />
         </Fab>
