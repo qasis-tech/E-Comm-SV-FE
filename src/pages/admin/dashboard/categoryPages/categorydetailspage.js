@@ -259,6 +259,10 @@ function Categorydetails() {
                               <>
                                 <div className="col-md-10">
                                   <span>
+                                    {/* <img
+                                      src={list?.imageFile[0]?.name}
+                                      alt="sub Cat images"
+                                    /> */}
                                     {getfileName(list?.imageFile[0]?.name)}
                                   </span>
                                 </div>

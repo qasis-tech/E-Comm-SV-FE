@@ -163,13 +163,13 @@ const OrderList = () => {
         marginTop={2}
         className="order-shorthand-main-section"
       >
-        <Grid item xs={4}>
+        <Grid item xs={2}>
           <Box
             sx={{
-              width: 300,
-              height: 125,
+              width: 150,
               backgroundColor: "primary.dark",
               display: "flex",
+              flexDirection: "column",
             }}
           >
             <div className="col-md-4">
@@ -245,7 +245,7 @@ const OrderList = () => {
                       }
                     >
                       <TableCell component="th" scope="row">
-                        {orderItem?.orderId}
+                        #{orderItem?.orderId}
                       </TableCell>
                       <TableCell
                         sx={{ maxWidth: 350 }}
@@ -272,7 +272,15 @@ const OrderList = () => {
                           })}
                       </TableCell>
                       <TableCell>{orderItem.user.mobileNumber}</TableCell>
-                      <TableCell>{orderItem.status}</TableCell>
+                      <TableCell>
+                        <span
+                          className={
+                            orderItem.status === "pending" ? "pending" : ""
+                          }
+                        >
+                          {orderItem.status}
+                        </span>
+                      </TableCell>
                     </TableRow>
                   );
                 })

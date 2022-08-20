@@ -15,6 +15,7 @@ import {
   ListItemText,
   Divider,
   TablePagination,
+  Typography,
 } from "@mui/material";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
@@ -53,16 +54,19 @@ const ListSubCat = ({ item }) => {
       {item?.subCategory?.length ? (
         item?.subCategory?.map((e, index) => {
           return (
-            <span
+            <Typography
+              variant="span"
               key={index}
               className="border px-2 py-1 m-1 rounded shadow-sm text-center"
             >
               {e.label}
-            </span>
+            </Typography>
           );
         })
       ) : (
-        <sapn>No sub categories</sapn>
+        <Typography variant="span" className="noData">
+          No sub categories
+        </Typography>
       )}
     </div>
   );
@@ -135,20 +139,20 @@ const ListCategory = () => {
   };
 
   useEffect(() => {
-    handleSubmitApi();
+    getCategoryListApi();
   }, []);
 
   useEffect(() => {
-    handleSubmitApi();
+    getCategoryListApi();
   }, [page, rowsPerPage]);
 
   useEffect(() => {
     if (searchInput === "") {
-      handleSubmitApi();
+      getCategoryListApi();
     }
   }, [searchInput]);
 
-  const handleSubmitApi = () => {
+  const getCategoryListApi = () => {
     setLoader(true);
     const token =
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
@@ -206,7 +210,7 @@ const ListCategory = () => {
                   >
                     <CloseIcon />
                   </IconButton>
-                  <IconButton onClick={() => handleSubmitApi()}>
+                  <IconButton onClick={() => getCategoryListApi()}>
                     <SearchIcon />
                   </IconButton>
                 </InputAdornment>
