@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { styled, alpha } from "@mui/material/styles";
+
 import Menu from "@mui/material/Menu";
 import Avatar from "@mui/material/Avatar";
-
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
@@ -10,9 +12,6 @@ import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-
-import { styled, alpha } from "@mui/material/styles";
-
 import SearchIcon from "@mui/icons-material/Search";
 import PersonIcon from "@mui/icons-material/Person";
 import IconButton from "@mui/material/IconButton";
@@ -41,6 +40,78 @@ const HeaderComponent = () => {
 
   const navigate = useNavigate();
 
+  // function NavBar() {
+  //   const [click, setClick] = React.useState(false);
+
+  //   const handleClick = () => setClick(!click);
+  //   const Close = () => setClick(false);
+
+  //   return (
+  //     <div className="responsive-menu">
+  //      <div className={click ? "main-container" : ""}  onClick={()=>Close()} />
+  //       <nav className="navbar" onClick={e => e.stopPropagation()}>
+  //         <div className="nav-container">
+  //           <ul className={click ? "nav-menu active" : "nav-menu"}>
+  //             <li className="nav-item">
+  //               <NavLink
+  //                 exact
+  //                 to="/"
+  //                 activeClassName="active"
+  //                 className="nav-links"
+  //               >
+  //                 Home
+  //               </NavLink>
+  //             </li>
+  //             <li className="nav-item">
+  //               <NavLink
+  //                 exact
+  //                 to="/about"
+  //                 activeClassName="active"
+  //                 className="nav-links"
+  //               >
+  //                 About
+  //               </NavLink>
+  //             </li>
+  //             <li className="nav-item">
+  //               <NavLink
+  //                 exact
+  //                 to="/blog"
+  //                 activeClassName="active"
+  //                 className="nav-links"
+  //               >
+  //                 Blog
+  //               </NavLink>
+  //             </li>
+  //             <li className="nav-item">
+  //               <NavLink
+  //                 exact
+  //                 to="/contact"
+  //                 activeClassName="active"
+  //                 className="nav-links"
+  //               >
+  //                 Contact Us
+  //               </NavLink>
+  //             </li>
+  //           </ul>
+  //           <div className="nav-icon" onClick={handleClick}>
+  //               <IconButton
+  //                 edge="start"
+  //                 color="inherit"
+  //                 aria-label="menu"
+  //                 className={click ? "fa fa-times" : "menu-icon"}
+  //               >
+  //                 <MenuIcon />
+  //               </IconButton>
+  //             </div>
+  //         </div>
+  //       </nav>
+  //     </ div>
+  //   );
+  // }
+
+  const [click, setClick] = React.useState(false);
+
+  const Close = () => setClick(false);
   return (
     <div className="header-container">
       <div className="py-1 top-section">
@@ -70,7 +141,11 @@ const HeaderComponent = () => {
           </div>
         </div>
       </div>
+      {/* <NavBar/> */}
+      <div className={click ? "main-container" : ""} onClick={() => Close()} />
+
       <nav
+        onClick={(e) => e.stopPropagation()}
         className="navbar navbar-expand-lg navbar-dark ftco_navbar  ftco-navbar-light"
         id="ftco-navbar"
       >
@@ -81,10 +156,8 @@ const HeaderComponent = () => {
                 Vegefoods
               </span>
             </div>
-
-            <div>
+            <div className="nav-icon">
               <IconButton
-                edge="start"
                 color="inherit"
                 aria-label="menu"
                 className="menu-icon"
@@ -92,22 +165,12 @@ const HeaderComponent = () => {
                 <MenuIcon />
               </IconButton>
             </div>
-            {/* <button
-              className="navbar-toggler"
-              type="button"
-              data-toggle="collapse"
-              data-target="#ftco-nav"
-              aria-controls="ftco-nav"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span className="oi oi-menu"></span> Menu
-            </button> */}
           </div>
           <TextField
             label="Search"
             size="small"
             variant="outlined"
+            className="search-section"
             fullWidth
             style={{ margin: "0 2em" }}
             InputProps={{
@@ -125,15 +188,107 @@ const HeaderComponent = () => {
             className="collapse navbar-collapse d-flex justify-content-end"
             id="ftco-nav"
           >
-            <ul className="navbar-nav ml-auto">
-              <li className="nav-item active">
+            <ul className="navbar-nav ml-auto menu">
+              <li className="nav-item ">
                 <a onClick={() => navigate("/")} className="nav-link">
                   Home
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link"> menus</a>
+                <a className="nav-link" href="">
+                  Products
+                </a>
+                <ul className="menu-gold">
+                  <li>
+                    <a href="">Category-1aaaaaaaaaaaaaaaaaaaaaa</a>
+                    <ul>
+                      <li>
+                        <a href="">
+                          <i class="fas fa-user"></i> Karim Khan
+                        </a>
+                      </li>
+                      <li>
+                        <a href="">
+                          <i class="fas fa-user-tie"></i> Rahim Khan
+                        </a>
+                        <ul>
+                          <li>
+                            <a href="">
+                              <i class="fas fa-user"></i> PHP
+                            </a>
+                          </li>
+                          <li>
+                            <a href="">
+                              <i class="fas fa-user-tie"></i> Mysql
+                            </a>
+                          </li>
+                          <li>
+                            <a href="">
+                              <i class="fas fa-user-ninja"></i> Node.js
+                            </a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <a href="">
+                          <i class="fas fa-user-ninja"></i> Mahesh Jagadappa
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <a href="">category-2</a>
+
+                  </li>
+                  <li>
+                    <a href="">Category-3</a>
+                  </li>
+                  <li>
+                    <a href="">Category-4</a>
+                    <ul>
+                      <li>
+                        <a href="">
+                          <i class="fas fa-user"></i> Karim Khan
+                        </a>
+                      </li>
+                      <li>
+                        <a href="">
+                          <i class="fas fa-user-tie"></i> Rahim Khan
+                        </a>
+                        <ul>
+                          <li>
+                            <a href="">
+                              <i class="fas fa-user"></i> PHP
+                            </a>
+                          </li>
+                          <li>
+                            <a href="">
+                              <i class="fas fa-user-tie"></i> Mysql
+                            </a>
+                          </li>
+                          <li>
+                            <a href="">
+                              <i class="fas fa-user-ninja"></i> Node.js
+                            </a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <a href="">
+                          <i class="fas fa-user-ninja"></i> Mahesh Jagadappa
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <a href="">Category-5</a>
+                  </li>
+                </ul>
               </li>
+
+              {/* <li className="nav-item menu">
+                <a className="nav-link"> menus</a>
+              </li> */}
               <li className="nav-item">
                 <a className="nav-link" onClick={() => navigate("/about")}>
                   About

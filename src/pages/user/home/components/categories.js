@@ -1,9 +1,11 @@
 import React from "react";
 import Category1 from "../../../../assets/category-1.jpg";
 
+import "../home.styles.scss";
+
 const CategoriesComponent = () => {
   return (
-    <section className="ftco-section ftco-category pt-5 pb-5 mt-5">
+    <section className="ftco-section ftco-category">
       <div className="container">
         <div className="row justify-content-center mb-3 pb-3">
           <div className="col-md-12 heading-section text-center ftco-animate">
