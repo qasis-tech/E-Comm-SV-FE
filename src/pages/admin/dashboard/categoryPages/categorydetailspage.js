@@ -2,7 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm, useFieldArray, Controller, useWatch } from "react-hook-form";
+import {
+  useForm,
+  useFieldArray,
+  Controller,
+  useWatch,
+  set,
+} from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { useReactiveVar } from "@apollo/client";
 import { useParams } from "react-router-dom";
@@ -15,7 +21,6 @@ import { Box, Grid, Button, TextField } from "@mui/material";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import PopupAlert from "../../../../components/popupAlerts";
-import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
 import DeleteIcon from "@mui/icons-material/Delete";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
@@ -58,10 +63,23 @@ function Categorydetails() {
 
   const { id } = useParams();
   const [categoryDetailData, setCategoryDetail] = React.useState([]);
+  const [popup, setPopup] = useState({ status: false, message: "" });
 
-  React.useEffect(() => {
+  useEffect(() => {
     getCategoryDetailsApi();
   }, []);
+
+  useEffect(() => {
+    if (popup.status) {
+      setTimeout(() => {
+        setPopup({ status: false, message: "" });
+      }, 3600);
+    }
+    // return () => {
+    //   setPopup({ status: false, message: "" });
+    // };
+  }, [popup.status]);
+
   const token =
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
 
@@ -72,28 +90,18 @@ function Categorydetails() {
       })
       .then((res) => {
         console.log("category get api==>>>", res);
-        console.log("category get api==>>>", res.data.data.subCategory);
         setCategoryDetail(res.data.data);
-        setValue("mainCategory", res.data.data.label);
-        setValue("categoryImageFile", res.data.data.image);
-
-        const subCatArr = [];
-        console.log("subcategory array==>>>", res.data.data.subCategory);
-
-        res.data.data.subCategory.forEach((data) => {
-          subCatArr.push({
+        const subCatArr = res.data.data.subCategory.map((data) => {
+          return {
             subCategoryName: data.label,
             imageFile: [{ name: data.subCategoryImage }],
-          });
+          };
         });
-
-        console.log("subCatArr === ", subCatArr);
-
+        setValue("categoryImageFile", res.data.data.image);
         setValue("subcategory", subCatArr);
       })
-
       .catch((err) => {
-        console.log("err in Category LIst", err);
+        console.error("err in get Category List", err);
       });
   };
 
@@ -107,42 +115,42 @@ function Categorydetails() {
     for (const values of subcategory) {
       formData.append(`${values.subCategoryName}`, values.imageFile[0]);
     }
-
-    // setTimeout(() => {
-    //   console.log("Payload", formData);
-    // }, 1000);
-
     const token =
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
+    setPopup({ status: true, message: "Updated successfully" });
 
-    axios
-      .put(
-        `${process.env.REACT_APP_BASE_URL}${URLS.category}/${id}`,
-        formData,
-        {
-          headers: {
-            Authorization: `${token}`,
-            "content-type": "multipart/form-data",
-          },
-        }
-      )
-      .then((res) => {
-        console.log("putapi category==>>", res);
-        if (res.data.data) {
-          navigate(
-            `${RouterList.admin.admin}/${RouterList.admin.categoryList}`
-          );
-        }
-      })
-      .catch((err) => {
-        console.log("Error in Category Add", err);
-      });
+    // popupVar({
+    //   message: "Testing 001",
+    //   show: true,
+    // });
+
+    // axios
+    //   .put(
+    //     `${process.env.REACT_APP_BASE_URL}${URLS.category}/${id}`,
+    //     formData,
+    //     {
+    //       headers: {
+    //         Authorization: `${token}`,
+    //         "content-type": "multipart/form-data",
+    //       },
+    //     }
+    //   )
+    //   .then((res) => {
+    //     console.log("putapi category==>>", res);
+    //     if (res.data.data) {
+    //       navigate(
+    //         `${RouterList.admin.admin}/${RouterList.admin.categoryList}`
+    //       );
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log("Error in Category Add", err);
+    //   });
   };
 
   const getfileName = (name) => {
-    let aa = name.split("/");
-    console.log("aa");
-    return aa[aa.length - 1];
+    let fileName = name.split("/");
+    return fileName[fileName.length - 1];
   };
 
   return (
@@ -163,7 +171,7 @@ function Categorydetails() {
                     fullWidth
                     size="small"
                     label="Name"
-                    // defaultValue="mainCategory"
+                    values={getValues("mainCategory")}
                     error={errors?.mainCategory}
                     {...register("mainCategory", {
                       required: "This is required.",
@@ -172,12 +180,15 @@ function Categorydetails() {
 
                   <div className="error">{errors?.mainCategory?.message}</div>
                 </Grid>
+
                 <Grid item xs={12} className="">
                   {getValues("categoryImageFile") ? (
                     <>
                       <div className="image-remove-section">
                         <div className="col-md-10">
-                          <span>{getValues("categoryImageFile[0].name")}</span>
+                          <span>
+                            {getfileName(getValues("categoryImageFile"))}
+                          </span>
                         </div>
                         <div className="col-md-2 delete-section">
                           <Button
@@ -247,7 +258,7 @@ function Categorydetails() {
                         <Grid item xs={11}>
                           <Grid item xs={12}>
                             <TextField
-                              label="Name"
+                              label="Subcategory"
                               variant="outlined"
                               fullWidth
                               size="small"
@@ -317,6 +328,7 @@ function Categorydetails() {
                   })}
                 </Grid>
               </Grid>
+              {popup.status.toString()}
               <div className="row submit-button">
                 <Grid item xs={2}>
                   <Button onClick={() => navigate(-1)}>Cancel</Button>
@@ -329,7 +341,7 @@ function Categorydetails() {
                     color="primary"
                     className="submit-btn"
                   >
-                    submit
+                    Update
                   </Button>
                 </Grid>
               </div>
@@ -337,7 +349,10 @@ function Categorydetails() {
           </div>
         </Grid>
       </Box>
-      {/* <PopupAlert show={true} message="Testing" /> */}
+
+      {popup.status && (
+        <PopupAlert show={popup.status} message={popup.message} />
+      )}
     </div>
   );
 }

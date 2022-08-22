@@ -113,6 +113,7 @@ const AddCategory = () => {
                   />
                   <div className="error">{errors?.mainCategory?.message}</div>
                 </Grid>
+
                 <Grid item xs={12} className="">
                   {getValues("categoryImageFile") ? (
                     <>

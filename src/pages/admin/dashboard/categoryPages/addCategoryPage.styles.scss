@@ -19,15 +19,15 @@
           .image-remove-section {
             display: flex;
             justify-content: space-between;
-            .delete-section{
+            .delete-section {
               display: flex;
               justify-content: end;
-              
             }
           }
         }
         hr {
-          border-style: dashed;
+          // border: 0.5px solid #bebebe;
+          color: #ccc;
           opacity: 1.25;
         }
         .subcategory-section {
@@ -47,7 +47,7 @@
           .image-remove-section {
             display: flex;
             justify-content: space-between;
-            div{
+            div {
               margin-top: 10px;
             }
           }
@@ -58,12 +58,12 @@
             border-radius: 10px;
             /* box-shadow: 10px 10px 10px; */
             border-color: lilac;
-            border-color:#c9c9c9;
+            border-color: #c9c9c9;
             margin-top: 0.5em;
-            .remove-section{
+            .remove-section {
               display: flex;
               justify-content: center;
-              .close-section{
+              .close-section {
                 align-items: center;
                 border: none;
                 background: white;
@@ -78,7 +78,6 @@
           padding: 0.5em 0;
           display: flex !important;
           justify-content: end;
-          
         }
       }
     }

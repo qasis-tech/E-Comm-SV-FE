@@ -63,22 +63,22 @@ table {
 .delivered {
   background-color: green;
 }
-.cancelled{
+.cancelled {
   background-color: red;
 }
-.await{
+.await {
   background-color: #0275d8;
 }
-.pending{
+.pending {
   background-color: #e99804;
 }
-.shipped{
+.shipped {
   background-color: rgb(112, 64, 112);
 }
-.refund{
+.refund {
   background-color: rgb(43, 23, 43);
 }
-.received{
+.received {
   background-color: rgb(10, 243, 10);
 }
 .main-heading {
@@ -86,10 +86,11 @@ table {
   padding: 5px 0;
   border-radius: 10px 10px 1px 1px;
   h5 {
-    padding: 0px 2em;
+    padding: 1em 1.5em;
     color: $white;
     font-size: 18px !important;
     margin-bottom: 0 !important;
+    text-transform: uppercase;
   }
 }
 

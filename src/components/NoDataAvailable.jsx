@@ -12,9 +12,7 @@ const NoDataAvailable = () => {
           <div className="empty-state__icon">
             <img src={BackgroundImage} alt="background image" />
           </div>
-          <div className="empty-state__message">
-            No records has been added yet.
-          </div>
+          <div className="empty-state__message">No Data Available.</div>
         </div>
       </div>
     </div>

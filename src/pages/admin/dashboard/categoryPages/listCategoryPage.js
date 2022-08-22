@@ -237,21 +237,21 @@ const ListCategory = () => {
           </div>
         </Grid>
       </Grid>
-      <TableContainer className="table-wrapper" component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell className="table-heading">Category</TableCell>
-              <TableCell className="table-heading"> Subcategory</TableCell>
-              <TableCell className="table-heading">Created Date</TableCell>
-              <TableCell className="table-heading">Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {isLoading ? (
-              <Loader />
-            ) : categoryList?.length ? (
-              categoryList?.map((item, index) => {
+      {isLoading ? (
+        <Loader />
+      ) : categoryList?.length ? (
+        <TableContainer className="table-wrapper" component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell className="table-heading">Category</TableCell>
+                <TableCell className="table-heading"> Subcategory</TableCell>
+                <TableCell className="table-heading">Created Date</TableCell>
+                <TableCell className="table-heading">Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {categoryList?.map((item, index) => {
                 return (
                   <TableRow hover className="row-section" key={item?._id}>
                     <TableCell
@@ -279,13 +279,13 @@ const ListCategory = () => {
                     </TableCell>
                   </TableRow>
                 );
-              })
-            ) : (
-              <NotDataAvailable />
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      ) : (
+        <NotDataAvailable />
+      )}
       {!isLoading && count > 10 ? (
         <div className="pagination-section">
           <TablePagination
