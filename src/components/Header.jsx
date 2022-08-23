@@ -17,10 +17,10 @@ import PersonIcon from "@mui/icons-material/Person";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import NavDropdown from "react-bootstrap/NavDropdown";
 
 import "../styles/header.styles.scss";
 import { InputAdornment, MenuItem, TextField, Tooltip } from "@mui/material";
@@ -113,14 +113,18 @@ const HeaderComponent = () => {
   //     </ div>
   //   );
   // }
+  function getWindowDimensions() {
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+      width,
+      height,
+    };
+  }
 
-  const [click, setClick] = React.useState(false);
+  const [navbarVisible, setNavbarVisible] = React.useState(false);
 
-  const Close = () => setClick(false);
   return (
-    
     <div className="header-container">
-      
       <div className="py-1 top-section">
         <div className="container">
           <div className="row no-gutters d-flex align-items-start align-items-center px-md-0">
@@ -165,10 +169,10 @@ const HeaderComponent = () => {
               className="navbar-toggler"
               data-bs-toggle="collapse"
               data-bs-target="#navbarCollapse"
+              onClick={() => setNavbarVisible(!navbarVisible)}
             >
               <MenuIcon style={{ color: "black" }} />
             </button>
-         
           </div>
           <TextField
             label="Search"
@@ -191,7 +195,15 @@ const HeaderComponent = () => {
             className="collapse navbar-collapse d-flex justify-content-end"
             id="navbarCollapse"
           >
-            <ul className="navbar-nav ml-auto menu">
+            <ul
+              className={
+                getWindowDimensions()?.width <= 960
+                  ? navbarVisible
+                    ? "navbar-nav-show 1 ml-auto"
+                    : "navbar-nav ml-auto"
+                  : "navbar-nav ml-auto menu"
+              }
+            >
               <li className="nav-item ">
                 <a onClick={() => navigate("/")} className="nav-link">
                   Home
@@ -264,7 +276,6 @@ const HeaderComponent = () => {
                 </ul>
               </li>
 
-             
               <li className="nav-item">
                 <a className="nav-link" onClick={() => navigate("/about")}>
                   About
@@ -356,7 +367,6 @@ const HeaderComponent = () => {
           </div>
         </div>
       </nav>
-      
     </div>
   );
 };
