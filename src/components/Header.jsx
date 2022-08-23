@@ -16,6 +16,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import PersonIcon from "@mui/icons-material/Person";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import PhoneIcon from '@mui/icons-material/Phone';
+import SendIcon from '@mui/icons-material/Send';
 
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -45,74 +49,6 @@ const HeaderComponent = () => {
 
   const navigate = useNavigate();
 
-  // function NavBar() {
-  //   const [click, setClick] = React.useState(false);
-
-  //   const handleClick = () => setClick(!click);
-  //   const Close = () => setClick(false);
-
-  //   return (
-  //     <div className="responsive-menu">
-  //      <div className={click ? "main-container" : ""}  onClick={()=>Close()} />
-  //       <nav className="navbar" onClick={e => e.stopPropagation()}>
-  //         <div className="nav-container">
-  //           <ul className={click ? "nav-menu active" : "nav-menu"}>
-  //             <li className="nav-item">
-  //               <NavLink
-  //                 exact
-  //                 to="/"
-  //                 activeClassName="active"
-  //                 className="nav-links"
-  //               >
-  //                 Home
-  //               </NavLink>
-  //             </li>
-  //             <li className="nav-item">
-  //               <NavLink
-  //                 exact
-  //                 to="/about"
-  //                 activeClassName="active"
-  //                 className="nav-links"
-  //               >
-  //                 About
-  //               </NavLink>
-  //             </li>
-  //             <li className="nav-item">
-  //               <NavLink
-  //                 exact
-  //                 to="/blog"
-  //                 activeClassName="active"
-  //                 className="nav-links"
-  //               >
-  //                 Blog
-  //               </NavLink>
-  //             </li>
-  //             <li className="nav-item">
-  //               <NavLink
-  //                 exact
-  //                 to="/contact"
-  //                 activeClassName="active"
-  //                 className="nav-links"
-  //               >
-  //                 Contact Us
-  //               </NavLink>
-  //             </li>
-  //           </ul>
-  //           <div className="nav-icon" onClick={handleClick}>
-  //               <IconButton
-  //                 edge="start"
-  //                 color="inherit"
-  //                 aria-label="menu"
-  //                 className={click ? "fa fa-times" : "menu-icon"}
-  //               >
-  //                 <MenuIcon />
-  //               </IconButton>
-  //             </div>
-  //         </div>
-  //       </nav>
-  //     </ div>
-  //   );
-  // }
   function getWindowDimensions() {
     const { innerWidth: width, innerHeight: height } = window;
     return {
@@ -132,13 +68,13 @@ const HeaderComponent = () => {
               <div className="row d-flex">
                 <div className="col-md pr-4 d-flex topper align-items-center">
                   <div className="icon mr-2 d-flex justify-content-center align-items-center">
-                    <i className="fa fa-phone" aria-hidden="true"></i>
+                    <PhoneIcon className="icons"/>
                   </div>
                   <span className="text">+ 1235 2355 98</span>
                 </div>
                 <div className="col-md pr-4 d-flex topper align-items-center header-email">
                   <div className="icon mr-2 d-flex justify-content-center align-items-center">
-                    <i className="fa fa-paper-plane-o"></i>
+                 <SendIcon  className="icons"/>
                   </div>
                   <span className="text">youremail@email.com</span>
                 </div>
@@ -210,18 +146,18 @@ const HeaderComponent = () => {
                 </a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="">
-                  Products
+                <a className="nav-link  d-flex" href="">
+                  Products<KeyboardArrowDownIcon style={{fontSize:"1rem"}}/>
                 </a>
                 <ul className="menu-gold">
                   <li>
-                    <a href="">Category-1aaaaaaaa</a>
+                    <a href="" className="d-flex justify-content-between">Category-1aaaaaaaa<KeyboardArrowRightIcon  style={{fontSize:"1rem"}}/></a>
                     <ul>
                       <li>
                         <a href="">Karim Khan</a>
                       </li>
                       <li>
-                        <a href="">Rahim Khan</a>
+                        <a href=""className="d-flex justify-content-between">Rahim Khan<KeyboardArrowRightIcon  style={{fontSize:"1rem"}}/></a>
                         <ul>
                           <li>
                             <a href="">PHP</a>
@@ -246,13 +182,13 @@ const HeaderComponent = () => {
                     <a href="">Category-3</a>
                   </li>
                   <li>
-                    <a href="">Category-4</a>
+                  <a href="" className="d-flex justify-content-between">Category-4<KeyboardArrowRightIcon  style={{fontSize:"1rem"}}/></a>
                     <ul>
                       <li>
                         <a href="">Karim Khan</a>
                       </li>
                       <li>
-                        <a href="">Rahim Khan</a>
+                      <a href=""className="d-flex justify-content-between">Rahim Khan<KeyboardArrowRightIcon  style={{fontSize:"1rem"}}/></a>
                         <ul>
                           <li>
                             <a href="">PHP</a>

@@ -28,7 +28,7 @@ export default function Payment() {
           </div>
         </div>
       </div>
-      <section className="ftco-section mt-5 mb-5">
+      <section className="ftco-section patyment-section mt-5 mb-5">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-xl-7">

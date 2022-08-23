@@ -39,6 +39,7 @@ import AboutUs from "../pages/user/about";
 import ContactUs from "../pages/user/contact";
 import { useEffect, useState } from "react";
 import WhishList from "../pages/user/accounts/whishlist";
+import Order from "../pages/user/accounts/order";
 import { authCheck } from "./auth";
 
 const CustomRouters = () => {
@@ -59,7 +60,7 @@ const CustomRouters = () => {
         <Route path="product-details" element={<CustomerProductDetails />} />
         <Route path="cart" element={<CartPage />} />
         <Route path="profile" element={<Profile />} />
-        <Route path="order-list" element={<OrderList />} />
+        <Route path="order" element={<Order />} />
         <Route path="order-details" element={<OrderDetails />} />
         <Route path="payments" element={<Payment />} />
         <Route path="whishlist" element={<WhishList />} />

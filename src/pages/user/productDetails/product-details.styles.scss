@@ -180,6 +180,13 @@
     }
     .input-group {
       width: 35% !important;
+      @media only screen and (min-width:320px) and (max-width:425px) {
+        flex-direction: row;
+        width: 100%!important;
+      }
+      @media only screen and (min-width:769px) and (max-width:1024px) {
+        width: 55%!important;
+      }
     }
     .btn-black {
       background: #000000;
@@ -212,6 +219,9 @@
     font-weight: 600;
     color: $black;
     font-family: $font-primary;
+    @media only screen and (min-width:320px) and (max-width:767px) {
+     font-size: 28px;
+    }
   }
   &.heading-section-white {
     .subheading {

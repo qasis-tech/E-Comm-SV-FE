@@ -26,11 +26,11 @@
     display: block;
     text-transform: uppercase;
     letter-spacing: 1px;
-
-    .icon {
-      .icon-color {
-        color: $white !important;
-        padding: 0 0.5em;
+    .icon{
+      padding: 0.5em;
+      .icons{
+       color: white;
+       font-size: 1rem;
       }
     }
 
@@ -94,7 +94,22 @@
       color: $black;
     }
   }
-
+  .navbar-collapse{
+	@media screen and (max-width: 960px) {
+		justify-content: flex-start!important;
+		ul{
+			list-style: none;
+			.MuiMenuItem-root {
+				padding: 0!important;
+			}
+		}
+		.menu-gold{
+			a{
+				text-decoration: none;
+			}
+		}
+	}
+  }
   .navbar-nav {
     > .nav-item {
       &:after {
@@ -196,6 +211,17 @@
     }
   }
 }
+.navbar-toggler{
+	@media only screen and (max-width: 320px) {
+		margin-left: 8em;
+	}
+	@media only screen and (min-width:321px) and (max-width: 375px) {
+		margin-left: 11em;
+	}
+	@media only screen and (min-width:376px) and (max-width:425px) {
+		margin-left: 14em;
+	}
+}
 
 @media screen and (max-width: 960px) {
   .navbar-nav {
@@ -203,6 +229,9 @@
   }
   .navbar-nav-show {
     display: block !important;
+	ul{
+		list-style: none;
+	}
   }
 }
 
