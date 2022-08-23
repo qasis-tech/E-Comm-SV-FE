@@ -155,7 +155,7 @@ const ListCategory = () => {
   const getCategoryListApi = () => {
     setLoader(true);
     const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodTkwQGdtYWlsLmNvbSIsImlhdCI6MTY2MTI0OTk0MSwiZXhwIjoxNjYyMTEzOTQxfQ.Jx0Ee7HNmDgOzA1nOuIL6pC-rSDQKnTnbakD3WxZ88Y";
 
     let URL =
       searchInput !== ""

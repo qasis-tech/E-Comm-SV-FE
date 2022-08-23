@@ -81,7 +81,7 @@ function Categorydetails() {
   }, [popup.status]);
 
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodTkwQGdtYWlsLmNvbSIsImlhdCI6MTY2MTI0OTk0MSwiZXhwIjoxNjYyMTEzOTQxfQ.Jx0Ee7HNmDgOzA1nOuIL6pC-rSDQKnTnbakD3WxZ88Y";
 
   const getCategoryDetailsApi = () => {
     axios
@@ -97,6 +97,7 @@ function Categorydetails() {
             imageFile: [{ name: data.subCategoryImage }],
           };
         });
+        setValue("mainCategory", res.data.data.label);
         setValue("categoryImageFile", res.data.data.image);
         setValue("subcategory", subCatArr);
       })
@@ -105,7 +106,7 @@ function Categorydetails() {
       });
   };
 
-  const handleCategorySubmitApi = (data) => {
+  const updateCategorySubmitApi = (data) => {
     const { categoryImageFile, mainCategory, subcategory } = data;
     const formData = new FormData();
 
@@ -115,8 +116,13 @@ function Categorydetails() {
     for (const values of subcategory) {
       formData.append(`${values.subCategoryName}`, values.imageFile[0]);
     }
+
+    setTimeout(() => {
+      console.log("Payload", formData);
+    }, 1000);
+
     const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodTkwQGdtYWlsLmNvbSIsImlhdCI6MTY2MTI0OTk0MSwiZXhwIjoxNjYyMTEzOTQxfQ.Jx0Ee7HNmDgOzA1nOuIL6pC-rSDQKnTnbakD3WxZ88Y";
     setPopup({ status: true, message: "Updated successfully" });
 
     // popupVar({
@@ -124,28 +130,28 @@ function Categorydetails() {
     //   show: true,
     // });
 
-    // axios
-    //   .put(
-    //     `${process.env.REACT_APP_BASE_URL}${URLS.category}/${id}`,
-    //     formData,
-    //     {
-    //       headers: {
-    //         Authorization: `${token}`,
-    //         "content-type": "multipart/form-data",
-    //       },
-    //     }
-    //   )
-    //   .then((res) => {
-    //     console.log("putapi category==>>", res);
-    //     if (res.data.data) {
-    //       navigate(
-    //         `${RouterList.admin.admin}/${RouterList.admin.categoryList}`
-    //       );
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log("Error in Category Add", err);
-    //   });
+    axios
+      .put(
+        `${process.env.REACT_APP_BASE_URL}${URLS.category}/${id}`,
+        formData,
+        {
+          headers: {
+            Authorization: `${token}`,
+            "content-type": "multipart/form-data",
+          },
+        }
+      )
+      .then((res) => {
+        console.log("putapi category==>>", res);
+        // if (res.data.data) {
+        //   navigate(
+        //     `${RouterList.admin.admin}/${RouterList.admin.categoryList}`
+        //   );
+        // }
+      })
+      .catch((err) => {
+        console.log("Error in Category Add", err);
+      });
   };
 
   const getfileName = (name) => {
@@ -159,10 +165,10 @@ function Categorydetails() {
         <Grid container direction="row" className="add-category-container">
           <div className="category-form-section col-md-8 col-lg-9 col-sm-10">
             <form
-              onSubmit={handleSubmit((res) => handleCategorySubmitApi(res))}
+              onSubmit={handleSubmit((res) => updateCategorySubmitApi(res))}
             >
               <div className="main-heading">
-                <h5 className="heading">Category</h5>
+                <h5 className="heading">Category Details</h5>
               </div>
               <Grid container spacing={2} className="category-section">
                 <Grid item xs={12}>
@@ -282,7 +288,12 @@ function Categorydetails() {
                                 <div className="col-md-2 delete-section">
                                   <Button
                                     className="delete-btn"
-                                    onClick={() => remove(index)}
+                                    onClick={() =>
+                                      setValue(
+                                        `subcategory.${index}.imageFile`,
+                                        null
+                                      )
+                                    }
                                   >
                                     <DeleteIcon className="remove-icon" />
                                   </Button>

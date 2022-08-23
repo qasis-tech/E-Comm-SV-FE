@@ -69,7 +69,7 @@ const AddCategory = () => {
     }, 1000);
 
     const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodTkwQGdtYWlsLmNvbSIsImlhdCI6MTY2MTI0OTk0MSwiZXhwIjoxNjYyMTEzOTQxfQ.Jx0Ee7HNmDgOzA1nOuIL6pC-rSDQKnTnbakD3WxZ88Y";
 
     axios
       .post(`${process.env.REACT_APP_BASE_URL}${URLS.category}`, formData, {
@@ -79,6 +79,7 @@ const AddCategory = () => {
         },
       })
       .then((res) => {
+        console.log("post api", res);
         if (res.data.data) {
           navigate(
             `${RouterList.admin.admin}/${RouterList.admin.categoryList}`
