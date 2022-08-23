@@ -32,7 +32,9 @@
         form {
           align-items: center;
           padding: 2.5em;
-
+          .text-field{
+            margin-bottom: 1em;
+          }
           .profile-container {
             display: flex;
             justify-content: center;

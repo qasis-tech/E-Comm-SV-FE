@@ -50,9 +50,7 @@
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center center;
-
 	padding: 10em 0;
-
 	.slider-text {
 		.breadcrumbs {
 			text-transform: uppercase;
@@ -81,6 +79,18 @@
 	}
 }
 .profile-section{
+	.row{
+		@media only screen and (min-width:320px) and (max-width:768px) {
+			flex-direction: column;
+			.col-8{
+				width: 100%;
+				margin-top: 2em;
+				.btn-success{
+					margin-top: 0!important;
+				}
+			}
+		}
+	}
     .profile-image{
         .card{
             background-color: $primary;

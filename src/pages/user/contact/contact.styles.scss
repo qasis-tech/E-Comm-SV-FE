@@ -83,6 +83,9 @@
 
 .contact-section {
     padding: 6em 0;
+	@media screen and (max-width: 960px) {
+       padding: 2em 0;
+      }
 	.contact-info{
 		p{
 			a{
@@ -96,6 +99,9 @@
 	}
 	.contact-form{
 		width: 100%;
+		@media screen and (max-width: 960px) {
+			padding: 1em !important;
+		  }
 	}
 }
 .block-9 {

@@ -83,6 +83,7 @@
 //CART
 .ftco-cart {
   .cart-list {
+    overflow-x: scroll;
     .table {
       min-width: 1000px !important;
       width: 100%;

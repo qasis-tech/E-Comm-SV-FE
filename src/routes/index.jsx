@@ -32,12 +32,14 @@ import PageNotFound from "../pages/user/pageNotFound";
 import OrderDetails from "../pages/admin/dashboard/orderPages/orderDetailsPage";
 import OrderList from "../pages/admin/dashboard/orderPages/orderPage";
 import Categorydetails from "../pages/admin/dashboard/categoryPages/categorydetailspage";
+import HeaderNav from "../components/TopNavbar";
 
 import RouterList from "./routerList";
 import AboutUs from "../pages/user/about";
 import ContactUs from "../pages/user/contact";
 import { useEffect, useState } from "react";
 import WhishList from "../pages/user/accounts/whishlist";
+import Order from "../pages/user/accounts/order";
 import { authCheck } from "./auth";
 
 const CustomRouters = () => {
@@ -58,12 +60,13 @@ const CustomRouters = () => {
         <Route path="product-details" element={<CustomerProductDetails />} />
         <Route path="cart" element={<CartPage />} />
         <Route path="profile" element={<Profile />} />
-        <Route path="order-list" element={<OrderList />} />
+        <Route path="order" element={<Order />} />
         <Route path="order-details" element={<OrderDetails />} />
         <Route path="payments" element={<Payment />} />
         <Route path="whishlist" element={<WhishList />} />
         <Route path={RouterList.user.about} element={<AboutUs />} />
         <Route path={RouterList.user.contact} element={<ContactUs />} />
+        <Route path="navbar" element={<HeaderNav/>}/>
       </Route>
       <Route path="/admin" element={<PrivateRouting />} isAdmin={true}>
         <Route path="/admin" element={<AdminHome />} />

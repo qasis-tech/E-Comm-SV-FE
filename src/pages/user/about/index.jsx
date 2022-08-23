@@ -38,7 +38,7 @@ const AboutUs = () => {
       <section className="ftco-section about-section bg-light mb-4">
         <div className="container">
           <div className="row">
-            <div className="col-md-5 d-flex justify-content-center align-items-center">
+            <div className="col-md-5 d-flex justify-content-center align-items-center about-image-section">
               <img src={AboutImage} alt="about image" />
             </div>
             <div className="col-md-7  wrap-about ftco-animate">
