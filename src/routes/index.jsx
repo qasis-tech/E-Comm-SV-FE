@@ -32,6 +32,7 @@ import PageNotFound from "../pages/user/pageNotFound";
 import OrderDetails from "../pages/admin/dashboard/orderPages/orderDetailsPage";
 import OrderList from "../pages/admin/dashboard/orderPages/orderPage";
 import Categorydetails from "../pages/admin/dashboard/categoryPages/categorydetailspage";
+import HeaderNav from "../components/TopNavbar";
 
 import RouterList from "./routerList";
 import AboutUs from "../pages/user/about";
@@ -64,6 +65,7 @@ const CustomRouters = () => {
         <Route path="whishlist" element={<WhishList />} />
         <Route path={RouterList.user.about} element={<AboutUs />} />
         <Route path={RouterList.user.contact} element={<ContactUs />} />
+        <Route path="navbar" element={<HeaderNav/>}/>
       </Route>
       <Route path="/admin" element={<PrivateRouting />} isAdmin={true}>
         <Route path="/admin" element={<AdminHome />} />

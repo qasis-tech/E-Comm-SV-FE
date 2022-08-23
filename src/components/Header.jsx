@@ -17,6 +17,11 @@ import PersonIcon from "@mui/icons-material/Person";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+
 import "../styles/header.styles.scss";
 import { InputAdornment, MenuItem, TextField, Tooltip } from "@mui/material";
 import { authCheck, authLogout, onLogout } from "../routes/auth";
@@ -113,7 +118,9 @@ const HeaderComponent = () => {
 
   const Close = () => setClick(false);
   return (
+    
     <div className="header-container">
+      
       <div className="py-1 top-section">
         <div className="container">
           <div className="row no-gutters d-flex align-items-start align-items-center px-md-0">
@@ -141,11 +148,8 @@ const HeaderComponent = () => {
           </div>
         </div>
       </div>
-      {/* <NavBar/> */}
-      <div className={click ? "main-container" : ""} onClick={() => Close()} />
 
       <nav
-        onClick={(e) => e.stopPropagation()}
         className="navbar navbar-expand-lg navbar-dark ftco_navbar  ftco-navbar-light"
         id="ftco-navbar"
       >
@@ -156,15 +160,15 @@ const HeaderComponent = () => {
                 Vegefoods
               </span>
             </div>
-            <div className="nav-icon">
-              <IconButton
-                color="inherit"
-                aria-label="menu"
-                className="menu-icon"
-              >
-                <MenuIcon />
-              </IconButton>
-            </div>
+            <button
+              type="button"
+              className="navbar-toggler"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarCollapse"
+            >
+              <MenuIcon style={{ color: "black" }} />
+            </button>
+         
           </div>
           <TextField
             label="Search"
@@ -183,10 +187,9 @@ const HeaderComponent = () => {
               ),
             }}
           />
-
           <div
             className="collapse navbar-collapse d-flex justify-content-end"
-            id="ftco-nav"
+            id="navbarCollapse"
           >
             <ul className="navbar-nav ml-auto menu">
               <li className="nav-item ">
@@ -200,45 +203,32 @@ const HeaderComponent = () => {
                 </a>
                 <ul className="menu-gold">
                   <li>
-                    <a href="">Category-1aaaaaaaaaaaaaaaaaaaaaa</a>
+                    <a href="">Category-1aaaaaaaa</a>
                     <ul>
                       <li>
-                        <a href="">
-                          <i class="fas fa-user"></i> Karim Khan
-                        </a>
+                        <a href="">Karim Khan</a>
                       </li>
                       <li>
-                        <a href="">
-                          <i class="fas fa-user-tie"></i> Rahim Khan
-                        </a>
+                        <a href="">Rahim Khan</a>
                         <ul>
                           <li>
-                            <a href="">
-                              <i class="fas fa-user"></i> PHP
-                            </a>
+                            <a href="">PHP</a>
                           </li>
                           <li>
-                            <a href="">
-                              <i class="fas fa-user-tie"></i> Mysql
-                            </a>
+                            <a href="">Mysql</a>
                           </li>
                           <li>
-                            <a href="">
-                              <i class="fas fa-user-ninja"></i> Node.js
-                            </a>
+                            <a href="">Node.js</a>
                           </li>
                         </ul>
                       </li>
                       <li>
-                        <a href="">
-                          <i class="fas fa-user-ninja"></i> Mahesh Jagadappa
-                        </a>
+                        <a href="">Mahesh Jagadappa</a>
                       </li>
                     </ul>
                   </li>
                   <li>
                     <a href="">category-2</a>
-
                   </li>
                   <li>
                     <a href="">Category-3</a>
@@ -247,36 +237,24 @@ const HeaderComponent = () => {
                     <a href="">Category-4</a>
                     <ul>
                       <li>
-                        <a href="">
-                          <i class="fas fa-user"></i> Karim Khan
-                        </a>
+                        <a href="">Karim Khan</a>
                       </li>
                       <li>
-                        <a href="">
-                          <i class="fas fa-user-tie"></i> Rahim Khan
-                        </a>
+                        <a href="">Rahim Khan</a>
                         <ul>
                           <li>
-                            <a href="">
-                              <i class="fas fa-user"></i> PHP
-                            </a>
+                            <a href="">PHP</a>
                           </li>
                           <li>
-                            <a href="">
-                              <i class="fas fa-user-tie"></i> Mysql
-                            </a>
+                            <a href="">Mysql</a>
                           </li>
                           <li>
-                            <a href="">
-                              <i class="fas fa-user-ninja"></i> Node.js
-                            </a>
+                            <a href="">Node.js</a>
                           </li>
                         </ul>
                       </li>
                       <li>
-                        <a href="">
-                          <i class="fas fa-user-ninja"></i> Mahesh Jagadappa
-                        </a>
+                        <a href="">Mahesh Jagadappa</a>
                       </li>
                     </ul>
                   </li>
@@ -286,9 +264,7 @@ const HeaderComponent = () => {
                 </ul>
               </li>
 
-              {/* <li className="nav-item menu">
-                <a className="nav-link"> menus</a>
-              </li> */}
+             
               <li className="nav-item">
                 <a className="nav-link" onClick={() => navigate("/about")}>
                   About
@@ -380,6 +356,7 @@ const HeaderComponent = () => {
           </div>
         </div>
       </nav>
+      
     </div>
   );
 };

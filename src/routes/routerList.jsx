@@ -5,6 +5,7 @@ const List = {
     register: "register",
     about: "about",
     contact: "contact",
+    HeaderNav:"navbar",
   },
   admin: {
     admin: "/admin",
