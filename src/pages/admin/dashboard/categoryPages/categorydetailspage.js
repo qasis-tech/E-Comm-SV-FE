@@ -79,15 +79,9 @@ function Categorydetails() {
     //   setPopup({ status: false, message: "" });
     // };
   }, [popup.status]);
-
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodTkwQGdtYWlsLmNvbSIsImlhdCI6MTY2MTI0OTk0MSwiZXhwIjoxNjYyMTEzOTQxfQ.Jx0Ee7HNmDgOzA1nOuIL6pC-rSDQKnTnbakD3WxZ88Y";
-
   const getCategoryDetailsApi = () => {
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}${URLS.category}/${id}`, {
-        headers: { Authorization: ` ${token}` },
-      })
+      .get(`${URLS.category}/${id}`, {})
       .then((res) => {
         console.log("category get api==>>>", res);
         setCategoryDetail(res.data.data);
@@ -121,8 +115,6 @@ function Categorydetails() {
       console.log("Payload", formData);
     }, 1000);
 
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodTkwQGdtYWlsLmNvbSIsImlhdCI6MTY2MTI0OTk0MSwiZXhwIjoxNjYyMTEzOTQxfQ.Jx0Ee7HNmDgOzA1nOuIL6pC-rSDQKnTnbakD3WxZ88Y";
     setPopup({ status: true, message: "Updated successfully" });
 
     // popupVar({
@@ -131,16 +123,11 @@ function Categorydetails() {
     // });
 
     axios
-      .put(
-        `${process.env.REACT_APP_BASE_URL}${URLS.category}/${id}`,
-        formData,
-        {
-          headers: {
-            Authorization: `${token}`,
-            "content-type": "multipart/form-data",
-          },
-        }
-      )
+      .put(`${URLS.category}/${id}`, formData, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      })
       .then((res) => {
         console.log("putapi category==>>", res);
         // if (res.data.data) {
@@ -155,7 +142,7 @@ function Categorydetails() {
   };
 
   const getfileName = (name) => {
-    let fileName = name.split("/");
+    let fileName = name?.split("/");
     return fileName[fileName.length - 1];
   };
 

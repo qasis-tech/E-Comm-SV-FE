@@ -1,21 +1,28 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const useAxiosPost = (url, payload) => {
-  const [data, setData] = useState(null);
-  const [error, setError] = useState("");
-  const [loaded, setLoaded] = useState(true);
-  const URL = `${process.env.BASE_URL}${url}`;
+axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 
-  useEffect(() => {
-    axios
-      .post(url, payload)
-      .then((res) => setData(res.data))
-      .catch((error) => setError(error.message))
-      .finally(() => setLoaded(false));
-  }, []);
+axios.interceptors.request.use((req) => {
+  req.headers.Authorization =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodTkwQGdtYWlsLmNvbSIsImlhdCI6MTY2MTI0OTk0MSwiZXhwIjoxNjYyMTEzOTQxfQ.Jx0Ee7HNmDgOzA1nOuIL6pC-rSDQKnTnbakD3WxZ88Y";
+  return req;
+});
 
-  return { data, error, loaded };
+const useAxios = (url, payload) => {
+  //   const [data, setData] = useState(null);
+  //   const [error, setError] = useState("");
+  //   const [loaded, setLoaded] = useState(true);
+  //   const URL = `${process.env.BASE_URL}${url}`;
+  //   useEffect(() => {
+  //     axios
+  //       .post(url, payload)
+  //       .then((res) => setData(res.data))
+  //       .catch((error) => setError(error.message))
+  //       .finally(() => setLoaded(false));
+  //   }, []);
+  return;
+  // { data, error, loaded };
 };
 
-export default useAxiosPost;
+export default useAxios;

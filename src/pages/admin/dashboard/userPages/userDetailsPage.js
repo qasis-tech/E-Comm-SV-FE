@@ -58,7 +58,7 @@ const UserDetails = () => {
 
   const getDetailsApi = () => {
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}${URLS.signup}/${id}`)
+      .get(`${URLS.signup}/${id}`)
       .then((res) => {
         console.log("ress =>>", res);
         setValue("userFirstName", res.data.data.firstName);

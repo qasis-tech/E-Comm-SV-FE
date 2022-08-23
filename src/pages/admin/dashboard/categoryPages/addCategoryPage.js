@@ -72,7 +72,7 @@ const AddCategory = () => {
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodTkwQGdtYWlsLmNvbSIsImlhdCI6MTY2MTI0OTk0MSwiZXhwIjoxNjYyMTEzOTQxfQ.Jx0Ee7HNmDgOzA1nOuIL6pC-rSDQKnTnbakD3WxZ88Y";
 
     axios
-      .post(`${process.env.REACT_APP_BASE_URL}${URLS.category}`, formData, {
+      .post(`${URLS.category}`, formData, {
         headers: {
           Authorization: `${token}`,
           "content-type": "multipart/form-data",

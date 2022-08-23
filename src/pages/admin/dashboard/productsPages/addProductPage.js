@@ -92,13 +92,9 @@ const AddProduct = () => {
   React.useEffect(() => {
     getCatgoryListApi();
   }, []);
-  const access_token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
   const getCatgoryListApi = () => {
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}${URLS.category}`, {
-        headers: { Authorization: `${access_token}` },
-      })
+      .get(`${URLS.category}`)
       .then((res) => {
         setCategorydata(res.data.data);
         console.log("resss", res.data.data);
@@ -170,13 +166,10 @@ const AddProduct = () => {
     featureArray.push(temp);
     bodyFormData.append("features", featureArray);
     console.log("features=>>>", featureArray);
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
 
     axios
-      .post(`${process.env.REACT_APP_BASE_URL}${URLS.product}`, bodyFormData, {
+      .post(`${URLS.product}`, bodyFormData, {
         headers: {
-          Authorization: ` ${token}`,
           "Content-Type": "multipart/form-data",
         },
       })

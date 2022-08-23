@@ -125,14 +125,10 @@ const UserList = () => {
     setLoader(true);
     let URL =
       searchInput !== ""
-        ? `${process.env.REACT_APP_BASE_URL}${
-            URLS.user
-          }?search=${searchInput}&limit=${rowsPerPage}&skip=${
+        ? `${URLS.user}?search=${searchInput}&limit=${rowsPerPage}&skip=${
             page * rowsPerPage
           }`
-        : `${process.env.REACT_APP_BASE_URL}${
-            URLS.user
-          }?limit=${rowsPerPage}&skip=${page * rowsPerPage}`;
+        : `${URLS.user}?limit=${rowsPerPage}&skip=${page * rowsPerPage}`;
     axios
       .get(URL, {
         "Content-Type": "application/json",

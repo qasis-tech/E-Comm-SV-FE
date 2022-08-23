@@ -154,25 +154,15 @@ const ListCategory = () => {
 
   const getCategoryListApi = () => {
     setLoader(true);
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodTkwQGdtYWlsLmNvbSIsImlhdCI6MTY2MTI0OTk0MSwiZXhwIjoxNjYyMTEzOTQxfQ.Jx0Ee7HNmDgOzA1nOuIL6pC-rSDQKnTnbakD3WxZ88Y";
 
     let URL =
       searchInput !== ""
-        ? `${process.env.REACT_APP_BASE_URL}${
-            URLS.category
-          }?search=${searchInput}&limit=${rowsPerPage}&skip=${
+        ? `${URLS.category}?search=${searchInput}&limit=${rowsPerPage}&skip=${
             page * rowsPerPage
           }`
-        : `${process.env.REACT_APP_BASE_URL}${
-            URLS.category
-          }?limit=${rowsPerPage}&skip=${page * rowsPerPage}`;
+        : `${URLS.category}?limit=${rowsPerPage}&skip=${page * rowsPerPage}`;
     axios
-      .get(URL, {
-        headers: {
-          Authorization: `${token}`,
-        },
-      })
+      .get(URL)
       .then((res) => {
         setLoader(false);
         if (res) {

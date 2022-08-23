@@ -125,23 +125,15 @@ const StockList = () => {
   const getStockListApi = () => {
     console.log("jdjhdgja");
     setLoader(true);
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
-
     let URL =
       searchInput !== ""
-        ? `${process.env.REACT_APP_BASE_URL}${
-            URLS.stock
-          }?search=${searchInput}&limit=${rowsPerPage}&skip=${
+        ? `${URLS.stock}?search=${searchInput}&limit=${rowsPerPage}&skip=${
             page * rowsPerPage
           }`
-        : `${process.env.REACT_APP_BASE_URL}${
-            URLS.stock
-          }?limit=${rowsPerPage}&skip=${page * rowsPerPage}`;
+        : `${URLS.stock}?limit=${rowsPerPage}&skip=${page * rowsPerPage}`;
     axios
       .get(URL, {
         headers: {
-          Authorization: `${token}`,
           "Content-Type": "application/json",
         },
       })

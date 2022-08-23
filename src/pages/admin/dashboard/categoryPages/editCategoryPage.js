@@ -62,13 +62,9 @@ const AddCategory = () => {
       console.log("Payload", formData);
     }, 1000);
 
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
-
     axios
-      .post(`${process.env.REACT_APP_BASE_URL}${URLS.category}`, formData, {
+      .post(`${URLS.category}`, formData, {
         headers: {
-          Authorization: `${token}`,
           "content-type": "multipart/form-data",
         },
       })

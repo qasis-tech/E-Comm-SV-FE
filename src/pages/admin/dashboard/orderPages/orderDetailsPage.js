@@ -94,14 +94,9 @@ const OrderDetails = () => {
     getOrderDetailsApi();
   }, []);
 
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodUB0ZXN0LmNvbSIsImlhdCI6MTY2MDI5NzkwNiwiZXhwIjoxNjYxMTYxOTA2fQ.qhDBNneysBl7A_MRi-0f0t8nsq034wp07EODXDEh2Eg";
-
   const getOrderDetailsApi = () => {
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}${URLS.order}/${id}`, {
-        headers: { Authorization: ` ${token}` },
-      })
+      .get(`${URLS.order}/${id}`)
       .then((res) => {
         setOrderDetail(res.data.data);
         setValue("orderMobilenumber", res.data.data.user.mobileNumber);
@@ -121,8 +116,7 @@ const OrderDetails = () => {
       status: selectedStatus.label,
     };
     axios
-      .put(`${process.env.REACT_APP_BASE_URL}${URLS.order}/${id}`, payload, {
-        headers: { Authorization: ` ${token}` },
+      .put(`${URLS.order}/${id}`, payload, {
         "Content-Type": "application/json",
       })
       .then((res) => {
