@@ -201,17 +201,15 @@ function Categorydetails() {
                     >
                       Upload Image
                       <input
-                        {...register("categoryImageFile", {
-                          required: "This is required.",
-                        })}
+                        {...register("categoryImageFile")}
                         type="file"
                         hidden
                       />
                     </Button>
                   )}
-                  <div className="error">
+                  {/* <div className="error">
                     {errors?.categoryImageFile?.message}
-                  </div>
+                  </div> */}
                 </Grid>
               </Grid>
               <hr />
@@ -257,7 +255,8 @@ function Categorydetails() {
                               size="small"
                               error={errors?.subCategoryName}
                               {...register(
-                                `subcategory.${index}.subCategoryName`
+                                `subcategory.${index}.subCategoryName`,
+                                { required: "This is required" }
                               )}
                             />
                             <div className="error">
@@ -306,9 +305,9 @@ function Categorydetails() {
                                 />
                               </Button>
                             )}
-                            <div className="error">
+                            {/* <div className="error">
                               {errors?.imageFile?.message}
-                            </div>
+                            </div> */}
                           </Grid>
                         </Grid>
                         <Grid item xs={1} className="remove-section">

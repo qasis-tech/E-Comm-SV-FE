@@ -132,7 +132,7 @@ const ListProduct = () => {
       .then((res) => {
         setLoader(false);
         setProductData(res.data);
-        setCount(res.data.count);
+        setCount(res.count);
       })
       .catch((err) => {
         setLoader(false);
@@ -219,9 +219,7 @@ const ListProduct = () => {
                       component="th"
                       scope="row"
                       onClick={() =>
-                        navigate(
-                          `${RouterList.admin.admin}/${RouterList.admin.productDetails}`
-                        )
+                        navigate(`/admin/product-details/${product._id}`)
                       }
                     >
                       {product.name}

@@ -1,8 +1,10 @@
 import * as React from "react";
+import { useForm, useFieldArray, Controller, useWatch } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { URLS } from "../../../../config/urls.config";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import axios from "axios";
 
 import { Box, Button, MenuItem, TextField } from "@mui/material";
 import Grid from "@mui/material/Grid";
@@ -12,6 +14,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
 import ProductImage from "../../../../assets/product-4.jpg";
 import "./product-details.styles.scss";
@@ -25,35 +28,83 @@ const productdetailsSchema = yup
     productUnit: yup.string().required(),
     productQuantity: yup.string().required(),
     productDescription: yup.string().required(),
-    productFeatures: yup.string().required(),
+    productFeatureKey: yup.string(),
+    productFeatureValue: yup.string(),
     productPrice: yup.string().required(),
+    productOfferUnit: yup.string().required(),
+    productOfferQuantity: yup.string().required(),
+    productOfferPrice: yup.string().required(),
+    productImageFile: yup.string().required(),
+    productVideoFile: yup.string().required(),
   })
   .required();
 
-const currencies = [
-  {
-    value: "Fruits",
-    label: "Fruits",
-  },
-  {
-    value: "EUR",
-    label: "€",
-  },
-  {
-    value: "BTC",
-    label: "฿",
-  },
-  {
-    value: "JPY",
-    label: "¥",
-  },
-];
 const ProductDetails = () => {
-  const [currency, setCurrency] = React.useState("Fruits");
+  const {
+    register,
+    handleSubmit,
+    watch,
+    control,
+    formState: { errors },
+    setValue,
+    getValues,
+  } = useForm({
+    resolver: yupResolver(productdetailsSchema),
+    defaultValues: {
+      productFeatures: [{ productFeatureKey: "", productFeatureValue: "" }],
+    },
+  });
 
-  const handleChange = (event) => {
-    setCurrency(event.target.value);
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "productFeatures",
+  });
+  const watchFieldArray = watch("productFeatures");
+  const controlledFields = fields?.map((field, index) => {
+    return {
+      ...field,
+      ...watchFieldArray[index],
+    };
+  });
+
+  const { id } = useParams();
+  console.log("parms ==>", id);
+
+  React.useEffect(() => {
+    getProductDetailsApi();
+  }, []);
+
+  const getProductDetailsApi = () => {
+    axios
+      .get(`${URLS.product}/${id}`)
+      .then((res) => {
+        console.log("getapi ress =>>", res.data);
+        setValue("productName", res.data.name);
+        setValue("productCategory", res.data.category);
+        setValue("productSubcategory", res.data.subCategory);
+        setValue("productUnit", res.data.unit);
+        setValue("productQuantity", res.data.quantity);
+        setValue("productDescription", res.data.description);
+
+        // const features = { model: " efgh", colour: "ijkl" };
+        console.log("res feture", res.data.features);
+        Object.keys(res.data.features).forEach(function eachKey(key) {
+          console.log("key", key);
+          //  console.log(key);
+          //  console.log(features[key]);
+        });
+
+        setValue("productPrice", res.data.price);
+        setValue("productOfferUnit", res.data.offerUnit);
+        setValue("productOfferQuantity", res.data.offerQuantity);
+        setValue("productOfferPrice", res.data.offerPrice);
+      })
+
+      .catch((err) => {
+        console.log("err in Category LIst", err);
+      });
   };
+
   return (
     <div className="details-product">
       <Box noValidate autoComplete="off" className="product-details-wrapper">
@@ -76,9 +127,13 @@ const ProductDetails = () => {
                       label="Name"
                       fullWidth
                       size="small"
-                      defaultValue="Kiwi"
+                      defaultValue=""
+                      {...register("productName")}
+                      error={errors?.productName}
+                      InputLabelProps={{ shrink: true }}
                     />
                   </Grid>
+                  <p>{errors?.productName?.message}</p>
                   <Grid item xs={4}>
                     <TextField
                       id="outlined-helperText"
@@ -86,6 +141,7 @@ const ProductDetails = () => {
                       fullWidth
                       size="small"
                       defaultValue="10"
+                      {...register("productQuantity")}
                     />
                   </Grid>
                   <Grid item xs={4}>
@@ -95,6 +151,7 @@ const ProductDetails = () => {
                       fullWidth
                       size="small"
                       defaultValue="Kg"
+                      {...register("productUnit")}
                     />
                   </Grid>
                 </Grid>
@@ -106,6 +163,7 @@ const ProductDetails = () => {
                       fullWidth
                       size="small"
                       defaultValue="Kg"
+                      {...register("productCategory")}
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -115,6 +173,7 @@ const ProductDetails = () => {
                       fullWidth
                       size="small"
                       defaultValue="Kg"
+                      {...register("productSubcategory")}
                     />
                   </Grid>
                 </Grid>
@@ -128,10 +187,11 @@ const ProductDetails = () => {
                       rows={4}
                       size="small"
                       defaultValue="Kiwifruit or Chinese gooseberry is the edible berry of several species of woody vines in the genus Actinidia."
+                      {...register("productDescription")}
                     />
                   </Grid>
                 </Grid>
-                <Grid container spacing={2} marginTop={1}>
+                {/* <Grid container spacing={2} marginTop={1}>
                   <Grid item xs={6}>
                     <TextField
                       id="outlined-helperText"
@@ -139,6 +199,7 @@ const ProductDetails = () => {
                       fullWidth
                       size="small"
                       defaultValue="Vitamin C"
+                      {...register("productFeatureKey")}
                     />
                   </Grid>
                   <Grid item xs={5}>
@@ -148,12 +209,77 @@ const ProductDetails = () => {
                       fullWidth
                       size="small"
                       defaultValue="154%"
+                      {...register("productFeatureValue")}
                     />
                   </Grid>
                   <Grid item xs={1}>
-                    <AddIcon color="primary" className="add-icon-section" />
+                    <AddIcon
+                      onClick={() =>
+                        append({
+                          productFeatureKey: "",
+                          productFeatureValue: "",
+                        })
+                      }
+                      color="primary"
+                      className="add-icon-section"
+                    />
                   </Grid>
-                </Grid>
+                </Grid> */}
+                <div className="feature-add">
+                  <Grid item className="add-icon">
+                    <AddIcon
+                      onClick={() =>
+                        append({
+                          productFeatureKey: "",
+                          productFeatureValue: "",
+                        })
+                      }
+                      color="primary"
+                      className="add-icon-section"
+                    />
+                  </Grid>
+                  {controlledFields?.map((list, index) => {
+                    return (
+                      <Grid
+                        key={list.id}
+                        className="add-section"
+                        container
+                        spacing={2}
+                        marginTop={1}
+                      >
+                        <Grid item xs={6}>
+                          <TextField
+                            fullWidth
+                            size="small"
+                            id="outlined-multiline-static"
+                            label="Features"
+                            {...register(
+                              `productFeatures.${index}.productFeatureKey`
+                            )}
+                          />
+                        </Grid>
+                        <Grid item xs={5}>
+                          <TextField
+                            fullWidth
+                            id="outlined-multiline-static"
+                            label="value"
+                            size="small"
+                            {...register(
+                              `productFeatures.${index}.productFeatureValue`
+                            )}
+                          />
+                        </Grid>
+                        <Grid item xs={1} className="remove-section">
+                          {fields.length > 1 && (
+                            <button className="close-section">
+                              <HighlightOffIcon />
+                            </button>
+                          )}
+                        </Grid>
+                      </Grid>
+                    );
+                  })}
+                </div>
                 <Grid container marginTop={1} spacing={2}>
                   <Grid item xs={6}>
                     <TextField
@@ -162,6 +288,7 @@ const ProductDetails = () => {
                       fullWidth
                       size="small"
                       defaultValue="80"
+                      {...register("productPrice")}
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -171,6 +298,7 @@ const ProductDetails = () => {
                       fullWidth
                       size="small"
                       defaultValue="Kg"
+                      {...register("productOfferUnit")}
                     />
                   </Grid>
                 </Grid>
@@ -182,6 +310,7 @@ const ProductDetails = () => {
                       fullWidth
                       size="small"
                       defaultValue="5"
+                      {...register("productOfferQuantity")}
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -191,6 +320,7 @@ const ProductDetails = () => {
                       fullWidth
                       size="small"
                       defaultValue="20"
+                      {...register("productOfferPrice")}
                     />
                   </Grid>
                 </Grid>
@@ -211,7 +341,11 @@ const ProductDetails = () => {
                           component="label"
                         >
                           Upload Image
-                          <input type="file" hidden />
+                          <input
+                            type="file"
+                            hidden
+                            {...register("productImageFile")}
+                          />
                         </Button>
                       </CardActions>
                     </Card>
@@ -232,7 +366,11 @@ const ProductDetails = () => {
                           component="label"
                         >
                           Upload Video
-                          <input type="file" hidden />
+                          <input
+                            type="file"
+                            hidden
+                            {...register("productVideoFile")}
+                          />
                         </Button>
                       </CardActions>
                     </Card>

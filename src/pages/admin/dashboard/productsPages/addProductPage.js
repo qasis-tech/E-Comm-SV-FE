@@ -28,6 +28,7 @@ const productaddSchema = yup
   .object()
   .shape({
     productName: yup.string().required("Product is required"),
+    units: yup.string(),
     quantity: yup
       .number()
       .required("Quantity is required")
@@ -37,6 +38,7 @@ const productaddSchema = yup
     featureKey: yup.string(),
     featureValue: yup.string(),
     price: yup.number().typeError("You must specify number").required(),
+    offerUnit: yup.string(),
     offerQuantity: yup
       .number()
       .required()
@@ -81,9 +83,10 @@ const AddProduct = () => {
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [selectedSubCategory, setSelectedSubCategory] = useState([]);
   const [unitData, setUnitdata] = useState([
-    { label: "Kg" },
-    { label: "Ltr" },
-    { label: "no:" },
+    { label: "kg", value: "kg" },
+    { label: "g", value: "g" },
+    { label: "ltr", value: "ltr" },
+    { label: "no:", value: "no" },
   ]);
   const [selectedUnit, setSelectedunit] = useState([]);
   const [selectedOfferunit, setSelectedofferunit] = useState([]);
@@ -107,7 +110,9 @@ const AddProduct = () => {
   const handleCategory = (e, val) => setSelectedCategory(val);
   const handleSubCategory = (e, val) => setSelectedSubCategory(val);
 
-  const handleUnit = (e, val) => setSelectedunit(val);
+  const handleUnit = (e, val) => {
+    setSelectedunit(val);
+  };
   const handleOfferUnit = (e, val) => setSelectedofferunit(val);
 
   const handleFeatureKey = (key, val) => {
@@ -135,23 +140,23 @@ const AddProduct = () => {
       productImageFile,
       productVideoFile,
     } = data;
-    var bodyFormData = new FormData();
+
+    const bodyFormData = new FormData();
     bodyFormData.append("name", productName);
+    bodyFormData.append("quantity", quantity);
+    bodyFormData.append("unit", selectedUnit);
     bodyFormData.append("category", selectedCategory);
     bodyFormData.append("subCategory", selectedSubCategory);
-    bodyFormData.append("unit", selectedUnit);
-    bodyFormData.append("quantity", quantity);
+
     bodyFormData.append("description", description);
     bodyFormData.append("price", price);
     bodyFormData.append("offerUnit", selectedOfferunit);
     bodyFormData.append("offerQuantity", offerQuantity);
     bodyFormData.append("offerPrice", offerPrice);
 
-    console.log("productimage", productImageFile);
-    for (let i = 0; i < productImageFile.length; i++) {
-      // bodyFormData.append("productImage", productImageFile[i]);
-      console.log("productfile", productImageFile[i]);
-    }
+    console.log("productimage", productImageFile[0]);
+
+    bodyFormData.append("productImage", productImageFile[0]);
 
     // bodyFormData.append("productVideo", productVideoFile);
 
@@ -232,7 +237,12 @@ const AddProduct = () => {
                         onChange={(e, val) => handleUnit(e, val)}
                         value={selectedUnit}
                         renderInput={(params) => (
-                          <TextField {...params} label="Units" size="small" />
+                          <TextField
+                            {...params}
+                            label="Units"
+                            size="small"
+                            {...register("units")}
+                          />
                         )}
                       />
                     )}
@@ -373,6 +383,7 @@ const AddProduct = () => {
                         value={selectedOfferunit}
                         renderInput={(params) => (
                           <TextField
+                            {...register("offerUnit")}
                             {...params}
                             label="Offer Units"
                             size="small"
@@ -442,9 +453,7 @@ const AddProduct = () => {
                     >
                       Upload Video
                       <input
-                        {...register("productVideoFile", {
-                          required: "This is required.",
-                        })}
+                        {...register("productVideoFile")}
                         type="file"
                         hidden
                       />
