@@ -4,7 +4,6 @@ import { Routes, Route, Navigate } from "react-router-dom";
 // User
 import HomePage from "../pages/user/home";
 import UserLoginPage from "../pages/user/login/loginPage";
-
 // Admin
 import AdminHome from "../pages/admin/dashboard/index";
 import DashboardPage from "../pages/admin/dashboard/mainContainer";

@@ -2,6 +2,7 @@ const List = {
   user: {
     home: "/",
     login: "/login",
+    loginuser:"loginpage",
     register: "register",
     about: "about",
     contact: "contact",
