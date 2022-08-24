@@ -71,7 +71,7 @@ const AddCategory = () => {
         },
       })
       .then((res) => {
-        if (res.data.data) {
+        if (res.data) {
           navigate(
             `${RouterList.admin.admin}/${RouterList.admin.categoryList}`
           );

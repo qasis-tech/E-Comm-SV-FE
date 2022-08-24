@@ -165,9 +165,10 @@ const ListCategory = () => {
       .get(URL)
       .then((res) => {
         setLoader(false);
+        console.log("res", res);
         if (res) {
           setCategoryList(res.data);
-          setCount(res.data.count);
+          setCount(res.count);
         }
       })
       .catch((err) => {

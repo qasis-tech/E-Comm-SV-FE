@@ -159,7 +159,6 @@ function Categorydetails() {
               <Grid container spacing={2} className="category-section">
                 <Grid item xs={12}>
                   <TextField
-                    id="outlined-helperText"
                     label="Category"
                     variant="outlined"
                     fullWidth
@@ -168,6 +167,7 @@ function Categorydetails() {
                     {...register("mainCategory", {
                       required: "This is required.",
                     })}
+                    InputLabelProps={{ shrink: true }}
                   />
 
                   <div className="error">{errors?.mainCategory?.message}</div>
@@ -251,6 +251,7 @@ function Categorydetails() {
                           <Grid item xs={12}>
                             <TextField
                               label="Subcategory"
+                              defaultValue="Subcategory"
                               variant="outlined"
                               fullWidth
                               size="small"
