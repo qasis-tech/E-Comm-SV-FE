@@ -226,48 +226,120 @@ function LoginPage() {
       className="login-section"
       style={{ backgroundImage: `url(${BackgroundImage})` }}
     >
-      <div class="container">
-        <div class="formWraper">
-          <div class="formDiv">
-            <h2>Login</h2>
-            <p class="text"> Sign Up with Social Media</p>
-            <div class="socialBtn">
-              <div class="facebook icon">
-                <FacebookIcon />
+      <div className="container">
+        <div className="formWraper">
+          <div className="formDiv">
+            <form onSubmit={handleSubmit(handleLogin)}>
+              <h2>Login</h2>
+              <p className="text"> Sign Up with Social Media</p>
+              <div className="socialBtn">
+                <div className="facebook icon">
+                  <FacebookIcon />
+                </div>
+                <div className="twitter icon">
+                  <GoogleIcon />
+                </div>
               </div>
-              <div class="twitter icon">
-                <GoogleIcon />
-              </div>
-              {/* <div class="instagram icon">
-                <i class="fab fa-instagram"></i>
-              </div> */}
-            </div>
-            <hr />
-            <div class="orDiv">Or</div>
-            <p class="text">Sign Up with Email Address</p>
-            <div class="formGroup">
-              <input type="email" name="email" id="email" placeholder="Email" />
-            </div>
-            <div class="formGroup">
-              <input
-                type="password"
-                name="password"
-                id="password"
-                placeholder="Password"
+              <hr />
+              <div className="orDiv">Or</div>
+              <p className="text">Sign Up with Email Address</p>
+              <TextField
+                id="login-username"
+                variant="outlined"
+                size="small"
+                label="Email"
+                className="text-field"
+                {...register("email", {
+                  required: "Email ID is required",
+                  pattern: {
+                    value:
+                      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                    message: "Invalid email Id ( eg: example@mail.com ) ",
+                  },
+                })}
+                fullWidth
+                error={errors?.email}
+                style={{ color: "#fff" }}
               />
-            </div>
-            <div class="checkBox">
-              <input type="checkbox" name="checkbox" id="checkbox" />
-              <span class="text">I Agree with Term & Conditions.</span>
-            </div>
-            <button class="btn">SIGN IN</button>
+              <div className="error">{errors?.email?.message}</div>
+              <TextField
+                label="Password"
+                size="small"
+                fullWidth
+                className="password"
+                variant="outlined"
+                type={isVisible ? "text" : "password"}
+                {...register("password", {
+                  required: "Password is required",
+                  minLength: {
+                    value: 8,
+                    message: "Minimum 8 charecter",
+                  },
+                })}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={() => setVisible(!isVisible)}
+                        edge="end"
+                      >
+                        {!isVisible ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+                error={errors?.password}
+              />
+              <div className="error">{errors?.password?.message}</div>
+              <div className="checkBox">
+                <input type="checkbox" name="checkbox" id="checkbox" />
+                <span className="text">Keep me signed in</span>
+              </div>
+              <button className="btn" type="submit">
+                SIGN IN
+              </button>
+              <div className="forgotpassword-link">
+                <p>
+                  <a
+                    href="#"
+                    onClick={() => navigate("/register", { replace: true })}
+                  >
+                    Forgot Password
+                  </a>{" "}
+                </p>
+              </div>
+              <div className="signup-link">
+                <p className="">
+                  Create new account?
+                  <a
+                    href="#"
+                    onClick={() => navigate("/register", { replace: true })}
+                  >
+                    Sign Up
+                  </a>{" "}
+                </p>
+              </div>
+            </form>
           </div>
-          <div class="welcomeDiv">
+          <div className="welcomeDiv">
             <h2>Welcome Back!</h2>
-            <p class="text">
+            <p className="text">
               Get in touch with us for our news letter and more updates.
             </p>
-            <button class="btn2">SIGN UP</button>
+            <button
+              className="btn2"
+              onClick={() => navigate("/register", { replace: true })}
+            >
+              SIGN UP
+            </button>
+            <div className="forgot-link">
+              <a
+                href="#"
+                onClick={() => navigate("/register", { replace: true })}
+              >
+                Forgot Password
+              </a>{" "}
+            </div>
           </div>
         </div>
       </div>

@@ -12,11 +12,13 @@ import Divider from "@mui/material/Divider";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import "yup-phone";
 import "./register.styles.scss";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import BackgoundImg from "../../../assets/bg-pic.png";
+import BackgroundImage from "../../../assets/bg.jpg";
 
 import { URLS } from "../../../config/urls.config";
 
@@ -93,168 +95,361 @@ function RegisterPage() {
   };
 
   return (
-    <div className="register">
-      <Box className="wrapper">
-        <Grid container direction="row" className="register-container">
-          <Grid item xs={6} className="form-section ">
-            <form onSubmit={handleSubmit(handleRegister)} autoComplete="off">
-              <Grid item xs={12} marginBottom={3} className="profile-container">
-                <h1>Create Account</h1>
-                <Divider />
-              </Grid>
-              <Grid container spacing={2}>
-                <Grid item xs={6}>
+    // <div className="register">
+    //   <Box className="wrapper">
+    //     <Grid container direction="row" className="register-container">
+    //       <Grid item xs={6} className="form-section ">
+    //         <form onSubmit={handleSubmit(handleRegister)} autoComplete="off">
+    //           <Grid item xs={12} marginBottom={3} className="profile-container">
+    //             <h1>Create Account</h1>
+    //             <Divider />
+    //           </Grid>
+    //           <Grid container spacing={2}>
+    //             <Grid item xs={6}>
+    //               <TextField
+    //                 id="filled-basic"
+    //                 label="FirstName"
+    //                 {...register("firstName", {})}
+    //                 variant="outlined"
+    //                 error={errors?.firstName}
+    //               />
+    //               <div className="error">{errors?.firstName?.message}</div>
+    //             </Grid>
+    //             <Grid item xs={6}>
+    //               <TextField
+    //                 id="filled-basic"
+    //                 label="LastName"
+    //                 {...register("lastName")}
+    //                 variant="outlined"
+    //                 error={errors?.lastName}
+    //               />
+    //               <div className="error">{errors?.lastName?.message}</div>
+    //             </Grid>
+    //           </Grid>
+    //           <Grid container spacing={2}>
+    //             <Grid item xs={6}>
+    //               <TextField
+    //                 id="filled-basic"
+    //                 label="Email"
+    //                {...register("email")}
+    //                 variant="outlined"
+    //                 error={errors?.email}
+    //               />
+    //               <div className="error">{errors?.email?.message}</div>
+    //             </Grid>
+    //             <Grid item xs={6}>
+    //               <TextField
+    //                 id="filled-basic"
+    //                 label="Phone Number"
+    //                 {...register("mobilenumber")}
+    //                 variant="outlined"
+    //                 type="numeric"
+    //                 error={errors?.mobilenumber}
+    //               />
+    //               <div className="error">{errors?.mobilenumber?.message}</div>
+    //             </Grid>
+    //           </Grid>
+    //           <Grid container spacing={2}>
+    //             <Grid item xs={6}>
+    //               <FormControl>
+    //                 <FormLabel id="demo-row-radio-buttons-group-label">
+    //                   Gender
+    //                 </FormLabel>
+    //                 <RadioGroup
+    //                   row
+    //                   aria-labelledby="demo-row-radio-buttons-group-label"
+    //                   name="row-radio-buttons-group"
+    //                 >
+    //                   <FormControlLabel
+    //                     value="female"
+    //                     {...register("gender", { required: true })}
+    //                     control={<Radio />}
+    //                     label="Female"
+    //                   />
+    //                   <FormControlLabel
+    //                     value="male"
+    //                     control={<Radio />}
+    //                     {...register("gender", { required: true })}
+    //                     label="Male"
+    //                   />
+    //                 </RadioGroup>
+    //               </FormControl>
+    //             </Grid>
+    //             <Grid item xs={6} className="dob">
+    // <TextField
+    //   id="date"
+    //   label="DOB"
+    //   type="date"
+    //   fullWidth
+    //   variant="outlined"
+    //   {...register("dob")}
+    //   InputLabelProps={{
+    //     shrink: true,
+    //   }}
+    // />
+    //             </Grid>
+    //           </Grid>
+    //           <Grid container spacing={2}>
+    //             <Grid item xs={6}>
+    //               <TextField
+    //                 id="filled-basic"
+    //                 type="password"
+    //                 label="Password"
+    //                 {...register("password")}
+    //                 variant="outlined"
+    //                 error={errors?.password}
+    //               />
+    //               <div className="error">{errors?.password?.message}</div>
+    //             </Grid>
+    //             <Grid item xs={6}>
+    //               <TextField
+    //                 id="filled-basic"
+    //                 label="Pincode"
+    //                 {...register("pincode")}
+    //                 variant="outlined"
+    //                 type="numeric"
+    //                 error={errors?.pincode}
+    //               />
+    //               <div className="error">{errors?.pincode?.message}</div>
+    //             </Grid>
+    //           </Grid>
+    //           <Grid container spacing={2}>
+    //             <Grid item xs={6}>
+    //               <TextField
+    //                 id="filled-basic"
+    //                 label="OTP for email"
+    //                 variant="outlined"
+    //               />
+    //             </Grid>
+    //             <Grid item xs={6}>
+    //               <TextField
+    //                 id="filled-basic"
+    //                 label="OTP for Phone Number"
+    //                 variant="outlined"
+    //               />
+    //             </Grid>
+    //           </Grid>
+    //           <Grid
+    //             container
+    //             direction="row"
+    //             justifyContent="space-between"
+    //             marginTop={3}
+    //           >
+    //             <Grid item className="submit-btn-container" xs={12}>
+    //               <Button
+    //                 className="submit-btn"
+    //                 type="submit"
+    //                 variant="contained"
+    //               >
+    //                 Submit
+    //               </Button>
+    //             </Grid>
+    //           </Grid>
+    //           <Grid item xs={12} marginTop={2} className="login-link">
+    //             <p>
+    //               Already have an account?<a href="#">Login</a>
+    //             </p>
+    //           </Grid>
+    //         </form>
+    //       </Grid>
+    //     </Grid>
+    //     <div className="bottom-image">
+    //       <img src={BackgoundImg} alt="background image" />
+    //     </div>
+    //   </Box>
+    // </div>
+
+    <div
+      className="register-section"
+      style={{ backgroundImage: `url(${BackgroundImage})` }}
+    >
+      <div className="container">
+        <div className="formWraper">
+          <div className="formDiv">
+            <form onSubmit={handleSubmit(handleRegister)}>
+              <h2>Create Account</h2>
+              <div className="row">
+                <div className="col-md-6">
                   <TextField
                     id="filled-basic"
-                    label="FirstName"
+                    label="First name"
+                    size="small"
+                    fullWidth
                     {...register("firstName", {})}
                     variant="outlined"
                     error={errors?.firstName}
                   />
                   <div className="error">{errors?.firstName?.message}</div>
-                </Grid>
-                <Grid item xs={6}>
+                </div>
+                <div className="col-md-6">
                   <TextField
                     id="filled-basic"
-                    label="LastName"
+                    label="Last name"
                     {...register("lastName")}
                     variant="outlined"
+                    size="small"
+                    fullWidth
                     error={errors?.lastName}
                   />
                   <div className="error">{errors?.lastName?.message}</div>
-                </Grid>
-              </Grid>
-              <Grid container spacing={2}>
-                <Grid item xs={6}>
-                  <TextField
-                    id="filled-basic"
-                    label="Email"
-                    {...register("email")}
-                    variant="outlined"
-                    error={errors?.email}
-                  />
-                  <div className="error">{errors?.email?.message}</div>
-                </Grid>
-                <Grid item xs={6}>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-6">
                   <TextField
                     id="filled-basic"
                     label="Phone Number"
                     {...register("mobilenumber")}
                     variant="outlined"
                     type="numeric"
+                    size="small"
+                    fullWidth
                     error={errors?.mobilenumber}
                   />
                   <div className="error">{errors?.mobilenumber?.message}</div>
-                </Grid>
-              </Grid>
-              <Grid container spacing={2}>
-                <Grid item xs={6}>
-                  <FormControl>
-                    <FormLabel id="demo-row-radio-buttons-group-label">
-                      Gender
-                    </FormLabel>
-                    <RadioGroup
-                      row
-                      aria-labelledby="demo-row-radio-buttons-group-label"
-                      name="row-radio-buttons-group"
-                    >
-                      <FormControlLabel
-                        value="female"
-                        {...register("gender", { required: true })}
-                        control={<Radio />}
-                        label="Female"
-                      />
-                      <FormControlLabel
-                        value="male"
-                        control={<Radio />}
-                        {...register("gender", { required: true })}
-                        label="Male"
-                      />
-                    </RadioGroup>
-                  </FormControl>
-                </Grid>
-                <Grid item xs={6} className="dob">
+                </div>
+                <div className="col-md-6">
                   <TextField
-                    id="date"
-                    label="DOB"
-                    type="date"
+                    id="filled-basic"
+                    label="Email"
                     fullWidth
+                    size="small"
+                    {...register("email")}
                     variant="outlined"
-                    {...register("dob")}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
+                    error={errors?.email}
                   />
-                </Grid>
-              </Grid>
-              <Grid container spacing={2}>
-                <Grid item xs={6}>
+                  <div className="error">{errors?.email?.message}</div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-6">
                   <TextField
                     id="filled-basic"
                     type="password"
                     label="Password"
+                    fullWidth
                     {...register("password")}
                     variant="outlined"
+                    size="small"
                     error={errors?.password}
                   />
                   <div className="error">{errors?.password?.message}</div>
-                </Grid>
-                <Grid item xs={6}>
+                </div>
+                <div className="col-md-6">
                   <TextField
                     id="filled-basic"
                     label="Pincode"
                     {...register("pincode")}
                     variant="outlined"
                     type="numeric"
+                    size="small"
+                    fullWidth
                     error={errors?.pincode}
                   />
                   <div className="error">{errors?.pincode?.message}</div>
-                </Grid>
-              </Grid>
-              <Grid container spacing={2}>
-                <Grid item xs={6}>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-6 gender-section">
+                  <div className="gender-label">
+                    <FormLabel
+                      className="gender-label"
+                      id="demo-row-radio-buttons-group-label"
+                    >
+                      Gender
+                    </FormLabel>
+                  </div>
+                  <div className="">
+                    <RadioGroup
+                      row
+                      aria-labelledby="demo-row-radio-buttons-group-label"
+                      name="row-radio-buttons-group"
+                    >
+                      <FormControlLabel
+                        {...register("userGender", { required: true })}
+                        value="female"
+                        control={<Radio />}
+                        label="Female"
+                        type="radio"
+                        checked={true}
+                      />
+                      <FormControlLabel
+                        {...register("userGender", { required: true })}
+                        value="male"
+                        control={<Radio />}
+                        label="Male"
+                        type="radio"
+                        checked={false}
+                        // checked={getValues("userGender") == "male"}
+                      />
+                    </RadioGroup>
+                  </div>
+                </div>
+                <div className="col-md-6">
+                  <TextField
+                    id="date"
+                    label="DOB"
+                    type="date"
+                    fullWidth
+                    size="small"
+                    variant="outlined"
+                    {...register("dob")}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
+                  <div className="error">{errors?.dob?.message}</div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-md-6">
                   <TextField
                     id="filled-basic"
                     label="OTP for email"
+                    size="small"
+                    fullWidth
                     variant="outlined"
                   />
-                </Grid>
-                <Grid item xs={6}>
+                </div>
+                <div className="col-md-6">
                   <TextField
                     id="filled-basic"
-                    label="OTP for Phone Number"
+                    label="OTP for phone number"
+                    size="small"
+                    fullWidth
                     variant="outlined"
                   />
-                </Grid>
-              </Grid>
-              <Grid
-                container
-                direction="row"
-                justifyContent="space-between"
-                marginTop={3}
-              >
-                <Grid item className="submit-btn-container" xs={12}>
-                  <Button
-                    className="submit-btn"
-                    type="submit"
-                    variant="contained"
+                </div>
+              </div>
+              <button className="btn" type="submit">
+                SIGN UP
+              </button>
+              <div className="signup-link">
+                <p className="">
+                  Already have an account?{" "}
+                  <a
+                    href="#"
+                    onClick={() => navigate("/login", { replace: true })}
                   >
-                    Submit
-                  </Button>
-                </Grid>
-              </Grid>
-              <Grid item xs={12} marginTop={2} className="login-link">
-                <p>
-                  Already have an account?<a href="#">Login</a>
+                    Signin
+                  </a>
                 </p>
-              </Grid>
+              </div>
             </form>
-          </Grid>
-        </Grid>
-        <div className="bottom-image">
-          <img src={BackgoundImg} alt="background image" />
+          </div>
+
+          <div className="welcomeDiv">
+            <h2>Welcome Back!</h2>
+            <p className="text">Already have an account?</p>
+            <button
+              className="btn2"
+              onClick={() => navigate("/login", { replace: true })}
+            >
+              SIGN IN
+            </button>
+          </div>
         </div>
-      </Box>
+      </div>
     </div>
   );
 }
