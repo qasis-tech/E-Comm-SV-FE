@@ -55,13 +55,13 @@ function LoginPage() {
       .then((res) => {
         console.log("REsss", res);
 
-        if (res.data.data) {
+        if (res.data) {
           if (isChecked) {
             localStorage.setItem(
               "loginDetails",
               JSON.stringify({ email, password })
             );
-            localStorage.setItem("LoginDatas", JSON.stringify(res.data.data));
+            localStorage.setItem("LoginDatas", JSON.stringify(res.data));
           } else {
             localStorage.removeItem("loginDetails");
           }
@@ -204,6 +204,7 @@ function LoginPage() {
                     <Button
                       className="login-with-button reg-btn"
                       variant="outlined"
+                      onClick={() => navigate("/register", { replace: true })}
                     >
                       Create your account
                     </Button>

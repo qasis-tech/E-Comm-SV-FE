@@ -63,7 +63,7 @@ function Categorydetails() {
 
   const { id } = useParams();
   const [categoryDetailData, setCategoryDetail] = React.useState([]);
-  const [popup, setPopup] = useState({ status: false, message: "" });
+  const [popup, setPopup] = useState({ status: false, message: "", type: "" });
 
   useEffect(() => {
     getCategoryDetailsApi();
@@ -72,56 +72,45 @@ function Categorydetails() {
   useEffect(() => {
     if (popup.status) {
       setTimeout(() => {
-        setPopup({ status: false, message: "" });
-      }, 3600);
+        setPopup({ status: false, message: "", type: "" });
+      }, 3000);
     }
-    // return () => {
-    //   setPopup({ status: false, message: "" });
-    // };
   }, [popup.status]);
+
   const getCategoryDetailsApi = () => {
     axios
-      .get(`${URLS.category}/${id}`, {})
-      .then((res) => {
-        console.log("category get api==>>>", res);
-        setCategoryDetail(res.data.data);
-        const subCatArr = res.data.data.subCategory.map((data) => {
+      .get(`${URLS.category}/${id}`)
+      .then(({ data }) => {
+        setCategoryDetail(data);
+        const subCatArr = data.subCategory.map((data) => {
           return {
             subCategoryName: data.label,
             imageFile: [{ name: data.subCategoryImage }],
           };
         });
-        setValue("mainCategory", res.data.data.label);
-        setValue("categoryImageFile", res.data.data.image);
+        setValue("mainCategory", data.label);
+        setValue("categoryImageFile", data.image);
         setValue("subcategory", subCatArr);
       })
       .catch((err) => {
         console.error("err in get Category List", err);
+        setCategoryDetail([]);
       });
   };
 
   const updateCategorySubmitApi = (data) => {
-    const { categoryImageFile, mainCategory, subcategory } = data;
+    const { mainCategory, categoryImageFile, subcategory } = data;
     const formData = new FormData();
 
     formData.append("label", mainCategory);
     formData.append("image", categoryImageFile[0]);
 
     for (const values of subcategory) {
+      values.imageFile[0].fieldname = values.subCategoryName;
       formData.append(`${values.subCategoryName}`, values.imageFile[0]);
     }
 
-    setTimeout(() => {
-      console.log("Payload", formData);
-    }, 1000);
-
-    setPopup({ status: true, message: "Updated successfully" });
-
-    // popupVar({
-    //   message: "Testing 001",
-    //   show: true,
-    // });
-
+    // console.log("ALL ===>", mainCategory, categoryImageFile, subcategory);
     axios
       .put(`${URLS.category}/${id}`, formData, {
         headers: {
@@ -129,19 +118,28 @@ function Categorydetails() {
         },
       })
       .then((res) => {
-        console.log("putapi category==>>", res);
-        // if (res.data.data) {
-        //   navigate(
-        //     `${RouterList.admin.admin}/${RouterList.admin.categoryList}`
-        //   );
-        // }
+        console.log("res", res);
+        setPopup({
+          status: true,
+          message: res.message,
+          type: res.success ? "success" : "error",
+        });
+        if (res.success) {
+          setTimeout(() => {
+            navigate(
+              `${RouterList.admin.admin}/${RouterList.admin.categoryList}`
+            );
+          }, 3000);
+        }
       })
       .catch((err) => {
-        console.log("Error in Category Add", err);
+        console.error("Error in Category Add", err);
       });
   };
 
   const getfileName = (name) => {
+    if (name[0]?.name) return name[0].name;
+    if (!name) return name;
     let fileName = name?.split("/");
     return fileName[fileName.length - 1];
   };
@@ -153,6 +151,7 @@ function Categorydetails() {
           <div className="category-form-section col-md-8 col-lg-9 col-sm-10">
             <form
               onSubmit={handleSubmit((res) => updateCategorySubmitApi(res))}
+              autoComplete="off"
             >
               <div className="main-heading">
                 <h5 className="heading">Category Details</h5>
@@ -161,10 +160,10 @@ function Categorydetails() {
                 <Grid item xs={12}>
                   <TextField
                     id="outlined-helperText"
+                    label="Category"
+                    variant="outlined"
                     fullWidth
                     size="small"
-                    label="Name"
-                    values={getValues("mainCategory")}
                     error={errors?.mainCategory}
                     {...register("mainCategory", {
                       required: "This is required.",
@@ -326,7 +325,6 @@ function Categorydetails() {
                   })}
                 </Grid>
               </Grid>
-              {popup.status.toString()}
               <div className="row submit-button">
                 <Grid item xs={2}>
                   <Button onClick={() => navigate(-1)}>Cancel</Button>
@@ -349,7 +347,11 @@ function Categorydetails() {
       </Box>
 
       {popup.status && (
-        <PopupAlert show={popup.status} message={popup.message} />
+        <PopupAlert
+          show={popup.status}
+          message={popup.message}
+          type={popup.type}
+        />
       )}
     </div>
   );

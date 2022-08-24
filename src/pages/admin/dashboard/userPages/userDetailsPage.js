@@ -61,12 +61,12 @@ const UserDetails = () => {
       .get(`${URLS.signup}/${id}`)
       .then((res) => {
         console.log("ress =>>", res);
-        setValue("userFirstName", res.data.data.firstName);
-        setValue("userLastName", res.data.data.lastName);
-        setValue("userMobilenumber", res.data.data.mobileNumber);
-        setValue("userEmail", res.data.data.email);
-        setValue("userPincode", res.data.data.pinCode);
-        setValue("userGender", res.data.data.gender);
+        setValue("userFirstName", res.data.firstName);
+        setValue("userLastName", res.data.lastName);
+        setValue("userMobilenumber", res.data.mobileNumber);
+        setValue("userEmail", res.data.email);
+        setValue("userPincode", res.data.pinCode);
+        setValue("userGender", res.data.gender);
       })
       .then(() => {
         console.log("getvalues", getValues("userGender"));

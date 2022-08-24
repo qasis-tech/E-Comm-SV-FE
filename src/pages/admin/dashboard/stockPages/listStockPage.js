@@ -140,7 +140,7 @@ const StockList = () => {
       .then((res) => {
         setLoader(false);
         console.log("ress", res);
-        setListdata(res.data.data.totalStock);
+        setListdata(res.data.totalStock);
         setCount(res.data.count);
         setStockShortDetails(res.data.shorthanddetails);
       })

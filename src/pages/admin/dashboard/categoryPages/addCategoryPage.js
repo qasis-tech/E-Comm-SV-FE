@@ -64,22 +64,13 @@ const AddCategory = () => {
       formData.append(`${values.subCategoryName}`, values.imageFile[0]);
     }
 
-    setTimeout(() => {
-      console.log("Payload", formData);
-    }, 1000);
-
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdlZXRodTkwQGdtYWlsLmNvbSIsImlhdCI6MTY2MTI0OTk0MSwiZXhwIjoxNjYyMTEzOTQxfQ.Jx0Ee7HNmDgOzA1nOuIL6pC-rSDQKnTnbakD3WxZ88Y";
-
     axios
       .post(`${URLS.category}`, formData, {
         headers: {
-          Authorization: `${token}`,
           "content-type": "multipart/form-data",
         },
       })
       .then((res) => {
-        console.log("post api", res);
         if (res.data.data) {
           navigate(
             `${RouterList.admin.admin}/${RouterList.admin.categoryList}`

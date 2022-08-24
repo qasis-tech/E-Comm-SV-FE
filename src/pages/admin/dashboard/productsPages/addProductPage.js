@@ -96,8 +96,8 @@ const AddProduct = () => {
     axios
       .get(`${URLS.category}`)
       .then((res) => {
-        setCategorydata(res.data.data);
-        console.log("resss", res.data.data);
+        setCategorydata(res.data);
+        console.log("resss", res.data);
       })
       .catch((err) => {
         console.log("error", err);

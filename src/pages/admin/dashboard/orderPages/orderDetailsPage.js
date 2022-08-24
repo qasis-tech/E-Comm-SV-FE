@@ -98,12 +98,12 @@ const OrderDetails = () => {
     axios
       .get(`${URLS.order}/${id}`)
       .then((res) => {
-        setOrderDetail(res.data.data);
-        setValue("orderMobilenumber", res.data.data.user.mobileNumber);
-        setValue("orderEmail", res.data.data.user.email);
-        setValue("orderPincode", res.data.data.user.pinCode);
-        setValue("orderLocation", res.data.data.user.location);
-        setValue("orderAddress", res.data.data.user.primaryAddress);
+        setOrderDetail(res.data);
+        setValue("orderMobilenumber", res.data.user.mobileNumber);
+        setValue("orderEmail", res.data.user.email);
+        setValue("orderPincode", res.data.user.pinCode);
+        setValue("orderLocation", res.data.user.location);
+        setValue("orderAddress", res.data.user.primaryAddress);
       })
 
       .catch((err) => {

@@ -166,7 +166,7 @@ const ListCategory = () => {
       .then((res) => {
         setLoader(false);
         if (res) {
-          setCategoryList(res.data.data);
+          setCategoryList(res.data);
           setCount(res.data.count);
         }
       })
@@ -237,7 +237,9 @@ const ListCategory = () => {
                 <TableCell className="table-heading">Category</TableCell>
                 <TableCell className="table-heading"> Subcategory</TableCell>
                 <TableCell className="table-heading">Created Date</TableCell>
-                <TableCell className="table-heading">Actions</TableCell>
+                <TableCell className="table-heading" align="right">
+                  Actions
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -259,10 +261,7 @@ const ListCategory = () => {
                     </TableCell>
 
                     <TableCell>{formatDate(item?.createdAt)}</TableCell>
-                    <TableCell>
-                      {/* <Button>
-                        <DeleteIcon className="delete-icon" />
-                      </Button> */}
+                    <TableCell align="right">
                       <Button>
                         <CreateIcon className="edit-icon" />
                       </Button>

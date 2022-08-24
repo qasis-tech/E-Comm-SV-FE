@@ -131,7 +131,7 @@ const ListProduct = () => {
       .get(URL)
       .then((res) => {
         setLoader(false);
-        setProductData(res.data.data);
+        setProductData(res.data);
         setCount(res.data.count);
       })
       .catch((err) => {

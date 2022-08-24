@@ -18,7 +18,7 @@ const PopupAlert = ({ show, message, type }) => {
       setTimeout(() => {
         setEnable(false);
         // popupVar({ show: false, message: "" });
-      }, 3500);
+      }, 3000);
     }
   }, [show]);
 

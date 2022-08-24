@@ -18,6 +18,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import BackgoundImg from "../../../assets/bg-pic.png";
 
+import { URLS } from "../../../config/urls.config";
+
 const signupSchema = yup
   .object()
   .shape({
@@ -73,12 +75,12 @@ function RegisterPage() {
       password: password,
     };
     axios
-      .post("http://localhost:4000/signup", payload, {
+      .post(URLS.user, payload, {
         "Content-Type": "application/json",
       })
       .then((res) => {
         console.log("ress=>=>", res);
-        if (res.data.data) {
+        if (res.data) {
           if (res.data.success === false) {
             alert(res.data.message);
           }
@@ -92,10 +94,10 @@ function RegisterPage() {
 
   return (
     <div className="register">
-      <Box noValidate autoComplete="off" className="wrapper">
+      <Box className="wrapper">
         <Grid container direction="row" className="register-container">
           <Grid item xs={6} className="form-section ">
-            <form onSubmit={handleSubmit(handleRegister)}>
+            <form onSubmit={handleSubmit(handleRegister)} autoComplete="off">
               <Grid item xs={12} marginBottom={3} className="profile-container">
                 <h1>Create Account</h1>
                 <Divider />

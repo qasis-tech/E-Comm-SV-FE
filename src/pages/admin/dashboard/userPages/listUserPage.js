@@ -136,7 +136,7 @@ const UserList = () => {
       .then((res) => {
         setLoader(false);
         console.log("ressss=>", res);
-        setUserData(res.data.data);
+        setUserData(res.data);
         setCount(res.data.count);
       })
       .catch((err) => {

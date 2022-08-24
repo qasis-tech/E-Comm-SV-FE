@@ -138,7 +138,7 @@ const OrderList = () => {
         setLoader(false);
         console.log("ORDER details", res.data);
         setOrderShortDetails(res.data.shorthanddetails);
-        setOrderData(res.data.data);
+        setOrderData(res.data);
         setCount(res.data.count);
       })
       .catch((err) => {
