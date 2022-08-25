@@ -10,3 +10,22 @@
         height: 100%;
     }
 }
+.heading{
+    padding-left: 0!important;
+    padding-right: 0!important;
+}
+
+.heading-section{
+    padding-left: 0!important;
+    padding-right: 0!important;
+    .col-md-2{
+        width: 14.666667%!important;
+    }
+    .col-md-10{
+
+        .MuiToolbar-root{
+            padding-left: 0!important;
+            padding-right: 0!important;
+        } 
+    }
+}

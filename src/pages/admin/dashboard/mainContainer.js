@@ -40,7 +40,23 @@ function DashboardPage() {
         position="fixed"
         sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
       >
-        <Grid container spacing={2}>
+        <div className="row heading-section">
+          <div className="col-md-2">
+            <Toolbar>
+              <Typography variant="h6" noWrap component="div">
+                Clipped drawer
+              </Typography>
+            </Toolbar>
+          </div>
+          <div className="col-md-10">
+            <Toolbar>
+              <Typography variant="h6" noWrap component="div">
+                Dashboard
+              </Typography>
+            </Toolbar>
+          </div>
+        </div>
+        {/* <Grid container spacing={2}>
           <Grid item xs={2}>
             <Toolbar>
               <Typography variant="h6" noWrap component="div">
@@ -48,14 +64,14 @@ function DashboardPage() {
               </Typography>
             </Toolbar>
           </Grid>
-          <Grid item xs={10}>
+          <Grid className="heading" item xs={10}>
             <Toolbar>
               <Typography variant="h6" noWrap component="div">
                 Dashboard
               </Typography>
             </Toolbar>
           </Grid>
-        </Grid>
+        </Grid> */}
       </AppBar>
       <Drawer
         variant="permanent"
