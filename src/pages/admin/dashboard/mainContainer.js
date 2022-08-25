@@ -18,6 +18,9 @@ import {
 import ListItemIcon from "@mui/material/ListItemIcon";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
 
 import "../../../styles/common.styles.scss";
 import "./mainContainer.styles.scss";
@@ -40,7 +43,27 @@ function DashboardPage() {
         position="fixed"
         sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
       >
-        <div className="row heading-section">
+        <div className="row appbar-heading-section">
+          <Toolbar>
+            <div className="col-md-2 logo">
+              <Typography variant="h6" noWrap component="div">
+                Clipped drawer
+              </Typography>
+            </div>
+            <div className="col-md-8">
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                Dashboard
+              </Typography>
+            </div>
+            <div className="col-md-2 logout-section">
+              <Button color="inherit" onClick={() => navigate("/login")}>
+                Logout
+              </Button>
+            </div>
+          </Toolbar>
+        </div>
+
+        {/* <div className="row appbar-heading-section">
           <div className="col-md-2">
             <Toolbar>
               <Typography variant="h6" noWrap component="div">
@@ -55,23 +78,7 @@ function DashboardPage() {
               </Typography>
             </Toolbar>
           </div>
-        </div>
-        {/* <Grid container spacing={2}>
-          <Grid item xs={2}>
-            <Toolbar>
-              <Typography variant="h6" noWrap component="div">
-                Clipped drawer
-              </Typography>
-            </Toolbar>
-          </Grid>
-          <Grid className="heading" item xs={10}>
-            <Toolbar>
-              <Typography variant="h6" noWrap component="div">
-                Dashboard
-              </Typography>
-            </Toolbar>
-          </Grid>
-        </Grid> */}
+        </div> */}
       </AppBar>
       <Drawer
         variant="permanent"
@@ -102,9 +109,9 @@ function DashboardPage() {
             </List>
           </Box>
           <Divider />
-          <Box className="logout" onClick={() => navigate("/login")}>
+          {/* <Box className="logout" onClick={() => navigate("/login")}>
             Logout
-          </Box>
+          </Box> */}
         </div>
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>

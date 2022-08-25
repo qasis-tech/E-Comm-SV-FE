@@ -10,26 +10,18 @@
         height: 100%;
     }
 }
-.heading{
+.appbar-heading-section{
     padding-left: 0!important;
     padding-right: 0!important;
-}
-
-.heading-section{
-    padding-left: 0!important;
-    padding-right: 0!important;
-    .col-md-2{
+    .logo{
         width: 16.66667%!important;
        // width: 15.66667% !important;
         @media screen and (min-width:1441px) and (max-width: 4560px) {
             width: 14.66666%!important;
         }
     }
-    .col-md-10{
-
-        // .MuiToolbar-root{
-        //     padding-left: 0!important;
-        //     padding-right: 0!important;
-        // } 
+    .logout-section{
+        display: flex;
+        justify-content: end;
     }
 }
