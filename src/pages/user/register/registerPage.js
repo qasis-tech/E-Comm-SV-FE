@@ -421,7 +421,7 @@ function RegisterPage() {
                   />
                 </div>
               </div>
-              <button className="btn" type="submit">
+              <button className="btn btn-success" type="submit">
                 SIGN UP
               </button>
               <div className="signup-link">
@@ -442,7 +442,7 @@ function RegisterPage() {
             <h2>Welcome Back!</h2>
             <p className="text">Already have an account?</p>
             <button
-              className="btn2"
+              className="btn btn2"
               onClick={() => navigate("/login", { replace: true })}
             >
               SIGN IN

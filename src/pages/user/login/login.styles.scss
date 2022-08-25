@@ -1,109 +1,14 @@
 @import "../../../styles/common.styles.scss";
 @import "../../../styles/variables.styles.scss";
 
-// .main-container {
-//  // margin-top: 4em;
-//   font-family: "Poppins", sans-serif;
-//   background-image: radial-gradient(farthest-side at 50% 20%, #fffefaed, #ffe77aff);
-//   background-color: #ffe77aff;
-//   .wrapper {
-//     // box-shadow: 0px 8px 20px 0px #00000026;
-//     //height: 979px;
-//     .login-container {
-//       // display: flex;
-//       //background-image: url("../../../assets/bg3.jpg");
-//       justify-content: center;
-//       // background-repeat: no-repeat;
-//       // object-fit: cover;
-//      // height: 100% !important;
-
-//       .form-section {
-//         margin: 6em 0;
-//         border-radius: 15px;
-//         backdrop-filter: blur(10px);
-//        // background-color: #ffffffcc;
-//         max-width: 550px !important;
-//         height: 493px;
-//         //  background-color: rgba(255, 255, 255, 78%);
-//         box-shadow: 0px 2px 5px 2px #9f9e9b;
-//         @media only screen and (min-width: 800px) and (max-width: 1024px) {
-//           height: 486px;
-//           margin: 3em 0;
-//         }
-//         form {
-//           align-items: center;
-//           padding: 2.5em;
-//           .text-field{
-//             margin-bottom: 1em;
-//           }
-//           .profile-container {
-//             display: flex;
-//             justify-content: center;
-//           }
-
-//           .login-btn-container {
-//             display: flex;
-//             justify-content: center;
-//             .login-btn {
-//               width: 100%;
-//               background-color: #399169;
-//             }
-//           }
-
-//           .sub-btn {
-//             padding: 1em 0 0;
-//             font-size: 13px!important;
-//             .login-with-button {
-//               border-radius: 20px;
-//               text-transform: none;
-//               width: 100%;
-//               font-size: 12px!important;
-//               @media only screen and (min-width: 800px) and (max-width: 1024px) {
-//                 font-size: 10px!important;
-//               }
-//             }
-//             .google-btn{
-//               border-color: coral;
-//               color: coral;
-//               font-size: 12px!important;
-//               @media only screen and (min-width: 800px) and (max-width: 1024px) {
-//                 font-size: 10px!important;
-//               }
-//             }
-//             .reg-btn{
-//               color: #399169;
-//               border-color: #399169;
-//               font-size: 13px!important;
-//               @media only screen and (min-width: 800px) and (max-width: 1024px) {
-//                 font-size: 11px!important;
-//               }
-//             }
-//           }
-//         }
-//       }
-//     }
-//     .bottom-image {
-//       @media only screen and (min-width: 800px) and (max-width: 1024px) {
-//         height: 291px;
-//       }
-//       @media only screen and (min-width: 1026px) and (max-width: 1444px) {
-//         height:  188px;
-//       }
-//       img {
-//         width: 100%;
-//         height: 100%
-//       }
-//     }
-//   }
-// }
-
-
 .login-section {
   margin: 0px;
   padding: 0px;
   font-family: "Poppins", sans-serif;
   box-sizing: border-box;
- // background-image: url(bg.jpg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-size: cover;
   background-attachment: fixed;
   height: 100vh;
@@ -115,60 +20,60 @@
   .formWraper {
     display: flex;
     width: 80%;
-   height: 100%;
+    height: 100%;
     background-color: $primary;
-    margin-top: 10em;
     border-radius: 10px;
     box-shadow: 0px 0px 20px black;
   }
-
-  /* code for left sectin of form */
   .formDiv {
     width: 50%;
     padding: 6% 4%;
     background-color: lavender;
     text-align: center;
     border-radius: 10px 0px 0px 10px;
+    h2 {
+      color: $primary;
+      margin-top: -5px;
+    }
   }
-  .formDiv h2 {
-    color: $primary;
-    margin-top: -5px;
-  }
-
-  /* code for right sectin of the registration form */
   .welcomeDiv {
     width: 50%;
     padding: 10px;
- //   background-image: url(image1.jpg);
     background-size: cover;
     text-align: center;
     color: white;
+    padding: 0% 4%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
-  .welcomeDiv h2 {
-    margin-top: 150px;
-  }
-
   /* ---- code for Font Awsome social icons */
   .socialBtn {
     display: flex;
     justify-content: center;
     margin-bottom: 20px;
-  }
-  .icon {
-    width: 30px;
-    height: 30px;
-    border-radius: 15px;
-    background-color: lavender;
-    margin: 5px;
-    line-height: 30px;
-    box-shadow: 0px 0px 10px black;
-    &:hover{
-      background-color: $primary;;
+    .icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 15px;
+      background-color: lavender;
+      margin: 5px;
+      margin: 0 0.5em;
+      line-height: 30px;
+      box-shadow: 0px 0px 5px black;
+      &:hover {
+        background-color: $primary;
+        color: $white;
+      }
+      .icons-size{
+        font-size: 18px!important;
+      }
     }
   }
 
   .text {
-    font-size: small;
+    font-size: $main-font-size;
   }
   .orDiv {
     width: 10%;
@@ -183,19 +88,18 @@
     width: 100%;
     margin-top: 1em;
   }
-  .password{
+  .password {
     margin-top: 1em;
   }
 
   .btn {
-    width: 70%;
     padding: 15px;
     background-color: $primary;
-    margin-top:3em;
-    color: lavender;
+    margin-top: 3em;
+    color: $white;
     border-radius: 20px;
     border-style: none;
-    &:hover{
+    &:hover {
       background-color: transparent;
       color: $primary;
       border: 1px solid;
@@ -203,61 +107,58 @@
     }
   }
   .btn2 {
-    width: 70%;
     padding: 15px;
     background-color: transparent;
     margin-top: 15px;
     color: lavender;
-    border-radius: 20px;
+    border-radius: 30px !important;
     border-style: none;
-    border: 2px solid rgb(247, 243, 243);
+    border: 1px solid rgb(247, 243, 243);
+    &:hover {
+      background-color: $white;
+      color: $primary;
+    }
   }
 
-  /* CSS mouse hover efects */
-  .btn2:hover
-     {
-    background-color: rgb(7, 80, 35);
-    color: whitesmoke;
-  }
-
-  .signup-link{
+  .signup-link {
     display: none;
     @media screen and (max-width: 1000px) {
       margin-top: 1em;
       display: contents;
-      p{
+      p {
         margin-top: 1em;
+        display: flex;
+        justify-content: space-around;
       }
     }
-    a{
+    a {
       text-decoration: none;
       color: $primary;
     }
   }
-  .forgot-link{
+  .forgot-link {
     margin-top: 1em;
-    a{
+    a {
       text-decoration: none;
-      color: black;
+      color: $white;
     }
     @media screen and (max-width: 1000px) {
       display: none;
       margin-top: 1em;
-      p{
+      p {
         margin-top: 1em;
       }
     }
-   
   }
-  .forgotpassword-link{
+  .forgotpassword-link {
     display: none;
     @media screen and (max-width: 1000px) {
       display: contents;
-      p{
-         margin-top: 1em;
+      p {
+        margin-top: 1em;
       }
     }
-    a{
+    a {
       text-decoration: none;
       color: black;
     }

@@ -234,10 +234,10 @@ function LoginPage() {
               <p className="text"> Sign Up with Social Media</p>
               <div className="socialBtn">
                 <div className="facebook icon">
-                  <FacebookIcon />
+                  <FacebookIcon className="icons-size" />
                 </div>
                 <div className="twitter icon">
-                  <GoogleIcon />
+                  <GoogleIcon className="icons-size" />
                 </div>
               </div>
               <hr />
@@ -277,6 +277,7 @@ function LoginPage() {
                   },
                 })}
                 InputProps={{
+                  // style: { border: "2px groove green" },
                   endAdornment: (
                     <InputAdornment position="end">
                       <IconButton
@@ -295,13 +296,14 @@ function LoginPage() {
                 <input type="checkbox" name="checkbox" id="checkbox" />
                 <span className="text">Keep me signed in</span>
               </div>
-              <button className="btn" type="submit">
+              <button className="btn btn-success" type="submit">
                 SIGN IN
               </button>
               <div className="forgotpassword-link">
                 <p>
                   <a
                     href="#"
+                    className="text"
                     onClick={() => navigate("/register", { replace: true })}
                   >
                     Forgot Password
@@ -309,10 +311,11 @@ function LoginPage() {
                 </p>
               </div>
               <div className="signup-link">
-                <p className="">
+                <p className="text">
                   Create new account?
                   <a
                     href="#"
+                    className="text"
                     onClick={() => navigate("/register", { replace: true })}
                   >
                     Sign Up
@@ -327,7 +330,7 @@ function LoginPage() {
               Get in touch with us for our news letter and more updates.
             </p>
             <button
-              className="btn2"
+              className="btn btn2"
               onClick={() => navigate("/register", { replace: true })}
             >
               SIGN UP
@@ -335,6 +338,7 @@ function LoginPage() {
             <div className="forgot-link">
               <a
                 href="#"
+                className="text"
                 onClick={() => navigate("/register", { replace: true })}
               >
                 Forgot Password
