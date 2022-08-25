@@ -27,30 +27,32 @@ import "./add-product.styles.scss";
 const productaddSchema = yup
   .object()
   .shape({
-    productName: yup.string().required("Product is required"),
-    units: yup.string(),
-    quantity: yup
-      .number()
-      .required("Quantity is required")
-      .typeError("You must specify number")
-      .min(0, "Min value 0"),
-    description: yup.string().required("Description is required"),
-    featureKey: yup.string(),
-    featureValue: yup.string(),
-    price: yup.number().typeError("You must specify number").required(),
-    offerUnit: yup.string(),
-    offerQuantity: yup
-      .number()
-      .required()
-      .typeError("You must specify number")
-      .min(0, "Min value 0"),
-    offerPrice: yup
-      .number()
-      .required("OfferPrice is required")
-      .typeError("You must specify number")
-      .min(0, "Min value 0"),
-    productImageFile: yup.string().required(),
-    productVideoFile: yup.string().required(),
+    // productName: yup.string().required("Product is required"),
+    // units: yup.string(),
+    // category: yup.string(),
+    // subCategory: yup.string(),
+    // quantity: yup
+    //   .number()
+    //   .required("Quantity is required")
+    //   .typeError("You must specify number")
+    //   .min(0, "Min value 0"),
+    // description: yup.string().required("Description is required"),
+    // featureKey: yup.string(),
+    // featureValue: yup.string(),
+    // price: yup.number().typeError("You must specify number").required(),
+    // offerUnit: yup.string(),
+    // offerQuantity: yup
+    //   .number()
+    //   .required()
+    //   .typeError("You must specify number")
+    //   .min(0, "Min value 0"),
+    // offerPrice: yup
+    //   .number()
+    //   .required("OfferPrice is required")
+    //   .typeError("You must specify number")
+    //   .min(0, "Min value 0"),
+    // image: yup.array().required(),
+    // productVideoFile: yup.array(),
   })
   .required();
 
@@ -65,20 +67,34 @@ const AddProduct = () => {
     resolver: yupResolver(productaddSchema),
     defaultValues: {
       features: [{ featureKey: "", featureValue: "" }],
+      productImageFile: [{ image: "" }],
     },
   });
-  const { fields, append } = useFieldArray({
+  const { fields: featureFields, append: featureAppend } = useFieldArray({
     control,
     name: "features",
   });
-  const watchFieldArray = watch("features");
-  const controlledFields = fields?.map((field, index) => {
+  const { fields: productImageFields, append: productFieldAppend } =
+    useFieldArray({
+      control,
+      name: "productImageFile",
+    });
+  const watchFeatureArray = watch("features");
+  const watchProductImageArray = watch("productImageFile");
+  const controlledFeatureFields = featureFields?.map((field, index) => {
     return {
       ...field,
-      ...watchFieldArray[index],
+      ...watchFeatureArray[index],
     };
   });
-
+  const controlledProductImageFields = productImageFields?.map(
+    (field, index) => {
+      return {
+        ...field,
+        ...watchProductImageArray[index],
+      };
+    }
+  );
   const [categoryData, setCategorydata] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [selectedSubCategory, setSelectedSubCategory] = useState([]);
@@ -90,7 +106,8 @@ const AddProduct = () => {
   ]);
   const [selectedUnit, setSelectedunit] = useState([]);
   const [selectedOfferunit, setSelectedofferunit] = useState([]);
-  const [featureData, SetFeaturedata] = useState([{}]);
+
+  // console.log("001", watch("productImageFile"));
 
   React.useEffect(() => {
     getCatgoryListApi();
@@ -100,7 +117,7 @@ const AddProduct = () => {
       .get(`${URLS.category}`)
       .then((res) => {
         setCategorydata(res.data);
-        console.log("resss", res.data);
+        // console.log("resss", res.data);
       })
       .catch((err) => {
         console.log("error", err);
@@ -111,30 +128,32 @@ const AddProduct = () => {
   const handleSubCategory = (e, val) => setSelectedSubCategory(val);
 
   const handleUnit = (e, val) => {
+    console.log("val", val);
     setSelectedunit(val);
+    console.log("selectedunit", val);
   };
   const handleOfferUnit = (e, val) => setSelectedofferunit(val);
 
-  const handleFeatureKey = (key, val) => {
-    console.log("key", key);
-    let temp = [...featureData];
-    let obj = {};
-    obj[key.target.value] = val?.target?.value;
-    temp.push(obj);
-    SetFeaturedata(temp);
-  };
+  // const handleFeatureKey = (key, val) => {
+  //   console.log("key", key);
+  //   let temp = [...featureData];
+  //   let obj = {};
+  //   obj[key.target.value] = val?.target?.value;
+  //   temp.push(obj);
+  //   SetFeaturedata(temp);
+  // };
 
   const handleProductAdd = (data) => {
     const {
       productName,
       quantity,
-      selectedUnit,
-      selectedCategory,
-      selectedSubCategory,
+      units,
+      category,
+      subCategory,
       description,
       features,
       price,
-      selectedOfferunit,
+      offerUnit,
       offerQuantity,
       offerPrice,
       productImageFile,
@@ -144,22 +163,15 @@ const AddProduct = () => {
     const bodyFormData = new FormData();
     bodyFormData.append("name", productName);
     bodyFormData.append("quantity", quantity);
-    bodyFormData.append("unit", selectedUnit);
-    bodyFormData.append("category", selectedCategory);
-    bodyFormData.append("subCategory", selectedSubCategory);
-
+    bodyFormData.append("unit", units);
+    bodyFormData.append("category", category);
+    bodyFormData.append("subCategory", subCategory);
     bodyFormData.append("description", description);
     bodyFormData.append("price", price);
-    bodyFormData.append("offerUnit", selectedOfferunit);
+    bodyFormData.append("offerUnit", offerUnit);
     bodyFormData.append("offerQuantity", offerQuantity);
     bodyFormData.append("offerPrice", offerPrice);
-
-    console.log("productimage", productImageFile[0]);
-
-    bodyFormData.append("productImage", productImageFile[0]);
-
-    // bodyFormData.append("productVideo", productVideoFile);
-
+    console.log("selectedunit===>>>", units);
     const temp = {};
     const featureArray = [];
 
@@ -169,21 +181,32 @@ const AddProduct = () => {
       // bodyFormData.append(`${values.featureKey}`, values.featureValue);
     }
     featureArray.push(temp);
-    bodyFormData.append("features", featureArray);
+    bodyFormData.append("features", JSON.stringify(featureArray));
     console.log("features=>>>", featureArray);
 
-    axios
-      .post(`${URLS.product}`, bodyFormData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((response) => {
-        console.log("Response=>>", response);
-      })
-      .catch((error) => {
-        console.log("Errorss=>>", error);
-      });
+    let arr = [];
+    for (const values of productImageFile) {
+      arr.push({ image: values.image[0] });
+      debugger;
+    }
+
+    console.log("imagearray===>>", arr);
+    bodyFormData.append("productImage", JSON.stringify(arr));
+
+    if (arr.length) {
+      axios
+        .post(`${URLS.product}`, bodyFormData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          console.log("Response=>>", response);
+        })
+        .catch((error) => {
+          console.log("Errorss=>>", error);
+        });
+    }
   };
 
   const navigate = useNavigate();
@@ -198,7 +221,7 @@ const AddProduct = () => {
           className="add-product-container"
         >
           <div className="product-form-section col-md-8">
-            <form onSubmit={handleSubmit((res) => handleProductAdd(res))}>
+            <form onSubmit={handleSubmit(handleProductAdd)}>
               <div className="main-heading">
                 <h5 className="heading">Product</h5>
               </div>
@@ -232,7 +255,7 @@ const AddProduct = () => {
                         options={unitData}
                         getOptionLabel={(option) => option.label || ""}
                         isOptionEqualToValue={(option, value) =>
-                          option.label === value.label
+                          option.value === value.value
                         }
                         onChange={(e, val) => handleUnit(e, val)}
                         value={selectedUnit}
@@ -264,6 +287,7 @@ const AddProduct = () => {
                             {...params}
                             label="Categories"
                             size="small"
+                            {...register("category")}
                           />
                         )}
                       />
@@ -287,6 +311,7 @@ const AddProduct = () => {
                           {...params}
                           label="Subcategories"
                           size="small"
+                          {...register("subCategory")}
                         />
                       )}
                     />
@@ -312,13 +337,13 @@ const AddProduct = () => {
                   <Grid item className="add-icon">
                     <AddIcon
                       onClick={() =>
-                        append({ featureKey: "", featureValue: "" })
+                        featureAppend({ featureKey: "", featureValue: "" })
                       }
                       color="primary"
                       className="add-icon-section"
                     />
                   </Grid>
-                  {controlledFields?.map((list, index) => {
+                  {controlledFeatureFields?.map((list, index) => {
                     return (
                       <Grid
                         key={list.id}
@@ -333,7 +358,7 @@ const AddProduct = () => {
                             size="small"
                             id="outlined-multiline-static"
                             label="Features"
-                            onChange={(e) => handleFeatureKey(e, null)}
+                            // onChange={(e) => handleFeatureKey(e, null)}
                             {...register(`features.${index}.featureKey`)}
                           />
                         </Grid>
@@ -343,12 +368,12 @@ const AddProduct = () => {
                             id="outlined-multiline-static"
                             label="value"
                             size="small"
-                            onChange={(e) => handleFeatureKey(null, e)}
+                            // onChange={(e) => handleFeatureKey(null, e)}
                             {...register(`features.${index}.featureValue`)}
                           />
                         </Grid>
                         <Grid item xs={1} className="remove-section">
-                          {fields.length > 1 && (
+                          {featureFields.length > 1 && (
                             <button className="close-section">
                               <HighlightOffIcon />
                             </button>
@@ -419,31 +444,41 @@ const AddProduct = () => {
                     <div className="error">{errors?.offerPrice?.message}</div>
                   </Grid>
                 </Grid>
-                <Grid container spacing={2} marginTop={1}>
-                  <Grid item xs={6}>
-                    <Button
-                      variant="contained"
-                      className="file-btn"
-                      fullWidth
-                      component="label"
-                    >
-                      Upload Image
-                      <input
-                        {...register("productImageFile")}
-                        type="file"
-                        hidden
-                      />
-                    </Button>
-                    <div className="error">
-                      {errors?.productImageFile?.message}
-                    </div>
 
-                    {/* <ErrorMessage
+                <Grid container spacing={2} marginTop={1}>
+                  <button onClick={() => productFieldAppend({ image: "" })}>
+                    Add
+                  </button>
+                  {controlledProductImageFields?.map((list, index) => {
+                    return (
+                      <Grid key={list.id} item xs={6}>
+                        {list && list?.image[0]?.name}
+                        <Button
+                          variant="contained"
+                          className="file-btn"
+                          fullWidth
+                          component="label"
+                        >
+                          Upload Image
+                          <input
+                            {...register(`productImageFile.${index}.image`)}
+                            type="file"
+                            hidden
+                          />
+                        </Button>
+                        <div className="error">
+                          {errors?.productImageFile?.message}
+                        </div>
+
+                        {/* <ErrorMessage
                       errors={errors}
                       name="productImageFile"
                       render={({ message }) => <p>{message}</p>}
                     /> */}
-                  </Grid>
+                      </Grid>
+                    );
+                  })}
+
                   <Grid item xs={6}>
                     <Button
                       variant="contained"
