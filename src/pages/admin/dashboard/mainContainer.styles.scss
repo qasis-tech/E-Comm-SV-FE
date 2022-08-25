@@ -1,0 +1,12 @@
+.MuiPaper-root{
+    z-index:1100!important;
+}
+.MuiDrawer-paper{
+    position: inherit!important;
+}
+.MuiDrawer-docked {
+    height: 100vh!important;
+    .MuiPaper-elevation{
+        height: 100%;
+    }
+}
