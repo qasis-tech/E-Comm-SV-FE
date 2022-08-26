@@ -67,7 +67,7 @@ const AddProduct = () => {
     resolver: yupResolver(productaddSchema),
     defaultValues: {
       features: [{ featureKey: "", featureValue: "" }],
-      productImageFile: [{ image: "" }],
+      productImageFile: [{ images: "" }],
     },
   });
   const { fields: featureFields, append: featureAppend } = useFieldArray({
@@ -171,42 +171,60 @@ const AddProduct = () => {
     bodyFormData.append("offerUnit", offerUnit);
     bodyFormData.append("offerQuantity", offerQuantity);
     bodyFormData.append("offerPrice", offerPrice);
-    console.log("selectedunit===>>>", units);
+
     const temp = {};
     const featureArray = [];
 
     for (const values of features) {
       let key = values.featureKey;
       temp[key] = values.featureValue;
-      // bodyFormData.append(`${values.featureKey}`, values.featureValue);
     }
     featureArray.push(temp);
     bodyFormData.append("features", JSON.stringify(featureArray));
-    console.log("features=>>>", featureArray);
 
-    let arr = [];
-    for (const values of productImageFile) {
-      arr.push({ image: values.image[0] });
-      debugger;
+    // let promise = new Promise((resolve, reject) => {
+    //   let arr = [];
+    //   for (const values of productImageFile) {
+    //     arr.push({ image: values.image[0] });
+    //   }
+    //   if (arr.length !== 0) {
+    //     console.log("arrayy==>>", arr);
+    //     resolve(bodyFormData.append("productImage", JSON.stringify(arr)));
+    //   }
+
+    //   reject("fails");
+    // });
+    // promise.then(() => console.log("ygysady")).catch((err) => console.log(err));
+
+    // let arr = [];
+    for (let i = 0; i < productImageFile.length; i++) {
+      console.log("values of i", productImageFile[i].images);
+      // arr.push({ image: values.image[0] });
+      bodyFormData.append("productImage", productImageFile[i]);
     }
+    bodyFormData.append("productVideo", productVideoFile[0]);
 
-    console.log("imagearray===>>", arr);
-    bodyFormData.append("productImage", JSON.stringify(arr));
+    // console.log("111===>>>", arr);
+    // bodyFormData.append("productImage", arr);
+    // console.log("cxhcvhcvs=====>>>", bodyFormData.entries());
+    // console.log("imagearray===>>", arr);
 
-    if (arr.length) {
-      axios
-        .post(`${URLS.product}`, bodyFormData, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((response) => {
-          console.log("Response=>>", response);
-        })
-        .catch((error) => {
-          console.log("Errorss=>>", error);
-        });
-    }
+    // let imageArr = JSON.stringify(arr);
+    // console.log("imagearray===>>", imageArr);
+
+    // bodyFormData.append("productImage", JSON.stringify(arr));
+    axios
+      .post(`${URLS.product}`, bodyFormData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        console.log("Response=>>", response);
+      })
+      .catch((error) => {
+        console.log("Errorss=>>", error);
+      });
   };
 
   const navigate = useNavigate();
@@ -446,13 +464,13 @@ const AddProduct = () => {
                 </Grid>
 
                 <Grid container spacing={2} marginTop={1}>
-                  <button onClick={() => productFieldAppend({ image: "" })}>
+                  <button onClick={() => productFieldAppend({ images: "" })}>
                     Add
                   </button>
                   {controlledProductImageFields?.map((list, index) => {
                     return (
                       <Grid key={list.id} item xs={6}>
-                        {list && list?.image[0]?.name}
+                        {list && list?.images[0]?.name}
                         <Button
                           variant="contained"
                           className="file-btn"
@@ -461,14 +479,14 @@ const AddProduct = () => {
                         >
                           Upload Image
                           <input
-                            {...register(`productImageFile.${index}.image`)}
+                            {...register(`productImageFile.${index}.images`)}
                             type="file"
                             hidden
                           />
                         </Button>
-                        <div className="error">
+                        {/* <div className="error">
                           {errors?.productImageFile?.message}
-                        </div>
+                        </div> */}
 
                         {/* <ErrorMessage
                       errors={errors}
