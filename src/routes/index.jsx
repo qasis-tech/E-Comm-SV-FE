@@ -4,6 +4,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 // User
 import HomePage from "../pages/user/home";
 import UserLoginPage from "../pages/user/login/loginPage";
+import ForgotPassword from "../pages/user/forgotpassword/forgotPasswordPage";
 // Admin
 import AdminHome from "../pages/admin/dashboard/index";
 import DashboardPage from "../pages/admin/dashboard/mainContainer";
@@ -56,6 +57,7 @@ const CustomRouters = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="login" element={<UserLoginPage />} />
         <Route path="register" element={<RegisterPage />} />
+        <Route path="forgotpassword" element={<ForgotPassword />} />
         <Route path="product-details" element={<CustomerProductDetails />} />
         <Route path="cart" element={<CartPage />} />
         <Route path="profile" element={<Profile />} />

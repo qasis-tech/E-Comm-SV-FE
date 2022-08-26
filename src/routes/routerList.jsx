@@ -2,8 +2,8 @@ const List = {
   user: {
     home: "/",
     login: "/login",
-    loginuser:"loginpage",
     register: "register",
+    forgotpassword:"forgotpassword",
     about: "about",
     contact: "contact",
     HeaderNav:"navbar",
