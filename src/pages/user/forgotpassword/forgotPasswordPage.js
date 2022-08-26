@@ -57,7 +57,6 @@ function ForgotPasswordPage() {
                 className="password"
                 variant="outlined"
                 InputProps={{
-                  // style: { border: "2px groove green" },
                   endAdornment: (
                     <InputAdornment position="end">
                       <IconButton edge="end"></IconButton>
