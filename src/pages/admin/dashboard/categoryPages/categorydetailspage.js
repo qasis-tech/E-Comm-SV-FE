@@ -44,7 +44,7 @@ function Categorydetails() {
     defaultValues: {
       mainCategory: null,
       categoryImageFile: null,
-      subcategory: [{ subCategoryName: "", imageFile: "" }],
+      subcategory: [],
     },
   });
 
@@ -107,6 +107,7 @@ function Categorydetails() {
 
     for (const values of subcategory) {
       values.imageFile[0].fieldname = values.subCategoryName;
+      console.log("values.imageFile[0] =========> ", values.imageFile);
       formData.append(`${values.subCategoryName}`, values.imageFile[0]);
     }
 
@@ -118,19 +119,18 @@ function Categorydetails() {
         },
       })
       .then((res) => {
-        console.log("res", res);
         setPopup({
           status: true,
           message: res.message,
           type: res.success ? "success" : "error",
         });
-        if (res.success) {
-          setTimeout(() => {
-            navigate(
-              `${RouterList.admin.admin}/${RouterList.admin.categoryList}`
-            );
-          }, 3000);
-        }
+        // if (res.success) {
+        //   setTimeout(() => {
+        //     navigate(
+        //       `${RouterList.admin.admin}/${RouterList.admin.categoryList}`
+        //     );
+        //   }, 3000);
+        // }
       })
       .catch((err) => {
         console.error("Error in Category Add", err);

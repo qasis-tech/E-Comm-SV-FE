@@ -36,7 +36,7 @@ const AddCategory = () => {
     defaultValues: {
       mainCategory: null,
       categoryImageFile: null,
-      subcategory: [{ subCategoryName: "", imageFile: "" }],
+      subcategory: [],
     },
   });
 
@@ -59,9 +59,11 @@ const AddCategory = () => {
 
     formData.append("label", mainCategory);
     formData.append("image", categoryImageFile[0]);
-
-    for (const values of subcategory) {
-      formData.append(`${values.subCategoryName}`, values.imageFile[0]);
+    if (subcategory) {
+      for (const values of subcategory) {
+        formData.append(`${values.subCategoryName}`, values.imageFile[0]);
+      }
+    } else {
     }
 
     axios
@@ -71,7 +73,7 @@ const AddCategory = () => {
         },
       })
       .then((res) => {
-        if (res.data) {
+        if (res.success) {
           navigate(
             `${RouterList.admin.admin}/${RouterList.admin.categoryList}`
           );
