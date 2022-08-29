@@ -183,41 +183,11 @@ const AddProduct = () => {
     featureArray.push(temp);
     bodyFormData.append("features", JSON.stringify(featureArray));
 
-<<<<<<< HEAD
-    let arr = [];
-    for (let i = 0; i < productImageFile.length; i++) {
-      bodyFormData.append("productImage", productImageFile[i]?.images[0]);
-    }
     bodyFormData.append("productVideo", productVideoFile);
-=======
-    // let promise = new Promise((resolve, reject) => {
-    //   let arr = [];
-    //   for (const values of productImageFile) {
-    //     arr.push({ image: values.image[0] });
-    //   }
-    //   if (arr.length !== 0) {
-    //     console.log("arrayy==>>", arr);
-    //     resolve(bodyFormData.append("productImage", JSON.stringify(arr)));
-    //   }
 
-    //   reject("fails");
-    // });
-    // promise.then(() => console.log("ygysady")).catch((err) => console.log(err));
-
-    let arr = [];
     for (const values of productImageFile) {
-      console.log("values", values.images);
-
-      arr.push({ image: values.images[0] });
-      console.log("arr", arr);
+      bodyFormData.append("productImage[]", values.images[0]);
     }
-    bodyFormData.append("productImage", JSON.stringify(arr));
-
-    // bodyFormData.append(
-    //   "productVideo",
-    //   productVideoFile[0] ? productVideoFile : []
-    // );
->>>>>>> 342c3ff4add3d4395c1c40ad456df5a351d49c18
 
     axios
       .post(`${URLS.product}`, bodyFormData, {
