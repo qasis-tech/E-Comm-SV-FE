@@ -192,23 +192,23 @@ const ListProduct = () => {
           </div>
         </Grid>
       </Grid>
-      <TableContainer className="product-table-wrapper" component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Category</TableCell>
-              <TableCell> Subcategory</TableCell>
-              <TableCell>Unit</TableCell>
-              <TableCell>Price</TableCell>
-              <TableCell>Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {isLoading ? (
-              <Loader />
-            ) : productData?.length ? (
-              productData?.map((product) => {
+      {isLoading ? (
+        <Loader />
+      ) : productData?.length ? (
+        <TableContainer className="product-table-wrapper" component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell>Category</TableCell>
+                <TableCell> Subcategory</TableCell>
+                <TableCell>Unit</TableCell>
+                <TableCell>Price</TableCell>
+                <TableCell>Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {productData?.map((product) => {
                 return (
                   <TableRow
                     hover
@@ -240,13 +240,13 @@ const ListProduct = () => {
                     </TableCell>
                   </TableRow>
                 );
-              })
-            ) : (
-              <NotDataAvailable />
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      ) : (
+        <NotDataAvailable />
+      )}
       {!isLoading && count > 10 ? (
         <div className="pagination-section">
           <TablePagination

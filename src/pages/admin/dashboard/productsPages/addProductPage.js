@@ -9,53 +9,13 @@ import { URLS } from "../../../../config/urls.config";
 import { ErrorMessage } from "@hookform/error-message";
 import Typography from "@mui/material/Typography";
 
-import {
-  Autocomplete,
-  Box,
-  Button,
-  Divider,
-  MenuItem,
-  TextField,
-} from "@mui/material";
-import Container from "@mui/material/Container";
+import { Autocomplete, Box, Button, TextField } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import AddIcon from "@mui/icons-material/Add";
-import CloseIcon from "@mui/icons-material/Close";
+
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
 import "./add-product.styles.scss";
-
-// const productaddSchema = yup
-//   .object()
-//   .shape({
-// productName: yup.string().required("Product is required"),
-// units: yup.string(),
-// category: yup.string(),
-// subCategory: yup.string(),
-// quantity: yup
-//   .number()
-//   .required("Quantity is required")
-//   .typeError("You must specify number")
-//   .min(0, "Min value 0"),
-// description: yup.string().required("Description is required"),
-// featureKey: yup.string(),
-// featureValue: yup.string(),
-// price: yup.number().typeError("You must specify number").required(),
-// offerUnit: yup.string(),
-// offerQuantity: yup
-//   .number()
-//   .required()
-//   .typeError("You must specify number")
-//   .min(0, "Min value 0"),
-// offerPrice: yup
-//   .number()
-//   .required("OfferPrice is required")
-//   .typeError("You must specify number")
-//   .min(0, "Min value 0"),
-// image: yup.array().required(),
-// productVideoFile: yup.array(),
-// })
-// .required();
 
 const AddProduct = () => {
   const {
@@ -99,15 +59,13 @@ const AddProduct = () => {
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [selectedSubCategory, setSelectedSubCategory] = useState([]);
   const [unitData, setUnitdata] = useState([
-    { label: "kg", value: "kg" },
-    { label: "g", value: "g" },
-    { label: "ltr", value: "ltr" },
-    { label: "no:", value: "no" },
+    { label: "Kg", value: "kg" },
+    { label: "Gram", value: "g" },
+    { label: "Ltr", value: "ltr" },
+    { label: "No", value: "no" },
   ]);
   const [selectedUnit, setSelectedunit] = useState([]);
   const [selectedOfferunit, setSelectedofferunit] = useState([]);
-
-  // console.log("001", watch("productImageFile"));
 
   React.useEffect(() => {
     getCatgoryListApi();
@@ -118,49 +76,31 @@ const AddProduct = () => {
       .get(`${URLS.category}`)
       .then((res) => {
         setCategorydata(res?.data);
-        // console.log("resss", res.data);
       })
       .catch((err) => {
         console.log("error", err);
       });
   };
-
   const handleCategory = (e, val) => setSelectedCategory(val);
   const handleSubCategory = (e, val) => setSelectedSubCategory(val);
-
-  const handleUnit = (e, val) => {
-    console.log("val", val);
-    setSelectedunit(val);
-    console.log("selectedunit", val);
-  };
+  const handleUnit = (e, val) => setSelectedunit(val);
   const handleOfferUnit = (e, val) => setSelectedofferunit(val);
 
-  // const handleFeatureKey = (key, val) => {
-  //   console.log("key", key);
-  //   let temp = [...featureData];
-  //   let obj = {};
-  //   obj[key.target.value] = val?.target?.value;
-  //   temp.push(obj);
-  //   SetFeaturedata(temp);
-  // };
-
-  const handleProductAdd = (data) => {
-    const {
-      productName,
-      quantity,
-      units,
-      category,
-      subCategory,
-      description,
-      features,
-      price,
-      offerUnit,
-      offerQuantity,
-      offerPrice,
-      productImageFile,
-      productVideoFile,
-    } = data;
-
+  const handleProductAdd = ({
+    productName,
+    quantity,
+    units,
+    category,
+    subCategory,
+    description,
+    features,
+    price,
+    offerUnit,
+    offerQuantity,
+    offerPrice,
+    productImageFile,
+    productVideoFile,
+  }) => {
     const bodyFormData = new FormData();
     bodyFormData.append("name", productName);
     bodyFormData.append("quantity", quantity);
@@ -175,21 +115,16 @@ const AddProduct = () => {
 
     const temp = {};
     const featureArray = [];
-
     for (const values of features) {
       let key = values.featureKey;
       temp[key] = values.featureValue;
     }
-
     featureArray.push(temp);
     bodyFormData.append("features", JSON.stringify(featureArray));
-
     bodyFormData.append("productVideo", productVideoFile);
-
     for (const values of productImageFile) {
       bodyFormData.append("productImage[]", values.images[0]);
     }
-
     axios
       .post(`${URLS.product}`, bodyFormData, {
         headers: { "Content-Type": "multipart/form-data" },

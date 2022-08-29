@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { startCase } from "lodash";
 
 import NotDataAvailable from "../../../../components/NoDataAvailable";
 import { URLS } from "../../../../config/urls.config";
@@ -59,7 +60,7 @@ const ListSubCat = ({ item }) => {
               key={index}
               className="border px-2 py-1 m-1 rounded shadow-sm text-center"
             >
-              {e.label}
+              {startCase(e.label)}
             </Typography>
           );
         })
@@ -147,9 +148,7 @@ const ListCategory = () => {
   }, [page, rowsPerPage]);
 
   useEffect(() => {
-    if (searchInput === "") {
-      getCategoryListApi();
-    }
+    getCategoryListApi();
   }, [searchInput]);
 
   const getCategoryListApi = () => {
@@ -194,9 +193,7 @@ const ListCategory = () => {
                     sx={{
                       visibility: searchInput !== "" ? "visible" : "hidden",
                     }}
-                    onClick={() => {
-                      setSearchInput("");
-                    }}
+                    onClick={() => setSearchInput("")}
                   >
                     <CloseIcon />
                   </IconButton>
@@ -245,15 +242,18 @@ const ListCategory = () => {
             <TableBody>
               {categoryList?.map((item, index) => {
                 return (
-                  <TableRow hover className="row-section" key={item?._id}>
-                    <TableCell
-                      component="th"
-                      scope="row"
-                      onClick={() =>
-                        navigate(`/admin/category-details/${item._id}`)
-                      }
-                    >
-                      {item.label}
+                  <TableRow
+                    hover
+                    className="row-section"
+                    key={item?._id}
+                    onClick={() =>
+                      navigate(
+                        `${RouterList.admin.admin}/${RouterList.admin.categoryDetails}/${item._id}`
+                      )
+                    }
+                  >
+                    <TableCell component="th" scope="row">
+                      {startCase(item.label)}
                     </TableCell>
 
                     <TableCell className="max-width-sc">
@@ -275,7 +275,7 @@ const ListCategory = () => {
       ) : (
         <NotDataAvailable />
       )}
-      {!isLoading && count > 10 ? (
+      {!!count > 10 && (
         <div className="pagination-section">
           <TablePagination
             component="div"
@@ -286,7 +286,7 @@ const ListCategory = () => {
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
         </div>
-      ) : null}
+      )}
       <div style={{ position: "fixed", bottom: "2em", right: "1em" }}>
         <Fab
           color="primary"

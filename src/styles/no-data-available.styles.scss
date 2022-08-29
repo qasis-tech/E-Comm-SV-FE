@@ -1,3 +1,5 @@
+@import "./common.styles.scss";
+
 .no-data-found {
   position: absolute;
   left: 45%;
@@ -29,9 +31,10 @@
 
       .empty-state__message {
         color: #38a169;
-        font-size: 1.5rem;
-        font-weight: 500;
+        font-size: $main-font-size;
+        font-weight: bold;
         margin-top: 0.85rem;
+        text-transform: uppercase;
       }
     }
   }

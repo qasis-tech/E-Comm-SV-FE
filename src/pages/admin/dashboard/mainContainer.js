@@ -1,5 +1,6 @@
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { Outlet, useNavigate, useLocation, Router } from "react-router-dom";
+import { startCase } from "lodash";
 
 import {
   Box,
@@ -12,31 +13,38 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
-  Grid,
 } from "@mui/material";
 
 import ListItemIcon from "@mui/material/ListItemIcon";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 
 import "../../../styles/common.styles.scss";
 import "./mainContainer.styles.scss";
+import RouterList from "../../../routes/routerList";
 
 const drawerWidth = 240;
 
 function DashboardPage() {
   let navigate = useNavigate();
+  const location = useLocation();
+
   const [routeList] = useState([
-    { path: "/admin", title: "Dashboard" },
-    { path: "category", title: "Category" },
-    { path: "products", title: "Products" },
-    { path: "order-list", title: "Orders" },
-    { path: "stocks", title: "Stocks" },
-    { path: "users", title: "Users" },
+    { path: RouterList.admin.admin, title: "Dashboard" },
+    { path: RouterList.admin.categoryList, title: "Category" },
+    { path: RouterList.admin.productList, title: "Products" },
+    { path: RouterList.admin.orderList, title: "Orders" },
+    { path: RouterList.admin.stockList, title: "Stocks" },
+    { path: RouterList.admin.userList, title: "Users" },
   ]);
+  const getPathName = () =>
+    startCase(
+      location?.pathname.split("/").pop() === "admin"
+        ? "Dashboard"
+        : location?.pathname.split("/").pop()
+    );
+
   return (
     <Box sx={{ display: "flex" }}>
       <AppBar
@@ -47,16 +55,19 @@ function DashboardPage() {
           <Toolbar>
             <div className="col-md-2 logo">
               <Typography variant="h6" noWrap component="div">
-                Clipped drawer
+                Company Logo
               </Typography>
             </div>
             <div className="col-md-8">
               <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                Dashboard
+                {getPathName()}
               </Typography>
             </div>
             <div className="col-md-2 logout-section">
-              <Button color="inherit" onClick={() => navigate("/login")}>
+              <Button
+                color="inherit"
+                onClick={() => navigate(`${RouterList.user.login}`)}
+              >
                 Logout
               </Button>
             </div>

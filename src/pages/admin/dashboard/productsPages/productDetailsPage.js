@@ -17,6 +17,7 @@ import Typography from "@mui/material/Typography";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
 import ProductImage from "../../../../assets/product-4.jpg";
+
 import "./product-details.styles.scss";
 
 const productdetailsSchema = yup
@@ -78,28 +79,17 @@ const ProductDetails = () => {
     axios
       .get(`${URLS.product}/${id}`)
       .then((res) => {
-        console.log("getapi ress =>>", res.data);
         setValue("productName", res.data.name);
         setValue("productCategory", res.data.category);
         setValue("productSubcategory", res.data.subCategory);
         setValue("productUnit", res.data.unit);
         setValue("productQuantity", res.data.quantity);
         setValue("productDescription", res.data.description);
-
-        // const features = { model: " efgh", colour: "ijkl" };
-        console.log("res feture", res.data.features);
-        Object.keys(res.data.features).forEach(function eachKey(key) {
-          console.log("key", key);
-          //  console.log(key);
-          //  console.log(features[key]);
-        });
-
         setValue("productPrice", res.data.price);
         setValue("productOfferUnit", res.data.offerUnit);
         setValue("productOfferQuantity", res.data.offerQuantity);
         setValue("productOfferPrice", res.data.offerPrice);
       })
-
       .catch((err) => {
         console.log("err in Category LIst", err);
       });
@@ -191,40 +181,6 @@ const ProductDetails = () => {
                     />
                   </Grid>
                 </Grid>
-                {/* <Grid container spacing={2} marginTop={1}>
-                  <Grid item xs={6}>
-                    <TextField
-                      id="outlined-helperText"
-                      label="Features"
-                      fullWidth
-                      size="small"
-                      defaultValue="Vitamin C"
-                      {...register("productFeatureKey")}
-                    />
-                  </Grid>
-                  <Grid item xs={5}>
-                    <TextField
-                      id="outlined-helperText"
-                      label="Value"
-                      fullWidth
-                      size="small"
-                      defaultValue="154%"
-                      {...register("productFeatureValue")}
-                    />
-                  </Grid>
-                  <Grid item xs={1}>
-                    <AddIcon
-                      onClick={() =>
-                        append({
-                          productFeatureKey: "",
-                          productFeatureValue: "",
-                        })
-                      }
-                      color="primary"
-                      className="add-icon-section"
-                    />
-                  </Grid>
-                </Grid> */}
                 <div className="feature-add">
                   <Grid item className="add-icon">
                     <AddIcon

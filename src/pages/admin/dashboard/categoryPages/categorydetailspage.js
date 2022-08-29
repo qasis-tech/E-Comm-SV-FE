@@ -62,7 +62,7 @@ function Categorydetails() {
   });
 
   const { id } = useParams();
-  const [categoryDetailData, setCategoryDetail] = React.useState([]);
+  const [categoryDetailData, setCategoryDetail] = useState([]);
   const [popup, setPopup] = useState({ status: false, message: "", type: "" });
 
   useEffect(() => {
@@ -98,20 +98,41 @@ function Categorydetails() {
       });
   };
 
-  const updateCategorySubmitApi = (data) => {
-    const { mainCategory, categoryImageFile, subcategory } = data;
-    const formData = new FormData();
+  const getFileObj = async (file) => {
+    let result = await fetch(file)
+      .then((r) => r.blob())
+      .then((blobFile) => {
+        let imageName = file.split("/").pop();
+        let fileExt = imageName.split(".").pop();
+        return new File([blobFile], `${imageName}`, {
+          type: `image/${fileExt}`,
+        });
+      });
+    return result;
+  };
 
+  const updateCategorySubmitApi = async ({
+    mainCategory,
+    categoryImageFile,
+    subcategory,
+  }) => {
+    const formData = new FormData();
     formData.append("label", mainCategory);
     formData.append("image", categoryImageFile[0]);
 
     for (const values of subcategory) {
       values.imageFile[0].fieldname = values.subCategoryName;
-      console.log("values.imageFile[0] =========> ", values.imageFile);
-      formData.append(`${values.subCategoryName}`, values.imageFile[0]);
+      if (
+        values.imageFile[0].name.startsWith("http") ||
+        values.imageFile[0].name.startsWith("https")
+      ) {
+        let file = await getFileObj(values.imageFile[0].name);
+        formData.append(`${values.subCategoryName}`, file);
+      } else {
+        formData.append(`${values.subCategoryName}`, values.imageFile[0]);
+      }
     }
 
-    // console.log("ALL ===>", mainCategory, categoryImageFile, subcategory);
     axios
       .put(`${URLS.category}/${id}`, formData, {
         headers: {
@@ -124,13 +145,11 @@ function Categorydetails() {
           message: res.message,
           type: res.success ? "success" : "error",
         });
-        // if (res.success) {
-        //   setTimeout(() => {
-        //     navigate(
-        //       `${RouterList.admin.admin}/${RouterList.admin.categoryList}`
-        //     );
-        //   }, 3000);
-        // }
+        if (res.success) {
+          navigate(
+            `${RouterList.admin.admin}/${RouterList.admin.categoryList}`
+          );
+        }
       })
       .catch((err) => {
         console.error("Error in Category Add", err);
@@ -146,7 +165,7 @@ function Categorydetails() {
 
   return (
     <div className="add-category">
-      <Box noValidate autoComplete="off" className="wrapper">
+      <Box className="wrapper">
         <Grid container direction="row" className="add-category-container">
           <div className="category-form-section col-md-8 col-lg-9 col-sm-10">
             <form
@@ -207,9 +226,6 @@ function Categorydetails() {
                       />
                     </Button>
                   )}
-                  {/* <div className="error">
-                    {errors?.categoryImageFile?.message}
-                  </div> */}
                 </Grid>
               </Grid>
               <hr />
@@ -221,14 +237,17 @@ function Categorydetails() {
               >
                 <Grid container spacing={2} paddingLeft={2}>
                   <Grid item xs={10}>
-                    <h5>Subcategory</h5>
+                    <h5 className="text-uppercase">Subcategory</h5>
                   </Grid>
                   <Grid item xs={2}>
                     <AddIcon
                       color="primary"
                       className="add-icon-section"
                       onClick={() =>
-                        append({ subCategoryName: "", imageFile: "" })
+                        append({
+                          subCategoryName: "",
+                          imageFile: "",
+                        })
                       }
                     />
                   </Grid>

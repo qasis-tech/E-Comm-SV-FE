@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { URLS } from "../../../../config/urls.config";
 import { useNavigate } from "react-router-dom";
-import NotDataAvailable from "../../../../components/NoDataAvailable";
 import axios from "axios";
-import RouterList from "../../../../routes/routerList";
-import Loader from "../../../../components/Loader";
+import { startCase } from "lodash";
 
 import {
   Table,
@@ -22,16 +19,17 @@ import {
   TextField,
   Fab,
   TablePagination,
+  Chip,
+  Drawer,
+  List,
+  Divider,
+  ListItem,
+  ListItemButton,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CreateIcon from "@mui/icons-material/Create";
 import SearchIcon from "@mui/icons-material/Search";
-import Chip from "@mui/material/Chip";
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
+
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
@@ -41,6 +39,10 @@ import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 
 import { formatDate } from "../../../../utils/dateFormat";
+import { URLS } from "../../../../config/urls.config";
+import NotDataAvailable from "../../../../components/NoDataAvailable";
+import RouterList from "../../../../routes/routerList";
+import Loader from "../../../../components/Loader";
 import "./list-user.styles.scss";
 
 const UserList = () => {
@@ -100,7 +102,7 @@ const UserList = () => {
   const [isLoading, setLoader] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const handleChangePage = (event, newPage) => setPage(newPage);
+  const handleChangePage = (e, newPage) => setPage(newPage);
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
@@ -121,7 +123,6 @@ const UserList = () => {
   }, [searchInput]);
 
   const getUserListApi = () => {
-    console.log("api");
     setLoader(true);
     let URL =
       searchInput !== ""
@@ -131,17 +132,16 @@ const UserList = () => {
         : `${URLS.user}?limit=${rowsPerPage}&skip=${page * rowsPerPage}`;
     axios
       .get(URL, {
-        "Content-Type": "application/json",
+        headers: { "Content-Type": "application/json" },
       })
       .then((res) => {
         setLoader(false);
-        console.log("ressss=>", res);
         setUserData(res.data);
         setCount(res.data.count);
       })
       .catch((err) => {
         setLoader(false);
-        console.log("error", err);
+        console.error("error in User List API", err);
         setUserData([]);
       });
   };
@@ -164,9 +164,7 @@ const UserList = () => {
                     sx={{
                       visibility: searchInput !== "" ? "visible" : "hidden",
                     }}
-                    onClick={() => {
-                      setSearchInput("");
-                    }}
+                    onClick={() => setSearchInput("")}
                   >
                     <CloseIcon />
                   </IconButton>
@@ -197,60 +195,65 @@ const UserList = () => {
           </div>
         </Grid>
       </Grid>
-      <TableContainer className="user-table-wrapper" component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Email</TableCell>
-              <TableCell> Phone Number</TableCell>
-              <TableCell>Location</TableCell>
-              <TableCell>Created Date</TableCell>
-              <TableCell>Updated Date</TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell>Actions</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {userData.map((useritem) => {
-              return (
-                <TableRow
-                  hover
-                  key={useritem._id}
-                  onClick={() =>
-                    navigate(`/admin/users-details/${useritem._id}`)
-                  }
-                  className="user-row-section"
-                >
-                  <TableCell component="th" scope="row">
-                    {useritem.firstName + " " + useritem.lastName}
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    {useritem.email}
-                  </TableCell>
-                  <TableCell>{useritem.mobileNumber}</TableCell>
-                  <TableCell>{useritem.location}</TableCell>
-                  <TableCell>{formatDate(useritem?.createdAt)}</TableCell>
-                  <TableCell>{formatDate(useritem?.updatedAt)}</TableCell>
-                  <TableCell>
-                    <span className="actives">Active</span>
-                    <span className="inactive">Inactive</span>
-                  </TableCell>
-                  <TableCell>
-                    <Button>
-                      <DeleteIcon className="delete-icon" />
-                    </Button>
-                    <Button>
-                      <CreateIcon className="edit-icon" />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-            {isLoading ? (
-              <Loader />
-            ) : userData?.length ? (
-              userData.map((useritem) => {
+      {isLoading ? (
+        <Loader />
+      ) : userData?.length ? (
+        <TableContainer className="user-table-wrapper" component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>Phone Number</TableCell>
+                <TableCell>Location</TableCell>
+                <TableCell>Created Date</TableCell>
+                <TableCell>Updated Date</TableCell>
+                <TableCell>Status</TableCell>
+                <TableCell>Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {userData?.map((useritem) => {
+                return (
+                  <TableRow
+                    hover
+                    key={useritem._id}
+                    onClick={() =>
+                      navigate(
+                        `${RouterList.admin}/${RouterList.admin.userDetails}/${useritem._id}`
+                      )
+                    }
+                    className="user-row-section"
+                  >
+                    <TableCell component="th" scope="row">
+                      {`${startCase(useritem.firstName)} ${startCase(
+                        useritem.lastName
+                      )}`}
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      {useritem.email}
+                    </TableCell>
+                    <TableCell>{useritem.mobileNumber}</TableCell>
+                    <TableCell>{useritem.location}</TableCell>
+                    <TableCell>{formatDate(useritem?.createdAt)}</TableCell>
+                    <TableCell>{formatDate(useritem?.updatedAt)}</TableCell>
+                    <TableCell>
+                      <span className="actives">Active</span>
+                      <span className="inactive">Inactive</span>
+                    </TableCell>
+                    <TableCell>
+                      <Button>
+                        <DeleteIcon className="delete-icon" />
+                      </Button>
+                      <Button>
+                        <CreateIcon className="edit-icon" />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+
+              {userData?.map((useritem) => {
                 return (
                   <TableRow
                     hover
@@ -287,25 +290,25 @@ const UserList = () => {
                     </TableCell>
                   </TableRow>
                 );
-              })
-            ) : (
-              <NotDataAvailable />
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      {!isLoading && count > 10 ? (
-        <div className="pagination-section">
-          <TablePagination
-            component="div"
-            count={count}
-            page={page}
-            onPageChange={handleChangePage}
-            rowsPerPage={rowsPerPage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </div>
-      ) : null}
+              })}
+            </TableBody>
+          </Table>
+          {!!count > 10 && (
+            <div className="pagination-section">
+              <TablePagination
+                component="div"
+                count={count}
+                page={page}
+                onPageChange={handleChangePage}
+                rowsPerPage={rowsPerPage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            </div>
+          )}
+        </TableContainer>
+      ) : (
+        <NotDataAvailable />
+      )}
       <div style={{ position: "fixed", bottom: "2em", right: "1em" }}>
         <Fab
           color="primary"

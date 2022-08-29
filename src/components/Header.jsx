@@ -17,9 +17,9 @@ import PersonIcon from "@mui/icons-material/Person";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import PhoneIcon from '@mui/icons-material/Phone';
-import SendIcon from '@mui/icons-material/Send';
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import PhoneIcon from "@mui/icons-material/Phone";
+import SendIcon from "@mui/icons-material/Send";
 
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -68,13 +68,13 @@ const HeaderComponent = () => {
               <div className="row d-flex">
                 <div className="col-md pr-4 d-flex topper align-items-center">
                   <div className="icon mr-2 d-flex justify-content-center align-items-center">
-                    <PhoneIcon className="icons"/>
+                    <PhoneIcon className="icons" />
                   </div>
                   <span className="text">+ 1235 2355 98</span>
                 </div>
                 <div className="col-md pr-4 d-flex topper align-items-center header-email">
                   <div className="icon mr-2 d-flex justify-content-center align-items-center">
-                 <SendIcon  className="icons"/>
+                    <SendIcon className="icons" />
                   </div>
                   <span className="text">youremail@email.com</span>
                 </div>
@@ -147,17 +147,26 @@ const HeaderComponent = () => {
               </li>
               <li className="nav-item">
                 <a className="nav-link  d-flex" href="">
-                  Products<KeyboardArrowDownIcon style={{fontSize:"1rem"}}/>
+                  Products
+                  <KeyboardArrowDownIcon style={{ fontSize: "1rem" }} />
                 </a>
                 <ul className="menu-gold">
                   <li>
-                    <a href="" className="d-flex justify-content-between">Category-1aaaaaaaa<KeyboardArrowRightIcon  style={{fontSize:"1rem"}}/></a>
+                    <a href="" className="d-flex justify-content-between">
+                      Category-1aaaaaaaa
+                      <KeyboardArrowRightIcon style={{ fontSize: "1rem" }} />
+                    </a>
                     <ul>
                       <li>
                         <a href="">Karim Khan</a>
                       </li>
                       <li>
-                        <a href=""className="d-flex justify-content-between">Rahim Khan<KeyboardArrowRightIcon  style={{fontSize:"1rem"}}/></a>
+                        <a href="" className="d-flex justify-content-between">
+                          Rahim Khan
+                          <KeyboardArrowRightIcon
+                            style={{ fontSize: "1rem" }}
+                          />
+                        </a>
                         <ul>
                           <li>
                             <a href="">PHP</a>
@@ -182,13 +191,21 @@ const HeaderComponent = () => {
                     <a href="">Category-3</a>
                   </li>
                   <li>
-                  <a href="" className="d-flex justify-content-between">Category-4<KeyboardArrowRightIcon  style={{fontSize:"1rem"}}/></a>
+                    <a href="" className="d-flex justify-content-between">
+                      Category-4
+                      <KeyboardArrowRightIcon style={{ fontSize: "1rem" }} />
+                    </a>
                     <ul>
                       <li>
                         <a href="">Karim Khan</a>
                       </li>
                       <li>
-                      <a href=""className="d-flex justify-content-between">Rahim Khan<KeyboardArrowRightIcon  style={{fontSize:"1rem"}}/></a>
+                        <a href="" className="d-flex justify-content-between">
+                          Rahim Khan
+                          <KeyboardArrowRightIcon
+                            style={{ fontSize: "1rem" }}
+                          />
+                        </a>
                         <ul>
                           <li>
                             <a href="">PHP</a>

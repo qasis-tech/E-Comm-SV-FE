@@ -102,7 +102,7 @@ const StockList = () => {
   const [isLoading, setLoader] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const handleChangePage = (event, newPage) => setPage(newPage);
+  const handleChangePage = (e, newPage) => setPage(newPage);
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
@@ -123,7 +123,6 @@ const StockList = () => {
   }, [searchInput]);
 
   const getStockListApi = () => {
-    console.log("jdjhdgja");
     setLoader(true);
     let URL =
       searchInput !== ""
@@ -139,14 +138,13 @@ const StockList = () => {
       })
       .then((res) => {
         setLoader(false);
-        console.log("ress", res);
         setListdata(res.data.totalStock);
         setCount(res.count);
         setStockShortDetails(res.shorthanddetails);
       })
       .catch((err) => {
         setLoader(false);
-        console.log("error", err);
+        console.error("error in stock List API", err);
         setListdata([]);
       });
   };
@@ -203,58 +201,59 @@ const StockList = () => {
           </div>
         </Grid>
       </Grid>
-      <Grid
-        container
-        spacing={2}
-        marginTop={2}
-        className="stock-shorthand-main-section"
-      >
-        <Grid item xs={3}>
-          <Box className="shorthand">
-            <div className="col-md-8 stock-shorthand-section">
-              <h3 className="head">In Stock</h3>
-              <h3 className="order-number">{stockShortDetails?.inStock}</h3>
-            </div>
-            <div className="col-md-4 icon-part">
-              <div className="cart-order-icon">
-                <ShoppingCartIcon className="order-cart-icon-section" />
+      {!!listData?.length && (
+        <Grid
+          container
+          spacing={2}
+          marginTop={2}
+          className="stock-shorthand-main-section"
+        >
+          <Grid item xs={3}>
+            <Box className="shorthand">
+              <div className="col-md-8 stock-shorthand-section">
+                <h3 className="head">In Stock</h3>
+                <h3 className="order-number">{stockShortDetails?.inStock}</h3>
               </div>
-            </div>
-          </Box>
-        </Grid>
-        <Grid item xs={3}>
-          <Box className="shorthand">
-            <div className="col-md-8 stock-shorthand-section">
-              <h3 className="head">Out Stock</h3>
-              <h3 className="order-number">{stockShortDetails?.outStock}</h3>
-            </div>
-            <div className="col-md-4 icon-part">
-              <div className="cart-order-icon">
-                <ShoppingCartCheckoutIcon className="order-cart-icon-section" />
+              <div className="col-md-4 icon-part">
+                <div className="cart-order-icon">
+                  <ShoppingCartIcon className="order-cart-icon-section" />
+                </div>
               </div>
-            </div>
-          </Box>
+            </Box>
+          </Grid>
+          <Grid item xs={3}>
+            <Box className="shorthand">
+              <div className="col-md-8 stock-shorthand-section">
+                <h3 className="head">Out Stock</h3>
+                <h3 className="order-number">{stockShortDetails?.outStock}</h3>
+              </div>
+              <div className="col-md-4 icon-part">
+                <div className="cart-order-icon">
+                  <ShoppingCartCheckoutIcon className="order-cart-icon-section" />
+                </div>
+              </div>
+            </Box>
+          </Grid>
         </Grid>
-      </Grid>
-      <TableContainer className="stock-table-wrapper" component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Category</TableCell>
-              <TableCell> Subcategory</TableCell>
-              <TableCell> Name</TableCell>
-              <TableCell>Quantity</TableCell>
-              <TableCell>Created Date</TableCell>
-              <TableCell>Updated Date</TableCell>
-              <TableCell>Action</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {isLoading ? (
-              <Loader />
-            ) : listData?.length ? (
-              listData?.map((listitem) => {
-                console.log("yfsas", listitem);
+      )}
+      {isLoading ? (
+        <Loader />
+      ) : listData?.length ? (
+        <TableContainer className="stock-table-wrapper" component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Category</TableCell>
+                <TableCell>Subcategory</TableCell>
+                <TableCell>Name</TableCell>
+                <TableCell>Quantity</TableCell>
+                <TableCell>Created Date</TableCell>
+                <TableCell>Updated Date</TableCell>
+                <TableCell>Action</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {listData?.map((listitem) => {
                 return (
                   <TableRow
                     hover
@@ -287,30 +286,32 @@ const StockList = () => {
                     </TableCell>
                   </TableRow>
                 );
-              })
-            ) : (
-              <NotDataAvailable />
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      {!isLoading && count > 10 ? (
-        <div className="pagination-section">
-          <TablePagination
-            component="div"
-            count={count}
-            page={page}
-            onPageChange={handleChangePage}
-            rowsPerPage={rowsPerPage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </div>
-      ) : null}
+              })}
+            </TableBody>
+          </Table>
+          {!!count > 10 && (
+            <div className="pagination-section">
+              <TablePagination
+                component="div"
+                count={count}
+                page={page}
+                onPageChange={handleChangePage}
+                rowsPerPage={rowsPerPage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            </div>
+          )}
+        </TableContainer>
+      ) : (
+        <NotDataAvailable />
+      )}
       <div style={{ position: "fixed", bottom: "2em", right: "1em" }}>
         <Fab
           color="primary"
           aria-label="add"
-          onClick={() => navigate("/admin/add-stock")}
+          onClick={() =>
+            navigate(`${RouterList.admin.admin}/${RouterList.admin.addStock}`)
+          }
         >
           <AddIcon />
         </Fab>

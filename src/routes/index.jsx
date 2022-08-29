@@ -1,5 +1,3 @@
-
-
 import { Routes, Route, Navigate } from "react-router-dom";
 // User
 import HomePage from "../pages/user/home";
@@ -69,12 +67,15 @@ const CustomRouters = () => {
         <Route path="whishlist" element={<WhishList />} />
         <Route path={RouterList.user.about} element={<AboutUs />} />
         <Route path={RouterList.user.contact} element={<ContactUs />} />
-        <Route path="navbar" element={<HeaderNav/>}/>
+        <Route path="navbar" element={<HeaderNav />} />
       </Route>
       <Route path="/admin" element={<PrivateRouting />} isAdmin={true}>
         <Route path="/admin" element={<AdminHome />} />
         <Route path="dashboard" element={<DashboardPage />} />
-        <Route path={RouterList.admin.categoryList} element={<ListCategory />} />
+        <Route
+          path={RouterList.admin.categoryList}
+          element={<ListCategory />}
+        />
         <Route path={RouterList.admin.addCategory} element={<AddCategory />} />
         <Route path="category-details/:id" element={<Categorydetails />} />
         <Route path="products" element={<ListProduct />} />
@@ -82,14 +83,16 @@ const CustomRouters = () => {
         <Route path="product-details/:id" element={<ProductDetails />} />
         <Route path="stocks" element={<StockList />} />
         <Route path="add-stock" element={<AddStock />} />
-        <Route path={RouterList.admin.stockDetails} element={<StockDetails />} />
+        <Route
+          path={RouterList.admin.stockDetails}
+          element={<StockDetails />}
+        />
         <Route path="users" element={<UserList />} />
         <Route path={RouterList.admin.addUser} element={<AddUser />} />
         <Route path="users-details/:id" element={<UserDetails />} />
         <Route path="add-user" element={<AddUser />} />
         <Route path="order-details/:id" element={<OrderDetails />} />
-        <Route path="order-list" element={<OrderList />} />
-       
+        <Route path={RouterList.admin.orderList} element={<OrderList />} />
       </Route>
 
       <Route path="*" element={<PageNotFound />} />
@@ -98,6 +101,3 @@ const CustomRouters = () => {
 };
 
 export default CustomRouters;
-
-
-

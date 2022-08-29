@@ -95,15 +95,14 @@ const OrderList = () => {
     </Box>
   );
 
-  const [orderData, setOrderData] = useState([]);
+  const [orderData, setOrderData] = useState();
   const [orderShortDetails, setOrderShortDetails] = useState(null);
   const [searchInput, setSearchInput] = useState("");
-
   const [count, setCount] = useState(0);
   const [isLoading, setLoader] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const handleChangePage = (event, newPage) => setPage(newPage);
+  const handleChangePage = (e, newPage) => setPage(newPage);
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
@@ -118,13 +117,10 @@ const OrderList = () => {
   }, [page, rowsPerPage]);
 
   useEffect(() => {
-    if (searchInput === "") {
-      getOrderListApi();
-    }
+    getOrderListApi();
   }, [searchInput]);
 
   const getOrderListApi = () => {
-    console.log("order api");
     setLoader(true);
     let URL =
       searchInput !== ""
@@ -136,14 +132,13 @@ const OrderList = () => {
       .get(URL)
       .then((res) => {
         setLoader(false);
-        console.log("ORDER details", res.data);
         setOrderShortDetails(res.data.shorthanddetails);
         setOrderData(res.data);
         setCount(res.data.count);
       })
       .catch((err) => {
         setLoader(false);
-        console.log("error", err);
+        console.error("error in Order List API ", err);
         setOrderData([]);
       });
   };
@@ -200,72 +195,76 @@ const OrderList = () => {
           </div>
         </Grid>
       </Grid>
-      <Grid
-        container
-        spacing={2}
-        marginTop={2}
-        className="order-shorthand-main-section"
-      >
-        <Grid item xs={3}>
-          <Box className="shorthand">
-            <div className="col-md-8 order-shorthand-section">
-              <h3 className="head">Total Orders</h3>
-              <h3 className="order-number">{orderShortDetails?.totalorders}</h3>
-            </div>
-            <div className="col-md-4 icon-part">
-              <div className="cart-order-icon">
-                <ShoppingCartIcon className="order-cart-icon-section" />
+      {!!orderData?.length && (
+        <Grid
+          container
+          spacing={2}
+          marginTop={2}
+          className="order-shorthand-main-section"
+        >
+          <Grid item xs={3}>
+            <Box className="shorthand">
+              <div className="col-md-8 order-shorthand-section">
+                <h3 className="head">Total Orders</h3>
+                <h3 className="order-number">
+                  {orderShortDetails?.totalorders}
+                </h3>
               </div>
-            </div>
-          </Box>
-        </Grid>
-        <Grid item xs={3}>
-          <Box className="shorthand">
-            <div className="col-md-8 order-shorthand-section">
-              <h3 className="head">Orders Pending</h3>
-              <h3 className="order-number">
-                {orderShortDetails?.pendingOrders}
-              </h3>
-            </div>
-            <div className="col-md-4 icon-part">
-              <div className="cart-order-icon">
-                <ShoppingCartCheckoutIcon className="order-cart-icon-section" />
+              <div className="col-md-4 icon-part">
+                <div className="cart-order-icon">
+                  <ShoppingCartIcon className="order-cart-icon-section" />
+                </div>
               </div>
-            </div>
-          </Box>
-        </Grid>
-        <Grid item xs={3}>
-          <Box className="shorthand">
-            <div className="col-md-8 order-shorthand-section">
-              <h3 className="head">Order Completed</h3>
-              <h3 className="order-number">
-                {orderShortDetails?.completedOrders}
-              </h3>
-            </div>
-            <div className="col-md-4 icon-part">
-              <div className="cart-order-icon">
-                <CheckIcon className="order-cart-icon-section" />
+            </Box>
+          </Grid>
+          <Grid item xs={3}>
+            <Box className="shorthand">
+              <div className="col-md-8 order-shorthand-section">
+                <h3 className="head">Orders Pending</h3>
+                <h3 className="order-number">
+                  {orderShortDetails?.pendingOrders}
+                </h3>
               </div>
-            </div>
-          </Box>
+              <div className="col-md-4 icon-part">
+                <div className="cart-order-icon">
+                  <ShoppingCartCheckoutIcon className="order-cart-icon-section" />
+                </div>
+              </div>
+            </Box>
+          </Grid>
+          <Grid item xs={3}>
+            <Box className="shorthand">
+              <div className="col-md-8 order-shorthand-section">
+                <h3 className="head">Order Completed</h3>
+                <h3 className="order-number">
+                  {orderShortDetails?.completedOrders}
+                </h3>
+              </div>
+              <div className="col-md-4 icon-part">
+                <div className="cart-order-icon">
+                  <CheckIcon className="order-cart-icon-section" />
+                </div>
+              </div>
+            </Box>
+          </Grid>
         </Grid>
-      </Grid>
-      <TableContainer className="order-table-wrapper" component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Order ID </TableCell>
-              <TableCell>Category</TableCell>
-              <TableCell> Subcategory</TableCell>
-              <TableCell>Phone Number</TableCell>
-              <TableCell>Status</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {isLoading ? (
-              <Loader />
-            ) : orderData?.length ? (
-              orderData?.map((orderItem) => {
+      )}
+      {isLoading ? (
+        <Loader />
+      ) : orderData?.length ? (
+        <TableContainer className="order-table-wrapper" component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Order ID </TableCell>
+                <TableCell>Category</TableCell>
+                <TableCell> Subcategory</TableCell>
+                <TableCell>Phone Number</TableCell>
+                <TableCell>Status</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {orderData?.map((orderItem) => {
                 return (
                   <TableRow
                     hover
@@ -314,25 +313,25 @@ const OrderList = () => {
                     </TableCell>
                   </TableRow>
                 );
-              })
-            ) : (
-              <NotDataAvailable />
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      {!isLoading && count > 10 ? (
-        <div className="pagination-section">
-          <TablePagination
-            component="div"
-            count={count}
-            page={page}
-            onPageChange={handleChangePage}
-            rowsPerPage={rowsPerPage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </div>
-      ) : null}
+              })}
+            </TableBody>
+          </Table>
+          {!!count > 10 && (
+            <div className="pagination-section">
+              <TablePagination
+                component="div"
+                count={count}
+                page={page}
+                onPageChange={handleChangePage}
+                rowsPerPage={rowsPerPage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            </div>
+          )}
+        </TableContainer>
+      ) : (
+        <NotDataAvailable />
+      )}
     </Box>
   );
 };

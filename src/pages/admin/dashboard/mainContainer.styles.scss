@@ -1,27 +1,29 @@
-.MuiPaper-root{
-    z-index:1100!important;
+.MuiPaper-root {
+  z-index: 1100 !important;
 }
-.MuiDrawer-paper{
-    position: inherit!important;
+.MuiDrawer-paper {
+  position: inherit !important;
 }
 .MuiDrawer-docked {
-    height: 100vh!important;
-    .MuiPaper-elevation{
-        height: 100%;
-    }
+  height: 100vh !important;
+  .MuiPaper-elevation {
+    height: 100%;
+  }
 }
-.appbar-heading-section{
-    padding-left: 0!important;
-    padding-right: 0!important;
-    .logo{
-        width: 16.66667%!important;
-       // width: 15.66667% !important;
-        @media screen and (min-width:1441px) and (max-width: 4560px) {
-            width: 14.66666%!important;
-        }
-    }
-    .logout-section{
-        display: flex;
-        justify-content: end;
-    }
+.appbar-heading-section {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  .logo {
+    border-right: 1px solid #cccccc30;
+    height: 100%;
+    width: 228px !important;
+    margin-right: 1.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .logout-section {
+    display: flex;
+    justify-content: end;
+  }
 }
