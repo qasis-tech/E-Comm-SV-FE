@@ -112,11 +112,12 @@ const AddProduct = () => {
   React.useEffect(() => {
     getCatgoryListApi();
   }, []);
+
   const getCatgoryListApi = () => {
     axios
       .get(`${URLS.category}`)
       .then((res) => {
-        setCategorydata(res.data);
+        setCategorydata(res?.data);
         // console.log("resss", res.data);
       })
       .catch((err) => {
@@ -179,45 +180,19 @@ const AddProduct = () => {
       let key = values.featureKey;
       temp[key] = values.featureValue;
     }
+
     featureArray.push(temp);
     bodyFormData.append("features", JSON.stringify(featureArray));
 
-    // let promise = new Promise((resolve, reject) => {
-    //   let arr = [];
-    //   for (const values of productImageFile) {
-    //     arr.push({ image: values.image[0] });
-    //   }
-    //   if (arr.length !== 0) {
-    //     console.log("arrayy==>>", arr);
-    //     resolve(bodyFormData.append("productImage", JSON.stringify(arr)));
-    //   }
-
-    //   reject("fails");
-    // });
-    // promise.then(() => console.log("ygysady")).catch((err) => console.log(err));
-
-    // let arr = [];
+    let arr = [];
     for (let i = 0; i < productImageFile.length; i++) {
-      console.log("values of i", productImageFile[i].images);
-      // arr.push({ image: values.image[0] });
-      bodyFormData.append("productImage", productImageFile[i]);
+      bodyFormData.append("productImage", productImageFile[i]?.images[0]);
     }
-    bodyFormData.append("productVideo", productVideoFile[0]);
+    bodyFormData.append("productVideo", productVideoFile);
 
-    // console.log("111===>>>", arr);
-    // bodyFormData.append("productImage", arr);
-    // console.log("cxhcvhcvs=====>>>", bodyFormData.entries());
-    // console.log("imagearray===>>", arr);
-
-    // let imageArr = JSON.stringify(arr);
-    // console.log("imagearray===>>", imageArr);
-
-    // bodyFormData.append("productImage", JSON.stringify(arr));
     axios
       .post(`${URLS.product}`, bodyFormData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+        headers: { "Content-Type": "multipart/form-data" },
       })
       .then((response) => {
         console.log("Response=>>", response);
