@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { URLS } from "../../../../config/urls.config";
 import { ErrorMessage } from "@hookform/error-message";
+import Typography from "@mui/material/Typography";
 
 import {
   Autocomplete,
@@ -437,6 +438,55 @@ const AddProduct = () => {
                   </Grid>
                 </Grid>
 
+                <div className="feature-add">
+                  <Grid item className="add-icon">
+                    <AddIcon
+                      onClick={() => productFieldAppend({ images: "" })}
+                      color="primary"
+                      className="add-icon-section"
+                    />
+                  </Grid>
+                  {controlledProductImageFields?.map((list, index) => {
+                    return (
+                      <Grid
+                        key={list.id}
+                        className="add-section"
+                        container
+                        spacing={2}
+                        marginTop={1}
+                      >
+                        <Grid item xs={6}>
+                          <Typography>
+                            {" "}
+                            {list && list?.images[0]?.name}
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={5}>
+                          <Button
+                            variant="contained"
+                            className="file-btn"
+                            fullWidth
+                            component="label"
+                          >
+                            Upload Image
+                            <input
+                              {...register(`productImageFile.${index}.images`)}
+                              type="file"
+                              hidden
+                            />
+                          </Button>
+                        </Grid>
+                        <Grid item xs={1} className="remove-section">
+                          {featureFields.length > 1 && (
+                            <button className="close-section">
+                              <HighlightOffIcon />
+                            </button>
+                          )}
+                        </Grid>
+                      </Grid>
+                    );
+                  })}
+                </div>
                 <Grid container spacing={2} marginTop={1}>
                   <button onClick={() => productFieldAppend({ images: "" })}>
                     Add
