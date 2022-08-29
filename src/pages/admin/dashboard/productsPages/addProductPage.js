@@ -24,37 +24,37 @@ import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
 import "./add-product.styles.scss";
 
-const productaddSchema = yup
-  .object()
-  .shape({
-    // productName: yup.string().required("Product is required"),
-    // units: yup.string(),
-    // category: yup.string(),
-    // subCategory: yup.string(),
-    // quantity: yup
-    //   .number()
-    //   .required("Quantity is required")
-    //   .typeError("You must specify number")
-    //   .min(0, "Min value 0"),
-    // description: yup.string().required("Description is required"),
-    // featureKey: yup.string(),
-    // featureValue: yup.string(),
-    // price: yup.number().typeError("You must specify number").required(),
-    // offerUnit: yup.string(),
-    // offerQuantity: yup
-    //   .number()
-    //   .required()
-    //   .typeError("You must specify number")
-    //   .min(0, "Min value 0"),
-    // offerPrice: yup
-    //   .number()
-    //   .required("OfferPrice is required")
-    //   .typeError("You must specify number")
-    //   .min(0, "Min value 0"),
-    // image: yup.array().required(),
-    // productVideoFile: yup.array(),
-  })
-  .required();
+// const productaddSchema = yup
+//   .object()
+//   .shape({
+// productName: yup.string().required("Product is required"),
+// units: yup.string(),
+// category: yup.string(),
+// subCategory: yup.string(),
+// quantity: yup
+//   .number()
+//   .required("Quantity is required")
+//   .typeError("You must specify number")
+//   .min(0, "Min value 0"),
+// description: yup.string().required("Description is required"),
+// featureKey: yup.string(),
+// featureValue: yup.string(),
+// price: yup.number().typeError("You must specify number").required(),
+// offerUnit: yup.string(),
+// offerQuantity: yup
+//   .number()
+//   .required()
+//   .typeError("You must specify number")
+//   .min(0, "Min value 0"),
+// offerPrice: yup
+//   .number()
+//   .required("OfferPrice is required")
+//   .typeError("You must specify number")
+//   .min(0, "Min value 0"),
+// image: yup.array().required(),
+// productVideoFile: yup.array(),
+// })
+// .required();
 
 const AddProduct = () => {
   const {
@@ -64,7 +64,6 @@ const AddProduct = () => {
     control,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(productaddSchema),
     defaultValues: {
       features: [{ featureKey: "", featureValue: "" }],
       productImageFile: [{ images: "" }],
@@ -184,11 +183,41 @@ const AddProduct = () => {
     featureArray.push(temp);
     bodyFormData.append("features", JSON.stringify(featureArray));
 
+<<<<<<< HEAD
     let arr = [];
     for (let i = 0; i < productImageFile.length; i++) {
       bodyFormData.append("productImage", productImageFile[i]?.images[0]);
     }
     bodyFormData.append("productVideo", productVideoFile);
+=======
+    // let promise = new Promise((resolve, reject) => {
+    //   let arr = [];
+    //   for (const values of productImageFile) {
+    //     arr.push({ image: values.image[0] });
+    //   }
+    //   if (arr.length !== 0) {
+    //     console.log("arrayy==>>", arr);
+    //     resolve(bodyFormData.append("productImage", JSON.stringify(arr)));
+    //   }
+
+    //   reject("fails");
+    // });
+    // promise.then(() => console.log("ygysady")).catch((err) => console.log(err));
+
+    let arr = [];
+    for (const values of productImageFile) {
+      console.log("values", values.images);
+
+      arr.push({ image: values.images[0] });
+      console.log("arr", arr);
+    }
+    bodyFormData.append("productImage", JSON.stringify(arr));
+
+    // bodyFormData.append(
+    //   "productVideo",
+    //   productVideoFile[0] ? productVideoFile : []
+    // );
+>>>>>>> 342c3ff4add3d4395c1c40ad456df5a351d49c18
 
     axios
       .post(`${URLS.product}`, bodyFormData, {

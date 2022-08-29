@@ -1,51 +1,63 @@
 import * as React from "react";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import * as yup from "yup";
+import { URLS } from "../../../../config/urls.config";
+import { useState } from "react";
 
-import { Box, Button, MenuItem, TextField } from "@mui/material";
+import { Box, Button, MenuItem, TextField, Autocomplete } from "@mui/material";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 
 import "./add-stock.styles.scss";
-const stockaddSchema = yup
-  .object()
-  .shape({
-    productname: yup.string().required(),
-    productquantity: yup.string().required(),
-  })
-  .required();
-const currencies = [
-  {
-    value: "Fruits",
-    label: "Fruits",
-  },
-  {
-    value: "EUR",
-    label: "€",
-  },
-  {
-    value: "BTC",
-    label: "฿",
-  },
-  {
-    value: "JPY",
-    label: "¥",
-  },
-];
+// const stockaddSchema = yup
+//   .object()
+//   .shape({
+//     productname: yup.string().required(),
+//     productquantity: yup.string().required(),
+//   })
+//   .required();
+
 const AddStock = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    resolver: yupResolver(stockaddSchema),
-  });
-  const [currency, setCurrency] = React.useState("Fruits");
+  } = useForm();
+  // const [currency, setCurrency] = React.useState("Fruits");
+  const [unitData, setUnitdata] = useState([
+    { label: "kg", value: "kg" },
+    { label: "g", value: "g" },
+    { label: "ltr", value: "ltr" },
+    { label: "no:", value: "no" },
+  ]);
+  const [selectedUnit, setSelectedunit] = useState([]);
+  const [stockProductData, setStockProductdata] = useState([]);
+  const [selectedStockProduct, setSelectedStockProduct] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState([]);
+  const [selectedSubCategory, setSelectedSubCategory] = useState([]);
 
-  const handleChange = (event) => {
-    setCurrency(event.target.value);
+  const handleProduct = (e, val) => setSelectedStockProduct(val);
+
+  React.useEffect(() => {
+    getProductListApi();
+  }, []);
+  const getProductListApi = () => {
+    axios
+      .get(`${URLS.product}`)
+      .then((res) => {
+        setStockProductdata(res.data);
+        console.log("resss", res);
+      })
+      .catch((err) => {
+        console.log("error", err);
+      });
+  };
+
+  const handleUnit = (e, val) => {
+    console.log("val", val);
+    setSelectedunit(val);
+    console.log("selectedunit", val);
   };
   const handleStockAddpage = (data) => {
     console.log("StockAddpage Details", data);
@@ -68,43 +80,16 @@ const AddStock = () => {
                 <Grid container spacing={2}>
                   <Grid item xs={6}>
                     <TextField
-                      id="outlined-read-only-input"
-                      fullWidth
-                      label="Name"
-                      size="small"
-                      error={errors?.productname}
-                      {...register("productname", {
-                        required: "This is required.",
-                      })}
-                    />
-                    <div className="error">{errors?.productname?.message}</div>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <TextField
-                      id="outlined-read-only-input"
-                      label="Quantity"
-                      size="small"
-                      fullWidth
-                      error={errors?.productquantity}
-                      {...register("productquantity", {
-                        required: "This is required.",
-                      })}
-                    />
-                    <div className="error">
-                      {errors?.productquantity?.message}
-                    </div>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <TextField
                       fullWidth
                       id="outlined-select-currency"
                       select
                       label="Category"
                       size="small"
-                      value={currency}
-                      onChange={handleChange}
+                      // value={currency}
+                      // onChange={handleChange}
+                      {...register("stockCategory")}
                     >
-                      {currencies.map((option) => (
+                      {unitData.map((option) => (
                         <MenuItem key={option.value} value={option.value}>
                           {option.label}
                         </MenuItem>
@@ -118,15 +103,74 @@ const AddStock = () => {
                       select
                       label="Subcategory"
                       size="small"
-                      value={currency}
-                      onChange={handleChange}
+                      // value={currency}
+                      // onChange={handleChange}
+                      {...register("stockSubCategory")}
                     >
-                      {currencies.map((option) => (
+                      {unitData.map((option) => (
                         <MenuItem key={option.value} value={option.value}>
                           {option.label}
                         </MenuItem>
                       ))}
                     </TextField>
+                  </Grid>
+                  <Grid item xs={6}>
+                    {stockProductData?.length && (
+                      <Autocomplete
+                        options={stockProductData}
+                        getOptionLabel={(option) => option.name || ""}
+                        isOptionEqualToValue={(option, value) =>
+                          option._id === value._id
+                        }
+                        onChange={(e, val) => handleProduct(e, val)}
+                        value={selectedStockProduct}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            label="ProductName"
+                            size="small"
+                            {...register("productName")}
+                          />
+                        )}
+                      />
+                    )}
+                  </Grid>
+                  <Grid item xs={3}>
+                    <TextField
+                      type="number"
+                      id="outlined-read-only-input"
+                      label="Quantity"
+                      size="small"
+                      fullWidth
+                      error={errors?.productquantity}
+                      {...register("productquantity", {
+                        required: "This is required.",
+                      })}
+                    />
+                    <div className="error">
+                      {errors?.productquantity?.message}
+                    </div>
+                  </Grid>
+                  <Grid item xs={3}>
+                    {unitData?.length && (
+                      <Autocomplete
+                        options={unitData}
+                        getOptionLabel={(option) => option.label || ""}
+                        isOptionEqualToValue={(option, value) =>
+                          option.value === value.value
+                        }
+                        onChange={(e, val) => handleUnit(e, val)}
+                        value={selectedUnit}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            label="Units"
+                            size="small"
+                            {...register("units")}
+                          />
+                        )}
+                      />
+                    )}
                   </Grid>
                 </Grid>
               </div>

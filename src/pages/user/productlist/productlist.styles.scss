@@ -1,0 +1,183 @@
+@import "../../../styles/button.styles.scss";
+@import "../../../styles/footer.styles.scss";
+@import "../../../styles/variables.styles.scss";
+@import "../../../styles/header.styles.scss";
+.bg-light {
+  background: #f7f6f2 !important;
+}
+
+.bg-primary {
+  background: $primary;
+}
+
+.bg-secondary {
+  background: $secondary !important;
+}
+
+.bg-color-1 {
+  background: $color-1;
+}
+
+.bg-color-2 {
+  background: $color-2;
+}
+
+.bg-color-3 {
+  background: $color-3;
+}
+
+.bg-color-4 {
+  background: $color-4;
+}
+
+.product-list-container {
+  font-family: $font-primary;
+  background: $white;
+  font-size: 15px;
+  line-height: 1.8;
+  font-weight: 400;
+  color: lighten($black, 50%);
+
+  &.menu-show {
+    overflow: hidden;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+  }
+}
+.product-list-wrap {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+
+  padding: 10em 0;
+
+  .slider-text {
+    .breadcrumbs {
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 3px;
+      font-weight: 400;
+
+      span {
+        color: white;
+
+        a {
+          color: white;
+          text-decoration: none;
+        }
+      }
+    }
+
+    .bread {
+      font-weight: 800;
+      color: #fff;
+      font-size: 30px;
+      font-family: "Poppins", Arial, sans-serif;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+  }
+}
+.product-filter-section {
+  padding-top: 3rem;
+  @media screen and (max-width: 1000px) {
+    padding-top: 0!important;
+  }
+  .slider {
+    color: $primary !important;
+  }
+  .checkbox-section {
+    .MuiSvgIcon-root {
+      color: $primary;
+    }
+  }
+  .productlist-main-section {
+    @media screen and (max-width: 1000px) {
+      margin-top: 1em;
+    }
+    .search-section {
+      width: 90%;
+      @media screen and (max-width: 1000px) {
+        margin-top: 1em!important;
+        margin-left: 0!important;
+        margin-right: 0 !important;
+        width: 100%;
+      }
+    }
+    .select-wrap {
+      position: relative;
+      width: 50%;
+      margin-left: 1em;
+      @media screen and (max-width: 1000px) {
+        width: 72%;
+      }
+      select {
+        font-size: 13px;
+        appearance: none;
+        text-transform: uppercase;
+      }
+    }
+    .icon {
+      position: absolute;
+      top: 10%;
+      right: 0;
+      font-size: 14px;
+      align-items: center;
+      align-content: center;
+
+      span {
+        color: $black;
+      }
+    }
+  }
+  .more-section{
+    .more-btn{
+      color: $primary;
+      text-decoration: none;
+    }
+  }
+  .pagination-section {
+    display: flex;
+    justify-content: end;
+    @media screen and (max-width: 1000px) {
+      justify-content: center;
+    }
+    .MuiButtonBase-root {
+      &:hover {
+        background-color: $primary;
+        color: $white;
+      }
+    }
+    .Mui-selected {
+      background-color: $primary;
+      color: $white;
+    }
+  }
+  .list-container{
+
+      .list-heading{
+        border-bottom: 2px solid $primary;
+      }
+      .MuiCheckbox-root{
+        padding: 0!important;
+      }
+      .MuiList-root{
+        padding-bottom: 0!important;
+      }
+  }
+  .category-list-items{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500;
+    border: 2px solid #000;
+    box-shadow: 24;
+    background-color: white;
+    
+  }
+  .chip-color{
+    border-color: $primary!important;
+  }
+}

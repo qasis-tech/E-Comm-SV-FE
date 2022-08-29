@@ -141,8 +141,8 @@ const StockList = () => {
         setLoader(false);
         console.log("ress", res);
         setListdata(res.data.totalStock);
-        setCount(res.data.count);
-        setStockShortDetails(res.data.shorthanddetails);
+        setCount(res.count);
+        setStockShortDetails(res.shorthanddetails);
       })
       .catch((err) => {
         setLoader(false);
