@@ -9,6 +9,7 @@ import { InputAdornment, IconButton, TextField } from "@mui/material";
 import BackgroundImage from "../../../assets/bg.jpg";
 
 import "./forgotpassword.styles.scss";
+import Loader from "../../../components/Loader";
 
 const forgotPasswordSchema = yup
   .object()
@@ -37,10 +38,11 @@ function ForgotPasswordPage() {
   } = useForm({
     resolver: yupResolver(forgotPasswordSchema),
   });
-
+  const [isLoading, setLoader] = useState(false);
   const navigate = useNavigate();
 
   const handleForgotPassword = (data) => {
+    const { forgotEmail, otp, password, cpassword } = data;
     console.log("Forgot Details", data);
   };
 
@@ -94,6 +96,7 @@ function ForgotPasswordPage() {
                 fullWidth
                 {...register("password")}
               />
+              <div className="error">{errors?.password?.message}</div>
               <TextField
                 label="Confirm password"
                 size="small"
@@ -110,9 +113,14 @@ function ForgotPasswordPage() {
                 {...register("cpassword")}
               />
               <div className="error">{errors?.cpassword?.message}</div>
-              <button className="btn btn-success" type="submit">
-                Reset Password
-              </button>
+
+              {isLoading ? (
+                <Loader />
+              ) : (
+                <button className="btn btn-success" type="submit">
+                  Reset Password
+                </button>
+              )}
             </form>
           </div>
           <div className="welcomeDiv">

@@ -13,6 +13,7 @@ import BackgroundImage from "../../../assets/bg.jpg";
 
 import "./login.styles.scss";
 import { authCheck } from "../../../routes/auth";
+import Loader from "../../../components/Loader";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -152,9 +153,14 @@ function LoginPage() {
                 <input type="checkbox" name="checkbox" id="checkbox" />
                 <span className="text">Keep me signed in</span>
               </div>
-              <button className="btn btn-success" type="submit">
-                SIGN IN
-              </button>
+
+              {isLoading ? (
+                <Loader />
+              ) : (
+                <button className="btn btn-success" type="submit">
+                  SIGN IN
+                </button>
+              )}
               <div className="forgotpassword-link">
                 <p>
                   <a

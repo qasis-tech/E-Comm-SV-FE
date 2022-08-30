@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -16,6 +16,7 @@ import BackgroundImage from "../../../assets/bg.jpg";
 
 import "./register.styles.scss";
 import { URLS } from "../../../config/urls.config";
+import Loader from "../../../components/Loader";
 
 const signupSchema = yup
   .object()
@@ -45,6 +46,8 @@ function RegisterPage() {
   } = useForm({
     resolver: yupResolver(signupSchema),
   });
+
+  const [isLoading, setLoader] = useState(false);
   const replaceHyphen = (e) => {
     const new_str = e.replace(/-/g, "");
     return new_str;
@@ -60,6 +63,7 @@ function RegisterPage() {
     password,
     pincode,
   }) => {
+    setLoader(true);
     const result = replaceHyphen(mobilenumber);
     mobilenumber = result;
     let payload = {
@@ -77,6 +81,7 @@ function RegisterPage() {
         "Content-Type": "application/json",
       })
       .then((res) => {
+        setLoader(false);
         console.log("ress=>=>", res);
         if (res.data) {
           if (res.data.success === false) {
@@ -86,6 +91,7 @@ function RegisterPage() {
         }
       })
       .catch((err) => {
+        setLoader(false);
         console.log("errors", err);
       });
   };
@@ -269,12 +275,17 @@ function RegisterPage() {
           <div className="welcomeDiv">
             <h2>Welcome Back!</h2>
             <p className="text">Already have an account?</p>
-            <button
-              className="btn btn2"
-              onClick={() => navigate("/login", { replace: true })}
-            >
-              SIGN IN
-            </button>
+
+            {isLoading ? (
+              <Loader />
+            ) : (
+              <button
+                className="btn btn2"
+                onClick={() => navigate("/login", { replace: true })}
+              >
+                SIGN IN
+              </button>
+            )}
           </div>
         </div>
       </div>
