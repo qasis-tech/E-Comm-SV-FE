@@ -10,21 +10,20 @@ import BackgroundImage from "../../../assets/bg.jpg";
 
 import "./forgotpassword.styles.scss";
 
-const forgotPasswordSchema = yup
-  .object()
-  .shape({
-    forgotEmail: yup.string().email().required("Email ID is required"),
-  })
-  .required();
+// const forgotPasswordSchema = yup
+//   .object()
+//   .shape({
+//     forgotEmail: yup.string().email().required("Email ID is required"),
+//     otp: yup.number().required(),
+//   })
+//   .required();
 
 function ForgotPasswordPage() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    resolver: yupResolver(forgotPasswordSchema),
-  });
+  } = useForm();
 
   const navigate = useNavigate();
 
@@ -55,11 +54,16 @@ function ForgotPasswordPage() {
                 label="Email"
                 className="text-field"
                 fullWidth
-                {...register("forgotEmail")}
-                error={errors?.forgotEmail}
+                {...register("forgotEmail", {
+                  required: "Email ID is required",
+                  pattern: {
+                    value:
+                      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                    message: "Invalid email Id ( eg: example@mail.com ) ",
+                  },
+                })}
               />
               <div className="error">{errors?.forgotEmail?.message}</div>
-
               <TextField
                 id="login-username"
                 variant="outlined"
@@ -67,7 +71,12 @@ function ForgotPasswordPage() {
                 label="OTP"
                 className="text-field"
                 fullWidth
+                {...register("otp", {
+                  required: "OTP is required",
+                  pattern: { value: /^[0-9]*$/, message: "Enter Digits Only" },
+                })}
               />
+              <div className="error">{errors?.otp?.message}</div>
               <TextField
                 id="login-username"
                 variant="outlined"
