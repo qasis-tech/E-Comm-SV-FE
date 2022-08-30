@@ -18,6 +18,7 @@ function LoginPage() {
   const navigate = useNavigate();
   const [isChecked, setCheckBox] = useState(false);
   const [isVisible, setVisible] = useState(false);
+  const [isLoading, setLoader] = useState(false);
   const {
     register,
     handleSubmit,
@@ -37,12 +38,14 @@ function LoginPage() {
   }, []);
 
   const handleLogin = ({ email, password }) => {
+    setLoader(true);
     let payload = { email: email, password: password };
     axios
       .post("http://localhost:4000/login", payload, {
         "Content-Type": "application/json",
       })
       .then((res) => {
+        setLoader(false);
         console.log("REsss", res);
 
         if (res.data) {
@@ -64,7 +67,10 @@ function LoginPage() {
         }
       })
 
-      .catch((error) => console.log("RESS Err", error));
+      .catch((error) => {
+        setLoader(false);
+        console.log("RESS Err", error);
+      });
 
     // navigate("/admin");
   };
