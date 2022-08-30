@@ -32,6 +32,7 @@ const signupSchema = yup
       .string()
       .matches(/^[1-9][0-9]{5}$/, "Invalid zipcode (682315)")
       .required(),
+    userGender: yup.string().required(),
   })
   .required();
 
@@ -54,7 +55,7 @@ function RegisterPage() {
     lastName,
     email,
     mobilenumber,
-    gender,
+    userGender,
     dob,
     password,
     pincode,
@@ -66,7 +67,7 @@ function RegisterPage() {
       lastName: lastName,
       mobileNumber: mobilenumber,
       email: email,
-      gender: gender,
+      gender: userGender,
       dob: dob,
       pinCode: pincode,
       password: password,
@@ -106,7 +107,7 @@ function RegisterPage() {
                     label="First name"
                     size="small"
                     fullWidth
-                    {...register("firstName", {})}
+                    {...register("firstName")}
                     variant="outlined"
                     error={errors?.firstName}
                   />
@@ -195,23 +196,19 @@ function RegisterPage() {
                       row
                       aria-labelledby="demo-row-radio-buttons-group-label"
                       name="row-radio-buttons-group"
+                      defaultValue="Female"
                     >
                       <FormControlLabel
-                        {...register("userGender", { required: true })}
+                        {...register("userGender")}
                         value="female"
                         control={<Radio />}
                         label="Female"
-                        type="radio"
-                        checked={true}
                       />
                       <FormControlLabel
-                        {...register("userGender", { required: true })}
+                        {...register("userGender")}
                         value="male"
                         control={<Radio />}
                         label="Male"
-                        type="radio"
-                        checked={false}
-                        // checked={getValues("userGender") == "male"}
                       />
                     </RadioGroup>
                   </div>

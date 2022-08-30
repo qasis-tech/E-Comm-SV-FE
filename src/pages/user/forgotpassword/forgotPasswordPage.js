@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 import { InputAdornment, IconButton, TextField } from "@mui/material";
 
@@ -7,8 +10,27 @@ import BackgroundImage from "../../../assets/bg.jpg";
 
 import "./forgotpassword.styles.scss";
 
+const forgotPasswordSchema = yup
+  .object()
+  .shape({
+    forgotEmail: yup.string().email().required("Email ID is required"),
+  })
+  .required();
+
 function ForgotPasswordPage() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(forgotPasswordSchema),
+  });
+
   const navigate = useNavigate();
+
+  const handleForgotPassword = (data) => {
+    console.log("Forgot Details", data);
+  };
   const style = { BackgroundImage: "url('../../../assets/bg.jpg')" };
 
   return (
@@ -19,7 +41,7 @@ function ForgotPasswordPage() {
       <div className="container">
         <div className="formWraper">
           <div className="formDiv">
-            <form>
+            <form onSubmit={handleSubmit(handleForgotPassword)}>
               <h2>Reset password</h2>
               <p className="text">
                 {" "}
@@ -33,7 +55,11 @@ function ForgotPasswordPage() {
                 label="Email"
                 className="text-field"
                 fullWidth
+                {...register("forgotEmail")}
+                error={errors?.forgotEmail}
               />
+              <div className="error">{errors?.forgotEmail?.message}</div>
+
               <TextField
                 id="login-username"
                 variant="outlined"

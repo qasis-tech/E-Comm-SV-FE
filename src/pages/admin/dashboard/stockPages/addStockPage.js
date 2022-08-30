@@ -32,21 +32,21 @@ const AddStock = () => {
     { label: "no:", value: "no" },
   ]);
   const [selectedUnit, setSelectedunit] = useState([]);
-  const [stockProductData, setStockProductdata] = useState([]);
-  const [selectedStockProduct, setSelectedStockProduct] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState([]);
-  const [selectedSubCategory, setSelectedSubCategory] = useState([]);
+  const [stockCategoryData, setStockCategoryData] = useState([]);
+  const [selectedStockCategory, setSelectedStockCategory] = useState([]);
+  const [selectedStockSubCategory, setSelectedStockSubCategory] = useState([]);
 
-  const handleProduct = (e, val) => setSelectedStockProduct(val);
+  // const handleProduct = (e, val) => setSelectedStockProduct(val);
 
   React.useEffect(() => {
-    getProductListApi();
+    getCategoryListApi();
   }, []);
-  const getProductListApi = () => {
+  const getCategoryListApi = () => {
     axios
-      .get(`${URLS.product}`)
+      .get(`${URLS.category}`)
       .then((res) => {
-        setStockProductdata(res.data);
+        setStockCategoryData(res.data);
+        // setStockProductdata(res.data);
         console.log("resss", res);
       })
       .catch((err) => {
@@ -59,6 +59,12 @@ const AddStock = () => {
     setSelectedunit(val);
     console.log("selectedunit", val);
   };
+  const handleStockCategory = (e, val) => {
+    setSelectedStockCategory(val);
+    console.log("selectedcategory", selectedStockCategory);
+  };
+  const handleStockSubCategory = (e, val) => setSelectedStockSubCategory(val);
+
   const handleStockAddpage = (data) => {
     console.log("StockAddpage Details", data);
   };
@@ -79,43 +85,51 @@ const AddStock = () => {
               <div className="main-form-container">
                 <Grid container spacing={2}>
                   <Grid item xs={6}>
-                    <TextField
-                      fullWidth
-                      id="outlined-select-currency"
-                      select
-                      label="Category"
-                      size="small"
-                      // value={currency}
-                      // onChange={handleChange}
-                      {...register("stockCategory")}
-                    >
-                      {unitData.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                          {option.label}
-                        </MenuItem>
-                      ))}
-                    </TextField>
+                    {stockCategoryData?.length && (
+                      <Autocomplete
+                        options={stockCategoryData}
+                        getOptionLabel={(option) => option.label || ""}
+                        isOptionEqualToValue={(option, value) =>
+                          option._id === value._id
+                        }
+                        onChange={(e, val) => handleStockCategory(e, val)}
+                        value={selectedStockCategory}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            label="Categories"
+                            size="small"
+                            {...register("stockCategory")}
+                          />
+                        )}
+                      />
+                    )}
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField
-                      fullWidth
-                      id="outlined-select-currency"
-                      select
-                      label="Subcategory"
-                      size="small"
-                      // value={currency}
-                      // onChange={handleChange}
-                      {...register("stockSubCategory")}
-                    >
-                      {unitData.map((option) => (
-                        <MenuItem key={option.value} value={option.value}>
-                          {option.label}
-                        </MenuItem>
-                      ))}
-                    </TextField>
+                    <Autocomplete
+                      options={
+                        selectedStockCategory?.SubCategory?.length
+                          ? selectedStockCategory?.SubCategory
+                          : []
+                      }
+                      getOptionLabel={(option) => option.label || ""}
+                      isOptionEqualToValue={(option, value) =>
+                        option.label === value.label
+                      }
+                      onChange={(e, val) => handleStockSubCategory(e, val)}
+                      value={selectedStockSubCategory}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          label="Subcategories"
+                          size="small"
+                          {...register("stockSubCategory")}
+                        />
+                      )}
+                    />
                   </Grid>
                   <Grid item xs={6}>
-                    {stockProductData?.length && (
+                    {/* {stockProductData?.length && (
                       <Autocomplete
                         options={stockProductData}
                         getOptionLabel={(option) => option.name || ""}
@@ -133,7 +147,7 @@ const AddStock = () => {
                           />
                         )}
                       />
-                    )}
+                    )} */}
                   </Grid>
                   <Grid item xs={3}>
                     <TextField
