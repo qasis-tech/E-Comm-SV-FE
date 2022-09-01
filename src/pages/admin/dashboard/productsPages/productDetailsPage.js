@@ -53,6 +53,8 @@ const ProductDetails = () => {
     resolver: yupResolver(productdetailsSchema),
     defaultValues: {
       productFeatures: [{ productFeatureKey: "", productFeatureValue: "" }],
+      productImageFile: [{ images: "" }],
+      productVideoFile: null,
     },
   });
 
@@ -69,7 +71,7 @@ const ProductDetails = () => {
   });
 
   const { id } = useParams();
-  console.log("parms ==>", id);
+  const [productDetailData, setProductDetail] = React.useState([]);
 
   React.useEffect(() => {
     getProductDetailsApi();
@@ -78,17 +80,46 @@ const ProductDetails = () => {
   const getProductDetailsApi = () => {
     axios
       .get(`${URLS.product}/${id}`)
-      .then((res) => {
-        setValue("productName", res.data.name);
-        setValue("productCategory", res.data.category);
-        setValue("productSubcategory", res.data.subCategory);
-        setValue("productUnit", res.data.unit);
-        setValue("productQuantity", res.data.quantity);
-        setValue("productDescription", res.data.description);
-        setValue("productPrice", res.data.price);
-        setValue("productOfferUnit", res.data.offerUnit);
-        setValue("productOfferQuantity", res.data.offerQuantity);
-        setValue("productOfferPrice", res.data.offerPrice);
+      .then(({ data }) => {
+        console.log("ress==>", data);
+        setProductDetail(data);
+        setValue("productName", data.name);
+        setValue("productCategory", data.category);
+        setValue("productSubcategory", data.subCategory);
+        setValue("productUnit", data.unit);
+        setValue("productQuantity", data.quantity);
+        setValue("productDescription", data.description);
+        setValue("productPrice", data.price);
+        setValue("productOfferUnit", data.offerUnit);
+        setValue("productOfferQuantity", data.offerQuantity);
+        setValue("productOfferPrice", data.offerPrice);
+
+        const temp = [];
+        temp.push(data.features);
+        const tempArray = [];
+        JSON.parse(temp).map((item) => {
+          Object.keys(item).forEach((val) => {
+            tempArray.push({
+              productFeatureKey: val,
+              productFeatureValue: item[val],
+            });
+          });
+        });
+        setValue("productFeatures", tempArray);
+        const tempProductImage = [];
+        tempProductImage.push(data.productImage);
+        for (const values of tempProductImage) {
+          console.log("valuess==>", values);
+          setValue("productImageFile", values);
+        }
+
+        setValue("productImageFile");
+        const tempProductVideo = [];
+        tempProductVideo.push(data.productVideo);
+        for (const values of tempProductVideo) {
+          console.log("valuess==>", values);
+          setValue("productVideoFile", values[0]);
+        }
       })
       .catch((err) => {
         console.log("err in Category LIst", err);
@@ -283,12 +314,12 @@ const ProductDetails = () => {
                 <Grid container spacing={2} marginTop={1}>
                   <Grid item xs={6}>
                     <Card fullWidth>
-                      <CardMedia
+                      {/* <CardMedia
                         component="img"
                         height="140"
                         image={ProductImage}
                         alt="green iguana"
-                      />
+                      /> */}
                       <CardActions>
                         <Button
                           variant="contained"
@@ -306,14 +337,15 @@ const ProductDetails = () => {
                       </CardActions>
                     </Card>
                   </Grid>
+
                   <Grid item xs={6}>
                     <Card fullWidth>
-                      <CardMedia
+                      {/* <CardMedia
                         component="img"
                         height="140"
                         image={ProductImage}
                         alt="green iguana"
-                      />
+                      /> */}
                       <CardActions>
                         <Button
                           variant="contained"
