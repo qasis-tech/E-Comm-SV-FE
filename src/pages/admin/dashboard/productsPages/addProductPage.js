@@ -6,6 +6,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { URLS } from "../../../../config/urls.config";
+import RouterList from "../../../../routes/routerList";
 import { ErrorMessage } from "@hookform/error-message";
 import Typography from "@mui/material/Typography";
 
@@ -22,23 +23,32 @@ const AddProduct = () => {
     register,
     handleSubmit,
     watch,
+    getValues,
     control,
     formState: { errors },
   } = useForm({
     defaultValues: {
       features: [{ featureKey: "", featureValue: "" }],
       productImageFile: [{ images: "" }],
+      productVideoFile: null,
     },
   });
-  const { fields: featureFields, append: featureAppend } = useFieldArray({
+  const {
+    fields: featureFields,
+    append: featureAppend,
+    remove: featureRemove,
+  } = useFieldArray({
     control,
     name: "features",
   });
-  const { fields: productImageFields, append: productFieldAppend } =
-    useFieldArray({
-      control,
-      name: "productImageFile",
-    });
+  const {
+    fields: productImageFields,
+    append: productFieldAppend,
+    remove: productFieldRemove,
+  } = useFieldArray({
+    control,
+    name: "productImageFile",
+  });
   const watchFeatureArray = watch("features");
   const watchProductImageArray = watch("productImageFile");
   const controlledFeatureFields = featureFields?.map((field, index) => {
@@ -89,13 +99,11 @@ const AddProduct = () => {
   const handleProductAdd = ({
     productName,
     quantity,
-    units,
     category,
     subCategory,
     description,
     features,
     price,
-    offerUnit,
     offerQuantity,
     offerPrice,
     productImageFile,
@@ -104,12 +112,12 @@ const AddProduct = () => {
     const bodyFormData = new FormData();
     bodyFormData.append("name", productName);
     bodyFormData.append("quantity", quantity);
-    bodyFormData.append("unit", units);
+    bodyFormData.append("unit", selectedUnit.value);
     bodyFormData.append("category", category);
     bodyFormData.append("subCategory", subCategory);
     bodyFormData.append("description", description);
     bodyFormData.append("price", price);
-    bodyFormData.append("offerUnit", offerUnit);
+    bodyFormData.append("offerUnit", selectedOfferunit.value);
     bodyFormData.append("offerQuantity", offerQuantity);
     bodyFormData.append("offerPrice", offerPrice);
 
@@ -121,16 +129,23 @@ const AddProduct = () => {
     }
     featureArray.push(temp);
     bodyFormData.append("features", JSON.stringify(featureArray));
-    bodyFormData.append("productVideo", productVideoFile);
-    for (const values of productImageFile) {
-      bodyFormData.append("productImage[]", values.images[0]);
+
+    if (productImageFile) {
+      for (const values of productImageFile) {
+        bodyFormData.append("productImage", values.images[0]);
+      }
+    } else {
     }
+    bodyFormData.append("productVideo", productVideoFile[0]);
     axios
       .post(`${URLS.product}`, bodyFormData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then((response) => {
         console.log("Response=>>", response);
+        if (response.success) {
+          navigate(`${RouterList.admin.admin}/${RouterList.admin.productList}`);
+        }
       })
       .catch((error) => {
         console.log("Errorss=>>", error);
@@ -183,7 +198,7 @@ const AddProduct = () => {
                         options={unitData}
                         getOptionLabel={(option) => option.label || ""}
                         isOptionEqualToValue={(option, value) =>
-                          option.value === value.value
+                          option.label === value.label
                         }
                         onChange={(e, val) => handleUnit(e, val)}
                         value={selectedUnit}
@@ -301,8 +316,11 @@ const AddProduct = () => {
                           />
                         </Grid>
                         <Grid item xs={1} className="remove-section">
-                          {featureFields.length > 1 && (
-                            <button className="close-section">
+                          {controlledFeatureFields.length > 1 && (
+                            <button
+                              onClick={() => featureRemove(index)}
+                              className="close-section"
+                            >
                               <HighlightOffIcon />
                             </button>
                           )}
@@ -381,6 +399,7 @@ const AddProduct = () => {
                       className="add-icon-section"
                     />
                   </Grid>
+
                   {controlledProductImageFields?.map((list, index) => {
                     return (
                       <Grid
@@ -412,8 +431,11 @@ const AddProduct = () => {
                           </Button>
                         </Grid>
                         <Grid item xs={1} className="remove-section">
-                          {featureFields.length > 1 && (
-                            <button className="close-section">
+                          {controlledProductImageFields.length > 1 && (
+                            <button
+                              onClick={() => productFieldRemove(index)}
+                              className="close-section"
+                            >
                               <HighlightOffIcon />
                             </button>
                           )}
@@ -423,39 +445,7 @@ const AddProduct = () => {
                   })}
                 </div>
                 <Grid container spacing={2} marginTop={1}>
-                  <button onClick={() => productFieldAppend({ images: "" })}>
-                    Add
-                  </button>
-                  {controlledProductImageFields?.map((list, index) => {
-                    return (
-                      <Grid key={list.id} item xs={6}>
-                        {list && list?.images[0]?.name}
-                        <Button
-                          variant="contained"
-                          className="file-btn"
-                          fullWidth
-                          component="label"
-                        >
-                          Upload Image
-                          <input
-                            {...register(`productImageFile.${index}.images`)}
-                            type="file"
-                            hidden
-                          />
-                        </Button>
-                        {/* <div className="error">
-                          {errors?.productImageFile?.message}
-                        </div> */}
-
-                        {/* <ErrorMessage
-                      errors={errors}
-                      name="productImageFile"
-                      render={({ message }) => <p>{message}</p>}
-                    /> */}
-                      </Grid>
-                    );
-                  })}
-
+                  <span>{getValues("productVideoFile[0].name")}</span>
                   <Grid item xs={6}>
                     <Button
                       variant="contained"
@@ -470,6 +460,7 @@ const AddProduct = () => {
                         hidden
                       />
                     </Button>
+
                     <ErrorMessage
                       errors={errors}
                       name="productVideoFile"

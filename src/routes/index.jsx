@@ -78,7 +78,7 @@ const CustomRouters = () => {
         />
         <Route path={RouterList.admin.addCategory} element={<AddCategory />} />
         <Route path="category-details/:id" element={<Categorydetails />} />
-        <Route path="products" element={<ListProduct />} />
+        <Route path={RouterList.admin.productList}element={<ListProduct />} />
         <Route path="add-products" element={<AddProduct />} />
         <Route path="product-details/:id" element={<ProductDetails />} />
         <Route path="stocks" element={<StockList />} />
