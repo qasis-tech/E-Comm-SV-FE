@@ -20,6 +20,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import PhoneIcon from "@mui/icons-material/Phone";
 import SendIcon from "@mui/icons-material/Send";
+import CloseIcon from "@mui/icons-material/Close";
 
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -110,213 +111,235 @@ const HeaderComponent = () => {
               <MenuIcon style={{ color: "black" }} />
             </button>
           </div>
-          <TextField
-            label="Search"
-            size="small"
-            variant="outlined"
-            className="search-section"
-            fullWidth
-            style={{ margin: "0 2em" }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton>
-                    <SearchIcon />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-          <div
-            className="collapse navbar-collapse d-flex justify-content-end"
-            id="navbarCollapse"
-          >
-            <ul
-              className={
-                getWindowDimensions()?.width <= 960
-                  ? navbarVisible
-                    ? "navbar-nav-show 1 ml-auto"
-                    : "navbar-nav ml-auto"
-                  : "navbar-nav ml-auto menu"
-              }
+          <div className="menus-items">
+            <div>
+              <TextField
+                label="Search"
+                size="small"
+                variant="outlined"
+                className="search-section"
+                style={{ margin: "15px 2em" }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      {/* <IconButton>
+                    <CloseIcon />
+                    </IconButton> */}
+                      <IconButton>
+                        <SearchIcon />
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </div>
+            <div
+              className="collapse navbar-collapse d-flex justify-content-end"
+              id="navbarCollapse"
             >
-              <li className="nav-item ">
-                <a onClick={() => navigate("/")} className="nav-link">
-                  Home
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link  d-flex" href="">
-                  Products
-                  <KeyboardArrowDownIcon style={{ fontSize: "1rem" }} />
-                </a>
-                <ul className="menu-gold">
-                  <li>
-                    <a href="" className="d-flex justify-content-between">
-                      Category-1aaaaaaaa
-                      <KeyboardArrowRightIcon style={{ fontSize: "1rem" }} />
-                    </a>
-                    <ul>
-                      <li>
-                        <a href="">Karim Khan</a>
-                      </li>
+              <ul
+                className={
+                  getWindowDimensions()?.width <= 960
+                    ? navbarVisible
+                      ? "navbar-nav-show 1 ml-auto"
+                      : "navbar-nav ml-auto"
+                    : "navbar-nav ml-auto menu"
+                }
+              >
+                <li className="nav-item ">
+                  <a onClick={() => navigate("/")} className="nav-link">
+                    Home
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link  d-flex" href="">
+                    Products
+                    <KeyboardArrowDownIcon
+                      className="down-arrow"
+                      style={{ fontSize: "1rem" }}
+                    />
+                  </a>
+                  <ul className="menu-gold">
                       <li>
                         <a href="" className="d-flex justify-content-between">
-                          Rahim Khan
+                          Category-1aaaaaaaa
                           <KeyboardArrowRightIcon
                             style={{ fontSize: "1rem" }}
                           />
                         </a>
                         <ul>
                           <li>
-                            <a href="">PHP</a>
+                            <a href="">Karim Khan</a>
                           </li>
                           <li>
-                            <a href="">Mysql</a>
+                            <a
+                              href=""
+                              className="d-flex justify-content-between"
+                            >
+                              Rahim Khan
+                              <KeyboardArrowRightIcon
+                                style={{ fontSize: "1rem" }}
+                              />
+                            </a>
+                            <ul>
+                              <li>
+                                <a href="">PHP</a>
+                              </li>
+                              <li>
+                                <a href="">Mysql</a>
+                              </li>
+                              <li>
+                                <a href="">Node.js</a>
+                              </li>
+                            </ul>
                           </li>
                           <li>
-                            <a href="">Node.js</a>
+                            <a href="">Mahesh Jagadappa</a>
                           </li>
                         </ul>
                       </li>
                       <li>
-                        <a href="">Mahesh Jagadappa</a>
+                        <a href="">category-2</a>
                       </li>
-                    </ul>
-                  </li>
-                  <li>
-                    <a href="">category-2</a>
-                  </li>
-                  <li>
-                    <a href="">Category-3</a>
-                  </li>
-                  <li>
-                    <a href="" className="d-flex justify-content-between">
-                      Category-4
-                      <KeyboardArrowRightIcon style={{ fontSize: "1rem" }} />
-                    </a>
-                    <ul>
                       <li>
-                        <a href="">Karim Khan</a>
+                        <a href="">Category-3</a>
                       </li>
                       <li>
                         <a href="" className="d-flex justify-content-between">
-                          Rahim Khan
+                          Category-4
                           <KeyboardArrowRightIcon
                             style={{ fontSize: "1rem" }}
                           />
                         </a>
                         <ul>
                           <li>
-                            <a href="">PHP</a>
+                            <a href="">Karim Khan</a>
                           </li>
                           <li>
-                            <a href="">Mysql</a>
+                            <a
+                              href=""
+                              className="d-flex justify-content-between"
+                            >
+                              Rahim Khan
+                              <KeyboardArrowRightIcon
+                                style={{ fontSize: "1rem" }}
+                              />
+                            </a>
+                            <ul>
+                              <li>
+                                <a href="">PHP</a>
+                              </li>
+                              <li>
+                                <a href="">Mysql</a>
+                              </li>
+                              <li>
+                                <a href="">Node.js</a>
+                              </li>
+                            </ul>
                           </li>
                           <li>
-                            <a href="">Node.js</a>
+                            <a href="">Mahesh Jagadappa</a>
                           </li>
                         </ul>
                       </li>
                       <li>
-                        <a href="">Mahesh Jagadappa</a>
+                        <a href="">Category-5</a>
                       </li>
-                    </ul>
-                  </li>
-                  <li>
-                    <a href="">Category-5</a>
-                  </li>
-                </ul>
-              </li>
+                  </ul>
+                </li>
 
-              <li className="nav-item">
-                <a className="nav-link" onClick={() => navigate("/about")}>
-                  About
-                </a>
-              </li>
-              <li className="nav-item">
-                <a onClick={() => navigate("/contact")} className="nav-link">
-                  Contact
-                </a>
-              </li>
+                <li className="nav-item">
+                  <a className="nav-link" onClick={() => navigate("/about")}>
+                    About
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a onClick={() => navigate("/contact")} className="nav-link">
+                    Contact
+                  </a>
+                </li>
 
-              {showMenus ? (
-                <>
-                  <Tooltip title="Account settings">
-                    <IconButton
-                      onClick={handleClick}
-                      size="small"
-                      sx={{ ml: 2 }}
-                      aria-controls={open ? "account-menu" : undefined}
-                      aria-haspopup="true"
-                      aria-expanded={open ? "true" : undefined}
+                {showMenus ? (
+                  <>
+                    <Tooltip title="Account settings">
+                      <IconButton
+                        onClick={handleClick}
+                        size="small"
+                        sx={{ ml: 2 }}
+                        aria-controls={open ? "account-menu" : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={open ? "true" : undefined}
+                      >
+                        <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+                      </IconButton>
+                    </Tooltip>
+                    <Menu
+                      anchorEl={anchorEl}
+                      id="account-menu"
+                      open={open}
+                      onClose={handleClose}
+                      onClick={handleClose}
+                      PaperProps={{
+                        elevation: 0,
+                        sx: {
+                          overflow: "visible",
+                          filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                          mt: 1.5,
+                          "& .MuiAvatar-root": {
+                            width: 32,
+                            height: 32,
+                            ml: -0.5,
+                            mr: 1,
+                          },
+                          "&:before": {
+                            content: '""',
+                            display: "block",
+                            position: "absolute",
+                            top: 0,
+                            right: 14,
+                            width: 10,
+                            height: 10,
+                            bgcolor: "background.paper",
+                            transform: "translateY(-50%) rotate(45deg)",
+                            zIndex: 0,
+                          },
+                        },
+                      }}
+                      transformOrigin={{ horizontal: "right", vertical: "top" }}
+                      anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
                     >
-                      <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
-                    </IconButton>
-                  </Tooltip>
-                  <Menu
-                    anchorEl={anchorEl}
-                    id="account-menu"
-                    open={open}
-                    onClose={handleClose}
-                    onClick={handleClose}
-                    PaperProps={{
-                      elevation: 0,
-                      sx: {
-                        overflow: "visible",
-                        filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                        mt: 1.5,
-                        "& .MuiAvatar-root": {
-                          width: 32,
-                          height: 32,
-                          ml: -0.5,
-                          mr: 1,
-                        },
-                        "&:before": {
-                          content: '""',
-                          display: "block",
-                          position: "absolute",
-                          top: 0,
-                          right: 14,
-                          width: 10,
-                          height: 10,
-                          bgcolor: "background.paper",
-                          transform: "translateY(-50%) rotate(45deg)",
-                          zIndex: 0,
-                        },
-                      },
-                    }}
-                    transformOrigin={{ horizontal: "right", vertical: "top" }}
-                    anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-                  >
-                    <MenuItem onClick={() => navigate("/profile")}>
-                      <Avatar /> Profile
-                    </MenuItem>
-                    <MenuItem onClick={() => navigate("/order-list")}>
-                      <Avatar /> Order History
-                    </MenuItem>
-                    <MenuItem onClick={() => navigate("/whishlist")}>
-                      <FavoriteBorderIcon /> Wishlist
-                    </MenuItem>
-                    <Divider />
+                      <MenuItem onClick={() => navigate("/profile")}>
+                        <Avatar /> Profile
+                      </MenuItem>
+                      <MenuItem onClick={() => navigate("/order-list")}>
+                        <Avatar /> Order History
+                      </MenuItem>
+                      <MenuItem onClick={() => navigate("/whishlist")}>
+                        <FavoriteBorderIcon /> Wishlist
+                      </MenuItem>
+                      <Divider />
 
-                    <MenuItem onClick={handleLogout}>
-                      <ListItemIcon>
-                        <Logout />
-                      </ListItemIcon>
-                      Logout
-                    </MenuItem>
-                  </Menu>
-                </>
-              ) : (
-                <MenuItem onClick={() => navigate("/login")}>
-                  <ListItemIcon>
-                    <Logout />
-                  </ListItemIcon>
-                  Login
-                </MenuItem>
-              )}
-            </ul>
+                      <MenuItem onClick={handleLogout}>
+                        <ListItemIcon>
+                          <Logout />
+                        </ListItemIcon>
+                        Logout
+                      </MenuItem>
+                    </Menu>
+                  </>
+                ) : (
+                  <MenuItem
+                    className="login-link"
+                    onClick={() => navigate("/login")}
+                  >
+                    <ListItemIcon>
+                      <Logout className="logout-icon" />
+                    </ListItemIcon>
+                    Login
+                  </MenuItem>
+                )}
+              </ul>
+            </div>
           </div>
         </div>
       </nav>

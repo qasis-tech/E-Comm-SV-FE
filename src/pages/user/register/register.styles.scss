@@ -210,6 +210,10 @@
       border: 1px solid;
       border-color: $primary;
     }
+      @media screen and (max-width: 1000px) {
+        margin: 1.5em 0;
+        width: 100%;
+      }
   }
   .btn2 {
     width: 50%;
@@ -230,9 +234,6 @@
     @media screen and (max-width: 1000px) {
       margin-top: 1em;
       display: contents;
-      p{
-        margin-top: 1em;
-      }
     }
     a{
       text-decoration: none;

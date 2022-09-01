@@ -64,17 +64,12 @@ const FooterComponent = () => {
                 <ul className="list-unstyled">
                   <li>
                     <a href="#" className="py-2 d-block text-decoration-none">
-                      Shop
+                      Products
                     </a>
                   </li>
                   <li>
                     <a href="#" className="py-2 d-block text-decoration-none">
                       About
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="py-2 d-block text-decoration-none">
-                      Journal
                     </a>
                   </li>
                   <li>
@@ -152,9 +147,8 @@ const FooterComponent = () => {
           <div className="row">
             <div className="col-md-12 text-center">
               <p>
-                Copyright &copy; All rights reserved | This template is made
-                with{" "}
-                <i className="icon-heart color-danger" aria-hidden="true"></i>{" "}
+                Copyright &copy; All rights reserved
+                {/* <i className="icon-heart color-danger" aria-hidden="true"></i>{" "}
                 by{" "}
                 <a
                   href="#"
@@ -163,7 +157,7 @@ const FooterComponent = () => {
                   style={{ color: "#82ae46" }}
                 >
                   Colorlib
-                </a>
+                </a> */}
               </p>
             </div>
           </div>

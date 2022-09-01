@@ -8,12 +8,13 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
-
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import BackgroundImage from "../../../assets/bg.jpg";
 
-import "./login.styles.scss";
 import { authCheck } from "../../../routes/auth";
 import Loader from "../../../components/Loader";
+import "../../../styles/preloader.styles.scss";
+import "./login.styles.scss";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -79,132 +80,143 @@ function LoginPage() {
 
   // const { data, error, loaded } =
   return (
-    <div
-      className="login-section"
-      style={{ backgroundImage: `url(${BackgroundImage})` }}
-    >
-      <div className="container">
-        <div className="formWraper">
-          <div className="formDiv">
-            <form onSubmit={handleSubmit(handleLogin)}>
-              <h2>Login</h2>
-              <p className="text"> Sign Up with Social Media</p>
-              <div className="socialBtn">
-                <div className="facebook icon">
-                  <FacebookIcon className="icons-size" />
+    <div>
+      {/* <div className="loader-section">
+        <div class="preloader"></div>
+        <p>Login</p>
+      </div> */}
+      <div
+        className="login-section"
+        style={{ backgroundImage: `url(${BackgroundImage})` }}
+      >
+        <div className="container">
+          <div className="formWraper">
+            <div className="formDiv">
+              <form onSubmit={handleSubmit(handleLogin)}>
+                <h2>Login</h2>
+                <p className="text"> Sign Up with Social Media</p>
+                <div className="socialBtn">
+                  <div className="facebook icon">
+                    <FacebookIcon className="icons-size" />
+                  </div>
+                  <div className="twitter icon">
+                    <GoogleIcon className="icons-size" />
+                  </div>
                 </div>
-                <div className="twitter icon">
-                  <GoogleIcon className="icons-size" />
+                <div class="separator">Or</div>
+                <p className="text signup-text">Sign Up with Email Address</p>
+                <TextField
+                  id="login-username"
+                  variant="outlined"
+                  size="small"
+                  label="Email"
+                  className="text-field"
+                  {...register("email", {
+                    required: "Email ID is required",
+                    pattern: {
+                      value:
+                        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                      message: "Invalid email Id ( eg: example@mail.com ) ",
+                    },
+                  })}
+                  fullWidth
+                  error={errors?.email}
+                  style={{ color: "#fff" }}
+                />
+                <div className="error">{errors?.email?.message}</div>
+                <TextField
+                  label="Password"
+                  size="small"
+                  fullWidth
+                  className="password"
+                  variant="outlined"
+                  type={isVisible ? "text" : "password"}
+                  {...register("password", {
+                    required: "Password is required",
+                    minLength: {
+                      value: 8,
+                      message: "Minimum 8 charecter",
+                    },
+                  })}
+                  InputProps={{
+                    // style: { border: "2px groove green" },
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          onClick={() => setVisible(!isVisible)}
+                          edge="end"
+                        >
+                          {!isVisible ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  error={errors?.password}
+                />
+                <div className="error">{errors?.password?.message}</div>
+                <div className="checkBox">
+                  <input type="checkbox" name="checkbox" id="checkbox" />
+                  <span className="text checkbox-text">Keep me signed in</span>
                 </div>
-              </div>
-              <hr />
-              <div className="orDiv">Or</div>
-              <p className="text">Sign Up with Email Address</p>
-              <TextField
-                id="login-username"
-                variant="outlined"
-                size="small"
-                label="Email"
-                className="text-field"
-                {...register("email", {
-                  required: "Email ID is required",
-                  pattern: {
-                    value:
-                      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                    message: "Invalid email Id ( eg: example@mail.com ) ",
-                  },
-                })}
-                fullWidth
-                error={errors?.email}
-                style={{ color: "#fff" }}
-              />
-              <div className="error">{errors?.email?.message}</div>
-              <TextField
-                label="Password"
-                size="small"
-                fullWidth
-                className="password"
-                variant="outlined"
-                type={isVisible ? "text" : "password"}
-                {...register("password", {
-                  required: "Password is required",
-                  minLength: {
-                    value: 8,
-                    message: "Minimum 8 charecter",
-                  },
-                })}
-                InputProps={{
-                  // style: { border: "2px groove green" },
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        onClick={() => setVisible(!isVisible)}
-                        edge="end"
-                      >
-                        {!isVisible ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-                error={errors?.password}
-              />
-              <div className="error">{errors?.password?.message}</div>
-              <div className="checkBox">
-                <input type="checkbox" name="checkbox" id="checkbox" />
-                <span className="text">Keep me signed in</span>
-              </div>
 
-              {isLoading ? (
-                <Loader />
-              ) : (
-                <button className="btn btn-success" type="submit">
-                  SIGN IN
-                </button>
-              )}
-              <div className="forgotpassword-link">
-                <p>
-                  <a
-                    href="#"
-                    className="text"
-                    onClick={() => navigate("/forgotpassword")}
-                  >
-                    Forgot Password
-                  </a>{" "}
-                </p>
-              </div>
-              <div className="signup-link">
-                <p className="text">
-                  Create new account?
-                  <a
-                    href="#"
-                    className="text"
-                    onClick={() => navigate("/register", { replace: true })}
-                  >
-                    Sign Up
-                  </a>{" "}
-                </p>
-              </div>
-            </form>
-          </div>
-          <div className="welcomeDiv">
-            <h2>Welcome Back!</h2>
-            <p className="text">
-              Get in touch with us for our news letter and more updates.
-            </p>
-            <button
-              className="btn btn2"
-              onClick={() => navigate("/register", { replace: true })}
-            >
-              SIGN UP
-            </button>
-            <div className="forgot-link">
-              <a
-                href="#"
-                className="text"
-                onClick={() => navigate("/forgotpassword")}
+                {isLoading ? (
+                  <Loader />
+                ) : (
+                  <button className="btn btn-success" type="submit">
+                    SIGN IN
+                  </button>
+                )}
+                <div className="forgotpassword-link">
+                  <p>
+                    <a
+                      href="#"
+                      className="text"
+                      onClick={() => navigate("/resetpassword")}
+                    >
+                      Forgot Password?
+                    </a>{" "}
+                  </p>
+                </div>
+                <div className="signup-link">
+                  <p className="text">
+                    Create new account?
+                    <a
+                      href="#"
+                      className="text"
+                      onClick={() => navigate("/register", { replace: true })}
+                    >
+                      Sign Up
+                    </a>{" "}
+                  </p>
+                </div>
+              </form>
+            </div>
+            <div className="welcomeDiv">
+              <h2>Welcome Back!</h2>
+              <p className="text">
+                Get in touch with us for our news letter and more updates.
+              </p>
+              <button
+                className="btn btn2"
+                onClick={() => navigate("/register", { replace: true })}
               >
-                Forgot Password
-              </a>{" "}
+                SIGN UP
+              </button>
+              <div className="forgot-link">
+                <a
+                  href="#"
+                  className="text"
+                  onClick={() => navigate("/resetpassword")}
+                >
+                  Forgot Password?
+                </a>{" "}
+              </div>
+              <div className="back-home">
+                <ChevronLeftIcon />
+                <a href="#" className="text">
+                  Back to Home
+                </a>
+              </div>
             </div>
           </div>
         </div>

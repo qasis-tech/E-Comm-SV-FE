@@ -14,6 +14,8 @@ $main-font-size: 15px;
   // padding: 0.5em 0 1em;
   color: $error;
   font-size: $error-font-size;
+  display: flex;
+  justify-content: flex-start;
 }
 
 //

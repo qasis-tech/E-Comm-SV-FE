@@ -3,7 +3,7 @@ const List = {
     home: "/",
     login: "/login",
     register: "register",
-    forgotpassword: "forgotpassword",
+    resetpassword: "resetpassword",
     about: "about",
     contact: "contact",
     HeaderNav: "navbar",

@@ -28,7 +28,7 @@ const SliderComponent = () => {
           </p>
         </Carousel.Caption>
       </Carousel.Item>
-      <Carousel.Item className="carousel-item-section">
+      {/* <Carousel.Item className="carousel-item-section">
         <div className="overlay"></div>
         <img
           className="d-block w-100"
@@ -65,7 +65,7 @@ const SliderComponent = () => {
             </a>
           </p>
         </Carousel.Caption>
-      </Carousel.Item>
+      </Carousel.Item> */}
     </Carousel>
   );
 };
