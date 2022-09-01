@@ -103,7 +103,7 @@ function LoginPage() {
                     <GoogleIcon className="icons-size" />
                   </div>
                 </div>
-                <div class="separator">Or</div>
+                <div className="separator">Or</div>
                 <p className="text signup-text">Sign Up with Email Address</p>
                 <TextField
                   id="login-username"
@@ -155,7 +155,12 @@ function LoginPage() {
                 />
                 <div className="error">{errors?.password?.message}</div>
                 <div className="checkBox">
-                  <input type="checkbox" name="checkbox" id="checkbox" />
+                  <input
+                    type="checkbox"
+                    className="checkbox-style"
+                    name="checkbox"
+                    id="checkbox"
+                  />
                   <span className="text checkbox-text">Keep me signed in</span>
                 </div>
 

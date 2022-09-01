@@ -120,7 +120,7 @@
   .navbar-collapse {
     @media screen and (max-width: 960px) {
       justify-content: flex-start !important;
-
+      transition: all 0.7s ease-in-out;
       ul {
         list-style: none;
         display: none;
@@ -276,7 +276,9 @@
     margin-left: 14em;
   }
 }
-
+.navbar-nav{
+  transition: all 0.7s ease-in-out!important;
+}
 @media screen and (max-width: 960px) {
   .navbar-nav {
     display: none !important;
@@ -284,9 +286,10 @@
 
   .navbar-nav-show {
     display: block !important;
-
-    ul {
+   // transition: all 7s ease-in-out;
+      ul {
       list-style: none;
+     // transition: all 7s ease-in-out;
     }
   }
 }

@@ -12,6 +12,7 @@
   background-size: cover;
   background-attachment: fixed;
   height: 100vh;
+
   .container {
     display: flex;
     align-content: center;
@@ -24,6 +25,8 @@
     background-color: $primary;
     border-radius: 10px;
     box-shadow: 0px 0px 20px black;
+    //transition: all 0.7s ease-in-out;
+
   }
   .formDiv {
     width: 50%;
@@ -113,10 +116,19 @@
   .checkBox {
     width: 100%;
     margin-top: 1em;
+    display: flex;
+    justify-content: center;
     .checkbox-text{
       margin-left: 0.5em;
     }
+    .checkbox-style{
+      width: 20px;
+      height: 20px;
+    }
   }
+  .checkbox:checked:before{
+    background-color:green;
+    }
   .password {
     margin-top: 1em;
   }
@@ -163,12 +175,13 @@
       p {
         margin-top: 1em;
         display: flex;
-        justify-content: space-around;
+        justify-content: center;
       }
     }
     a {
       text-decoration: none;
       color: $primary;
+      margin-left: 10px;
     }
   }
   .forgot-link {
@@ -253,7 +266,7 @@
   }
   @media screen and (max-width: 670px) {
     .formDiv {
-      width: 90%;
+      width: 100%;
       border-radius: 10px 10px 10px 10px;
     }
     .welcomeDiv {

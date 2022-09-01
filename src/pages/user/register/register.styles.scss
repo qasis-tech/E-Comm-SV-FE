@@ -118,6 +118,9 @@
     color: $primary;
     //margin-top: -5px;
     margin-bottom: 1em;
+    @media screen and (max-width: 1000px) {
+      margin-bottom: 0;
+    }
   }
 
   .col-md-6{
@@ -234,6 +237,9 @@
     @media screen and (max-width: 1000px) {
       margin-top: 1em;
       display: contents;
+      p{
+        margin: 0;
+      }
     }
     a{
       text-decoration: none;
@@ -244,12 +250,11 @@
   @media screen and (max-width: 1000px) {
     .formWraper {
       width: 95%;
-      margin-top: 5em;
     }
   }
   @media screen and (max-width: 670px) {
     .formDiv {
-      width: 90%;
+      width: 100%;
       border-radius: 10px 10px 10px 10px;
     }
     .welcomeDiv {

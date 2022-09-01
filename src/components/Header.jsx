@@ -59,7 +59,6 @@ const HeaderComponent = () => {
   }
 
   const [navbarVisible, setNavbarVisible] = React.useState(false);
-
   return (
     <div className="header-container">
       <div className="py-1 top-section">
