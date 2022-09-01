@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import axios from "axios";
 
 import { InputAdornment, IconButton, TextField } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -11,6 +12,7 @@ import BackgroundImage from "../../../assets/bg.jpg";
 
 import "./forgotpassword.styles.scss";
 import Loader from "../../../components/Loader";
+import { URLS } from "../../../config/urls.config";
 
 const forgotPasswordSchema = yup
   .object()
@@ -39,18 +41,89 @@ function ForgotPasswordPage() {
   } = useForm({
     resolver: yupResolver(forgotPasswordSchema),
   });
+
   const [isLoading, setLoader] = useState(false);
+  const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
+  const [userData, setUserData] = useState([]);
+
   const navigate = useNavigate();
 
-  const handleForgotPassword = (data) => {
-    const { forgotEmail, otp, password, cpassword } = data;
-    console.log("Forgot Details", data);
+  const handleEmail = (e) => {
+    setEmail(e.target.value);
   };
 
-  // const handlePassword = (e) => {
-  //   console.log("password", password);
-  //   setPassword(e.target.value);
-  // };
+  const handleOtp = () => {
+    let payload = {
+      email: email,
+    };
+    axios
+      .post(URLS.resetOtp, payload, {
+        "Content-Type": "application/json",
+      })
+      .then((res) => {
+        console.log("ressotppp=>=>", res);
+        alert(res.message);
+      })
+      .catch((err) => {
+        console.log("errorsi ottpppp", err);
+      });
+  };
+
+  const handleEnteredOtp = (e) => {
+    setOtp(e.target.value);
+  };
+
+  const handleVerifyOtp = () => {
+    let payload = {
+      email: email,
+      otp: otp,
+    };
+    axios
+      .post(URLS.verifyResetOtp, payload, {
+        "Content-Type": "application/json",
+      })
+      .then((res) => {
+        console.log("ress veriffyy otppp=>=>", res);
+        alert(res.message);
+        if (res.data) {
+          setUserData(res.data);
+        }
+      })
+      .catch((err) => {
+        console.log("errorsi ottpppp", err);
+      });
+  };
+
+  const handleForgotPassword = ({ cpassword }) => {
+    let payload = {
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      mobileNumber: userData.mobileNumber,
+      email: userData.email,
+      gender: userData.gender,
+      dob: userData.dob,
+      pinCode: userData.pinCode,
+      password: cpassword,
+    };
+
+    axios
+      .put(`${URLS.user}/${userData._id}`, payload, {
+        "Content-Type": "application/json",
+      })
+      .then((res) => {
+        console.log("put api user=>=>", res);
+        if (res.data) {
+          if (res.success === true) {
+            alert(res.message);
+          }
+        }
+      })
+      .catch((err) => {
+        console.log("errorsi ottpppp", err);
+      });
+  };
+
   const style = { BackgroundImage: "url('../../../assets/bg.jpg')" };
 
   return (
@@ -76,8 +149,12 @@ function ForgotPasswordPage() {
                 className="text-field"
                 fullWidth
                 {...register("forgotEmail")}
+                onChange={handleEmail}
               />
               <div className="error">{errors?.forgotEmail?.message}</div>
+              <button className="btn btn-successs" onClick={handleOtp}>
+                sent otp
+              </button>
               <TextField
                 id="login-username"
                 variant="outlined"
@@ -86,8 +163,13 @@ function ForgotPasswordPage() {
                 className="text-field"
                 fullWidth
                 {...register("otp")}
+                onChange={handleEnteredOtp}
               />
               <div className="error">{errors?.otp?.message}</div>
+              <button className="btn btn-successs" onClick={handleVerifyOtp}>
+                verify otp
+              </button>
+
               <TextField
                 id="login-username"
                 variant="outlined"
