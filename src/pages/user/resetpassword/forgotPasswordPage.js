@@ -13,6 +13,7 @@ import BackgroundImage from "../../../assets/bg.jpg";
 import "./forgotpassword.styles.scss";
 import Loader from "../../../components/Loader";
 import { URLS } from "../../../config/urls.config";
+import Button from "../../../components/Button";
 
 const forgotPasswordSchema = yup
   .object()
@@ -46,6 +47,7 @@ function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [userData, setUserData] = useState([]);
+  const [screens, setScreens] = useState("email");
 
   const navigate = useNavigate();
 
@@ -54,6 +56,7 @@ function ForgotPasswordPage() {
   };
 
   const handleOtp = () => {
+    setLoader(true);
     let payload = {
       email: email,
     };
@@ -62,10 +65,12 @@ function ForgotPasswordPage() {
         "Content-Type": "application/json",
       })
       .then((res) => {
+        setLoader(false);
+        setScreens("otp");
         console.log("ressotppp=>=>", res);
-        alert(res.message);
       })
       .catch((err) => {
+        setLoader(false);
         console.log("errorsi ottpppp", err);
       });
   };
@@ -75,6 +80,7 @@ function ForgotPasswordPage() {
   };
 
   const handleVerifyOtp = () => {
+    setLoader(true);
     let payload = {
       email: email,
       otp: otp,
@@ -84,18 +90,21 @@ function ForgotPasswordPage() {
         "Content-Type": "application/json",
       })
       .then((res) => {
+        setLoader(false);
+        setScreens("password");
         console.log("ress veriffyy otppp=>=>", res);
-        alert(res.message);
         if (res.data) {
           setUserData(res.data);
         }
       })
       .catch((err) => {
+        setLoader(false);
         console.log("errorsi ottpppp", err);
       });
   };
 
   const handleForgotPassword = ({ cpassword }) => {
+    setLoader(true);
     let payload = {
       firstName: userData.firstName,
       lastName: userData.lastName,
@@ -112,14 +121,17 @@ function ForgotPasswordPage() {
         "Content-Type": "application/json",
       })
       .then((res) => {
+        setLoader(false);
+        setScreens("email");
         console.log("put api user=>=>", res);
         if (res.data) {
           if (res.success === true) {
-            alert(res.message);
+            navigate("/login");
           }
         }
       })
       .catch((err) => {
+        setLoader(false);
         console.log("errorsi ottpppp", err);
       });
   };
@@ -137,72 +149,94 @@ function ForgotPasswordPage() {
             <form onSubmit={handleSubmit(handleForgotPassword)}>
               <h2>Reset password</h2>
               <p className="text">
-                {" "}
                 For best security practices,you should change your password
                 periodically.
               </p>
-              <TextField
-                id="login-username"
-                variant="outlined"
-                size="small"
-                label="Email"
-                className="text-field"
-                fullWidth
-                {...register("forgotEmail")}
-                onChange={handleEmail}
-              />
-              <div className="error">{errors?.forgotEmail?.message}</div>
-              <button className="btn btn-successs" onClick={handleOtp}>
-                sent otp
-              </button>
-              <TextField
-                id="login-username"
-                variant="outlined"
-                size="small"
-                label="OTP"
-                className="text-field"
-                fullWidth
-                {...register("otp")}
-                onChange={handleEnteredOtp}
-              />
-              <div className="error">{errors?.otp?.message}</div>
-              <button className="btn btn-successs" onClick={handleVerifyOtp}>
-                verify otp
-              </button>
+              {screens === "email" ? (
+                <>
+                  <TextField
+                    id="login-username"
+                    variant="outlined"
+                    size="small"
+                    label="Email"
+                    className="text-field"
+                    fullWidth
+                    {...register("forgotEmail")}
+                    onChange={handleEmail}
+                  />
+                  <div className="error">{errors?.forgotEmail?.message}</div>
+                </>
+              ) : null}
 
-              <TextField
-                id="login-username"
-                variant="outlined"
-                size="small"
-                label="New password"
-                className="text-field"
-                fullWidth
-                {...register("password")}
-              />
-              <div className="error">{errors?.password?.message}</div>
-              <TextField
-                label="Confirm password"
-                size="small"
-                fullWidth
-                className="password"
-                variant="outlined"
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton edge="end"></IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-                {...register("cpassword")}
-              />
-              <div className="error">{errors?.cpassword?.message}</div>
+              {screens === "otp" ? (
+                <>
+                  <TextField
+                    id="login-username"
+                    variant="outlined"
+                    size="small"
+                    label="OTP"
+                    className="text-field"
+                    fullWidth
+                    {...register("otp")}
+                    onChange={handleEnteredOtp}
+                  />
+                  <div className="error">{errors?.otp?.message}</div>
+                </>
+              ) : null}
+
+              {screens === "password" ? (
+                <>
+                  <TextField
+                    id="login-username"
+                    variant="outlined"
+                    size="small"
+                    label="New password"
+                    className="text-field"
+                    fullWidth
+                    {...register("password")}
+                  />
+                  <div className="error">{errors?.password?.message}</div>
+
+                  <TextField
+                    label="Confirm password"
+                    size="small"
+                    fullWidth
+                    className="password"
+                    variant="outlined"
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton edge="end"></IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                    {...register("cpassword")}
+                  />
+                  <div className="error">{errors?.cpassword?.message}</div>
+                </>
+              ) : null}
 
               {isLoading ? (
                 <Loader />
               ) : (
-                <button className="btn btn-success" type="submit">
-                  Reset Password
-                </button>
+                <>
+                  <Button
+                    label={
+                      screens === "email"
+                        ? "Sent Otp"
+                        : screens === "otp"
+                        ? "Verify Otp"
+                        : "Submit"
+                    }
+                    handleClick={() => {
+                      screens === "email"
+                        ? handleOtp()
+                        : screens === "otp"
+                        ? handleVerifyOtp()
+                        : handleSubmit();
+                    }}
+                  ></Button>
+                </>
               )}
             </form>
           </div>
@@ -216,7 +250,7 @@ function ForgotPasswordPage() {
             </button>
             <div className="back-home">
               <ChevronLeftIcon />
-              <a href="#" className="text">
+              <a href="#" className="text" onClick={() => navigate("/login")}>
                 Go Back
               </a>
             </div>
