@@ -305,7 +305,22 @@ const OrderList = () => {
                     <TableCell>
                       <span
                         className={
-                          orderItem.status === "pending" ? "pending" : ""
+                          orderItem.status === "Order Pending"
+                            ? "pending"
+                            : orderItem.status ===
+                                "Awaiting order confirming" ||
+                              "Awaiting payment" ||
+                              "Awaiting pickup"
+                            ? "await"
+                            : orderItem.status === "Order received"
+                            ? "received"
+                            : orderItem.status === "Shipped"
+                            ? "shipped"
+                            : orderItem.status === "Cancelled"
+                            ? "cancelled"
+                            : orderItem.status === "Refunded"
+                            ? "refund"
+                            : "delivered"
                         }
                       >
                         {orderItem.status}

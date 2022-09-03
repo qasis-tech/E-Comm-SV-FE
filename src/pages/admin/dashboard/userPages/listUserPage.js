@@ -109,14 +109,17 @@ const UserList = () => {
   };
 
   useEffect(() => {
+    console.log("0003");
     getUserListApi();
   }, []);
 
   useEffect(() => {
+    console.log("0001");
     getUserListApi();
   }, [page, rowsPerPage]);
 
   useEffect(() => {
+    console.log("0002");
     if (searchInput === "") {
       getUserListApi();
     }
@@ -135,6 +138,7 @@ const UserList = () => {
         headers: { "Content-Type": "application/json" },
       })
       .then((res) => {
+        console.log("1111===>", res);
         setLoader(false);
         setUserData(res.data);
         setCount(res.data.count);
@@ -214,13 +218,17 @@ const UserList = () => {
             </TableHead>
             <TableBody>
               {userData?.map((useritem) => {
+                console.log(
+                  "0001",
+                  `${RouterList.admin}/${RouterList.admin.userDetails}/${useritem._id}`
+                );
                 return (
                   <TableRow
                     hover
                     key={useritem._id}
                     onClick={() =>
                       navigate(
-                        `${RouterList.admin}/${RouterList.admin.userDetails}/${useritem._id}`
+                        `${RouterList.admin.admin}/${RouterList.admin.userDetails}/${useritem._id}`
                       )
                     }
                     className="user-row-section"
@@ -238,47 +246,11 @@ const UserList = () => {
                     <TableCell>{formatDate(useritem?.createdAt)}</TableCell>
                     <TableCell>{formatDate(useritem?.updatedAt)}</TableCell>
                     <TableCell>
-                      <span className="actives">Active</span>
-                      <span className="inactive">Inactive</span>
-                    </TableCell>
-                    <TableCell>
-                      <Button>
-                        <DeleteIcon className="delete-icon" />
-                      </Button>
-                      <Button>
-                        <CreateIcon className="edit-icon" />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-
-              {userData?.map((useritem) => {
-                return (
-                  <TableRow
-                    hover
-                    key={useritem._id}
-                    className="user-row-section"
-                  >
-                    <TableCell
-                      onClick={() =>
-                        navigate(`/admin/users-details/${useritem._id}`)
-                      }
-                      component="th"
-                      scope="row"
-                    >
-                      {useritem.firstName + " " + useritem.lastName}
-                    </TableCell>
-                    <TableCell component="th" scope="row">
-                      {useritem.email}
-                    </TableCell>
-                    <TableCell>{useritem.mobileNumber}</TableCell>
-                    <TableCell>{useritem.location}</TableCell>
-                    <TableCell>{formatDate(useritem?.createdAt)}</TableCell>
-                    <TableCell>{formatDate(useritem?.updatedAt)}</TableCell>
-                    <TableCell>
-                      <Chip label="Active" color="success" />
-                      <Chip label="Inactive" color="error" />
+                      {useritem.status === "active" ? (
+                        <span className="actives">Active</span>
+                      ) : (
+                        <span className="inactive">Inactive</span>
+                      )}
                     </TableCell>
                     <TableCell>
                       <Button>
