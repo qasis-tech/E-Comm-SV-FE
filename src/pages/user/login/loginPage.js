@@ -10,6 +10,7 @@ import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import BackgroundImage from "../../../assets/bg.jpg";
+import CloseIcon from "@mui/icons-material/Close";
 
 import { authCheck } from "../../../routes/auth";
 import Loader from "../../../components/Loader";
@@ -197,31 +198,38 @@ function LoginPage() {
               </form>
             </div>
             <div className="welcomeDiv">
-              <h2>Welcome Back!</h2>
-              <p className="text">
-                Get in touch with us for our news letter and more updates.
-              </p>
-              <button
-                className="btn btn2"
-                onClick={() => navigate("/register", { replace: true })}
-              >
-                SIGN UP
-              </button>
-              <div className="forgot-link">
-                <a
-                  href="#"
-                  className="text"
-                  onClick={() => navigate("/resetpassword")}
-                >
-                  Forgot Password?
-                </a>{" "}
+              <div className="close-icon">
+                <CloseIcon />
               </div>
-              <div className="back-home">
+              <div className="welcome">
+                <div className="main-welcome-section">
+                  <h2>Welcome Back!</h2>
+                  <p className="text">
+                    Get in touch with us for our news letter and more updates.
+                  </p>
+                  <button
+                    className="btn btn2"
+                    onClick={() => navigate("/register", { replace: true })}
+                  >
+                    SIGN UP
+                  </button>
+                  <div className="forgot-link">
+                    <a
+                      href="#"
+                      className="text"
+                      onClick={() => navigate("/resetpassword")}
+                    >
+                      Forgot Password?
+                    </a>{" "}
+                  </div>
+                </div>
+              </div>
+              {/* <div className="back-home">
                 <ChevronLeftIcon />
                 <a href="#" className="text">
                   Back to Home
                 </a>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

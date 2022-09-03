@@ -197,7 +197,7 @@ function RegisterPage() {
                       Gender
                     </FormLabel>
                   </div>
-                  <div className="">
+                  <div className="gender-btn">
                     <RadioGroup
                       row
                       aria-labelledby="demo-row-radio-buttons-group-label"

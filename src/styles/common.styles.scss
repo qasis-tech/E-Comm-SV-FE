@@ -46,7 +46,28 @@ table {
     }
   }
 }
-
+//radio btn 
+.MuiTypography-root{
+  font-family: $main-font-family!important;
+  font-size: $main-font-size!important;
+}
+//textfield
+.MuiInputLabel-root{
+  font-family: $main-font-family!important;
+  font-size: $main-font-size!important;
+}
+//date textfield
+.MuiOutlinedInput-root{
+  font-family: $main-font-family!important;
+  font-size: $main-font-size!important;
+  color: rgba(0, 0, 0, 0.6)!important;
+}
+//radio btn label
+.MuiFormLabel-root{
+  font-family: $main-font-family!important;
+  font-size: $main-font-size!important;
+  color: rgba(0, 0, 0, 0.6)!important;
+}
 .await,
 .pending,
 .received,
