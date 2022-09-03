@@ -180,6 +180,9 @@
       background-color: $white;
       color: $primary;
     }
+    @media screen and (max-width: 1000px) {
+      width: 100%;
+    }
   }
 
   .signup-link {
