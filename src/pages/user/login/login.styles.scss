@@ -57,6 +57,9 @@
     }
     .welcome{
       padding: 35% 0;
+      @media screen and (max-width: 768px) {
+        padding: 60% 0;
+      }
       .main-welcome-section{
         display: flex;
         flex-direction: column;
