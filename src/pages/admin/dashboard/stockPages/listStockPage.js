@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
 import NotDataAvailable from "../../../../components/NoDataAvailable";
 import { URLS } from "../../../../config/urls.config";
 import RouterList from "../../../../routes/routerList";
@@ -94,15 +95,20 @@ const StockList = () => {
       </List>
     </Box>
   );
+
   const [listData, setListdata] = useState([]);
   const [searchInput, setSearchInput] = useState("");
-  const [stockShortDetails, setStockShortDetails] = React.useState(null);
+  const [stockShortDetails, setStockShortDetails] = useState(null);
 
   const [count, setCount] = useState(0);
   const [isLoading, setLoader] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const navigate = useNavigate();
+
   const handleChangePage = (e, newPage) => setPage(newPage);
+
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
@@ -144,12 +150,10 @@ const StockList = () => {
       })
       .catch((err) => {
         setLoader(false);
-        console.error("error in stock List API", err);
+        console.error("Error in stock List API", err);
         setListdata([]);
       });
   };
-
-  const navigate = useNavigate();
 
   return (
     <Box className="list-stock">
@@ -262,9 +266,7 @@ const StockList = () => {
                   >
                     <TableCell
                       onClick={() =>
-                        navigate(
-                          `${RouterList.admin.admin}/${RouterList.admin.stockDetails}`
-                        )
+                        navigate(`/admin/stock-details/${listitem._id}`)
                       }
                       component="th"
                       scope="row"

@@ -1,14 +1,15 @@
-import * as React from "react";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { URLS } from "../../../../config/urls.config";
+import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import RouterList from "../../../../routes/routerList";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
-import Container from "@mui/material/Container";
+import { URLS } from "../../../../config/urls.config";
+import RouterList from "../../../../routes/routerList";
+import Loader from "../../../../components/Loader";
+
 import Grid from "@mui/material/Grid";
 import { Box, Button, MenuItem, TextField, Autocomplete } from "@mui/material";
 import Table from "@mui/material/Table";
@@ -20,6 +21,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
 import "./order-details.styles.scss";
+
 const orderdetailsSchema = yup
   .object()
   .shape({
@@ -73,8 +75,9 @@ const status = [
 ];
 
 const OrderDetails = () => {
-  const [orderDetailData, setOrderDetail] = React.useState([]);
-  const [selectedStatus, setSelectedStatus] = React.useState([]);
+  const [orderDetailData, setOrderDetail] = useState([]);
+  const [selectedStatus, setSelectedStatus] = useState([]);
+  const [isLoading, setLoader] = useState(false);
 
   const { id } = useParams();
 
@@ -85,19 +88,20 @@ const OrderDetails = () => {
     handleSubmit,
     formState: { errors },
     setValue,
-    getValues,
   } = useForm({
     resolver: yupResolver(orderdetailsSchema),
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     getOrderDetailsApi();
   }, []);
 
   const getOrderDetailsApi = () => {
+    setLoader(true);
     axios
       .get(`${URLS.order}/${id}`)
       .then((res) => {
+        setLoader(false);
         setOrderDetail(res.data);
         setValue("orderMobilenumber", res.data.user.mobileNumber);
         setValue("orderEmail", res.data.user.email);
@@ -107,11 +111,18 @@ const OrderDetails = () => {
       })
 
       .catch((err) => {
-        console.log("err in Category LIst", err);
+        setLoader(false);
+        setOrderDetail([]);
+        console.log("ErrOR in Order LIst", err);
       });
   };
 
+  const handleChange = (e, val) => {
+    setSelectedStatus(val);
+  };
+
   const putOrderDetailsApi = () => {
+    setLoader(true);
     let payload = {
       status: selectedStatus.label,
     };
@@ -120,18 +131,15 @@ const OrderDetails = () => {
         "Content-Type": "application/json",
       })
       .then((res) => {
-        console.log("res put order status", res);
+        setLoader(false);
         if (res) {
           navigate(`${RouterList.admin.admin}/${RouterList.admin.orderList}`);
         }
       })
       .catch((err) => {
-        console.log("error in put api===>>>", err);
+        setLoader(false);
+        console.log("Error in put api===>>>", err);
       });
-  };
-
-  const handleChange = (e, val) => {
-    setSelectedStatus(val);
   };
 
   return (
@@ -157,110 +165,128 @@ const OrderDetails = () => {
                     <Button className="order-cancel-btn">Cancel</Button>
                   </Grid>
                   <Grid item xs={4}>
-                    <Button
-                      fullWidth
-                      type="submit"
-                      className="order-submit-btn"
-                    >
-                      Submit
-                    </Button>
+                    {isLoading ? (
+                      <Loader />
+                    ) : (
+                      <Button
+                        fullWidth
+                        type="submit"
+                        className="order-submit-btn"
+                      >
+                        Submit
+                      </Button>
+                    )}
                   </Grid>
                 </div>
               </div>
-              <div className="order-details-container ">
-                <Grid container spacing={2}>
-                  <Grid item xs={6}>
-                    <TextField
-                      id="outlined-helperText"
-                      label="Name"
-                      fullWidth
-                      size="small"
-                      defaultValue="Email"
-                      {...register("orderEmail")}
-                      InputProps={{
-                        readOnly: true,
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <TextField
-                      id="outlined-helperText"
-                      label="Location"
-                      fullWidth
-                      size="small"
-                      defaultValue="Location"
-                      {...register("orderLocation")}
-                      InputProps={{
-                        readOnly: true,
-                      }}
-                    />
-                  </Grid>
-                  <Grid container spacing={2} marginTop={1} className="address">
-                    <Grid item xs={12}>
+              {isLoading ? (
+                <Loader />
+              ) : (
+                <div className="order-details-container ">
+                  <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                      <TextField
+                        id="outlined-helperText"
+                        label="Name"
+                        fullWidth
+                        size="small"
+                        defaultValue="Email"
+                        {...register("orderEmail")}
+                        InputProps={{
+                          readOnly: true,
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
                       <TextField
                         id="outlined-helperText"
                         label="Location"
                         fullWidth
                         size="small"
-                        defaultValue="Address"
-                        multiline
-                        rows={4}
-                        {...register("orderAddress")}
+                        defaultValue="Location"
+                        {...register("orderLocation")}
                         InputProps={{
                           readOnly: true,
                         }}
                       />
                     </Grid>
-                  </Grid>
-                  <Grid container spacing={2} marginTop={1} className="address">
-                    <Grid item xs={4}>
-                      <TextField
-                        id="outlined-helperText"
-                        label="Phone Number"
-                        fullWidth
-                        size="small"
-                        defaultValue="Phone Number"
-                        InputProps={{
-                          readOnly: true,
-                        }}
-                        {...register("orderMobilenumber")}
-                      />
-                    </Grid>
-                    <Grid item xs={3}>
-                      <TextField
-                        label="Pincode"
-                        fullWidth
-                        size="small"
-                        defaultValue="Pincode"
-                        InputProps={{
-                          readOnly: true,
-                        }}
-                        {...register("orderPincode")}
-                      />
-                    </Grid>
-                    <Grid item xs={5}>
-                      {status?.length && (
-                        <Autocomplete
-                          options={status}
-                          getOptionLabel={(option) => option.label || ""}
-                          isOptionEqualToValue={(option, value) =>
-                            option.label === value.label
-                          }
-                          value={selectedStatus}
-                          onChange={(e, val) => handleChange(e, val)}
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              label="Status"
-                              size="small"
-                            />
-                          )}
+                    <Grid
+                      container
+                      spacing={2}
+                      marginTop={1}
+                      className="address"
+                    >
+                      <Grid item xs={12}>
+                        <TextField
+                          id="outlined-helperText"
+                          label="Location"
+                          fullWidth
+                          size="small"
+                          defaultValue="Address"
+                          multiline
+                          rows={4}
+                          {...register("orderAddress")}
+                          InputProps={{
+                            readOnly: true,
+                          }}
                         />
-                      )}
+                      </Grid>
+                    </Grid>
+                    <Grid
+                      container
+                      spacing={2}
+                      marginTop={1}
+                      className="address"
+                    >
+                      <Grid item xs={4}>
+                        <TextField
+                          id="outlined-helperText"
+                          label="Phone Number"
+                          fullWidth
+                          size="small"
+                          defaultValue="Phone Number"
+                          InputProps={{
+                            readOnly: true,
+                          }}
+                          {...register("orderMobilenumber")}
+                        />
+                      </Grid>
+                      <Grid item xs={3}>
+                        <TextField
+                          label="Pincode"
+                          fullWidth
+                          size="small"
+                          defaultValue="Pincode"
+                          InputProps={{
+                            readOnly: true,
+                          }}
+                          {...register("orderPincode")}
+                        />
+                      </Grid>
+                      <Grid item xs={5}>
+                        {status?.length && (
+                          <Autocomplete
+                            options={status}
+                            getOptionLabel={(option) => option.label || ""}
+                            isOptionEqualToValue={(option, value) =>
+                              option.label === value.label
+                            }
+                            value={selectedStatus}
+                            onChange={(e, val) => handleChange(e, val)}
+                            renderInput={(params) => (
+                              <TextField
+                                {...params}
+                                label="Status"
+                                size="small"
+                              />
+                            )}
+                          />
+                        )}
+                      </Grid>
                     </Grid>
                   </Grid>
-                </Grid>
-              </div>
+                </div>
+              )}
             </form>
           </div>
         </Grid>

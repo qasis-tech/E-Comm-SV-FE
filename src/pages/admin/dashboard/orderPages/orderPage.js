@@ -1,9 +1,9 @@
-import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+
 import { URLS } from "../../../../config/urls.config";
 import NotDataAvailable from "../../../../components/NoDataAvailable";
-import RouterList from "../../../../routes/routerList";
 import Loader from "../../../../components/Loader";
 
 import {
@@ -97,12 +97,15 @@ const OrderList = () => {
 
   const [orderData, setOrderData] = useState();
   const [orderShortDetails, setOrderShortDetails] = useState(null);
+
   const [searchInput, setSearchInput] = useState("");
   const [count, setCount] = useState(0);
   const [isLoading, setLoader] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+
   const handleChangePage = (e, newPage) => setPage(newPage);
+
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
@@ -131,7 +134,6 @@ const OrderList = () => {
     axios
       .get(URL)
       .then((res) => {
-        console.log("res order", res);
         setLoader(false);
         setOrderShortDetails(res.shorthanddetails);
         setOrderData(res.data);
@@ -139,7 +141,7 @@ const OrderList = () => {
       })
       .catch((err) => {
         setLoader(false);
-        console.error("error in Order List API ", err);
+        console.error("Error in Order List API ", err);
         setOrderData([]);
       });
   };
