@@ -131,10 +131,11 @@ const OrderList = () => {
     axios
       .get(URL)
       .then((res) => {
+        console.log("res order", res);
         setLoader(false);
-        setOrderShortDetails(res.data.shorthanddetails);
+        setOrderShortDetails(res.shorthanddetails);
         setOrderData(res.data);
-        setCount(res.data.count);
+        setCount(res.count);
       })
       .catch((err) => {
         setLoader(false);

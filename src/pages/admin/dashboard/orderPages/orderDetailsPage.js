@@ -120,6 +120,7 @@ const OrderDetails = () => {
         "Content-Type": "application/json",
       })
       .then((res) => {
+        console.log("res put order status", res);
         if (res) {
           navigate(`${RouterList.admin.admin}/${RouterList.admin.orderList}`);
         }

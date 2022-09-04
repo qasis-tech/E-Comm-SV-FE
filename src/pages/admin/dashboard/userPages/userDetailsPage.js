@@ -189,23 +189,19 @@ const UserDetails = () => {
                         row
                         aria-labelledby="demo-row-radio-buttons-group-label"
                         name="row-radio-buttons-group"
+                        defaultValue="Female"
                       >
                         <FormControlLabel
                           {...register("userGender", { required: true })}
                           value="female"
                           control={<Radio />}
                           label="Female"
-                          type="radio"
-                          checked={true}
                         />
                         <FormControlLabel
                           {...register("userGender", { required: true })}
                           value="male"
                           control={<Radio />}
                           label="Male"
-                          type="radio"
-                          checked={false}
-                          // checked={getValues("userGender") == "male"}
                         />
                       </RadioGroup>
                     </Grid>
