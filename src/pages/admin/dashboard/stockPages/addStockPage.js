@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { URLS } from "../../../../config/urls.config";
+import RouterList from "../../../../routes/routerList";
 import { useState } from "react";
 
 import { Box, Button, MenuItem, TextField, Autocomplete } from "@mui/material";
@@ -24,7 +25,7 @@ const AddStock = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  // const [currency, setCurrency] = React.useState("Fruits");
+
   const [unitData, setUnitdata] = useState([
     { label: "kg", value: "kg" },
     { label: "g", value: "g" },
@@ -35,38 +36,78 @@ const AddStock = () => {
   const [stockCategoryData, setStockCategoryData] = useState([]);
   const [selectedStockCategory, setSelectedStockCategory] = useState([]);
   const [selectedStockSubCategory, setSelectedStockSubCategory] = useState([]);
+  const [stockProductData, setStockProductdata] = useState([]);
+  const [selectedStockProduct, setSelectedStockProductData] = useState([]);
+  const [stockData, setStockData] = useState([]);
 
-  // const handleProduct = (e, val) => setSelectedStockProduct(val);
-
+  const navigate = useNavigate();
   React.useEffect(() => {
     getCategoryListApi();
   }, []);
+
+  React.useEffect(() => {
+    if (selectedStockCategory.length !== 0) {
+      getProductListApi();
+    }
+  }, [selectedStockCategory, selectedStockSubCategory]);
+
   const getCategoryListApi = () => {
     axios
       .get(`${URLS.category}`)
       .then((res) => {
         setStockCategoryData(res.data);
-        // setStockProductdata(res.data);
-        console.log("resss", res);
       })
       .catch((err) => {
         console.log("error", err);
       });
   };
 
+  const getProductListApi = () => {
+    let URL =
+      selectedStockCategory.length !== 0
+        ? `${URLS.product}?category=${selectedStockCategory.label}&subCategory=${selectedStockSubCategory.label}`
+        : null;
+    axios
+      .get(URL)
+      .then((res) => {
+        setStockProductdata(res.data);
+      })
+      .catch((err) => {
+        console.log("error", err);
+      });
+  };
   const handleUnit = (e, val) => {
     console.log("val", val);
     setSelectedunit(val);
-    console.log("selectedunit", val);
   };
   const handleStockCategory = (e, val) => {
     setSelectedStockCategory(val);
-    console.log("selectedcategory", selectedStockCategory);
   };
-  const handleStockSubCategory = (e, val) => setSelectedStockSubCategory(val);
 
-  const handleStockAddpage = (data) => {
-    console.log("StockAddpage Details", data);
+  const handleStockSubCategory = (e, val) => setSelectedStockSubCategory(val);
+  const handleProduct = (e, val) => setSelectedStockProductData(val);
+
+  const handleStockAddpage = ({ productQuantity }) => {
+    let payload = {
+      product: selectedStockProduct.name,
+      category: selectedStockCategory.label,
+      subCategory: selectedStockSubCategory.label,
+      quantity: productQuantity,
+      unit: selectedUnit.value,
+    };
+    axios
+      .post(`${URLS.stock}`, payload, {
+        "Content-Type": "application/json",
+      })
+      .then((res) => {
+        setStockData(res.data);
+        if (res.success) {
+          navigate(`${RouterList.admin.admin}/${RouterList.admin.stockList}`);
+        }
+      })
+      .catch((err) => {
+        console.log("errors in post stock", err);
+      });
   };
   return (
     <div className="add-stock">
@@ -108,8 +149,8 @@ const AddStock = () => {
                   <Grid item xs={6}>
                     <Autocomplete
                       options={
-                        selectedStockCategory?.SubCategory?.length
-                          ? selectedStockCategory?.SubCategory
+                        selectedStockCategory?.subCategory?.length
+                          ? selectedStockCategory?.subCategory
                           : []
                       }
                       getOptionLabel={(option) => option.label || ""}
@@ -129,7 +170,7 @@ const AddStock = () => {
                     />
                   </Grid>
                   <Grid item xs={6}>
-                    {/* {stockProductData?.length && (
+                    {stockProductData ? (
                       <Autocomplete
                         options={stockProductData}
                         getOptionLabel={(option) => option.name || ""}
@@ -147,7 +188,7 @@ const AddStock = () => {
                           />
                         )}
                       />
-                    )} */}
+                    ) : null}
                   </Grid>
                   <Grid item xs={3}>
                     <TextField
@@ -156,13 +197,13 @@ const AddStock = () => {
                       label="Quantity"
                       size="small"
                       fullWidth
-                      error={errors?.productquantity}
-                      {...register("productquantity", {
+                      error={errors?.productQuantity}
+                      {...register("productQuantity", {
                         required: "This is required.",
                       })}
                     />
                     <div className="error">
-                      {errors?.productquantity?.message}
+                      {errors?.productQuantity?.message}
                     </div>
                   </Grid>
                   <Grid item xs={3}>
