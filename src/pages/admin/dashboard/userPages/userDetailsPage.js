@@ -1,12 +1,13 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import "yup-phone";
-import { useParams } from "react-router-dom";
-import axios from "axios";
+
 import { URLS } from "../../../../config/urls.config";
-import { getValue } from "@testing-library/user-event/dist/utils";
+import Loader from "../../../../components/Loader";
 
 import { Box, Button, TextField } from "@mui/material";
 import Container from "@mui/material/Container";
@@ -50,17 +51,18 @@ const UserDetails = () => {
   });
 
   const { id } = useParams();
-  console.log("parms ==>", id);
+  const [isLoading, setLoader] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     getDetailsApi();
   }, []);
 
   const getDetailsApi = () => {
+    setLoader(true);
     axios
       .get(`${URLS.user}/${id}`)
       .then((res) => {
-        console.log("ress =>>", res);
+        setLoader(false);
         setValue("userFirstName", res.data.firstName);
         setValue("userLastName", res.data.lastName);
         setValue("userMobilenumber", res.data.mobileNumber);
@@ -72,6 +74,7 @@ const UserDetails = () => {
         console.log("getvalues", getValues("userGender"));
       })
       .catch((err) => {
+        setLoader(false);
         console.log("err in Category LIst", err);
       });
   };

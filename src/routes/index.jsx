@@ -84,7 +84,7 @@ const CustomRouters = () => {
         <Route path={RouterList.admin.stockList} element={<StockList />} />
         <Route path="add-stock" element={<AddStock />} />
         <Route path="stock-details/:id" element={<StockDetails />}/>
-        <Route path="users" element={<UserList />} />
+        <Route path={RouterList.admin.userList} element={<UserList />} />
         <Route path={RouterList.admin.addUser} element={<AddUser />} />
         <Route path="users-details/:id" element={<UserDetails />} />
         <Route path="add-user" element={<AddUser />} />

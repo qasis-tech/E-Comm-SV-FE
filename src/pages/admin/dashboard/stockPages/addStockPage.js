@@ -5,12 +5,12 @@ import { useNavigate } from "react-router-dom";
 
 import { URLS } from "../../../../config/urls.config";
 import RouterList from "../../../../routes/routerList";
+import Loader from "../../../../components/Loader";
 
 import { Box, Button, MenuItem, TextField, Autocomplete } from "@mui/material";
 import Grid from "@mui/material/Grid";
 
 import "./add-stock.styles.scss";
-import Loader from "../../../../components/Loader";
 
 const AddStock = () => {
   const {
@@ -113,6 +113,7 @@ const AddStock = () => {
       })
       .catch((err) => {
         setLoader(false);
+        setStockData([]);
         console.log("Errors in post stock", err);
       });
   };

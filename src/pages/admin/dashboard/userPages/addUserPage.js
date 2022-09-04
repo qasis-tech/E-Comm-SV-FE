@@ -1,11 +1,14 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import "yup-phone";
-import axios from "axios";
+
 import { URLS } from "../../../../config/urls.config";
-import { useNavigate } from "react-router-dom";
+import Loader from "../../../../components/Loader";
+import RouterList from "../../../../routes/routerList";
 
 import { Box, Button, TextField } from "@mui/material";
 import Container from "@mui/material/Container";
@@ -16,6 +19,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 
 import "./add-user.styles.scss";
+
 const userdetailsSchema = yup
   .object()
   .shape({
@@ -44,7 +48,10 @@ const AddUser = () => {
   } = useForm({
     resolver: yupResolver(userdetailsSchema),
   });
+
   const navigate = useNavigate();
+  const [isLoading, setLoader] = useState(false);
+  const [userData, setUserData] = useState([]);
 
   const handleUserDetails = ({
     userFirstName,
@@ -59,6 +66,7 @@ const AddUser = () => {
     userPincode,
     userGender,
   }) => {
+    setLoader(true);
     let payload = {
       firstName: userFirstName,
       lastName: userLastName,
@@ -74,10 +82,16 @@ const AddUser = () => {
         "Content-Type": "application/json",
       })
       .then((res) => {
-        console.log("ress=>=>", res);
+        setLoader(false);
+        setUserData(res.data);
+        if (res.success) {
+          navigate(`${RouterList.admin.admin}/${RouterList.admin.userList}`);
+        }
       })
       .catch((err) => {
-        console.log("errors swwer", err);
+        setLoader(false);
+        setUserData([]);
+        console.log("Errors IN POST USER", err);
       });
   };
 
@@ -254,15 +268,19 @@ const AddUser = () => {
                   <Button>Cancel</Button>
                 </Grid>
                 <Grid item xs={4}>
-                  <Button
-                    fullWidth
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    className="submit-btn"
-                  >
-                    submit
-                  </Button>
+                  {isLoading ? (
+                    <Loader />
+                  ) : (
+                    <Button
+                      fullWidth
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      className="submit-btn"
+                    >
+                      submit
+                    </Button>
+                  )}
                 </Grid>
               </div>
             </form>

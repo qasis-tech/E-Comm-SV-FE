@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { startCase } from "lodash";
 
 import {
@@ -43,6 +43,7 @@ import { URLS } from "../../../../config/urls.config";
 import NotDataAvailable from "../../../../components/NoDataAvailable";
 import RouterList from "../../../../routes/routerList";
 import Loader from "../../../../components/Loader";
+
 import "./list-user.styles.scss";
 
 const UserList = () => {
@@ -95,31 +96,30 @@ const UserList = () => {
       </List>
     </Box>
   );
-  const [userData, setUserData] = React.useState([]);
+  const [userData, setUserData] = useState([]);
   const [searchInput, setSearchInput] = useState("");
 
   const [count, setCount] = useState(0);
   const [isLoading, setLoader] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+
   const handleChangePage = (e, newPage) => setPage(newPage);
+
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
   useEffect(() => {
-    console.log("0003");
     getUserListApi();
   }, []);
 
   useEffect(() => {
-    console.log("0001");
     getUserListApi();
   }, [page, rowsPerPage]);
 
   useEffect(() => {
-    console.log("0002");
     if (searchInput === "") {
       getUserListApi();
     }
@@ -138,7 +138,6 @@ const UserList = () => {
         headers: { "Content-Type": "application/json" },
       })
       .then((res) => {
-        console.log("1111===>", res);
         setLoader(false);
         setUserData(res.data);
         setCount(res.data.count);
@@ -149,6 +148,7 @@ const UserList = () => {
         setUserData([]);
       });
   };
+
   const navigate = useNavigate();
 
   return (
@@ -218,10 +218,6 @@ const UserList = () => {
             </TableHead>
             <TableBody>
               {userData?.map((useritem) => {
-                console.log(
-                  "0001",
-                  `${RouterList.admin}/${RouterList.admin.userDetails}/${useritem._id}`
-                );
                 return (
                   <TableRow
                     hover
