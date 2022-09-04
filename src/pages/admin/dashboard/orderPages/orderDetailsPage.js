@@ -41,19 +41,19 @@ const orderdetailsSchema = yup
 
 const status = [
   {
-    label: "Awaiting Order Confirming",
+    label: "Awaiting order confirming",
   },
   {
-    label: "Awaiting Payment",
+    label: "Awaiting payment",
   },
   {
     label: "Order Pending",
   },
   {
-    label: "Order Received",
+    label: "Order received",
   },
   {
-    label: "Awaiting Pickup",
+    label: "Awaiting pickup",
   },
   {
     label: "Shipped",
@@ -62,7 +62,7 @@ const status = [
     label: "Cancelled",
   },
   {
-    label: "Awaiting Refunding",
+    label: "Awaiting refunding",
   },
   {
     label: "Refunded",

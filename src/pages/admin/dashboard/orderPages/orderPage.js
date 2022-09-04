@@ -308,10 +308,13 @@ const OrderList = () => {
                         className={
                           orderItem.status === "Order Pending"
                             ? "pending"
-                            : orderItem.status ===
-                                "Awaiting order confirming" ||
-                              "Awaiting payment" ||
-                              "Awaiting pickup"
+                            : orderItem.status === "Awaiting order confirming"
+                            ? "await"
+                            : orderItem.status === "Awaiting payment"
+                            ? "await"
+                            : orderItem.status === "Awaiting pickup"
+                            ? "await"
+                            : orderItem.status === "Awaiting refunding"
                             ? "await"
                             : orderItem.status === "Order received"
                             ? "received"
