@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import "yup-phone";
 
 import { URLS } from "../../../../config/urls.config";
 import Loader from "../../../../components/Loader";
+import RouterList from "../../../../routes/routerList";
 
 import { Box, Button, TextField } from "@mui/material";
 import Container from "@mui/material/Container";
@@ -51,7 +53,11 @@ const UserDetails = () => {
   });
 
   const { id } = useParams();
+
+  const navigate = useNavigate();
+
   const [isLoading, setLoader] = useState(false);
+  const [userDetailData, setUserDetailData] = useState([]);
 
   useEffect(() => {
     getDetailsApi();
@@ -63,6 +69,7 @@ const UserDetails = () => {
       .get(`${URLS.user}/${id}`)
       .then((res) => {
         setLoader(false);
+        setUserDetailData(res.data);
         setValue("userFirstName", res.data.firstName);
         setValue("userLastName", res.data.lastName);
         setValue("userMobilenumber", res.data.mobileNumber);
@@ -70,21 +77,40 @@ const UserDetails = () => {
         setValue("userPincode", res.data.pinCode);
         setValue("userGender", res.data.gender);
       })
-      .then(() => {
-        console.log("getvalues", getValues("userGender"));
-      })
       .catch((err) => {
         setLoader(false);
+        setUserDetailData([]);
         console.log("err in Category LIst", err);
       });
   };
 
-  const handleUserDetails = ({
+  const putUserDetailsApi = ({
     userLocation,
     userPrimaryaddress,
     userOtheraddress,
+    userPincode,
   }) => {
-    // console.log("UserDetailspage Details", data);
+    setLoader(true);
+    let payload = {
+      location: userLocation,
+      primaryAddress: userPrimaryaddress,
+      userPrimaryaddress: userOtheraddress,
+      pinCode: userPincode,
+    };
+    axios
+      .put(`${URLS.addUser}/${id}`, payload, {
+        "Content-Type": "application/json",
+      })
+      .then((res) => {
+        setLoader(false);
+        if (res) {
+          navigate(`${RouterList.admin.admin}/${RouterList.admin.userList}`);
+        }
+      })
+      .catch((err) => {
+        setLoader(false);
+        console.log("Error in put api user===>>>", err);
+      });
   };
   return (
     <div className="details-user">
@@ -96,165 +122,175 @@ const UserDetails = () => {
           className="details-user-container"
         >
           <div className="user-details-form-section col-md-8">
-            <form onSubmit={handleSubmit(handleUserDetails)}>
+            <form onSubmit={handleSubmit(putUserDetailsApi)}>
               <div className="main-heading">
                 <h5 className="heading">User Details</h5>
               </div>
-              <div className="main-form-container">
-                <Grid container spacing={2}>
-                  <Grid item xs={6}>
-                    <TextField
-                      id="outlined-helperText"
-                      fullWidth
-                      size="small"
-                      label="First Name"
-                      {...register("userFirstName")}
-                      defaultValue="Firstname"
-                      error={errors?.userFirstName}
-                    />
-                    <p>{errors?.userFirstName?.message}</p>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <TextField
-                      id="outlined-helperText"
-                      fullWidth
-                      size="small"
-                      label="Last Name"
-                      {...register("userLastName")}
-                      defaultValue="LastName"
-                      error={errors?.userLastName}
-                    />
-                    <p>{errors?.userLastName?.message}</p>
-                  </Grid>
-                </Grid>
-                <Grid container spacing={2}>
-                  <Grid item xs={6}>
-                    <TextField
-                      id="outlined-helperText"
-                      fullWidth
-                      size="small"
-                      label="Email"
-                      {...register("userEmail")}
-                      defaultValue="Email"
-                      error={errors?.userEmail}
-                    />
-                    <p>{errors?.userEmail?.message}</p>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <TextField
-                      id="outlined-helperText"
-                      fullWidth
-                      size="small"
-                      label="Location"
-                      {...register("userLocation")}
-                      defaultValue="Location"
-                      error={errors?.userLocation}
-                    />
-                    <p>{errors?.userLocation?.message}</p>
-                  </Grid>
-                </Grid>
-                <Grid container spacing={2}>
-                  <Grid item xs={4}>
-                    <TextField
-                      id="outlined-helperText"
-                      fullWidth
-                      size="small"
-                      label="Phone Number"
-                      {...register("userMobilenumber")}
-                      defaultValue="Phone Number"
-                      error={errors?.userMobilenumber}
-                    />
-                    <p>{errors?.userMobilenumber?.message}</p>
-                  </Grid>
-                  <Grid item xs={3}>
-                    <TextField
-                      id="outlined-helperText"
-                      fullWidth
-                      size="small"
-                      label="Pincode"
-                      {...register("userPincode")}
-                      defaultValue="Pin"
-                      error={errors?.userPincode}
-                    />
-                    <p>{errors?.userPincode?.message}</p>
-                  </Grid>
-                  <Grid item xs={5} className="gender-section">
-                    <Grid item xs={2}>
-                      <FormLabel
-                        className="gender-label"
-                        id="demo-row-radio-buttons-group-label"
-                      >
-                        Gender
-                      </FormLabel>
+              {isLoading ? (
+                <Loader />
+              ) : (
+                <div className="main-form-container">
+                  <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                      <TextField
+                        id="outlined-helperText"
+                        fullWidth
+                        size="small"
+                        label="First Name"
+                        {...register("userFirstName")}
+                        defaultValue="Firstname"
+                        error={errors?.userFirstName}
+                      />
+                      <p>{errors?.userFirstName?.message}</p>
                     </Grid>
-                    <Grid item xs={10} className="radio-btn">
-                      <RadioGroup
-                        row
-                        aria-labelledby="demo-row-radio-buttons-group-label"
-                        name="row-radio-buttons-group"
-                        defaultValue="Female"
-                      >
-                        <FormControlLabel
-                          {...register("userGender", { required: true })}
-                          value="female"
-                          control={<Radio />}
-                          label="Female"
-                        />
-                        <FormControlLabel
-                          {...register("userGender", { required: true })}
-                          value="male"
-                          control={<Radio />}
-                          label="Male"
-                        />
-                      </RadioGroup>
+                    <Grid item xs={6}>
+                      <TextField
+                        id="outlined-helperText"
+                        fullWidth
+                        size="small"
+                        label="Last Name"
+                        {...register("userLastName")}
+                        defaultValue="LastName"
+                        error={errors?.userLastName}
+                      />
+                      <p>{errors?.userLastName?.message}</p>
                     </Grid>
                   </Grid>
-                </Grid>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <TextField
-                      id="outlined-helperText"
-                      fullWidth
-                      label="Primary Address"
-                      {...register("userPrimaryaddress")}
-                      defaultValue="Primary Address"
-                      multiline
-                      rows={4}
-                      error={errors?.userPrimaryaddress}
-                    />
-                    <p>{errors?.userPrimaryaddress?.message}</p>
+                  <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                      <TextField
+                        id="outlined-helperText"
+                        fullWidth
+                        size="small"
+                        label="Email"
+                        {...register("userEmail")}
+                        defaultValue="Email"
+                        error={errors?.userEmail}
+                      />
+                      <p>{errors?.userEmail?.message}</p>
+                    </Grid>
+                    <Grid item xs={6}>
+                      <TextField
+                        id="outlined-helperText"
+                        fullWidth
+                        size="small"
+                        label="Location"
+                        {...register("userLocation")}
+                        defaultValue="Location"
+                        error={errors?.userLocation}
+                      />
+                      <p>{errors?.userLocation?.message}</p>
+                    </Grid>
                   </Grid>
-                </Grid>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <TextField
-                      {...register("userOtheraddress")}
-                      id="outlined-helperText"
-                      fullWidth
-                      label="Other Address"
-                      defaultValue="Other Address"
-                      multiline
-                      rows={4}
-                      error={errors?.userOtheraddress}
-                    />
-                    <p>{errors?.userOtheraddress?.message}</p>
+                  <Grid container spacing={2}>
+                    <Grid item xs={4}>
+                      <TextField
+                        id="outlined-helperText"
+                        fullWidth
+                        size="small"
+                        label="Phone Number"
+                        {...register("userMobilenumber")}
+                        defaultValue="Phone Number"
+                        error={errors?.userMobilenumber}
+                      />
+                      <p>{errors?.userMobilenumber?.message}</p>
+                    </Grid>
+                    <Grid item xs={3}>
+                      <TextField
+                        id="outlined-helperText"
+                        fullWidth
+                        size="small"
+                        label="Pincode"
+                        {...register("userPincode")}
+                        defaultValue="Pin"
+                        error={errors?.userPincode}
+                      />
+                      <p>{errors?.userPincode?.message}</p>
+                    </Grid>
+                    <Grid item xs={5} className="gender-section">
+                      <Grid item xs={2}>
+                        <FormLabel
+                          className="gender-label"
+                          id="demo-row-radio-buttons-group-label"
+                        >
+                          Gender
+                        </FormLabel>
+                      </Grid>
+                      <Grid item xs={10} className="radio-btn">
+                        <RadioGroup
+                          row
+                          aria-labelledby="demo-row-radio-buttons-group-label"
+                          name="row-radio-buttons-group"
+                          defaultValue="Female"
+                        >
+                          <FormControlLabel
+                            {...register("userGender", { required: true })}
+                            value=""
+                            control={<Radio />}
+                            label="Female"
+                            checked={userDetailData.gender === "female"}
+                          />
+                          <FormControlLabel
+                            {...register("userGender", { required: true })}
+                            value=""
+                            control={<Radio />}
+                            label="Male"
+                            checked={userDetailData.gender === "male"}
+                          />
+                        </RadioGroup>
+                      </Grid>
+                    </Grid>
                   </Grid>
-                </Grid>
-              </div>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                      <TextField
+                        id="outlined-helperText"
+                        fullWidth
+                        label="Primary Address"
+                        {...register("userPrimaryaddress")}
+                        defaultValue="Primary Address"
+                        multiline
+                        rows={4}
+                        error={errors?.userPrimaryaddress}
+                      />
+                      <p>{errors?.userPrimaryaddress?.message}</p>
+                    </Grid>
+                  </Grid>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                      <TextField
+                        {...register("userOtheraddress")}
+                        id="outlined-helperText"
+                        fullWidth
+                        label="Other Address"
+                        defaultValue="Other Address"
+                        multiline
+                        rows={4}
+                        error={errors?.userOtheraddress}
+                      />
+                      <p>{errors?.userOtheraddress?.message}</p>
+                    </Grid>
+                  </Grid>
+                </div>
+              )}
               <div className="row submit-button">
                 <Grid item xs={2}>
                   <Button>Cancel</Button>
                 </Grid>
                 <Grid item xs={4}>
-                  <Button
-                    fullWidth
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    className="submit-btn"
-                  >
-                    submit
-                  </Button>
+                  {isLoading ? (
+                    <Loader />
+                  ) : (
+                    <Button
+                      fullWidth
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      className="submit-btn"
+                    >
+                      submit
+                    </Button>
+                  )}
                 </Grid>
               </div>
             </form>

@@ -275,7 +275,7 @@ const ListCategory = () => {
       ) : (
         <NotDataAvailable />
       )}
-      {!!count > 10 && (
+      {!isLoading && count > 10 && (
         <div className="pagination-section">
           <TablePagination
             component="div"

@@ -138,9 +138,10 @@ const UserList = () => {
         headers: { "Content-Type": "application/json" },
       })
       .then((res) => {
+        console.log("111==>>>", res);
         setLoader(false);
         setUserData(res.data);
-        setCount(res.data.count);
+        setCount(res.count);
       })
       .catch((err) => {
         setLoader(false);
@@ -261,7 +262,7 @@ const UserList = () => {
               })}
             </TableBody>
           </Table>
-          {!!count > 10 && (
+          {!isLoading && count > 10 && (
             <div className="pagination-section">
               <TablePagination
                 component="div"

@@ -6,4 +6,5 @@ export const URLS = {
   order: "/order",
   resetOtp: "/resetOtp",
   verifyResetOtp: "/verifyResetOtp",
+  addUser: "/addUser",
 };

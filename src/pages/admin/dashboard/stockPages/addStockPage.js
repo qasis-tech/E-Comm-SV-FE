@@ -152,9 +152,7 @@ const AddStock = () => {
                               {...params}
                               label="Categories"
                               size="small"
-                              {...register("stockCategory", {
-                                required: "This is required",
-                              })}
+                              {...register("stockCategory")}
                             />
                           )}
                         />
@@ -182,9 +180,7 @@ const AddStock = () => {
                             {...params}
                             label="Subcategories"
                             size="small"
-                            {...register("stockSubCategory", {
-                              required: "This is required",
-                            })}
+                            {...register("stockSubCategory")}
                           />
                         )}
                       />
