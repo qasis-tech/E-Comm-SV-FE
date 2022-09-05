@@ -40,6 +40,7 @@ import CloseIcon from "@mui/icons-material/Close";
 
 import "./list-product.styles.scss";
 import Loader from "../../../../components/Loader";
+import DialogComponent from "../../../../components/Dialog";
 
 const ListProduct = () => {
   const [state, setState] = React.useState({
@@ -98,11 +99,13 @@ const ListProduct = () => {
   const [isLoading, setLoader] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+
   const handleChangePage = (event, newPage) => setPage(newPage);
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+  const handleDelete = () => {};
 
   React.useEffect(() => {
     getProductListApi();
@@ -232,7 +235,14 @@ const ListProduct = () => {
                     <TableCell>{product.price}</TableCell>
                     <TableCell>
                       <Button>
-                        <DeleteIcon className="delete-icon" />
+                        <DialogComponent
+                          title="Confirmation"
+                          msg="Are you sure,you want to delete ?"
+                          deleteWord="yes"
+                          notNowWord="no"
+                        >
+                          <DeleteIcon />
+                        </DialogComponent>
                       </Button>
                       <Button>
                         <CreateIcon className="edit-icon" />
