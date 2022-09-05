@@ -143,6 +143,10 @@ const ListProduct = () => {
         setProductData([]);
       });
   };
+
+  const handleRemove = (id) => {
+    console.log("Removed ID ==> ", id);
+  };
   const navigate = useNavigate();
 
   return (
@@ -236,10 +240,11 @@ const ListProduct = () => {
                     <TableCell>
                       <Button>
                         <DialogComponent
-                          title="Confirmation"
-                          msg="Are you sure,you want to delete ?"
+                          title="Warning"
+                          msg="Are you sure, you want to delete ?"
                           deleteWord="yes"
                           notNowWord="no"
+                          action={() => handleRemove(product._id)}
                         >
                           <DeleteIcon />
                         </DialogComponent>
