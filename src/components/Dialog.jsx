@@ -79,10 +79,10 @@ const DialogComponent = (props) => {
           <Typography gutterBottom></Typography>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose}>
+          <Button autoFocus onClick={() => {props.action();handleClose();}}>
             {props.deleteWord}
           </Button>
-          <Button autoFocus onClick={() => props.action()}>
+          <Button autoFocus onClick={handleClose}>
             {props.notNowWord}
           </Button>
         </DialogActions>

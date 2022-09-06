@@ -105,9 +105,8 @@ const ListProduct = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  const handleDelete = () => {};
 
-  React.useEffect(() => {
+  useEffect(() => {
     getProductListApi();
   }, []);
 
@@ -145,7 +144,17 @@ const ListProduct = () => {
   };
 
   const handleRemove = (id) => {
-    console.log("Removed ID ==> ", id);
+    axios
+      .delete(`${URLS.product}/${id}`)
+      .then((res) => {
+        if (res.success) {
+          alert(res.message);
+        }
+      })
+      .catch((err) => {
+        console.log("errror", err);
+      });
+    getProductListApi();
   };
   const navigate = useNavigate();
 

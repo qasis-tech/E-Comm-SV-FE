@@ -6,6 +6,7 @@ import NotDataAvailable from "../../../../components/NoDataAvailable";
 import { URLS } from "../../../../config/urls.config";
 import RouterList from "../../../../routes/routerList";
 import Loader from "../../../../components/Loader";
+import DialogComponent from "../../../../components/Dialog";
 
 import {
   Table,
@@ -154,6 +155,19 @@ const StockList = () => {
         setListdata([]);
       });
   };
+  const handleRemove = (id) => {
+    axios
+      .delete(`${URLS.stock}/${id}`)
+      .then((res) => {
+        if (res.success) {
+          alert(res.message);
+        }
+      })
+      .catch((err) => {
+        console.log("errror", err);
+      });
+    getStockListApi();
+  };
 
   return (
     <Box className="list-stock">
@@ -280,7 +294,15 @@ const StockList = () => {
                     <TableCell>{formatDate(listitem?.updatedAt)}</TableCell>
                     <TableCell>
                       <Button>
-                        <DeleteIcon className="delete-icon" />
+                        <DialogComponent
+                          title="Warning"
+                          msg="Are you sure, you want to delete ?"
+                          deleteWord="yes"
+                          notNowWord="no"
+                          action={() => handleRemove(listitem._id)}
+                        >
+                          <DeleteIcon />
+                        </DialogComponent>
                       </Button>
                       <Button>
                         <CreateIcon className="edit-icon" />
