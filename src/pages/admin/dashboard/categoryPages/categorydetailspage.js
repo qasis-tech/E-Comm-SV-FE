@@ -88,6 +88,7 @@ function Categorydetails() {
             imageFile: [{ name: data.subCategoryImage }],
           };
         });
+
         setValue("mainCategory", data.label);
         setValue("categoryImageFile", data.image);
         setValue("subcategory", subCatArr);

@@ -200,6 +200,10 @@ const AddProduct = () => {
                       error={errors?.quantity}
                       {...register("quantity", {
                         required: "Quantity is required",
+                        pattern: {
+                          value: /^[0-9]+$/,
+                          message: "Please enter a number",
+                        },
                       })}
                     />
                     <div className="error">{errors?.quantity?.message}</div>
@@ -380,7 +384,13 @@ const AddProduct = () => {
                       label="Price"
                       size="small"
                       error={errors?.price}
-                      {...register("price", { required: "Price is required" })}
+                      {...register("price", {
+                        required: "Price is required",
+                        pattern: {
+                          value: /^[0-9]+$/,
+                          message: "Please enter a number",
+                        },
+                      })}
                     />
                     <div className="error">{errors?.price?.message}</div>
                   </Grid>
@@ -421,6 +431,10 @@ const AddProduct = () => {
                       error={errors?.offerQuantity}
                       {...register("offerQuantity", {
                         required: "OfferQuantity is required",
+                        pattern: {
+                          value: /^[0-9]+$/,
+                          message: "Please enter a number",
+                        },
                       })}
                     />
                     <div className="error">
@@ -436,6 +450,10 @@ const AddProduct = () => {
                       error={errors?.offerPrice}
                       {...register("offerPrice", {
                         required: "OfferPrice is required",
+                        pattern: {
+                          value: /^[0-9]+$/,
+                          message: "Please enter a number",
+                        },
                       })}
                     />
                     <div className="error">{errors?.offerPrice?.message}</div>

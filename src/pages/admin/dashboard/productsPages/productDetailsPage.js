@@ -21,26 +21,6 @@ import ProductImage from "../../../../assets/product-4.jpg";
 
 import "./product-details.styles.scss";
 
-const productdetailsSchema = yup
-  .object()
-  .shape({
-    productName: yup.string().required(),
-    productCategory: yup.string().required(),
-    productSubcategory: yup.string().required(),
-    productUnit: yup.string().required(),
-    productQuantity: yup.string().required(),
-    productDescription: yup.string().required(),
-    productFeatureKey: yup.string(),
-    productFeatureValue: yup.string(),
-    productPrice: yup.string().required(),
-    productOfferUnit: yup.string().required(),
-    productOfferQuantity: yup.string().required(),
-    productOfferPrice: yup.string().required(),
-    productImageFile: yup.string().required(),
-    productVideoFile: yup.string().required(),
-  })
-  .required();
-
 const ProductDetails = () => {
   const {
     register,
@@ -51,25 +31,45 @@ const ProductDetails = () => {
     setValue,
     getValues,
   } = useForm({
-    resolver: yupResolver(productdetailsSchema),
     defaultValues: {
       productFeatures: [{ productFeatureKey: "", productFeatureValue: "" }],
-      productImageFile: [{ images: "" }],
+      productDetailImageFile: [{ images: "" }],
       productVideoFile: null,
     },
   });
 
-  const { fields, append, remove } = useFieldArray({
+  const {
+    fields: featureFields,
+    append: featureAppend,
+    remove: featureRemove,
+  } = useFieldArray({
     control,
     name: "productFeatures",
   });
-  const watchFieldArray = watch("productFeatures");
-  const controlledFields = fields?.map((field, index) => {
+  const {
+    fields: productImageFields,
+    append: productFieldAppend,
+    remove: productFieldRemove,
+  } = useFieldArray({
+    control,
+    name: "productDetailImageFile",
+  });
+  const watchFeatureArray = watch("productFeatures");
+  const watchProductImageArray = watch("productDetailImageFile");
+  const controlledFeatureFields = featureFields?.map((field, index) => {
     return {
       ...field,
-      ...watchFieldArray[index],
+      ...watchFeatureArray[index],
     };
   });
+  const controlledProductImageFields = productImageFields?.map(
+    (field, index) => {
+      return {
+        ...field,
+        ...watchProductImageArray[index],
+      };
+    }
+  );
 
   const { id } = useParams();
   const [productDetailData, setProductDetail] = useState([]);
@@ -107,25 +107,24 @@ const ProductDetails = () => {
           });
         });
         setValue("productFeatures", tempArray);
-        const tempProductImage = [];
-        tempProductImage.push(data.productImage);
-        for (const values of tempProductImage) {
-          console.log("valuess==>", values);
-          setValue("productImageFile", values);
-        }
+        const proImgArr = data.productImage.map((data) => {
+          return {
+            images: [{ name: data.image }],
+          };
+        });
 
-        setValue("productImageFile");
-        const tempProductVideo = [];
-        tempProductVideo.push(data.productVideo);
-        for (const values of tempProductVideo) {
-          console.log("valuess==>", values);
-          setValue("productVideoFile", values[0]);
-        }
+        setValue("productDetailImageFile", proImgArr);
+        const proVidArr = data.productVideo.map((data) => {
+          console.log("video", data);
+          setValue("productVideoFile", data.video);
+        });
       })
       .catch((err) => {
         console.log("err in Category LIst", err);
       });
   };
+  console.log("1111", getValues("productVideoFile"));
+  const putProductDetailApi = () => {};
 
   return (
     <div className="details-product">
@@ -137,7 +136,7 @@ const ProductDetails = () => {
           className="details-product-container"
         >
           <div className="product-details-form-section col-md-8">
-            <form>
+            <form onSubmit={handleSubmit(putProductDetailApi)}>
               <div className="main-heading">
                 <h5 className="heading">Product Details</h5>
               </div>
@@ -217,7 +216,7 @@ const ProductDetails = () => {
                   <Grid item className="add-icon">
                     <AddIcon
                       onClick={() =>
-                        append({
+                        featureAppend({
                           productFeatureKey: "",
                           productFeatureValue: "",
                         })
@@ -226,7 +225,7 @@ const ProductDetails = () => {
                       className="add-icon-section"
                     />
                   </Grid>
-                  {controlledFields?.map((list, index) => {
+                  {controlledFeatureFields?.map((list, index) => {
                     return (
                       <Grid
                         key={list.id}
@@ -258,8 +257,11 @@ const ProductDetails = () => {
                           />
                         </Grid>
                         <Grid item xs={1} className="remove-section">
-                          {fields.length > 1 && (
-                            <button className="close-section">
+                          {controlledFeatureFields.length > 1 && (
+                            <button
+                              onClick={() => featureRemove(index)}
+                              className="close-section"
+                            >
                               <HighlightOffIcon />
                             </button>
                           )}
@@ -312,57 +314,85 @@ const ProductDetails = () => {
                     />
                   </Grid>
                 </Grid>
-                <Grid container spacing={2} marginTop={1}>
-                  <Grid item xs={6}>
-                    <Card fullWidth>
-                      {/* <CardMedia
-                        component="img"
-                        height="140"
-                        image={ProductImage}
-                        alt="green iguana"
-                      /> */}
-                      <CardActions>
-                        <Button
-                          variant="contained"
-                          className="file-btn"
-                          fullWidth
-                          component="label"
-                        >
-                          Upload Image
-                          <input
-                            type="file"
-                            hidden
-                            {...register("productImageFile")}
-                          />
-                        </Button>
-                      </CardActions>
-                    </Card>
+
+                <div className="feature-add">
+                  <Grid item className="add-icon">
+                    <AddIcon
+                      onClick={() => productFieldAppend({ images: "" })}
+                      color="primary"
+                      className="add-icon-section"
+                    />
                   </Grid>
 
+                  {controlledProductImageFields?.map((list, index) => {
+                    console.log("list", list);
+                    return (
+                      <Grid
+                        key={list.id}
+                        className="add-section"
+                        container
+                        spacing={2}
+                        marginTop={1}
+                      >
+                        <Grid item xs={6}>
+                          <Typography>
+                            {" "}
+                            {list && list?.images[0]?.name}
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={5}>
+                          <Button
+                            variant="contained"
+                            className="file-btn"
+                            fullWidth
+                            component="label"
+                          >
+                            Upload Image
+                            <input
+                              {...register(
+                                `productDetailImageFile.${index}.images`,
+                                {
+                                  required: true,
+                                }
+                              )}
+                              type="file"
+                              hidden
+                            />
+                          </Button>
+                          {errors.productDetailImageFile?.[index]?.images && (
+                            <div className="error">Image is required</div>
+                          )}
+                        </Grid>
+                        <Grid item xs={1} className="remove-section">
+                          {controlledProductImageFields.length > 1 && (
+                            <button
+                              onClick={() => productFieldRemove(index)}
+                              className="close-section"
+                            >
+                              <HighlightOffIcon />
+                            </button>
+                          )}
+                        </Grid>
+                      </Grid>
+                    );
+                  })}
+                </div>
+                <Grid container spacing={2} marginTop={1}>
                   <Grid item xs={6}>
-                    <Card fullWidth>
-                      {/* <CardMedia
-                        component="img"
-                        height="140"
-                        image={ProductImage}
-                        alt="green iguana"
-                      /> */}
-                      <CardActions>
-                        <Button
-                          variant="contained"
-                          className="file-btn"
-                          fullWidth
-                          component="label"
-                        >
-                          Upload Video
-                          <input
-                            type="file"
-                            hidden
-                            {...register("productVideoFile")}
-                          />
-                        </Button>
-                      </CardActions>
-                    </Card>
+                    <Button
+                      variant="contained"
+                      className="file-btn"
+                      fullWidth
+                      component="label"
+                    >
+                      Upload Video
+                      <input
+                        {...register("productVideoFile")}
+                        type="file"
+                        hidden
+                      />
+                    </Button>
+                    <span>{getValues("productVideoFile")}</span>
                   </Grid>
                 </Grid>
               </div>
