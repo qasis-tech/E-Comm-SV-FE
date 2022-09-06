@@ -6,6 +6,8 @@ import { startCase } from "lodash";
 import NotDataAvailable from "../../../../components/NoDataAvailable";
 import { URLS } from "../../../../config/urls.config";
 import RouterList from "../../../../routes/routerList";
+import { formatDate } from "../../../../utils/dateFormat";
+import Loader from "../../../../components/Loader";
 
 import {
   Drawer,
@@ -46,8 +48,6 @@ import Pagination from "@mui/material/Pagination";
 import SearchIcon from "@mui/icons-material/Search";
 
 import "./list-category.styles.scss";
-import { formatDate } from "../../../../utils/dateFormat";
-import Loader from "../../../../components/Loader";
 
 const ListSubCat = ({ item }) => {
   return (

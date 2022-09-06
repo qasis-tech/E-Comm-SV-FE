@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -9,14 +9,15 @@ import { useReactiveVar } from "@apollo/client";
 import RouterList from "../../../../routes/routerList";
 import { URLS } from "../../../../config/urls.config";
 import { popupVar } from "../../../../utils/globalVar";
+import PopupAlert from "../../../../components/popupAlerts";
 
 import { Box, Grid, Button, TextField } from "@mui/material";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
-import PopupAlert from "../../../../components/popupAlerts";
 import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
 import DeleteIcon from "@mui/icons-material/Delete";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+
 import "./addCategoryPage.styles.scss";
 import "./addCategoryPage.styles.scss";
 
@@ -187,14 +188,17 @@ const AddCategory = () => {
                               variant="outlined"
                               fullWidth
                               size="small"
-                              error={errors?.subCategoryName}
+                              error={
+                                errors.subcategory?.[index]?.subCategoryName
+                              }
                               {...register(
-                                `subcategory.${index}.subCategoryName`
+                                `subcategory.${index}.subCategoryName`,
+                                { required: true }
                               )}
                             />
-                            <div className="error">
-                              {errors?.subCategoryName?.message}
-                            </div>
+                            {errors.subcategory?.[index]?.subCategoryName && (
+                              <div className="error">This is required</div>
+                            )}
                           </Grid>
                           <Grid item xs={12} className="image-remove-section">
                             {list?.imageFile?.length ? (
@@ -223,18 +227,20 @@ const AddCategory = () => {
                                   label="file"
                                   type="file"
                                   variant="outlined"
+                                  error={errors.subcategory?.[index]?.imageFile}
                                   fullWidth
                                   hidden
                                   {...register(
-                                    `subcategory.${index}.imageFile`
+                                    `subcategory.${index}.imageFile`,
+                                    { required: true }
                                   )}
                                 />
                               </Button>
                             )}
-                            <div className="error">
-                              {errors?.imageFile?.message}
-                            </div>
                           </Grid>
+                          {errors.subcategory?.[index]?.imageFile && (
+                            <div className="error">This is required</div>
+                          )}
                         </Grid>
                         <Grid item xs={1} className="remove-section">
                           {fields.length > 1 && (

@@ -5,6 +5,7 @@ import axios from "axios";
 import { URLS } from "../../../../config/urls.config";
 import NotDataAvailable from "../../../../components/NoDataAvailable";
 import Loader from "../../../../components/Loader";
+import RouterList from "../../../../routes/routerList";
 
 import {
   Table,
@@ -45,7 +46,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import "./list-order.styles.scss";
 
 const OrderList = () => {
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     right: false,
   });
 
@@ -274,7 +275,9 @@ const OrderList = () => {
                     className="order-row-section"
                     key={orderItem._id}
                     onClick={() =>
-                      navigate(`/admin/order-details/${orderItem._id}`)
+                      navigate(
+                        `${RouterList.admin.admin}/${RouterList.admin.orderDetails}/${orderItem._id}`
+                      )
                     }
                   >
                     <TableCell component="th" scope="row">

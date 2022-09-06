@@ -37,7 +37,7 @@ const orderdetailsSchema = yup
     orderPincode: yup
       .string()
       .matches(/^[1-9][0-9]{5}$/, "Invalid zipcode (682315)"),
-    orderStatus: yup.string(),
+    orderStatus: yup.string().required("Status is required"),
   })
   .required();
 
@@ -278,10 +278,16 @@ const OrderDetails = () => {
                                 {...params}
                                 label="Status"
                                 size="small"
+                                {...register("orderStatus")}
                               />
                             )}
                           />
                         )}
+                        {!selectedStatus.label ? (
+                          <div className="error">
+                            {errors?.orderStatus?.message}
+                          </div>
+                        ) : null}
                       </Grid>
                     </Grid>
                   </Grid>
@@ -312,7 +318,34 @@ const OrderDetails = () => {
                       <TableCell>{orderdetail.category}</TableCell>
                       <TableCell>{orderdetail.subCategory}</TableCell>
                       <TableCell>{orderdetail.unit}</TableCell>
-                      <TableCell>{orderDetailData.status}</TableCell>
+                      <TableCell>
+                        <span
+                          className={
+                            orderDetailData.status === "Order Pending"
+                              ? "pending"
+                              : orderDetailData.status ===
+                                "Awaiting order confirming"
+                              ? "await"
+                              : orderDetailData.status === "Awaiting payment"
+                              ? "await"
+                              : orderDetailData.status === "Awaiting pickup"
+                              ? "await"
+                              : orderDetailData.status === "Awaiting refunding"
+                              ? "await"
+                              : orderDetailData.status === "Order received"
+                              ? "received"
+                              : orderDetailData.status === "Shipped"
+                              ? "shipped"
+                              : orderDetailData.status === "Cancelled"
+                              ? "cancelled"
+                              : orderDetailData.status === "Refunded"
+                              ? "refund"
+                              : "delivered"
+                          }
+                        >
+                          {orderDetailData.status}
+                        </span>
+                      </TableCell>
                     </TableRow>
                   );
                 })
