@@ -23,20 +23,21 @@ import "./add-user.styles.scss";
 const userdetailsSchema = yup
   .object()
   .shape({
-    userFirstName: yup.string().required(),
-    userLastName: yup.string().required(),
-    userEmail: yup.string().email().required(),
+    userFirstName: yup.string().required("FirstName is required"),
+    userLastName: yup.string().required("LastName is required"),
+    userEmail: yup.string().email().required("Email ID is required"),
     userMobilenumber: yup
       .string()
       .phone("IN", true, "Mobile Number is invalid")
-      .required(),
+      .required("Mobile Number is required"),
     userPassword: yup.string().min(8).required("Password is required"),
-    userLocation: yup.string().required(),
-    userPrimaryaddress: yup.string().required(),
-    userOtheraddress: yup.string().required(),
+    userLocation: yup.string().required("Location is required"),
+    userPrimaryaddress: yup.string().required("Primary Address is required"),
+    userOtheraddress: yup.string().required("Other Address is required"),
     userPincode: yup
       .string()
       .matches(/^[1-9][0-9]{5}$/, "Invalid zipcode (682315)"),
+    userDob: yup.string().required("DOB is required"),
   })
   .required();
 
@@ -179,6 +180,7 @@ const AddUser = () => {
                         shrink: true,
                       }}
                     />
+                    <div className="error">{errors?.userDob?.message}</div>
                   </Grid>
                   <Grid item xs={4}>
                     <TextField

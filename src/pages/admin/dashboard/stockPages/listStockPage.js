@@ -7,6 +7,7 @@ import { URLS } from "../../../../config/urls.config";
 import RouterList from "../../../../routes/routerList";
 import Loader from "../../../../components/Loader";
 import DialogComponent from "../../../../components/Dialog";
+import { formatDate } from "../../../../utils/dateFormat";
 
 import {
   Table,
@@ -43,7 +44,6 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 
-import { formatDate } from "../../../../utils/dateFormat";
 import "./list-stock.styles.scss";
 
 const StockList = () => {
@@ -261,13 +261,15 @@ const StockList = () => {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Category</TableCell>
-                <TableCell>Subcategory</TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell>Quantity</TableCell>
-                <TableCell>Created Date</TableCell>
-                <TableCell>Updated Date</TableCell>
-                <TableCell>Action</TableCell>
+                <TableCell className="table-heading">Category</TableCell>
+                <TableCell className="table-heading">Subcategory</TableCell>
+                <TableCell className="table-heading">Name</TableCell>
+                <TableCell className="table-heading">Quantity</TableCell>
+                <TableCell className="table-heading">Created Date</TableCell>
+                <TableCell className="table-heading">Updated Date</TableCell>
+                <TableCell className="table-heading" align="center">
+                  Action
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -280,19 +282,31 @@ const StockList = () => {
                   >
                     <TableCell
                       onClick={() =>
-                        navigate(`/admin/stock-details/${listitem._id}`)
+                        navigate(
+                          `${RouterList.admin.admin}/${RouterList.admin.stockDetails}/${listitem._id}`
+                        )
                       }
                       component="th"
                       scope="row"
                     >
                       {listitem.category}
                     </TableCell>
-                    <TableCell>{listitem.subCategory}</TableCell>
-                    <TableCell>{listitem.product}</TableCell>
-                    <TableCell>{listitem.quantity}</TableCell>
-                    <TableCell>{formatDate(listitem?.createdAt)}</TableCell>
-                    <TableCell>{formatDate(listitem?.updatedAt)}</TableCell>
-                    <TableCell>
+                    <TableCell className="max-width-sc">
+                      {listitem.subCategory}
+                    </TableCell>
+                    <TableCell className="max-width-sc">
+                      {listitem.product}
+                    </TableCell>
+                    <TableCell className="max-width-sc">
+                      {listitem.quantity}
+                    </TableCell>
+                    <TableCell className="max-width-sc">
+                      {formatDate(listitem?.createdAt)}
+                    </TableCell>
+                    <TableCell className="max-width-sc">
+                      {formatDate(listitem?.updatedAt)}
+                    </TableCell>
+                    <TableCell className="max-width-sc" align="center">
                       <Button>
                         <DialogComponent
                           title="Warning"

@@ -31,9 +31,9 @@ const userdetailsSchema = yup
       .string()
       .phone("IN", true, "Mobile Number is invalid")
       .required(),
-    userLocation: yup.string().required(),
-    userPrimaryaddress: yup.string().required(),
-    userOtheraddress: yup.string().required(),
+    userLocation: yup.string().required("Location is required"),
+    userPrimaryaddress: yup.string().required("PrimaryAddress is required"),
+    userOtheraddress: yup.string().required("OtherAddress is required"),
     userPincode: yup
       .string()
       .matches(/^[1-9][0-9]{5}$/, "Invalid zipcode (682315)"),
@@ -176,10 +176,11 @@ const UserDetails = () => {
                         size="small"
                         label="Location"
                         {...register("userLocation")}
-                        defaultValue="Location"
                         error={errors?.userLocation}
                       />
-                      <p>{errors?.userLocation?.message}</p>
+                      <div className="error">
+                        {errors?.userLocation?.message}
+                      </div>
                     </Grid>
                   </Grid>
                   <Grid container spacing={2}>
@@ -224,14 +225,14 @@ const UserDetails = () => {
                           defaultValue="Female"
                         >
                           <FormControlLabel
-                            {...register("userGender", { required: true })}
+                            {...register("userGender")}
                             value=""
                             control={<Radio />}
                             label="Female"
                             checked={userDetailData.gender === "female"}
                           />
                           <FormControlLabel
-                            {...register("userGender", { required: true })}
+                            {...register("userGender")}
                             value=""
                             control={<Radio />}
                             label="Male"
@@ -248,12 +249,13 @@ const UserDetails = () => {
                         fullWidth
                         label="Primary Address"
                         {...register("userPrimaryaddress")}
-                        defaultValue="Primary Address"
                         multiline
                         rows={4}
                         error={errors?.userPrimaryaddress}
                       />
-                      <p>{errors?.userPrimaryaddress?.message}</p>
+                      <div className="error">
+                        {errors?.userPrimaryaddress?.message}
+                      </div>
                     </Grid>
                   </Grid>
                   <Grid container spacing={2}>
@@ -263,12 +265,13 @@ const UserDetails = () => {
                         id="outlined-helperText"
                         fullWidth
                         label="Other Address"
-                        defaultValue="Other Address"
                         multiline
                         rows={4}
                         error={errors?.userOtheraddress}
                       />
-                      <p>{errors?.userOtheraddress?.message}</p>
+                      <div className="error">
+                        {errors?.userOtheraddress?.message}
+                      </div>
                     </Grid>
                   </Grid>
                 </div>

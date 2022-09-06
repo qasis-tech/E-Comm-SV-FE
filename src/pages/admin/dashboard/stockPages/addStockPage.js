@@ -44,7 +44,7 @@ const AddStock = () => {
     if (selectedStockCategory.length !== 0) {
       getProductListApi();
     }
-  }, [selectedStockCategory, selectedStockSubCategory]);
+  }, [selectedStockCategory]);
 
   const getCategoryListApi = () => {
     setLoader(true);
@@ -128,7 +128,7 @@ const AddStock = () => {
           className="add-stock-container"
         >
           <div className="stock-form-section col-md-8">
-            <form onSubmit={handleSubmit(handleStockAddpage)}>
+            <form onSubmit={handleSubmit((res) => handleStockAddpage(res))}>
               <div className="main-heading">
                 <h5 className="heading">Stock</h5>
               </div>
@@ -152,14 +152,18 @@ const AddStock = () => {
                               {...params}
                               label="Categories"
                               size="small"
-                              {...register("stockCategory")}
+                              {...register("stockCategory", {
+                                required: "This is required",
+                              })}
                             />
                           )}
                         />
                       )}
-                      <div className="error">
-                        {errors?.stockCategory?.message}
-                      </div>
+                      {!selectedStockCategory.label ? (
+                        <div className="error">
+                          {errors?.stockCategory?.message}
+                        </div>
+                      ) : null}
                     </Grid>
 
                     <Grid item xs={6}>
@@ -180,13 +184,17 @@ const AddStock = () => {
                             {...params}
                             label="Subcategories"
                             size="small"
-                            {...register("stockSubCategory")}
+                            {...register("stockSubCategory", {
+                              required: "This is required",
+                            })}
                           />
                         )}
                       />
-                      <div className="error">
-                        {errors?.stockSubCategory?.message}
-                      </div>
+                      {!selectedStockSubCategory.label ? (
+                        <div className="error">
+                          {errors?.stockSubCategory?.message}
+                        </div>
+                      ) : null}
                     </Grid>
 
                     <Grid item xs={6}>
@@ -211,9 +219,11 @@ const AddStock = () => {
                           )}
                         />
                       ) : null}
-                      <div className="error">
-                        {errors?.productName?.message}
-                      </div>
+                      {!selectedStockProduct.name ? (
+                        <div className="error">
+                          {errors?.productName?.message}
+                        </div>
+                      ) : null}
                     </Grid>
 
                     <Grid item xs={3}>
@@ -254,7 +264,9 @@ const AddStock = () => {
                           )}
                         />
                       )}
-                      <div className="error">{errors?.units?.message}</div>
+                      {!selectedUnit.label ? (
+                        <div className="error">{errors?.units?.message}</div>
+                      ) : null}
                     </Grid>
                   </Grid>
                 </div>

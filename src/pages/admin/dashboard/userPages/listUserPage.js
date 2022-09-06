@@ -222,14 +222,16 @@ const UserList = () => {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Phone Number</TableCell>
-                <TableCell>Location</TableCell>
-                <TableCell>Created Date</TableCell>
-                <TableCell>Updated Date</TableCell>
-                <TableCell>Status</TableCell>
-                <TableCell>Actions</TableCell>
+                <TableCell className="table-heading">Name</TableCell>
+                <TableCell className="table-heading">Email</TableCell>
+                <TableCell className="table-heading">Phone Number</TableCell>
+                <TableCell className="table-heading">Location</TableCell>
+                <TableCell className="table-heading">Created Date</TableCell>
+                <TableCell className="table-heading">Updated Date</TableCell>
+                <TableCell className="table-heading">Status</TableCell>
+                <TableCell className="table-heading" align="center">
+                  Actions
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -241,6 +243,7 @@ const UserList = () => {
                     className="user-row-section"
                   >
                     <TableCell
+                      className="max-width-sc"
                       component="th"
                       scope="row"
                       onClick={() =>
@@ -253,21 +256,33 @@ const UserList = () => {
                         useritem.lastName
                       )}`}{" "}
                     </TableCell>
-                    <TableCell component="th" scope="row">
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      className="max-width-sc"
+                    >
                       {useritem.email}
                     </TableCell>
-                    <TableCell>{useritem.mobileNumber}</TableCell>
-                    <TableCell>{useritem.location}</TableCell>
-                    <TableCell>{formatDate(useritem?.createdAt)}</TableCell>
-                    <TableCell>{formatDate(useritem?.updatedAt)}</TableCell>
-                    <TableCell>
+                    <TableCell className="max-width-sc">
+                      {useritem.mobileNumber}
+                    </TableCell>
+                    <TableCell className="max-width-sc">
+                      {useritem.location}
+                    </TableCell>
+                    <TableCell className="max-width-sc">
+                      {formatDate(useritem?.createdAt)}
+                    </TableCell>
+                    <TableCell className="max-width-sc">
+                      {formatDate(useritem?.updatedAt)}
+                    </TableCell>
+                    <TableCell className="max-width-sc">
                       {useritem.status === "active" ? (
                         <span className="actives">Active</span>
                       ) : (
                         <span className="inactive">Inactive</span>
                       )}
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="max-width-sc" align="center">
                       <Button>
                         <DialogComponent
                           title="Warning"
