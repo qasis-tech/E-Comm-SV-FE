@@ -43,6 +43,7 @@ import { URLS } from "../../../../config/urls.config";
 import NotDataAvailable from "../../../../components/NoDataAvailable";
 import RouterList from "../../../../routes/routerList";
 import Loader from "../../../../components/Loader";
+import DialogComponent from "../../../../components/Dialog";
 
 import "./list-user.styles.scss";
 
@@ -150,6 +151,20 @@ const UserList = () => {
       });
   };
 
+  const handleRemove = (id) => {
+    axios
+      .delete(`${URLS.user}/${id}`)
+      .then((res) => {
+        if (res.success) {
+          alert(res.message);
+        }
+      })
+      .catch((err) => {
+        console.log("errror", err);
+      });
+    getUserListApi();
+  };
+
   const navigate = useNavigate();
 
   return (
@@ -223,17 +238,20 @@ const UserList = () => {
                   <TableRow
                     hover
                     key={useritem._id}
-                    onClick={() =>
-                      navigate(
-                        `${RouterList.admin.admin}/${RouterList.admin.userDetails}/${useritem._id}`
-                      )
-                    }
                     className="user-row-section"
                   >
-                    <TableCell component="th" scope="row">
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      onClick={() =>
+                        navigate(
+                          `${RouterList.admin.admin}/${RouterList.admin.userDetails}/${useritem._id}`
+                        )
+                      }
+                    >
                       {`${startCase(useritem.firstName)} ${startCase(
                         useritem.lastName
-                      )}`}
+                      )}`}{" "}
                     </TableCell>
                     <TableCell component="th" scope="row">
                       {useritem.email}
@@ -251,7 +269,15 @@ const UserList = () => {
                     </TableCell>
                     <TableCell>
                       <Button>
-                        <DeleteIcon className="delete-icon" />
+                        <DialogComponent
+                          title="Warning"
+                          msg="Are you sure, you want to delete ?"
+                          deleteWord="yes"
+                          notNowWord="no"
+                          action={() => handleRemove(useritem._id)}
+                        >
+                          <DeleteIcon />
+                        </DialogComponent>
                       </Button>
                       <Button>
                         <CreateIcon className="edit-icon" />
