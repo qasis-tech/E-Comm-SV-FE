@@ -16,7 +16,7 @@ const List = {
     addCategory: "add-category",
     categoryDetails: "category-details",
     productList: "products",
-    addProduct: "add-product",
+    addProduct: "add-products",
     productDetails: "product-details",
     orderList: "orders",
     orderDetails: "order-details",

@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import NotDataAvailable from "../../../../components/NoDataAvailable";
-import { URLS } from "../../../../config/urls.config";
-import RouterList from "../../../../routes/routerList";
 
 import {
   Table,
@@ -38,9 +35,13 @@ import MailIcon from "@mui/icons-material/Mail";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import CloseIcon from "@mui/icons-material/Close";
 
-import "./list-product.styles.scss";
 import Loader from "../../../../components/Loader";
+import NotDataAvailable from "../../../../components/NoDataAvailable";
+import { URLS } from "../../../../config/urls.config";
+import RouterList from "../../../../routes/routerList";
 import DialogComponent from "../../../../components/Dialog";
+
+import "./list-product.styles.scss";
 
 const ListProduct = () => {
   const [state, setState] = React.useState({
@@ -215,12 +216,14 @@ const ListProduct = () => {
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Name</TableCell>
-                <TableCell>Category</TableCell>
-                <TableCell> Subcategory</TableCell>
-                <TableCell>Unit</TableCell>
-                <TableCell>Price</TableCell>
-                <TableCell>Actions</TableCell>
+                <TableCell className="table-heading">Name</TableCell>
+                <TableCell className="table-heading">Category</TableCell>
+                <TableCell className="table-heading"> Subcategory</TableCell>
+                <TableCell className="table-heading">Unit</TableCell>
+                <TableCell className="table-heading">Price</TableCell>
+                <TableCell className="table-heading" align="center">
+                  Actions
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -235,7 +238,9 @@ const ListProduct = () => {
                       component="th"
                       scope="row"
                       onClick={() =>
-                        navigate(`/admin/product-details/${product._id}`)
+                        navigate(
+                          `${RouterList.admin.admin}/${RouterList.admin.productDetails}/${product._id}`
+                        )
                       }
                     >
                       {product.name}
@@ -243,10 +248,16 @@ const ListProduct = () => {
                     <TableCell component="th" scope="row">
                       {product.category}
                     </TableCell>
-                    <TableCell>{product.subCategory}</TableCell>
-                    <TableCell>{product.unit}</TableCell>
-                    <TableCell>{product.price}</TableCell>
-                    <TableCell>
+                    <TableCell className="max-width-sc">
+                      {product.subCategory}
+                    </TableCell>
+                    <TableCell className="max-width-sc">
+                      {product.unit}
+                    </TableCell>
+                    <TableCell className="max-width-sc">
+                      {product.price}
+                    </TableCell>
+                    <TableCell className="max-width-sc" align="center">
                       <Button>
                         <DialogComponent
                           title="Warning"
@@ -287,7 +298,9 @@ const ListProduct = () => {
         <Fab
           color="primary"
           aria-label="add"
-          onClick={() => navigate("/admin/add-products")}
+          onClick={() =>
+            navigate(`${RouterList.admin.admin}/${RouterList.admin.addProduct}`)
+          }
         >
           <AddIcon />
         </Fab>

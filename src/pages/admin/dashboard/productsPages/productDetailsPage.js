@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import { useForm, useFieldArray, Controller, useWatch } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { URLS } from "../../../../config/urls.config";
@@ -71,9 +72,9 @@ const ProductDetails = () => {
   });
 
   const { id } = useParams();
-  const [productDetailData, setProductDetail] = React.useState([]);
+  const [productDetailData, setProductDetail] = useState([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     getProductDetailsApi();
   }, []);
 

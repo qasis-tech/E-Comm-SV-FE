@@ -1,19 +1,18 @@
 import * as React from "react";
 import { useForm, useFieldArray, Controller, useWatch } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { ErrorMessage } from "@hookform/error-message";
+
 import { URLS } from "../../../../config/urls.config";
 import RouterList from "../../../../routes/routerList";
-import { ErrorMessage } from "@hookform/error-message";
-import Typography from "@mui/material/Typography";
+import Loader from "../../../../components/Loader";
 
 import { Autocomplete, Box, Button, TextField } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import AddIcon from "@mui/icons-material/Add";
-
+import Typography from "@mui/material/Typography";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 
 import "./add-product.styles.scss";
@@ -76,18 +75,22 @@ const AddProduct = () => {
   ]);
   const [selectedUnit, setSelectedunit] = useState([]);
   const [selectedOfferunit, setSelectedofferunit] = useState([]);
+  const [isLoading, setLoader] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     getCatgoryListApi();
   }, []);
 
   const getCatgoryListApi = () => {
+    setLoader(true);
     axios
       .get(`${URLS.category}`)
       .then((res) => {
+        setLoader(false);
         setCategorydata(res?.data);
       })
       .catch((err) => {
+        setLoader(false);
         console.log("error", err);
       });
   };
@@ -109,6 +112,7 @@ const AddProduct = () => {
     productImageFile,
     productVideoFile,
   }) => {
+    setLoader(true);
     const bodyFormData = new FormData();
     bodyFormData.append("name", productName);
     bodyFormData.append("quantity", quantity);
@@ -136,18 +140,22 @@ const AddProduct = () => {
       }
     } else {
     }
-    bodyFormData.append("productVideo", productVideoFile[0]);
+    if (productVideoFile) {
+      bodyFormData.append("productVideo", productVideoFile[0]);
+    }
     axios
       .post(`${URLS.product}`, bodyFormData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then((response) => {
+        setLoader(false);
         console.log("Response=>>", response);
         if (response.success) {
           navigate(`${RouterList.admin.admin}/${RouterList.admin.productList}`);
         }
       })
       .catch((error) => {
+        setLoader(false);
         console.log("Errorss=>>", error);
       });
   };
@@ -177,7 +185,9 @@ const AddProduct = () => {
                       label="Name"
                       size="small"
                       error={errors?.productName}
-                      {...register("productName")}
+                      {...register("productName", {
+                        required: "Product Name is required",
+                      })}
                     />
                     <div className="error">{errors?.productName?.message}</div>
                   </Grid>
@@ -188,7 +198,9 @@ const AddProduct = () => {
                       label="Quantity"
                       size="small"
                       error={errors?.quantity}
-                      {...register("quantity")}
+                      {...register("quantity", {
+                        required: "Quantity is required",
+                      })}
                     />
                     <div className="error">{errors?.quantity?.message}</div>
                   </Grid>
@@ -207,11 +219,16 @@ const AddProduct = () => {
                             {...params}
                             label="Units"
                             size="small"
-                            {...register("units")}
+                            {...register("units", {
+                              required: "Unit is required",
+                            })}
                           />
                         )}
                       />
                     )}
+                    {!selectedUnit.value ? (
+                      <div className="error">{errors?.units?.message}</div>
+                    ) : null}
                   </Grid>
                 </Grid>
                 <Grid container marginTop={1} spacing={2}>
@@ -230,11 +247,16 @@ const AddProduct = () => {
                             {...params}
                             label="Categories"
                             size="small"
-                            {...register("category")}
+                            {...register("category", {
+                              required: "Category is required",
+                            })}
                           />
                         )}
                       />
                     )}
+                    {!selectedCategory.label ? (
+                      <div className="error">{errors?.category?.message}</div>
+                    ) : null}
                   </Grid>
                   <Grid item xs={6}>
                     <Autocomplete
@@ -254,10 +276,17 @@ const AddProduct = () => {
                           {...params}
                           label="Subcategories"
                           size="small"
-                          {...register("subCategory")}
+                          {...register("subCategory", {
+                            required: "SubCategory is required",
+                          })}
                         />
                       )}
                     />
+                    {!selectedSubCategory.label ? (
+                      <div className="error">
+                        {errors?.subCategory?.message}
+                      </div>
+                    ) : null}
                   </Grid>
                 </Grid>
                 <Grid container marginTop={1} spacing={2}>
@@ -270,7 +299,9 @@ const AddProduct = () => {
                       rows={4}
                       size="small"
                       error={errors?.description}
-                      {...register("description")}
+                      {...register("description", {
+                        required: "Description is required",
+                      })}
                     />
                     <div className="error">{errors?.description?.message}</div>
                   </Grid>
@@ -301,9 +332,13 @@ const AddProduct = () => {
                             size="small"
                             id="outlined-multiline-static"
                             label="Features"
-                            // onChange={(e) => handleFeatureKey(e, null)}
-                            {...register(`features.${index}.featureKey`)}
+                            {...register(`features.${index}.featureKey`, {
+                              required: true,
+                            })}
                           />
+                          {errors.features?.[index]?.featureKey && (
+                            <div className="error">FeatureKey is required</div>
+                          )}
                         </Grid>
                         <Grid item xs={5}>
                           <TextField
@@ -312,8 +347,15 @@ const AddProduct = () => {
                             label="value"
                             size="small"
                             // onChange={(e) => handleFeatureKey(null, e)}
-                            {...register(`features.${index}.featureValue`)}
+                            {...register(`features.${index}.featureValue`, {
+                              required: true,
+                            })}
                           />
+                          {errors.features?.[index]?.featureValue && (
+                            <div className="error">
+                              FeatureValue is required
+                            </div>
+                          )}
                         </Grid>
                         <Grid item xs={1} className="remove-section">
                           {controlledFeatureFields.length > 1 && (
@@ -338,7 +380,7 @@ const AddProduct = () => {
                       label="Price"
                       size="small"
                       error={errors?.price}
-                      {...register("price")}
+                      {...register("price", { required: "Price is required" })}
                     />
                     <div className="error">{errors?.price?.message}</div>
                   </Grid>
@@ -354,7 +396,9 @@ const AddProduct = () => {
                         value={selectedOfferunit}
                         renderInput={(params) => (
                           <TextField
-                            {...register("offerUnit")}
+                            {...register("offerUnit", {
+                              required: "OfferUnit is required",
+                            })}
                             {...params}
                             label="Offer Units"
                             size="small"
@@ -362,6 +406,9 @@ const AddProduct = () => {
                         )}
                       />
                     )}
+                    {!selectedOfferunit.value ? (
+                      <div className="error">{errors?.offerUnit?.message}</div>
+                    ) : null}
                   </Grid>
                 </Grid>
                 <Grid container spacing={2} marginTop={1}>
@@ -372,7 +419,9 @@ const AddProduct = () => {
                       label="Quantity"
                       size="small"
                       error={errors?.offerQuantity}
-                      {...register("offerQuantity")}
+                      {...register("offerQuantity", {
+                        required: "OfferQuantity is required",
+                      })}
                     />
                     <div className="error">
                       {errors?.offerQuantity?.message}
@@ -385,7 +434,9 @@ const AddProduct = () => {
                       label="Offer Price"
                       size="small"
                       error={errors?.offerPrice}
-                      {...register("offerPrice")}
+                      {...register("offerPrice", {
+                        required: "OfferPrice is required",
+                      })}
                     />
                     <div className="error">{errors?.offerPrice?.message}</div>
                   </Grid>
@@ -424,11 +475,16 @@ const AddProduct = () => {
                           >
                             Upload Image
                             <input
-                              {...register(`productImageFile.${index}.images`)}
+                              {...register(`productImageFile.${index}.images`, {
+                                required: true,
+                              })}
                               type="file"
                               hidden
                             />
                           </Button>
+                          {errors.productImageFile?.[index]?.images && (
+                            <div className="error">Image is required</div>
+                          )}
                         </Grid>
                         <Grid item xs={1} className="remove-section">
                           {controlledProductImageFields.length > 1 && (
@@ -474,15 +530,19 @@ const AddProduct = () => {
                   <Button onClick={() => navigate(-1)}>Cancel</Button>
                 </Grid>
                 <Grid item xs={4}>
-                  <Button
-                    fullWidth
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    className="submit-btn"
-                  >
-                    submit
-                  </Button>
+                  {isLoading ? (
+                    <Loader />
+                  ) : (
+                    <Button
+                      fullWidth
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      className="submit-btn"
+                    >
+                      submit
+                    </Button>
+                  )}
                 </Grid>
               </div>
             </form>
