@@ -1,11 +1,11 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
+import axios from "axios";
 import { useForm, useFieldArray } from "react-hook-form";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { URLS } from "../../../../config/urls.config";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import axios from "axios";
+import RouterList from "../../../../routes/routerList";
 
 import { Box, Button, MenuItem, TextField } from "@mui/material";
 import Grid from "@mui/material/Grid";
@@ -22,6 +22,8 @@ import ProductImage from "../../../../assets/product-4.jpg";
 import "./product-details.styles.scss";
 
 const ProductDetails = () => {
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -34,7 +36,7 @@ const ProductDetails = () => {
     defaultValues: {
       productFeatures: [{ productFeatureKey: "", productFeatureValue: "" }],
       productDetailImageFile: [{ images: "" }],
-      productVideoFile: null,
+      productDetailVideoFile: [{ videos: "" }],
     },
   });
 
@@ -46,6 +48,7 @@ const ProductDetails = () => {
     control,
     name: "productFeatures",
   });
+
   const {
     fields: productImageFields,
     append: productFieldAppend,
@@ -54,19 +57,37 @@ const ProductDetails = () => {
     control,
     name: "productDetailImageFile",
   });
+
+  const { fields: productVideoFields } = useFieldArray({
+    control,
+    name: "productDetailVideoFile",
+  });
+
   const watchFeatureArray = watch("productFeatures");
   const watchProductImageArray = watch("productDetailImageFile");
+  const watchProductVideoArray = watch("productDetailVideoFile");
+
   const controlledFeatureFields = featureFields?.map((field, index) => {
     return {
       ...field,
       ...watchFeatureArray[index],
     };
   });
+
   const controlledProductImageFields = productImageFields?.map(
     (field, index) => {
       return {
         ...field,
         ...watchProductImageArray[index],
+      };
+    }
+  );
+
+  const controlledProductVideoFields = productVideoFields?.map(
+    (field, index) => {
+      return {
+        ...field,
+        ...watchProductVideoArray[index],
       };
     }
   );
@@ -107,24 +128,132 @@ const ProductDetails = () => {
           });
         });
         setValue("productFeatures", tempArray);
-        const proImgArr = data.productImage.map((data) => {
-          return {
-            images: [{ name: data.image }],
-          };
-        });
+        console.log("data.productimage", data.productImage);
+        // const proImgArr = data.productImage.map((data) => {
+        //   console.log("data", data);
+        //   return {
+        //     images: data.image,
+        //   };
+        // });
+        const tempImageArray = [];
+        for (const values of data.productImage) {
+          tempImageArray.push({ images: values.image });
+        }
 
-        setValue("productDetailImageFile", proImgArr);
-        const proVidArr = data.productVideo.map((data) => {
-          console.log("video", data);
-          setValue("productVideoFile", data.video);
-        });
+        console.log("image arrayy getapi===>", tempImageArray);
+        setValue("productDetailImageFile", tempImageArray);
+
+        // const proVidArr = data.productVideo.map((data) => {
+        //   return {
+        //     videos: data.video,
+        //   };
+        // });
+
+        const tempVideoArray = [];
+        for (const values of data.productVideo) {
+          tempVideoArray.push({ videos: values.video });
+        }
+        setValue("productDetailVideoFile", tempVideoArray);
       })
       .catch((err) => {
-        console.log("err in Category LIst", err);
+        console.log("err in product details get api", err);
       });
   };
-  console.log("1111", getValues("productVideoFile"));
-  const putProductDetailApi = () => {};
+
+  // put api**************//////
+  const putProductDetailApi = async ({
+    productName,
+    productQuantity,
+    productUnit,
+    productCategory,
+    productSubcategory,
+    productDescription,
+    productFeatures,
+    productPrice,
+    productOfferUnit,
+    productOfferQuantity,
+    productOfferPrice,
+    productDetailImageFile,
+    productDetailVideoFile,
+  }) => {
+    const formData = new FormData();
+    formData.append("name", productName);
+    formData.append("category", productCategory);
+    formData.append("subCategory", productSubcategory);
+    formData.append("unit", productUnit);
+    formData.append("quantity", productQuantity);
+    formData.append("description", productDescription);
+    formData.append("price", productPrice);
+    formData.append("offerUnit", productOfferUnit);
+    formData.append("offerQuantity", productOfferQuantity);
+    formData.append("offerPrice", productOfferPrice);
+
+    const temp = {};
+    const featureArray = [];
+    for (const values of productFeatures) {
+      let key = values.productFeatureKey;
+      temp[key] = values.productFeatureValue;
+    }
+    featureArray.push(temp);
+    formData.append("features", JSON.stringify(featureArray));
+
+    // if (productDetailImageFile) {
+    //   for (const values of productDetailImageFile) {
+    //     console.log("productimageputapi====>", values);
+    //     formData.append("productImage", values.images[0]);
+    //   }
+    // } else {
+    // }
+    for (const values of productDetailImageFile) {
+      console.log("values", values);
+
+      if (
+        values.images[0].name.startsWith("http") ||
+        values.images[0].name.startsWith("https")
+      ) {
+        let file = await getFileObj(values.images[0].name);
+        formData.append("productImage", file);
+      } else {
+        formData.append("productImage", values.images[0]);
+      }
+    }
+
+    if (productDetailVideoFile) {
+      for (const values of productDetailVideoFile) {
+        formData.append("productVideo", values.videos[0]);
+      }
+    } else {
+    }
+
+    axios
+      .put(`${URLS.product}/${id}`, formData, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        console.log("resputtt==>", res);
+        if (res.success) {
+          navigate(`${RouterList.admin.admin}/${RouterList.admin.productList}`);
+        }
+      })
+      .catch((err) => {
+        console.error("Error in Category Add", err);
+      });
+  };
+  const getFileObj = async (file) => {
+    console.log("file", file);
+    let result = await fetch(file)
+      .then((r) => r.blob())
+      .then((blobFile) => {
+        let imageName = file.split("/").pop();
+        let fileExt = imageName.split(".").pop();
+        return new File([blobFile], `${imageName}`, {
+          type: `image/${fileExt}`,
+        });
+      });
+    return result;
+  };
 
   return (
     <div className="details-product">
@@ -148,22 +277,34 @@ const ProductDetails = () => {
                       label="Name"
                       fullWidth
                       size="small"
-                      defaultValue=""
-                      {...register("productName")}
+                      {...register("productName", {
+                        required: "ProductName is required",
+                      })}
                       error={errors?.productName}
                       InputLabelProps={{ shrink: true }}
                     />
+                    <div className="error">{errors?.productName?.message}</div>
                   </Grid>
-                  <p>{errors?.productName?.message}</p>
+
                   <Grid item xs={4}>
                     <TextField
                       id="outlined-helperText"
                       label="Quantity"
                       fullWidth
                       size="small"
-                      defaultValue="10"
-                      {...register("productQuantity")}
+                      InputLabelProps={{ shrink: true }}
+                      error={errors?.productQuantity}
+                      {...register("productQuantity", {
+                        required: "Quantity is required",
+                        pattern: {
+                          value: /^[0-9]+$/,
+                          message: "Please enter a number",
+                        },
+                      })}
                     />
+                    <div className="error">
+                      {errors?.productQuantity?.message}
+                    </div>
                   </Grid>
                   <Grid item xs={4}>
                     <TextField
@@ -171,9 +312,13 @@ const ProductDetails = () => {
                       label="Unit"
                       fullWidth
                       size="small"
-                      defaultValue="Kg"
-                      {...register("productUnit")}
+                      InputLabelProps={{ shrink: true }}
+                      error={errors?.productUnit}
+                      {...register("productUnit", {
+                        required: "Unit is required",
+                      })}
                     />
+                    <div className="error">{errors?.productUnit?.message}</div>
                   </Grid>
                 </Grid>
                 <Grid container spacing={2} marginTop={1}>
@@ -183,9 +328,15 @@ const ProductDetails = () => {
                       label="Category"
                       fullWidth
                       size="small"
-                      defaultValue="Kg"
-                      {...register("productCategory")}
+                      InputLabelProps={{ shrink: true }}
+                      error={errors?.productCategory}
+                      {...register("productCategory", {
+                        required: "Category is required",
+                      })}
                     />
+                    <div className="error">
+                      {errors?.productCategory?.message}
+                    </div>
                   </Grid>
                   <Grid item xs={6}>
                     <TextField
@@ -193,9 +344,15 @@ const ProductDetails = () => {
                       label="Subcategory"
                       fullWidth
                       size="small"
-                      defaultValue="Kg"
-                      {...register("productSubcategory")}
+                      InputLabelProps={{ shrink: true }}
+                      error={errors?.productSubcategory}
+                      {...register("productSubcategory", {
+                        required: "SubCategory is required",
+                      })}
                     />
+                    <div className="error">
+                      {errors?.productSubcategory?.message}
+                    </div>
                   </Grid>
                 </Grid>
                 <Grid container marginTop={1} spacing={2}>
@@ -207,9 +364,15 @@ const ProductDetails = () => {
                       multiline
                       rows={4}
                       size="small"
-                      defaultValue="Kiwifruit or Chinese gooseberry is the edible berry of several species of woody vines in the genus Actinidia."
-                      {...register("productDescription")}
+                      InputLabelProps={{ shrink: true }}
+                      error={errors?.productDescription}
+                      {...register("productDescription", {
+                        required: "Description is required",
+                      })}
                     />
+                    <div className="error">
+                      {errors?.productDescription?.message}
+                    </div>
                   </Grid>
                 </Grid>
                 <div className="feature-add">
@@ -240,10 +403,18 @@ const ProductDetails = () => {
                             size="small"
                             id="outlined-multiline-static"
                             label="Features"
+                            error={
+                              errors.productFeatures?.[index]?.productFeatureKey
+                            }
                             {...register(
-                              `productFeatures.${index}.productFeatureKey`
+                              `productFeatures.${index}.productFeatureKey`,
+                              { required: true }
                             )}
                           />
+                          {errors.productFeatures?.[index]
+                            ?.productFeatureKey && (
+                            <div className="error">FeatureKey is required</div>
+                          )}
                         </Grid>
                         <Grid item xs={5}>
                           <TextField
@@ -251,10 +422,19 @@ const ProductDetails = () => {
                             id="outlined-multiline-static"
                             label="value"
                             size="small"
+                            error={
+                              errors.productFeatures?.[index]
+                                ?.productFeatureValue
+                            }
                             {...register(
-                              `productFeatures.${index}.productFeatureValue`
+                              `productFeatures.${index}.productFeatureValue`,
+                              { required: true }
                             )}
                           />
+                          {errors.productFeatures?.[index]
+                            ?.productFeatureValue && (
+                            <div className="error">FeatureKey is required</div>
+                          )}
                         </Grid>
                         <Grid item xs={1} className="remove-section">
                           {controlledFeatureFields.length > 1 && (
@@ -277,9 +457,13 @@ const ProductDetails = () => {
                       label="Price"
                       fullWidth
                       size="small"
-                      defaultValue="80"
-                      {...register("productPrice")}
+                      InputLabelProps={{ shrink: true }}
+                      error={errors?.productPrice}
+                      {...register("productPrice", {
+                        required: "Price is required",
+                      })}
                     />
+                    <div className="error">{errors?.productPrice?.message}</div>
                   </Grid>
                   <Grid item xs={6}>
                     <TextField
@@ -287,9 +471,15 @@ const ProductDetails = () => {
                       label="Offer Unit"
                       fullWidth
                       size="small"
-                      defaultValue="Kg"
-                      {...register("productOfferUnit")}
+                      InputLabelProps={{ shrink: true }}
+                      error={errors?.productOfferUnit}
+                      {...register("productOfferUnit", {
+                        required: "OfferUnit is required",
+                      })}
                     />
+                    <div className="error">
+                      {errors?.productOfferUnit?.message}
+                    </div>
                   </Grid>
                 </Grid>
                 <Grid container spacing={2} marginTop={1}>
@@ -299,9 +489,15 @@ const ProductDetails = () => {
                       label="Offer Quantity"
                       fullWidth
                       size="small"
-                      defaultValue="5"
-                      {...register("productOfferQuantity")}
+                      InputLabelProps={{ shrink: true }}
+                      error={errors?.productOfferQuantity}
+                      {...register("productOfferQuantity", {
+                        required: "OfferQuantity is required",
+                      })}
                     />
+                    <div className="error">
+                      {errors?.productOfferQuantity?.message}
+                    </div>
                   </Grid>
                   <Grid item xs={6}>
                     <TextField
@@ -309,9 +505,15 @@ const ProductDetails = () => {
                       label="Offer Price"
                       fullWidth
                       size="small"
-                      defaultValue="20"
-                      {...register("productOfferPrice")}
+                      InputLabelProps={{ shrink: true }}
+                      error={errors?.productOfferPrice}
+                      {...register("productOfferPrice", {
+                        required: "OfferPrice is required",
+                      })}
                     />
+                    <div className="error">
+                      {errors?.productOfferPrice?.message}
+                    </div>
                   </Grid>
                 </Grid>
 
@@ -325,7 +527,6 @@ const ProductDetails = () => {
                   </Grid>
 
                   {controlledProductImageFields?.map((list, index) => {
-                    console.log("list", list);
                     return (
                       <Grid
                         key={list.id}
@@ -350,18 +551,12 @@ const ProductDetails = () => {
                             Upload Image
                             <input
                               {...register(
-                                `productDetailImageFile.${index}.images`,
-                                {
-                                  required: true,
-                                }
+                                `productDetailImageFile.${index}.images`
                               )}
                               type="file"
                               hidden
                             />
                           </Button>
-                          {errors.productDetailImageFile?.[index]?.images && (
-                            <div className="error">Image is required</div>
-                          )}
                         </Grid>
                         <Grid item xs={1} className="remove-section">
                           {controlledProductImageFields.length > 1 && (
@@ -378,22 +573,31 @@ const ProductDetails = () => {
                   })}
                 </div>
                 <Grid container spacing={2} marginTop={1}>
-                  <Grid item xs={6}>
-                    <Button
-                      variant="contained"
-                      className="file-btn"
-                      fullWidth
-                      component="label"
-                    >
-                      Upload Video
-                      <input
-                        {...register("productVideoFile")}
-                        type="file"
-                        hidden
-                      />
-                    </Button>
-                    <span>{getValues("productVideoFile")}</span>
-                  </Grid>
+                  {controlledProductVideoFields?.map((list, index) => {
+                    return (
+                      <Grid key={list.id} item xs={6}>
+                        <Button
+                          variant="contained"
+                          className="file-btn"
+                          fullWidth
+                          component="label"
+                        >
+                          Upload Video
+                          <input
+                            {...register(
+                              `productDetailVideoFile.${index}.videos`,
+                              {
+                                required: true,
+                              }
+                            )}
+                            type="file"
+                            hidden
+                          />
+                        </Button>
+                        {list && list?.videos[0]?.name}
+                      </Grid>
+                    );
+                  })}
                 </Grid>
               </div>
               <div className="row submit-button">
