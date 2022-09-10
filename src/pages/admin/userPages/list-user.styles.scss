@@ -1,0 +1,43 @@
+@import "../../../styles/variables.styles.scss";
+@import "../../../styles/button.styles.scss";
+
+.list-user {
+  .user-search {
+    display: flex;
+    justify-content: space-between;
+    .css-i4bv87-MuiSvgIcon-root {
+      font-size: 1.5rem !important;
+    }
+  }
+  .user-table-wrapper {
+    margin-top: 2em;
+    .sticky {
+      position: -webkit-sticky;
+      position: sticky !important;
+      .table-heading {
+        font-weight: 600;
+      }
+    }
+    .user-row-section {
+      //cursor: -webkit-grab;
+      cursor: pointer;
+    }
+    .max-width-sc {
+      max-width: 250px;
+      // display: flex;
+      // flex-wrap: wrap;
+    }
+  }
+  .pagination-section {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 1em;
+    .MuiTablePagination-root {
+      .MuiToolbar-root {
+        p {
+          margin-top: 15px !important;
+        }
+      }
+    }
+  }
+}

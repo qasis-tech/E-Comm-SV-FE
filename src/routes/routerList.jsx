@@ -7,6 +7,9 @@ const List = {
     about: "about",
     contact: "contact",
     HeaderNav: "navbar",
+    cart: "cart",
+    profile: "profile",
+    orderList: "order-list",
   },
   admin: {
     admin: "/admin",

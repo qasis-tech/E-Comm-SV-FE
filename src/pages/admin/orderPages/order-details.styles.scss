@@ -1,0 +1,46 @@
+@import "../../../styles/common.styles.scss";
+
+.order-details {
+  font-family: $main-font-family;
+  margin-top: 3em;
+  .order-details-wrapper {
+    margin-bottom: 1em;
+    .order-details-container {
+      justify-content: center;
+      .order-details-form-section {
+        box-shadow: 2px 5px 5px 3px #888888;
+        border-radius: 10px;
+        .order-details-container {
+          padding: 1em 2em;
+          .address {
+            padding-left: 15px !important;
+          }
+        }
+        .main-order-details-heading {
+          background-color: #1976d2;
+          border-radius: 10px 10px 1px 1px;
+          display: flex;
+          justify-content: space-between;
+          .heading {
+            padding: 0.5em 1.5em;
+            color: white;
+          }
+          .order-buttons {
+            margin-top: 7px;
+            padding: 0;
+            display: flex !important;
+            justify-content: end;
+            .order-submit-btn {
+              background-color: white;
+              color: #0e5289;
+              border-radius: 25px !important;
+            }
+            .order-cancel-btn {
+              color: white;
+            }
+          }
+        }
+      }
+    }
+  }
+}

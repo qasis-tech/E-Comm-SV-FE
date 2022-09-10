@@ -12,8 +12,9 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import BackgroundImage from "../../../assets/bg.jpg";
 import CloseIcon from "@mui/icons-material/Close";
 
-import { authCheck } from "../../../routes/auth";
+import { AuthCheck, authCheck } from "../../../routes/auth";
 import Loader from "../../../components/Loader";
+import { URLS } from "../../../config/urls.config";
 import "../../../styles/preloader.styles.scss";
 import "./login.styles.scss";
 
@@ -44,14 +45,13 @@ function LoginPage() {
     setLoader(true);
     let payload = { email: email, password: password };
     axios
-      .post("http://localhost:4000/login", payload, {
+      .post(URLS.login, payload, {
         "Content-Type": "application/json",
       })
-      .then((res) => {
+      .then(async (res) => {
         setLoader(false);
         console.log("REsss", res);
-
-        if (res.data) {
+        if (res.success && res.data) {
           if (isChecked) {
             localStorage.setItem(
               "loginDetails",
@@ -61,12 +61,13 @@ function LoginPage() {
           } else {
             localStorage.removeItem("loginDetails");
           }
-          // const { isUser, isAdmin } = authCheck();
-          // if (isUser) {
-          //   navigate("/");
-          // } else {
-          //   navigate("/admin");
-          // }
+
+          const { isUser, isAdmin } = await authCheck();
+          if (isUser && !isAdmin) {
+            navigate("/");
+          } else if (isAdmin && !isUser) {
+            navigate("/admin");
+          }
         }
       })
 

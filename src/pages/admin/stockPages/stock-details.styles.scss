@@ -1,0 +1,26 @@
+@import "../../../styles/common.styles.scss";
+
+.details-stock {
+  font-family: $main-font-family;
+  margin-top: 3em;
+  .stock-details-wrapper {
+    .details-stock-container {
+      justify-content: center;
+      .stock-details-form-section {
+        box-shadow: 2px 5px 5px 3px #888888;
+        border-radius: 10px;
+        .main-form-container {
+          padding: 1em 2em;
+        }
+        .submit-button {
+          background-color: #cbc9c959;
+          padding: 0;
+          margin: 0em 0 0 0;
+          padding: 0.5em 0;
+          display: flex !important;
+          justify-content: end;
+        }
+      }
+    }
+  }
+}

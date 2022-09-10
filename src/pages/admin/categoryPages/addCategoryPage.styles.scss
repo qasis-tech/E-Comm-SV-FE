@@ -1,0 +1,85 @@
+@import "../../../styles/common.styles.scss";
+
+.add-category {
+  font-family: $main-font-family;
+  .wrapper {
+    .add-category-container {
+      justify-content: center;
+      .category-form-section {
+        box-shadow: 2px 5px 5px 3px #888888;
+        border-radius: 10px;
+        @media only screen and (min-width: 800px) and (max-width: 1600px) {
+        }
+        .category-section {
+          padding: 2em 3em 1em 3em;
+          .css-mhc70k-MuiGrid-root > .MuiGrid-item {
+            padding-left: 16px;
+            padding-right: 16px;
+          }
+          .image-remove-section {
+            display: flex;
+            justify-content: space-between;
+            .delete-section {
+              display: flex;
+              justify-content: end;
+            }
+          }
+        }
+        hr {
+          // border: 0.5px solid #bebebe;
+          color: #ccc;
+          opacity: 1.25;
+        }
+        .subcategory-section {
+          padding: 0 3em 0 3em;
+          .css-mhc70k-MuiGrid-root > .MuiGrid-item {
+            padding-left: 16px;
+            padding-right: 16px;
+          }
+          .add-icon-section {
+            font-size: 25px;
+            background-color: #1973bb;
+            color: white;
+            margin: 0 2em;
+            border-radius: 25px;
+          }
+
+          .image-remove-section {
+            display: flex;
+            justify-content: space-between;
+            div {
+              margin-top: 10px;
+            }
+          }
+          .subcategory-add-section {
+            display: flex;
+            justify-content: space-between;
+            border: 1px solid;
+            border-radius: 10px;
+            /* box-shadow: 10px 10px 10px; */
+            border-color: lilac;
+            border-color: #c9c9c9;
+            margin-top: 0.5em;
+            .remove-section {
+              display: flex;
+              justify-content: center;
+              .close-section {
+                align-items: center;
+                border: none;
+                background: white;
+              }
+            }
+          }
+        }
+        .submit-button {
+          background-color: #cbc9c959;
+          padding: 0;
+          margin: 2em 0 0 0;
+          padding: 0.5em 0;
+          display: flex !important;
+          justify-content: end;
+        }
+      }
+    }
+  }
+}

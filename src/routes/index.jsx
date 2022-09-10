@@ -6,17 +6,18 @@ import ResetPassword from "../pages/user/resetpassword/forgotPasswordPage";
 // Admin
 import AdminHome from "../pages/admin/dashboard/index";
 import DashboardPage from "../pages/admin/dashboard/mainContainer";
-import ListCategory from "../pages/admin/dashboard/categoryPages/listCategoryPage";
-import AddCategory from "../pages/admin/dashboard/categoryPages/addCategoryPage";
-import ListProduct from "../pages/admin/dashboard/productsPages/listProductPage";
-import AddProduct from "../pages/admin/dashboard/productsPages/addProductPage";
-import ProductDetails from "../pages/admin/dashboard/productsPages/productDetailsPage";
-import StockList from "../pages/admin/dashboard/stockPages/listStockPage";
-import AddStock from "../pages/admin/dashboard/stockPages/addStockPage";
-import StockDetails from "../pages/admin/dashboard/stockPages/stockDetailsPage";
-import UserList from "../pages/admin/dashboard/userPages/listUserPage";
-import AddUser from "../pages/admin/dashboard/userPages/addUserPage";
-import UserDetails from "../pages/admin/dashboard/userPages/userDetailsPage";
+import ListCategory from "../pages/admin/categoryPages/listCategoryPage";
+import AddCategory from "../pages/admin/categoryPages/addCategoryPage";
+import ListProduct from "../pages/admin/productsPages/listProductPage";
+import AddProduct from "../pages/admin/productsPages/addProductPage";
+import ProductDetails from "../pages/admin/productsPages/productDetailsPage";
+import StockList from "../pages/admin/stockPages/listStockPage";
+import AddStock from "../pages/admin/stockPages/addStockPage";
+import StockDetails from "../pages/admin/stockPages/stockDetailsPage";
+import UserList from "../pages/admin/userPages/listUserPage";
+import AddUser from "../pages/admin/userPages/addUserPage";
+// User
+import UserDetails from "../pages/admin/userPages/userDetailsPage";
 import PublicRouting from "../routes/publicRoutes";
 import PrivateRouting from "../routes/privateRoutes";
 import CustomerProductDetails from "../pages/user/productDetails";
@@ -27,9 +28,9 @@ import Profile from "../pages/user/accounts/profile";
 import Payment from "../pages/user/accounts/payment";
 import RegisterPage from "../pages/user/register/registerPage";
 import PageNotFound from "../pages/user/pageNotFound";
-import OrderDetails from "../pages/admin/dashboard/orderPages/orderDetailsPage";
-import OrderList from "../pages/admin/dashboard/orderPages/orderPage";
-import Categorydetails from "../pages/admin/dashboard/categoryPages/categorydetailspage";
+import OrderDetails from "../pages/admin/orderPages/orderDetailsPage";
+import OrderList from "../pages/admin/orderPages/orderPage";
+import Categorydetails from "../pages/admin/categoryPages/categorydetailspage";
 import HeaderNav from "../components/TopNavbar";
 
 import RouterList from "./routerList";
@@ -42,24 +43,30 @@ import ProductList from "../pages/user/productlist";
 import { authCheck } from "./auth";
 
 const CustomRouters = () => {
-  // const [isUser, setUser] = useState(false);
-  // const [isAdmin, setAdmin] = useState(false);
+  const [isUser, setUser] = useState(false);
+  const [isAdmin, setAdmin] = useState(false);
   useEffect(() => {
-    //   const { isUser, isAdmin, ...other } = authCheck();
-    //   setUser(isUser);
-    //   setAdmin(isAdmin);
+    const { isUser, isAdmin } = authCheck();
+    setUser(isUser);
+    setAdmin(isAdmin);
   }, []);
 
   return (
     <Routes>
       <Route element={<PublicRouting />}>
         <Route path="/" element={<HomePage />} />
-        <Route path="login" element={<UserLoginPage />} />
-        <Route path="register" element={<RegisterPage />} />
-        <Route path="resetpassword" element={<ResetPassword />} />
-        <Route path="product-details" element={<CustomerProductDetails />} />
-        <Route path="cart" element={<CartPage />} />
-        <Route path="profile" element={<Profile />} />
+        <Route path={RouterList.user.login} element={<UserLoginPage />} />
+        <Route path={RouterList.user.register} element={<RegisterPage />} />
+        <Route
+          path={RouterList.user.resetpassword}
+          element={<ResetPassword />}
+        />
+        <Route
+          path={RouterList.user.productList}
+          element={<CustomerProductDetails />}
+        />
+        <Route path={RouterList.user.cart} element={<CartPage />} />
+        <Route path={RouterList.user.profile} element={<Profile />} />
         <Route path="order" element={<Order />} />
         <Route path="order-details" element={<OrderDetails />} />
         <Route path="payments" element={<Payment />} />
@@ -69,7 +76,7 @@ const CustomRouters = () => {
         <Route path={RouterList.user.contact} element={<ContactUs />} />
         <Route path="navbar" element={<HeaderNav />} />
       </Route>
-      <Route path="/admin" element={<PrivateRouting />} isAdmin={true}>
+      <Route path="/admin" element={<PrivateRouting />}>
         <Route path="/admin" element={<AdminHome />} />
         <Route path="dashboard" element={<DashboardPage />} />
         <Route

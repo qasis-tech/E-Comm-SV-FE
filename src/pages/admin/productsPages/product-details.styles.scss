@@ -1,0 +1,33 @@
+@import "../../../styles/common.styles.scss";
+
+.details-product {
+  font-family: $main-font-family;
+  margin-top: 1em;
+  .product-details-wrapper {
+    .details-product-container {
+      justify-content: center;
+      .product-details-form-section {
+        box-shadow: 2px 5px 5px 3px #888888;
+        border-radius: 10px;
+        .main-form-container {
+          padding: 1em 2em;
+          .add-icon-section {
+            font-size: 25px;
+            background-color: #1973bb;
+            color: white;
+            margin-top: 6px;
+            border-radius: 25px;
+          }
+        }
+        .submit-button {
+          background-color: #cbc9c959;
+          padding: 0;
+          margin: 0em 0 0 0;
+          padding: 0.5em 0;
+          display: flex !important;
+          justify-content: end;
+        }
+      }
+    }
+  }
+}

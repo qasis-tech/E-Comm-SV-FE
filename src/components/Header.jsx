@@ -37,9 +37,13 @@ const HeaderComponent = () => {
   const open = Boolean(anchorEl);
 
   useEffect(() => {
-    const { isUser } = authCheck();
-    setShowMenus(isUser);
+    checkAuth();
   }, []);
+
+  const checkAuth = async () => {
+    const auth = await authCheck();
+    setShowMenus(auth?.isUser ? true : false);
+  };
 
   const handleClick = (event) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
@@ -159,91 +163,81 @@ const HeaderComponent = () => {
                     />
                   </a>
                   <ul className="menu-gold">
-                      <li>
-                        <a href="" className="d-flex justify-content-between">
-                          Category-1aaaaaaaa
-                          <KeyboardArrowRightIcon
-                            style={{ fontSize: "1rem" }}
-                          />
-                        </a>
-                        <ul>
-                          <li>
-                            <a href="">Karim Khan</a>
-                          </li>
-                          <li>
-                            <a
-                              href=""
-                              className="d-flex justify-content-between"
-                            >
-                              Rahim Khan
-                              <KeyboardArrowRightIcon
-                                style={{ fontSize: "1rem" }}
-                              />
-                            </a>
-                            <ul>
-                              <li>
-                                <a href="">PHP</a>
-                              </li>
-                              <li>
-                                <a href="">Mysql</a>
-                              </li>
-                              <li>
-                                <a href="">Node.js</a>
-                              </li>
-                            </ul>
-                          </li>
-                          <li>
-                            <a href="">Mahesh Jagadappa</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li>
-                        <a href="">category-2</a>
-                      </li>
-                      <li>
-                        <a href="">Category-3</a>
-                      </li>
-                      <li>
-                        <a href="" className="d-flex justify-content-between">
-                          Category-4
-                          <KeyboardArrowRightIcon
-                            style={{ fontSize: "1rem" }}
-                          />
-                        </a>
-                        <ul>
-                          <li>
-                            <a href="">Karim Khan</a>
-                          </li>
-                          <li>
-                            <a
-                              href=""
-                              className="d-flex justify-content-between"
-                            >
-                              Rahim Khan
-                              <KeyboardArrowRightIcon
-                                style={{ fontSize: "1rem" }}
-                              />
-                            </a>
-                            <ul>
-                              <li>
-                                <a href="">PHP</a>
-                              </li>
-                              <li>
-                                <a href="">Mysql</a>
-                              </li>
-                              <li>
-                                <a href="">Node.js</a>
-                              </li>
-                            </ul>
-                          </li>
-                          <li>
-                            <a href="">Mahesh Jagadappa</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li>
-                        <a href="">Category-5</a>
-                      </li>
+                    <li>
+                      <a href="" className="d-flex justify-content-between">
+                        Category-1aaaaaaaa
+                        <KeyboardArrowRightIcon style={{ fontSize: "1rem" }} />
+                      </a>
+                      <ul>
+                        <li>
+                          <a href="">Karim Khan</a>
+                        </li>
+                        <li>
+                          <a href="" className="d-flex justify-content-between">
+                            Rahim Khan
+                            <KeyboardArrowRightIcon
+                              style={{ fontSize: "1rem" }}
+                            />
+                          </a>
+                          <ul>
+                            <li>
+                              <a href="">PHP</a>
+                            </li>
+                            <li>
+                              <a href="">Mysql</a>
+                            </li>
+                            <li>
+                              <a href="">Node.js</a>
+                            </li>
+                          </ul>
+                        </li>
+                        <li>
+                          <a href="">Mahesh Jagadappa</a>
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      <a href="">category-2</a>
+                    </li>
+                    <li>
+                      <a href="">Category-3</a>
+                    </li>
+                    <li>
+                      <a href="" className="d-flex justify-content-between">
+                        Category-4
+                        <KeyboardArrowRightIcon style={{ fontSize: "1rem" }} />
+                      </a>
+                      <ul>
+                        <li>
+                          <a href="">Karim Khan</a>
+                        </li>
+                        <li>
+                          <a href="" className="d-flex justify-content-between">
+                            Rahim Khan
+                            <KeyboardArrowRightIcon
+                              style={{ fontSize: "1rem" }}
+                            />
+                          </a>
+                          <ul>
+                            <li>
+                              <a href="">PHP</a>
+                            </li>
+                            <li>
+                              <a href="">Mysql</a>
+                            </li>
+                            <li>
+                              <a href="">Node.js</a>
+                            </li>
+                          </ul>
+                        </li>
+                        <li>
+                          <a href="">Mahesh Jagadappa</a>
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      <a href="">Category-5</a>
+                    </li>
                   </ul>
                 </li>
 
