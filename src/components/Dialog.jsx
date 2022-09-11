@@ -1,5 +1,6 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
+
 import { styled } from "@mui/material/styles";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -9,8 +10,13 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import { Delete } from "@mui/icons-material";
+import { Alert } from "@mui/material";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+  "& .MuiDialog-paper": {
+    width: "30%",
+    height: "40%",
+  },
   "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
   },
@@ -19,17 +25,11 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-// export interface DialogTitleProps {
-//   id: string;
-//   children?: React.ReactNode;
-//   onClose: () => void;
-// }
-
 const BootstrapDialogTitle = (props) => {
   const { children, onClose, ...other } = props;
 
   return (
-    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+    <DialogTitle sx={{ m: 0, p: 0 }} {...other}>
       {children}
       {onClose ? (
         <IconButton
@@ -50,13 +50,8 @@ const BootstrapDialogTitle = (props) => {
 };
 const DialogComponent = (props) => {
   const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const handleClickOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
     <div>
@@ -67,23 +62,32 @@ const DialogComponent = (props) => {
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
+        maxWidth="lg"
       >
         <BootstrapDialogTitle
           id="customized-dialog-title"
           onClose={handleClose}
         >
-          {props.title}
+          <Alert severity="warning">{props.title}</Alert>
         </BootstrapDialogTitle>
         <DialogContent dividers>
           <Typography gutterBottom>{props.msg}</Typography>
           <Typography gutterBottom></Typography>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={() => {props.action();handleClose();}}>
-            {props.deleteWord}
-          </Button>
           <Button autoFocus onClick={handleClose}>
             {props.notNowWord}
+          </Button>
+          <Button
+            variant="contained"
+            color="error"
+            autoFocus
+            onClick={() => {
+              props.action();
+              handleClose();
+            }}
+          >
+            {props.deleteWord}
           </Button>
         </DialogActions>
       </BootstrapDialog>

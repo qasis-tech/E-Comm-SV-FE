@@ -46,27 +46,27 @@ table {
     }
   }
 }
-//radio btn 
-.MuiTypography-root{
-  font-family: $main-font-family!important;
-  font-size: $main-font-size!important;
+//radio btn
+.MuiTypography-root {
+  font-family: $main-font-family !important;
+  font-size: $main-font-size !important;
 }
 //textfield
-.MuiInputLabel-root{
-  font-family: $main-font-family!important;
-  font-size: $main-font-size!important;
+.MuiInputLabel-root {
+  font-family: $main-font-family !important;
+  font-size: $main-font-size !important;
 }
 //date textfield
-.MuiOutlinedInput-root{
-  font-family: $main-font-family!important;
-  font-size: $main-font-size!important;
-  color: rgba(0, 0, 0, 0.6)!important;
+.MuiOutlinedInput-root {
+  font-family: $main-font-family !important;
+  font-size: $main-font-size !important;
+  color: rgba(0, 0, 0, 0.6) !important;
 }
 //radio btn label
-.MuiFormLabel-root{
-  font-family: $main-font-family!important;
-  font-size: $main-font-size!important;
-  color: rgba(0, 0, 0, 0.6)!important;
+.MuiFormLabel-root {
+  font-family: $main-font-family !important;
+  font-size: $main-font-size !important;
+  color: rgba(0, 0, 0, 0.6) !important;
 }
 .await,
 .pending,
@@ -106,12 +106,25 @@ table {
 }
 .main-heading {
   background-color: $table-header;
-  padding: 5px 0;
+  padding: 0;
   border-radius: 10px 10px 1px 1px;
   h5 {
-    padding: 1em 1.5em;
+    padding: 0.8em 1.6em;
     color: $white;
-    font-size: 18px !important;
+    font-size: 15px !important;
+    margin-bottom: 0 !important;
+    text-transform: uppercase;
+  }
+}
+
+.sub-heading {
+  background-color: $table-header;
+  padding: 0;
+  border-radius: 1px;
+  h5 {
+    padding: 0.8em 1.6em;
+    color: $white;
+    font-size: 15px !important;
     margin-bottom: 0 !important;
     text-transform: uppercase;
   }
@@ -133,6 +146,6 @@ table {
   background-color: $inactive-color;
 }
 
-// .MuiInputBase-input{
-//   color: red !important;
-// }
+.BoxShadow {
+  box-shadow: 2px 2px 5px 3px #cfcfcf;
+}

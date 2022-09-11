@@ -6,73 +6,94 @@
     .add-category-container {
       justify-content: center;
       .category-form-section {
-        box-shadow: 2px 5px 5px 3px #888888;
         border-radius: 10px;
         @media only screen and (min-width: 800px) and (max-width: 1600px) {
         }
-        .category-section {
-          padding: 2em 3em 1em 3em;
-          .css-mhc70k-MuiGrid-root > .MuiGrid-item {
-            padding-left: 16px;
-            padding-right: 16px;
-          }
-          .image-remove-section {
-            display: flex;
-            justify-content: space-between;
-            .delete-section {
+
+        .category-wrapper {
+          @extend .BoxShadow;
+          border-radius: 10px;
+          .category-section {
+            padding: 2em 3em 1em 3em;
+            .css-mhc70k-MuiGrid-root > .MuiGrid-item {
+              padding-left: 16px;
+              padding-right: 16px;
+            }
+            .image-remove-section {
               display: flex;
-              justify-content: end;
+              justify-content: space-between;
+              .delete-section {
+                display: flex;
+                justify-content: end;
+              }
             }
           }
         }
+
         hr {
-          // border: 0.5px solid #bebebe;
           color: #ccc;
           opacity: 1.25;
         }
-        .subcategory-section {
-          padding: 0 3em 0 3em;
-          .css-mhc70k-MuiGrid-root > .MuiGrid-item {
-            padding-left: 16px;
-            padding-right: 16px;
+
+        .subcategory-wrapper {
+          overflow: hidden;
+          @extend .BoxShadow;
+          .sub-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
           }
           .add-icon-section {
             font-size: 25px;
-            background-color: #1973bb;
-            color: white;
-            margin: 0 2em;
+            // background-color: #1973bb;
+            // color: white;
+            background-color: #fff;
+            margin: 0 0.7em;
             border-radius: 25px;
           }
 
-          .image-remove-section {
-            display: flex;
-            justify-content: space-between;
-            div {
-              margin-top: 10px;
+          border-radius: 10px;
+          .subcategory-section {
+            position: relative;
+            padding: 0 3em;
+            // .css-mhc70k-MuiGrid-root > .MuiGrid-item {
+            //   padding-left: 16px;
+            //   padding-right: 16px;
+            // }
+
+            .image-remove-section {
+              display: flex;
+              justify-content: space-between;
+              div {
+                margin-top: 10px;
+              }
             }
-          }
-          .subcategory-add-section {
-            display: flex;
-            justify-content: space-between;
-            border: 1px solid;
-            border-radius: 10px;
-            /* box-shadow: 10px 10px 10px; */
-            border-color: lilac;
-            border-color: #c9c9c9;
-            margin-top: 0.5em;
-            .remove-section {
+            .subcategory-add-section {
               display: flex;
               justify-content: center;
-              .close-section {
-                align-items: center;
-                border: none;
-                background: white;
+              border: 1px solid;
+              border-radius: 10px;
+              border-color: lilac;
+              border-color: #c9c9c9;
+              margin: 0.5em;
+              padding: 1em 0;
+
+              .remove-section {
+                display: flex;
+                justify-content: center;
+                .close-section {
+                  align-items: center;
+                  border: none;
+                  background: white;
+                  color: #1973bb;
+                }
               }
             }
           }
         }
         .submit-button {
-          background-color: #cbc9c959;
+          // background-color: #cbc9c959;
+          background-color: #fff;
           padding: 0;
           margin: 2em 0 0 0;
           padding: 0.5em 0;

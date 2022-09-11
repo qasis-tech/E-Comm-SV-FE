@@ -308,5 +308,4 @@ const ListProduct = () => {
     </Box>
   );
 };
-
 export default ListProduct;

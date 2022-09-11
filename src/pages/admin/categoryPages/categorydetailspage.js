@@ -88,7 +88,6 @@ function Categorydetails() {
             imageFile: [{ name: data.subCategoryImage }],
           };
         });
-
         setValue("mainCategory", data.label);
         setValue("categoryImageFile", data.image);
         setValue("subcategory", subCatArr);
@@ -173,176 +172,174 @@ function Categorydetails() {
               onSubmit={handleSubmit((res) => updateCategorySubmitApi(res))}
               autoComplete="off"
             >
-              <div className="main-heading">
-                <h5 className="heading">Category Details</h5>
-              </div>
-              <Grid container spacing={2} className="category-section">
-                <Grid item xs={12}>
-                  <TextField
-                    label="Category"
-                    variant="outlined"
-                    fullWidth
-                    size="small"
-                    error={errors?.mainCategory}
-                    {...register("mainCategory", {
-                      required: "This is required.",
-                    })}
-                    InputLabelProps={{ shrink: true }}
-                  />
-
-                  <div className="error">{errors?.mainCategory?.message}</div>
-                </Grid>
-
-                <Grid item xs={12} className="">
-                  {getValues("categoryImageFile") ? (
-                    <>
-                      <div className="image-remove-section">
-                        <div className="col-md-10">
-                          <span>
-                            {getfileName(getValues("categoryImageFile"))}
-                          </span>
-                        </div>
-                        <div className="col-md-2 delete-section">
-                          <Button
-                            className="delete-btn"
-                            onClick={() => resetField("categoryImageFile")}
-                          >
-                            <DeleteIcon className="remove-icon" />
-                          </Button>
-                        </div>
-                      </div>
-                    </>
-                  ) : (
-                    <Button
-                      variant="contained"
-                      className="file-btn"
+              <div className="category-wrapper">
+                <div className="main-heading">
+                  <h5 className="heading">Category</h5>
+                </div>
+                <Grid container spacing={2} className="category-section">
+                  <Grid item xs={12}>
+                    <TextField
+                      label="Category"
+                      variant="outlined"
                       fullWidth
-                      component="label"
-                    >
-                      Upload Image
-                      <input
-                        {...register("categoryImageFile", {
-                          required: "This is required",
-                        })}
-                        type="file"
-                        hidden
-                      />
-                    </Button>
-                  )}
-                  <div className="error">
-                    {errors?.categoryImageFile?.message}
-                  </div>
-                </Grid>
-              </Grid>
-              <hr />
-              <Grid
-                container
-                spacing={2}
-                marginTop={4}
-                className="subcategory-section"
-              >
-                <Grid container spacing={2} paddingLeft={2}>
-                  <Grid item xs={10}>
-                    <h5 className="text-uppercase">Subcategory</h5>
-                  </Grid>
-                  <Grid item xs={2}>
-                    <AddIcon
-                      color="primary"
-                      className="add-icon-section"
-                      onClick={() =>
-                        append({
-                          subCategoryName: "",
-                          imageFile: "",
-                        })
-                      }
+                      size="small"
+                      error={errors?.mainCategory}
+                      {...register("mainCategory", {
+                        required: "This is required.",
+                      })}
+                      InputLabelProps={{ shrink: true }}
                     />
+
+                    <div className="error">{errors?.mainCategory?.message}</div>
                   </Grid>
 
-                  {/* sub category list */}
-                  {controlledFields?.map((list, index) => {
-                    return (
-                      <Grid
-                        key={list.id}
-                        item
-                        xs={12}
-                        className="subcategory-add-section"
-                        sx={{
-                          padding: "1em 0 ",
-                        }}
-                      >
-                        <Grid item xs={11}>
-                          <Grid item xs={12}>
-                            <TextField
-                              label="Subcategory"
-                              defaultValue="Subcategory"
-                              variant="outlined"
-                              fullWidth
-                              size="small"
-                              error={errors?.subCategoryName}
-                              {...register(
-                                `subcategory.${index}.subCategoryName`
-                              )}
-                            />
-                          </Grid>
-                          <Grid item xs={12} className="image-remove-section">
-                            {list?.imageFile?.length ? (
-                              <>
-                                <div className="col-md-10">
-                                  <span>
-                                    {getfileName(list?.imageFile[0]?.name)}
-                                  </span>
-                                </div>
-                                <div className="col-md-2 delete-section">
-                                  <Button
-                                    className="delete-btn"
-                                    onClick={() =>
-                                      setValue(
-                                        `subcategory.${index}.imageFile`,
-                                        null
-                                      )
-                                    }
-                                  >
-                                    <DeleteIcon className="remove-icon" />
-                                  </Button>
-                                </div>
-                              </>
-                            ) : (
-                              <Button
-                                variant="contained"
-                                fullWidth
-                                component="label"
-                                className="mt-3 file-btn"
-                              >
-                                Upload Image
-                                <TextField
-                                  label="file"
-                                  type="file"
-                                  variant="outlined"
-                                  fullWidth
-                                  hidden
-                                  {...register(
-                                    `subcategory.${index}.imageFile`
-                                  )}
-                                />
-                              </Button>
-                            )}
-                          </Grid>
-                        </Grid>
-                        <Grid item xs={1} className="remove-section">
-                          {fields.length > 1 && (
-                            <button
-                              onClick={() => remove(index)}
-                              className="close-section"
+                  <Grid item xs={12} className="">
+                    {getValues("categoryImageFile") ? (
+                      <>
+                        <div className="image-remove-section">
+                          <div className="col-md-10">
+                            <span>
+                              {getfileName(getValues("categoryImageFile"))}
+                            </span>
+                          </div>
+                          <div className="col-md-2 delete-section">
+                            <Button
+                              className="delete-btn"
+                              onClick={() => resetField("categoryImageFile")}
                             >
-                              <HighlightOffIcon />
-                            </button>
+                              <DeleteIcon className="remove-icon" />
+                            </Button>
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <Button
+                        variant="contained"
+                        className="file-btn"
+                        fullWidth
+                        component="label"
+                      >
+                        Upload Image
+                        <input
+                          {...register("categoryImageFile", {
+                            required: "This is required",
+                          })}
+                          type="file"
+                          hidden
+                        />
+                      </Button>
+                    )}
+                    <div className="error">
+                      {errors?.categoryImageFile?.message}
+                    </div>
+                  </Grid>
+                </Grid>
+              </div>
+              <div className="subcategory-wrapper mt-3">
+                <div className="sub-heading">
+                  <h5 className="heading">Subcategory</h5>
+                  <AddIcon
+                    color="primary"
+                    className="add-icon-section"
+                    onClick={() =>
+                      append({
+                        subCategoryName: "",
+                        imageFile: "",
+                      })
+                    }
+                  />
+                </div>
+                <Grid
+                  container
+                  spacing={2}
+                  marginTop={4}
+                  className="subcategory-section"
+                >
+                  <Grid container spacing={2} paddingLeft={2}>
+                    {/* sub category list */}
+                    {controlledFields?.map((list, index) => {
+                      return (
+                        <Grid
+                          key={list.id}
+                          item
+                          xs={12}
+                          className="subcategory-add-section"
+                          sx={{ padding: "1em" }}
+                        >
+                          <Grid item xs={fields.length > 1 ? 11 : 11.8}>
+                            <Grid item xs={12}>
+                              <TextField
+                                label="Subcategory"
+                                defaultValue="Subcategory"
+                                variant="outlined"
+                                fullWidth
+                                size="small"
+                                error={errors?.subCategoryName}
+                                {...register(
+                                  `subcategory.${index}.subCategoryName`
+                                )}
+                              />
+                            </Grid>
+                            <Grid item xs={12} className="image-remove-section">
+                              {list?.imageFile?.length ? (
+                                <>
+                                  <div className="col-md-10">
+                                    <span>
+                                      {getfileName(list?.imageFile[0]?.name)}
+                                    </span>
+                                  </div>
+                                  <div className="col-md-2 delete-section">
+                                    <Button
+                                      className="delete-btn"
+                                      onClick={() =>
+                                        setValue(
+                                          `subcategory.${index}.imageFile`,
+                                          null
+                                        )
+                                      }
+                                    >
+                                      <DeleteIcon className="remove-icon" />
+                                    </Button>
+                                  </div>
+                                </>
+                              ) : (
+                                <Button
+                                  variant="contained"
+                                  fullWidth
+                                  component="label"
+                                  className="mt-3 file-btn"
+                                >
+                                  Upload Image
+                                  <TextField
+                                    label="file"
+                                    type="file"
+                                    variant="outlined"
+                                    fullWidth
+                                    hidden
+                                    {...register(
+                                      `subcategory.${index}.imageFile`
+                                    )}
+                                  />
+                                </Button>
+                              )}
+                            </Grid>
+                          </Grid>
+                          {fields.length > 1 && (
+                            <Grid item xs={1} className="remove-section">
+                              <button
+                                onClick={() => remove(index)}
+                                className="close-section"
+                              >
+                                <HighlightOffIcon />
+                              </button>
+                            </Grid>
                           )}
                         </Grid>
-                      </Grid>
-                    );
-                  })}
+                      );
+                    })}
+                  </Grid>
                 </Grid>
-              </Grid>
+              </div>
               <div className="row submit-button">
                 <Grid item xs={2}>
                   <Button onClick={() => navigate(-1)}>Cancel</Button>
@@ -374,5 +371,4 @@ function Categorydetails() {
     </div>
   );
 }
-
 export default Categorydetails;
