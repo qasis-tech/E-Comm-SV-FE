@@ -103,7 +103,6 @@ const ProductDetails = () => {
     axios
       .get(`${URLS.product}/${id}`)
       .then(({ data }) => {
-        console.log("ress==>", data);
         setProductDetail(data);
         setValue("productName", data.name);
         setValue("productCategory", data.category);
@@ -128,40 +127,44 @@ const ProductDetails = () => {
           });
         });
         setValue("productFeatures", tempArray);
-        console.log("data.productimage", data.productImage);
-        // const proImgArr = data.productImage.map((data) => {
-        //   console.log("data", data);
-        //   return {
-        //     images: data.image,
-        //   };
-        // });
-        const tempImageArray = [];
-        for (const values of data.productImage) {
-          tempImageArray.push({ images: values.image });
-        }
 
-        console.log("image arrayy getapi===>", tempImageArray);
-        setValue("productDetailImageFile", tempImageArray);
+        const proImgArr = data.productImage.map((data) => {
+          return {
+            images: [{ name: data.image }],
+          };
+        });
 
-        // const proVidArr = data.productVideo.map((data) => {
-        //   return {
-        //     videos: data.video,
-        //   };
-        // });
+        setValue("productDetailImageFile", proImgArr);
 
-        const tempVideoArray = [];
-        for (const values of data.productVideo) {
-          tempVideoArray.push({ videos: values.video });
-        }
-        setValue("productDetailVideoFile", tempVideoArray);
+        const proVidArr = data.productVideo.map((data) => {
+          return {
+            videos: [{ name: data.video }],
+          };
+        });
+
+        setValue("productDetailVideoFile", proVidArr);
       })
       .catch((err) => {
         console.log("err in product details get api", err);
       });
   };
 
+  const getFileObj = async (file) => {
+    console.log("file", file);
+    let result = await fetch(file)
+      .then((r) => r.blob())
+      .then((blobFile) => {
+        let imageName = file.split("/").pop();
+        let fileExt = imageName.split(".").pop();
+        return new File([blobFile], `${imageName}`, {
+          type: `image/${fileExt}`,
+        });
+      });
+    return result;
+  };
+
   // put api**************//////
-  const putProductDetailApi = async ({
+  const updateProductDetailApi = async ({
     productName,
     productQuantity,
     productUnit,
@@ -197,16 +200,7 @@ const ProductDetails = () => {
     featureArray.push(temp);
     formData.append("features", JSON.stringify(featureArray));
 
-    // if (productDetailImageFile) {
-    //   for (const values of productDetailImageFile) {
-    //     console.log("productimageputapi====>", values);
-    //     formData.append("productImage", values.images[0]);
-    //   }
-    // } else {
-    // }
     for (const values of productDetailImageFile) {
-      console.log("values", values);
-
       if (
         values.images[0].name.startsWith("http") ||
         values.images[0].name.startsWith("https")
@@ -218,13 +212,17 @@ const ProductDetails = () => {
       }
     }
 
-    if (productDetailVideoFile) {
-      for (const values of productDetailVideoFile) {
+    for (const values of productDetailVideoFile) {
+      if (
+        values.videos[0].name.startsWith("http") ||
+        values.videos[0].name.startsWith("https")
+      ) {
+        let file = await getFileObj(values.videos[0].name);
+        formData.append("productVideo", file);
+      } else {
         formData.append("productVideo", values.videos[0]);
       }
-    } else {
     }
-
     axios
       .put(`${URLS.product}/${id}`, formData, {
         headers: {
@@ -241,18 +239,12 @@ const ProductDetails = () => {
         console.error("Error in Category Add", err);
       });
   };
-  const getFileObj = async (file) => {
-    console.log("file", file);
-    let result = await fetch(file)
-      .then((r) => r.blob())
-      .then((blobFile) => {
-        let imageName = file.split("/").pop();
-        let fileExt = imageName.split(".").pop();
-        return new File([blobFile], `${imageName}`, {
-          type: `image/${fileExt}`,
-        });
-      });
-    return result;
+
+  const getfileName = (name) => {
+    if (name[0]?.name) return name[0]?.name;
+    if (!name) return name;
+    let fileName = name?.split("/");
+    return fileName[fileName.length - 1];
   };
 
   return (
@@ -265,7 +257,7 @@ const ProductDetails = () => {
           className="details-product-container"
         >
           <div className="product-details-form-section col-md-8">
-            <form onSubmit={handleSubmit(putProductDetailApi)}>
+            <form onSubmit={handleSubmit(updateProductDetailApi)}>
               <div className="main-heading">
                 <h5 className="heading">Product Details</h5>
               </div>
@@ -538,7 +530,8 @@ const ProductDetails = () => {
                         <Grid item xs={6}>
                           <Typography>
                             {" "}
-                            {list && list?.images[0]?.name}
+                            {list?.images[0]?.name &&
+                              getfileName(list?.images[0]?.name)}
                           </Typography>
                         </Grid>
                         <Grid item xs={5}>
@@ -573,9 +566,9 @@ const ProductDetails = () => {
                   })}
                 </div>
                 <Grid container spacing={2} marginTop={1}>
-                  {controlledProductVideoFields?.map((list, index) => {
+                  {controlledProductVideoFields?.map((lists, index) => {
                     return (
-                      <Grid key={list.id} item xs={6}>
+                      <Grid key={lists.id} item xs={6}>
                         <Button
                           variant="contained"
                           className="file-btn"
@@ -585,16 +578,17 @@ const ProductDetails = () => {
                           Upload Video
                           <input
                             {...register(
-                              `productDetailVideoFile.${index}.videos`,
-                              {
-                                required: true,
-                              }
+                              `productDetailVideoFile.${index}.videos`
                             )}
                             type="file"
                             hidden
                           />
                         </Button>
-                        {list && list?.videos[0]?.name}
+                        <Typography>
+                          {" "}
+                          {lists?.videos[0]?.name &&
+                            getfileName(lists?.videos[0]?.name)}
+                        </Typography>
                       </Grid>
                     );
                   })}
