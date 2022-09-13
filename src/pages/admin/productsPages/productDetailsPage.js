@@ -103,6 +103,7 @@ const ProductDetails = () => {
     axios
       .get(`${URLS.product}/${id}`)
       .then(({ data }) => {
+        console.log("data111===>>", data);
         setProductDetail(data);
         setValue("productName", data.name);
         setValue("productCategory", data.category);
@@ -135,14 +136,15 @@ const ProductDetails = () => {
         });
 
         setValue("productDetailImageFile", proImgArr);
+        if (data.productVideo) {
+          const proVidArr = data.productVideo.map((data) => {
+            return {
+              videos: [{ name: data.video }],
+            };
+          });
 
-        const proVidArr = data.productVideo.map((data) => {
-          return {
-            videos: [{ name: data.video }],
-          };
-        });
-
-        setValue("productDetailVideoFile", proVidArr);
+          setValue("productDetailVideoFile", proVidArr);
+        }
       })
       .catch((err) => {
         console.log("err in product details get api", err);
@@ -567,28 +569,56 @@ const ProductDetails = () => {
                 </div>
                 <Grid container spacing={2} marginTop={1}>
                   {controlledProductVideoFields?.map((lists, index) => {
+                    console.log("lists", productVideoFields);
                     return (
                       <Grid key={lists.id} item xs={6}>
-                        <Button
-                          variant="contained"
-                          className="file-btn"
-                          fullWidth
-                          component="label"
-                        >
-                          Upload Video
-                          <input
-                            {...register(
-                              `productDetailVideoFile.${index}.videos`
-                            )}
-                            type="file"
-                            hidden
-                          />
-                        </Button>
-                        <Typography>
-                          {" "}
-                          {lists?.videos[0]?.name &&
-                            getfileName(lists?.videos[0]?.name)}
-                        </Typography>
+                        {productVideoFields.videos ? (
+                          <>
+                            <Button
+                              variant="contained"
+                              className="file-btn"
+                              fullWidth
+                              component="label"
+                            >
+                              Upload Video
+                              <input
+                                {...register(
+                                  `productDetailVideoFile.${index}.videos`
+                                )}
+                                type="file"
+                                hidden
+                              />
+                            </Button>
+                            <Typography>
+                              {" "}
+                              {lists?.videos[0]?.name &&
+                                getfileName(lists?.videos[0]?.name)}
+                            </Typography>
+                          </>
+                        ) : (
+                          <>
+                            <Button
+                              variant="contained"
+                              className="file-btn"
+                              fullWidth
+                              component="label"
+                            >
+                              Upload Video
+                              <input
+                                {...register(
+                                  `productDetailVideoFile.${index}.videos`
+                                )}
+                                type="file"
+                                hidden
+                              />
+                            </Button>
+                            <Typography>
+                              {" "}
+                              {lists?.videos[0]?.name &&
+                                getfileName(lists?.videos[0]?.name)}
+                            </Typography>
+                          </>
+                        )}
                       </Grid>
                     );
                   })}

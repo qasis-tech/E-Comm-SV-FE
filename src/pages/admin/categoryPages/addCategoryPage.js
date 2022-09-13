@@ -11,7 +11,7 @@ import { URLS } from "../../../config/urls.config";
 import { popupVar } from "../../../utils/globalVar";
 import PopupAlert from "../../../components/popupAlerts";
 
-import { Box, Grid, Button, TextField } from "@mui/material";
+import { Box, Grid, Button, TextField, Typography } from "@mui/material";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import DisabledByDefaultIcon from "@mui/icons-material/DisabledByDefault";
@@ -119,7 +119,7 @@ const AddCategory = () => {
                       alignItems="center"
                     >
                       <Grid xs={10}>
-                        {getValues("categoryImageFile") ? (
+                        {watch("categoryImageFile") ? (
                           <>
                             <div className="image-remove-section">
                               <div className="col-md-10">
@@ -228,7 +228,10 @@ const AddCategory = () => {
                                   {list?.imageFile?.length ? (
                                     <>
                                       <div className="col-md-10 name-section">
-                                        <span>{list?.imageFile[0]?.name}</span>
+                                        <Typography>
+                                          {" "}
+                                          {list && list?.imageFile[0]?.name}
+                                        </Typography>
                                       </div>
                                       <div className="col-md-2 delete-section">
                                         <Button

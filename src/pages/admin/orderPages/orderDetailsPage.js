@@ -190,11 +190,8 @@ const OrderDetails = () => {
                         label="Name"
                         fullWidth
                         size="small"
-                        defaultValue="Email"
+                        InputLabelProps={{ shrink: true }}
                         {...register("orderEmail")}
-                        InputProps={{
-                          readOnly: true,
-                        }}
                       />
                     </Grid>
                     <Grid item xs={6}>
@@ -203,11 +200,8 @@ const OrderDetails = () => {
                         label="Location"
                         fullWidth
                         size="small"
-                        defaultValue="Location"
                         {...register("orderLocation")}
-                        InputProps={{
-                          readOnly: true,
-                        }}
+                        InputLabelProps={{ shrink: true }}
                       />
                     </Grid>
                     <Grid
@@ -219,16 +213,13 @@ const OrderDetails = () => {
                       <Grid item xs={12}>
                         <TextField
                           id="outlined-helperText"
-                          label="Location"
+                          label="Address"
                           fullWidth
                           size="small"
-                          defaultValue="Address"
                           multiline
                           rows={4}
                           {...register("orderAddress")}
-                          InputProps={{
-                            readOnly: true,
-                          }}
+                          InputLabelProps={{ shrink: true }}
                         />
                       </Grid>
                     </Grid>
@@ -244,10 +235,7 @@ const OrderDetails = () => {
                           label="Phone Number"
                           fullWidth
                           size="small"
-                          defaultValue="Phone Number"
-                          InputProps={{
-                            readOnly: true,
-                          }}
+                          InputLabelProps={{ shrink: true }}
                           {...register("orderMobilenumber")}
                         />
                       </Grid>
@@ -256,10 +244,7 @@ const OrderDetails = () => {
                           label="Pincode"
                           fullWidth
                           size="small"
-                          defaultValue="Pincode"
-                          InputProps={{
-                            readOnly: true,
-                          }}
+                          InputLabelProps={{ shrink: true }}
                           {...register("orderPincode")}
                         />
                       </Grid>

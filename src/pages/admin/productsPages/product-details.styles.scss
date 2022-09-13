@@ -19,6 +19,16 @@
             border-radius: 25px;
           }
         }
+        .remove-section {
+          display: flex;
+          justify-content: center;
+          .close-section {
+            align-items: center;
+            border: none;
+            background: white;
+            color: #1973bb;
+          }
+        }
         .submit-button {
           background-color: #cbc9c959;
           padding: 0;

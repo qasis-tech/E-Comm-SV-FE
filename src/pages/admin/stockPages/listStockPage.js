@@ -319,7 +319,14 @@ const StockList = () => {
                         </DialogComponent>
                       </Button>
                       <Button>
-                        <CreateIcon className="edit-icon" />
+                        <CreateIcon
+                          className="edit-icon"
+                          onClick={() =>
+                            navigate(
+                              `${RouterList.admin.admin}/${RouterList.admin.stockDetails}/${listitem._id}`
+                            )
+                          }
+                        />
                       </Button>
                     </TableCell>
                   </TableRow>

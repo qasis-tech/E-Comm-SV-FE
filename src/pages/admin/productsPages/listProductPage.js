@@ -270,7 +270,14 @@ const ListProduct = () => {
                         </DialogComponent>
                       </Button>
                       <Button>
-                        <CreateIcon className="edit-icon" />
+                        <CreateIcon
+                          className="edit-icon"
+                          onClick={() =>
+                            navigate(
+                              `${RouterList.admin.admin}/${RouterList.admin.productDetails}/${product._id}`
+                            )
+                          }
+                        />
                       </Button>
                     </TableCell>
                   </TableRow>

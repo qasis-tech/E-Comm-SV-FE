@@ -29,7 +29,7 @@ const AddProduct = () => {
     defaultValues: {
       features: [{ featureKey: "", featureValue: "" }],
       productImageFile: [{ images: "" }],
-      productVideoFile: null,
+      productVideoFile: [{ videos: "" }],
     },
   });
   const {
@@ -48,8 +48,13 @@ const AddProduct = () => {
     control,
     name: "productImageFile",
   });
+  const { fields: productVideoFields } = useFieldArray({
+    control,
+    name: "productVideoFile",
+  });
   const watchFeatureArray = watch("features");
   const watchProductImageArray = watch("productImageFile");
+  const watchProductVideoArray = watch("productVideoFile");
   const controlledFeatureFields = featureFields?.map((field, index) => {
     return {
       ...field,
@@ -61,6 +66,14 @@ const AddProduct = () => {
       return {
         ...field,
         ...watchProductImageArray[index],
+      };
+    }
+  );
+  const controlledProductVideoFields = productVideoFields?.map(
+    (field, index) => {
+      return {
+        ...field,
+        ...watchProductVideoArray[index],
       };
     }
   );
@@ -140,9 +153,17 @@ const AddProduct = () => {
       }
     } else {
     }
+    // if (productVideoFile) {
+    //   bodyFormData.append("productVideo", productVideoFile[0]);
+    // }
+
     if (productVideoFile) {
-      bodyFormData.append("productVideo", productVideoFile[0]);
+      for (const values of productVideoFile) {
+        bodyFormData.append("productVideo", values.videos[0]);
+      }
+    } else {
     }
+
     axios
       .post(`${URLS.product}`, bodyFormData, {
         headers: { "Content-Type": "multipart/form-data" },
@@ -519,28 +540,29 @@ const AddProduct = () => {
                   })}
                 </div>
                 <Grid container spacing={2} marginTop={1}>
-                  <span>{getValues("productVideoFile[0].name")}</span>
-                  <Grid item xs={6}>
-                    <Button
-                      variant="contained"
-                      className="file-btn"
-                      fullWidth
-                      component="label"
-                    >
-                      Upload Video
-                      <input
-                        {...register("productVideoFile")}
-                        type="file"
-                        hidden
-                      />
-                    </Button>
-
-                    <ErrorMessage
-                      errors={errors}
-                      name="productVideoFile"
-                      render={({ message }) => <p>{message}</p>}
-                    />
-                  </Grid>
+                  {controlledProductVideoFields?.map((lists, index) => {
+                    return (
+                      <Grid key={lists.id} item xs={6}>
+                        <Button
+                          variant="contained"
+                          className="file-btn"
+                          fullWidth
+                          component="label"
+                        >
+                          Upload Video
+                          <input
+                            {...register(`productVideoFile.${index}.videos`)}
+                            type="file"
+                            hidden
+                          />
+                        </Button>
+                        <Typography>
+                          {" "}
+                          {lists && lists?.videos[0]?.name}
+                        </Typography>
+                      </Grid>
+                    );
+                  })}
                 </Grid>
               </div>
               <div className="row submit-button">
