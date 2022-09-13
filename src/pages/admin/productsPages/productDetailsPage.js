@@ -144,6 +144,8 @@ const ProductDetails = () => {
           });
 
           setValue("productDetailVideoFile", proVidArr);
+        } else {
+          setValue("productDetailVideoFile", data.productVideo);
         }
       })
       .catch((err) => {
@@ -569,16 +571,16 @@ const ProductDetails = () => {
                 </div>
                 <Grid container spacing={2} marginTop={1}>
                   {controlledProductVideoFields?.map((lists, index) => {
-                    console.log("lists", productVideoFields);
                     return (
                       <Grid key={lists.id} item xs={6}>
-                        {productVideoFields.videos ? (
+                        {lists?.videos ? (
                           <>
                             <Button
                               variant="contained"
                               className="file-btn"
                               fullWidth
                               component="label"
+                              defaultValue="video"
                             >
                               Upload Video
                               <input
