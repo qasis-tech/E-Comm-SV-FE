@@ -1,3 +1,6 @@
+import {useEffect,useState} from "react";
+import axios from "axios";
+
 import { useNavigate } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
@@ -17,8 +20,44 @@ import "../../../styles/button.styles.scss";
 import FooterComponent from "../../../components/Footer";
 import CategoriesComponent from "./components/categories";
 import ProductComponent from "../../../components/product";
+import { URLS } from "../../../config/urls.config";
 
 const Home = () => {
+  const[isLoading,setLoader]=useState(false);
+const[productData,setProductData]=useState([]);
+
+  useEffect(() => {
+    getProductList();
+    getDealOfDay();
+  }, []);
+  const getProductList = () => {
+    setLoader(true);
+    axios
+
+      .get(`${URLS.product}`)
+      .then((res) => {
+        setLoader(false);
+        setProductData(res.data);
+        console.log("res productttt", res);
+      })
+      .catch((err) => {
+        setLoader(false);
+        console.log("err in product LIst", err);
+      });
+  };
+
+  const getDealOfDay=()=>{
+    axios
+  .get(`${URLS.deal}`)
+    .then((res) => {
+      
+      console.log("res deal", res);
+    })
+    .catch((err) => {
+     
+      console.log("err in deal LIst", err);
+    });
+  }
   const navigation = useNavigate();
   return (
     <div>
@@ -36,9 +75,10 @@ const Home = () => {
         </div>
         <div className="container">
           <div className="row">
-            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((items, index) => {
-              return <ProductComponent key={index} />;
+            {productData.map((items, index) => {
+              return <ProductComponent productName={items.name} price={items.price} offerPrice={items.offerPrice} key={items._id} />;
             })}
+
           </div>
         </div>
       </section>

@@ -8,4 +8,6 @@ export const URLS = {
   resetOtp: "/resetOtp",
   verifyResetOtp: "/verifyResetOtp",
   addUser: "/addUser",
+  slider: "/slider",
+  deal: "/deal",
 };
