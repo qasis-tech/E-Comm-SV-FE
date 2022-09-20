@@ -124,6 +124,14 @@ const AddCategory = () => {
                             <div className="image-remove-section">
                               <div className="col-md-10">
                                 <span>
+                                  {getValues("categoryImageFile[0]") && (
+                                    <img
+                                      src={URL?.createObjectURL(
+                                        getValues("categoryImageFile[0]")
+                                      )}
+                                      alt="categoryImage"
+                                    />
+                                  )}
                                   {getValues("categoryImageFile[0].name")}
                                 </span>
                               </div>

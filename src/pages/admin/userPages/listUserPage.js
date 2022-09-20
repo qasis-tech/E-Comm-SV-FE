@@ -139,7 +139,6 @@ const UserList = () => {
         headers: { "Content-Type": "application/json" },
       })
       .then((res) => {
-        console.log("111==>>>", res);
         setLoader(false);
         setUserData(res.data);
         setCount(res.count);
