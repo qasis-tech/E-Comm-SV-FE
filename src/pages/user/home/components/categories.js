@@ -5,6 +5,7 @@ import { URLS } from "../../../../config/urls.config";
 
 import "../home.styles.scss";
 import Loader from "../../../../components/Loader";
+import NoDataAvailable from "../../../../components/NoDataAvailable";
 
 const CategoriesComponent = () => {
   const [categoryData, setCategoryData] = useState([]);
@@ -65,7 +66,7 @@ const CategoriesComponent = () => {
             })}
           </div>
         ) : (
-          <p>nodata</p>
+          <NoDataAvailable />
         )}
       </div>
     </section>

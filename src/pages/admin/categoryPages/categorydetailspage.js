@@ -199,6 +199,14 @@ function Categorydetails() {
                         <div className="image-remove-section">
                           <div className="col-md-10">
                             <span>
+                              {getValues("categoryImageFile[0]") && (
+                                <img
+                                  src={URL?.revokeObjectURL(
+                                    getValues("categoryImageFile[0]")
+                                  )}
+                                  alt="categoryImage"
+                                />
+                              )}
                               {getfileName(getValues("categoryImageFile"))}
                             </span>
                           </div>
@@ -285,6 +293,14 @@ function Categorydetails() {
                                 <>
                                   <div className="col-md-10">
                                     <span>
+                                      {list?.imageFile[0] && (
+                                        <img
+                                          src={URL?.revokeObjectURL(
+                                            list?.imageFile[0]
+                                          )}
+                                          alt="subcategoryImage"
+                                        />
+                                      )}
                                       {getfileName(list?.imageFile[0]?.name)}
                                     </span>
                                   </div>

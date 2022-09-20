@@ -532,6 +532,12 @@ const ProductDetails = () => {
                         marginTop={1}
                       >
                         <Grid item xs={6}>
+                          {list?.images[0] && (
+                            <img
+                              src={URL?.revokeObjectURL(list?.images[0])}
+                              alt="ProductImage"
+                            />
+                          )}
                           <Typography>
                             {" "}
                             {list?.images[0]?.name &&
@@ -591,6 +597,12 @@ const ProductDetails = () => {
                                 hidden
                               />
                             </Button>
+                            {lists?.videos[0] && (
+                              <img
+                                src={URL?.revokeObjectURL(lists?.videos[0])}
+                                alt="ProductVideo"
+                              />
+                            )}
                             <Typography>
                               {" "}
                               {lists?.videos[0]?.name &&

@@ -4,6 +4,7 @@ import axios from "axios";
 import Carousel from "react-bootstrap/Carousel";
 
 import { URLS } from "../config/urls.config";
+import Loader from "./Loader";
 
 import BackgroundImage from "../assets/bg_1.jpg"
 import BackgroundImage2 from "../assets/bg_2.jpg";
@@ -14,34 +15,45 @@ import "../pages/user/home/home.styles.scss";
 
 const SliderComponent = () => {
 const [sliderData,setSliderData]=useState([])
-const [imgSrc, setImgSrc] = useState("Invalid Image Source");
-const image1=BackgroundImage;
-console.log("image",image1)
+const [imgSrc, setImgSrc] = useState([]);
+const [isLoading,setLoader]=useState(false)
+
 useEffect(()=>{
 getSliderList();
 },[])
 
  const getSliderList=()=>{
-axios.get(`${URLS.slider}`)
+  setLoader(true)
+ axios.get(`${URLS.slider}`)
 .then((res) => {
+  setLoader(false)
   setSliderData(res.data)
- console.log("res sliderr", res.data[0].sliderImage[0].image);
- setImgSrc(res.data[0].sliderImage[0].image)
+  sliderData.map((data)=>{
+  for(const values of data.sliderImage){
+   setImgSrc(values.image)
+  }
+ })
+ 
 })
 .catch((err) => {
+ setLoader(true)
  console.log("err in slider LIst", err);
 });
  }
-
+ 
   return (
     <Carousel fade className="carousel-hero">
       <Carousel.Item className="carousel-item-section">
         <div className="overlay"></div>
+        {isLoading?(
+          <Loader/>
+        ):(
         <img
           className="d-block w-100"
           src={imgSrc}
           alt="First slide"
-          onError = {() => setImgSrc(require("../assets/bg_1.jpg"))}/>
+          onError = {() => setImgSrc(BackgroundImage)}/>
+        )}
         <Carousel.Caption className="caption">
           <h3> We serve Fresh Vegetables &amp; Fruits</h3>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
