@@ -23,6 +23,7 @@ import AddIcon from "@mui/icons-material/Add";
 import PopupAlert from "../../../components/popupAlerts";
 import DeleteIcon from "@mui/icons-material/Delete";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import ProductImage from "../../../assets/product-2.jpg";
 
 import "./addCategoryPage.styles.scss";
 
@@ -64,7 +65,7 @@ function Categorydetails() {
   const { id } = useParams();
   const [categoryDetailData, setCategoryDetail] = useState([]);
   const [popup, setPopup] = useState({ status: false, message: "", type: "" });
-
+  const [imgSrc, setImgSrc] = useState([]);
   useEffect(() => {
     getCategoryDetailsApi();
   }, []);
@@ -201,9 +202,7 @@ function Categorydetails() {
                             <span>
                               {getValues("categoryImageFile[0]") && (
                                 <img
-                                  src={URL?.revokeObjectURL(
-                                    getValues("categoryImageFile[0]")
-                                  )}
+                                  src={getValues("categoryImageFile[0]")}
                                   alt="categoryImage"
                                 />
                               )}
@@ -295,9 +294,7 @@ function Categorydetails() {
                                     <span>
                                       {list?.imageFile[0] && (
                                         <img
-                                          src={URL?.revokeObjectURL(
-                                            list?.imageFile[0]
-                                          )}
+                                          src={list?.imageFile[0]}
                                           alt="subcategoryImage"
                                         />
                                       )}

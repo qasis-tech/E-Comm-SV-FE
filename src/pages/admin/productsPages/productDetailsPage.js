@@ -533,10 +533,7 @@ const ProductDetails = () => {
                       >
                         <Grid item xs={6}>
                           {list?.images[0] && (
-                            <img
-                              src={URL?.revokeObjectURL(list?.images[0])}
-                              alt="ProductImage"
-                            />
+                            <img src={list?.images[0]} alt="ProductImage" />
                           )}
                           <Typography>
                             {" "}
@@ -598,10 +595,7 @@ const ProductDetails = () => {
                               />
                             </Button>
                             {lists?.videos[0] && (
-                              <img
-                                src={URL?.revokeObjectURL(lists?.videos[0])}
-                                alt="ProductVideo"
-                              />
+                              <img src={lists?.videos[0]} alt="ProductVideo" />
                             )}
                             <Typography>
                               {" "}

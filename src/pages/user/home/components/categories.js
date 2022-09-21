@@ -10,6 +10,7 @@ import NoDataAvailable from "../../../../components/NoDataAvailable";
 const CategoriesComponent = () => {
   const [categoryData, setCategoryData] = useState([]);
   const [isLoading, setLoader] = useState(false);
+  const [imgSrc, setImgSrc] = useState([]);
 
   useEffect(() => {
     getCategoryList();
@@ -26,6 +27,9 @@ const CategoriesComponent = () => {
         setLoader(false);
         setCategoryData(res.data);
         console.log("res categoryyyyy", res);
+        categoryData.map((category) => {
+          setImgSrc(category.image);
+        });
       })
       .catch((err) => {
         setLoader(false);
@@ -47,13 +51,20 @@ const CategoriesComponent = () => {
         ) : categoryData?.length ? (
           <div className="d-flex flex-wrap justify-content-center">
             {categoryData.map((items) => {
+              console.log("items", items);
               return (
                 <div
                   key={items._id}
                   className="category-wrap ftco-animate mb-4 d-flex align-items-end"
                   style={{ width: 200, margin: "0 1.5em" }}
                 >
-                  <img src={Category1} alt="Category Image" />
+                  {items?.image && (
+                    <img
+                      src={imgSrc}
+                      alt="Category Image"
+                      onError={() => setImgSrc(Category1)}
+                    />
+                  )}
                   <div className="text px-3 py-1 bottom-left">
                     <h2 className="mb-0">
                       <a href="#" className=" text-decoration-none">
