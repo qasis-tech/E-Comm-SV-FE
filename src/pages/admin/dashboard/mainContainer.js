@@ -63,6 +63,7 @@ function DashboardPage() {
     },
     { path: RouterList.admin.stockList, title: "Stocks", icon: WarehouseIcon },
     { path: RouterList.admin.userList, title: "Users", icon: GroupIcon },
+    { path: RouterList.admin.homeManage, title: "Home", icon: GroupIcon },
   ]);
 
   const getPathName = () => {

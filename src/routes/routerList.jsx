@@ -29,6 +29,7 @@ const List = {
     userList: "users",
     userDetails: "users-details",
     addUser: "add-user",
+    homeManage: "home",
   },
 };
 

@@ -51,7 +51,6 @@ const CategoriesComponent = () => {
         ) : categoryData?.length ? (
           <div className="d-flex flex-wrap justify-content-center">
             {categoryData.map((items) => {
-              console.log("items", items);
               return (
                 <div
                   key={items._id}
