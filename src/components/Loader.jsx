@@ -2,7 +2,6 @@ import { CircularProgress, Skeleton } from "@mui/material";
 
 export default function Loader({ height, width }) {
   return (
-    // <Skeleton />
     <CircularProgress
       style={{
         position: "absolute",

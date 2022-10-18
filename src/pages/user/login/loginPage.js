@@ -75,8 +75,6 @@ function LoginPage() {
         setLoader(false);
         console.log("RESS Err", error);
       });
-
-    // navigate("/admin");
   };
   const style = { BackgroundImage: "url('../../../assets/bg.jpg')" };
 
@@ -166,13 +164,10 @@ function LoginPage() {
                   <span className="text checkbox-text">Keep me signed in</span>
                 </div>
 
-                {isLoading ? (
-                  <Loader />
-                ) : (
-                  <button className="btn btn-success" type="submit">
-                    SIGN IN
-                  </button>
-                )}
+                <button className="btn btn-success" type="submit">
+                  SIGN IN
+                </button>
+
                 <div className="forgotpassword-link">
                   <p>
                     <a
@@ -181,7 +176,7 @@ function LoginPage() {
                       onClick={() => navigate("/resetpassword")}
                     >
                       Forgot Password?
-                    </a>{" "}
+                    </a>
                   </p>
                 </div>
                 <div className="signup-link">
@@ -193,7 +188,7 @@ function LoginPage() {
                       onClick={() => navigate("/register", { replace: true })}
                     >
                       Sign Up
-                    </a>{" "}
+                    </a>
                   </p>
                 </div>
               </form>
