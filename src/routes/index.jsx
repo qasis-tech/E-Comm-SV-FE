@@ -41,6 +41,7 @@ import WhishList from "../pages/user/accounts/whishlist";
 import Order from "../pages/user/accounts/order";
 import ProductList from "../pages/user/productlist";
 import { authCheck } from "./auth";
+import Home from "../pages/admin/Home/Home";
 
 const CustomRouters = () => {
   const [isUser, setUser] = useState(false);
@@ -97,6 +98,7 @@ const CustomRouters = () => {
         <Route path="add-user" element={<AddUser />} />
         <Route path="order-details/:id" element={<OrderDetails />} />
         <Route path={RouterList.admin.orderList} element={<OrderList />} />
+        <Route path={RouterList.admin.homeManage} element={<Home />} />
       </Route>
 
       <Route path="*" element={<PageNotFound />} />

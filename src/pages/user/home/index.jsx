@@ -1,5 +1,6 @@
 import {useEffect,useState} from "react";
 import axios from "axios";
+import moment from "moment/moment";
 
 import { useNavigate } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -25,6 +26,9 @@ import { URLS } from "../../../config/urls.config";
 const Home = () => {
   const[isLoading,setLoader]=useState(false);
 const[productData,setProductData]=useState([]);
+const[dealData,setDealData]=useState([]);
+const [startDate,setStartDate]=useState("")
+const[endDate,setEndDate]=useState("")
 
   useEffect(() => {
     getProductList();
@@ -47,17 +51,26 @@ const[productData,setProductData]=useState([]);
   };
 
   const getDealOfDay=()=>{
-    axios
+    setLoader(true)
+  axios
   .get(`${URLS.deal}`)
     .then((res) => {
-      
-      console.log("res deal", res);
+      setLoader(false)
+      console.log("res deal", res.data);
+      setDealData(res.data)
+      dealData.map((deal)=>{
+        console.log("deal.startdate",deal.startDate)
+      const m1=moment(deal.startDate)
+      const m2=moment (deal.endDate)
+      })
+     
     })
     .catch((err) => {
-     
+      setLoader(false)
       console.log("err in deal LIst", err);
     });
   }
+ 
   const navigation = useNavigate();
   return (
     <div>

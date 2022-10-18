@@ -5,10 +5,12 @@ import { URLS } from "../../../../config/urls.config";
 
 import "../home.styles.scss";
 import Loader from "../../../../components/Loader";
+import NoDataAvailable from "../../../../components/NoDataAvailable";
 
 const CategoriesComponent = () => {
   const [categoryData, setCategoryData] = useState([]);
   const [isLoading, setLoader] = useState(false);
+  const [imgSrc, setImgSrc] = useState([]);
 
   useEffect(() => {
     getCategoryList();
@@ -25,6 +27,9 @@ const CategoriesComponent = () => {
         setLoader(false);
         setCategoryData(res.data);
         console.log("res categoryyyyy", res);
+        categoryData.map((category) => {
+          setImgSrc(category.image);
+        });
       })
       .catch((err) => {
         setLoader(false);
@@ -52,7 +57,13 @@ const CategoriesComponent = () => {
                   className="category-wrap ftco-animate mb-4 d-flex align-items-end"
                   style={{ width: 200, margin: "0 1.5em" }}
                 >
-                  <img src={Category1} alt="Category Image" />
+                  {items?.image && (
+                    <img
+                      src={imgSrc}
+                      alt="Category Image"
+                      onError={() => setImgSrc(Category1)}
+                    />
+                  )}
                   <div className="text px-3 py-1 bottom-left">
                     <h2 className="mb-0">
                       <a href="#" className=" text-decoration-none">
@@ -65,7 +76,7 @@ const CategoriesComponent = () => {
             })}
           </div>
         ) : (
-          <p>nodata</p>
+          <NoDataAvailable />
         )}
       </div>
     </section>

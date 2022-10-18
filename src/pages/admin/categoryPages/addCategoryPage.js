@@ -31,6 +31,7 @@ const AddCategory = () => {
     getValues,
     watch,
     reset,
+    resetField,
     formState: { errors },
     control,
   } = useForm({
@@ -236,6 +237,14 @@ const AddCategory = () => {
                                   {list?.imageFile?.length ? (
                                     <>
                                       <div className="col-md-10 name-section">
+                                        {list?.imageFile[0] && (
+                                          <img
+                                            src={URL?.createObjectURL(
+                                              list?.imageFile[0]
+                                            )}
+                                            alt="subcategoryImage"
+                                          />
+                                        )}
                                         <Typography>
                                           {" "}
                                           {list && list?.imageFile[0]?.name}
@@ -244,7 +253,11 @@ const AddCategory = () => {
                                       <div className="col-md-2 delete-section">
                                         <Button
                                           className="delete-btn"
-                                          onClick={() => remove(index)}
+                                          onClick={() =>
+                                            resetField(
+                                              `subcategory.${index}.imageFile`
+                                            )
+                                          }
                                         >
                                           <DeleteIcon className="remove-icon" />
                                         </Button>

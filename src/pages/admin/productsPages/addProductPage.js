@@ -301,17 +301,15 @@ const AddProduct = () => {
                           {...params}
                           label="Subcategories"
                           size="small"
-                          {...register("subCategory", {
-                            required: "SubCategory is required",
-                          })}
+                          {...register("subCategory")}
                         />
                       )}
                     />
-                    {!selectedSubCategory.label ? (
+                    {/* {!selectedSubCategory.label ? (
                       <div className="error">
                         {errors?.subCategory?.message}
                       </div>
-                    ) : null}
+                    ) : null} */}
                   </Grid>
                 </Grid>
                 <Grid container marginTop={1} spacing={2}>
@@ -500,6 +498,12 @@ const AddProduct = () => {
                         marginTop={1}
                       >
                         <Grid item xs={6}>
+                          {list?.images[0] && (
+                            <img
+                              src={URL?.createObjectURL(list?.images[0])}
+                              alt="ProductImage"
+                            />
+                          )}
                           <Typography>
                             {" "}
                             {list && list?.images[0]?.name}
@@ -556,6 +560,12 @@ const AddProduct = () => {
                             hidden
                           />
                         </Button>
+                        {lists?.videos[0] && (
+                          <img
+                            src={URL?.createObjectURL(lists?.videos[0])}
+                            alt="ProductVideo"
+                          />
+                        )}
                         <Typography>
                           {" "}
                           {lists && lists?.videos[0]?.name}

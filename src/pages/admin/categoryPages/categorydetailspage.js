@@ -23,6 +23,7 @@ import AddIcon from "@mui/icons-material/Add";
 import PopupAlert from "../../../components/popupAlerts";
 import DeleteIcon from "@mui/icons-material/Delete";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import ProductImage from "../../../assets/product-2.jpg";
 
 import "./addCategoryPage.styles.scss";
 
@@ -64,7 +65,7 @@ function Categorydetails() {
   const { id } = useParams();
   const [categoryDetailData, setCategoryDetail] = useState([]);
   const [popup, setPopup] = useState({ status: false, message: "", type: "" });
-
+  const [imgSrc, setImgSrc] = useState([]);
   useEffect(() => {
     getCategoryDetailsApi();
   }, []);
@@ -199,6 +200,12 @@ function Categorydetails() {
                         <div className="image-remove-section">
                           <div className="col-md-10">
                             <span>
+                              {getValues("categoryImageFile[0]") && (
+                                <img
+                                  src={getValues("categoryImageFile[0]")}
+                                  alt="categoryImage"
+                                />
+                              )}
                               {getfileName(getValues("categoryImageFile"))}
                             </span>
                           </div>
@@ -285,6 +292,12 @@ function Categorydetails() {
                                 <>
                                   <div className="col-md-10">
                                     <span>
+                                      {list?.imageFile[0] && (
+                                        <img
+                                          src={list?.imageFile[0]}
+                                          alt="subcategoryImage"
+                                        />
+                                      )}
                                       {getfileName(list?.imageFile[0]?.name)}
                                     </span>
                                   </div>
